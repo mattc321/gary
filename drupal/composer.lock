@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05a31a76f51cb6e434148cab0674b840",
+    "content-hash": "bcee0beaf6cd1378dc539706c5da965b",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2220,6 +2220,59 @@
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
             }
+        },
+        {
+            "name": "drupal/field_collection",
+            "version": "dev-3.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/field_collection",
+                "reference": "e0981647028d069df405b812f87bfc2a52185c90"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-3.x": "3.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-3.x-dev",
+                    "datestamp": "1480945083",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Wolfgang Ziegler (fago)",
+                    "homepage": "https://www.drupal.org/u/fago",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Joel Muzzerall (jmuzz)",
+                    "homepage": "https://www.drupal.org/u/jmuzz",
+                    "role": "Co-maintainer"
+                },
+                {
+                    "name": "larowlan",
+                    "homepage": "https://www.drupal.org/user/395439"
+                }
+            ],
+            "description": "Provides a field collection field, to which any number of fields can be attached.",
+            "homepage": "https://drupal.org/project/field_collection",
+            "support": {
+                "source": "http://cgit.drupalcode.org/field_collection",
+                "issues": "https://drupal.org/project/issues/field_collection"
+            },
+            "time": "2016-12-05T13:39:07+00:00"
         },
         {
             "name": "drush/drush",
@@ -7602,7 +7655,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "drupal/field_collection": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
