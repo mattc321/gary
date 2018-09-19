@@ -6,12 +6,21 @@ core: 8.x
 base theme: classy
 # Defines libraries group in which we can add css/js.
 libraries:
-  - gary/global-styling
+  - gary/global
+
+ckeditor_stylesheets:
+  - dist/base/elements.css
+  - dist/theme/base.css
+  - dist/layout/grid.css
+  - dist/components/table.css
+  - dist/components/captions.css
+
 # Regions
 regions:
   header: Header
+  primary_menu: 'Primary Menu'
+  page_top: 'Page Top'
+  page_bottom: 'Page Bottom'
   featured: Featured
   content: Content
-  sidebar_first: First sidebar
-  sidebar_second: Second sidebar
   footer: Footer

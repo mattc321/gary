@@ -1,4 +1,36 @@
-global-styling:
+global:
   css:
+    base:
+      dist/base/drupal.css: {}
+      dist/base/elements.css: {}
+    layout:
+      dist/layout/header.css: {}
+      dist/layout/menu.css: {}
+      dist/layout/main.css: {}
+      dist/layout/footer.css: {}
+      dist/layout/gary-layout.css: {}
     component:
-      css/style.css: {}
+      dist/components/messages.css: {}
+      dist/components/modal.css: {}
+      dist/components/expand.css: {}
+      dist/components/views.css: {}
+    theme:
+      dist/theme/base.css: { media: screen }
+      dist/theme/svg.css: {}
+      dist/theme/forms.css: { media: screen }
+      dist/theme/pages.css: {}
+      dist/theme/search.css: {}
+      dist/theme/print.css: { media: print }
+  js:
+    dist/global/global.js: {}
+    dist/global/models/AppStateModel.js: {}
+    dist/forms.js: {}
+    dist/front.js: {}
+
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+    - core/underscore
+    - core/backbone
+    - core/drupal.dialog.ajax
