@@ -6,6 +6,7 @@ global:
     layout:
       dist/layout/header.css: {}
       dist/layout/menu.css: {}
+      dist/layout/grid.css: {}
       dist/layout/main.css: {}
       dist/layout/footer.css: {}
       dist/layout/gary-layout.css: {}
