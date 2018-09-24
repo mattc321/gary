@@ -17,10 +17,9 @@ ckeditor_stylesheets:
 
 # Regions
 regions:
-  header: Header
-  primary_menu: 'Primary Menu'
-  page_top: 'Page Top'
-  page_bottom: 'Page Bottom'
-  featured: Featured
+  top: Top
+  menu: Main Menu
+  before_content: 'Before Content'
   content: Content
+  sidebar: 'Sidebar'
   footer: Footer

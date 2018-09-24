@@ -13,7 +13,7 @@
  */
 module.exports = {
   "ui": {
-    "port": 3001,
+    "port": 8080,
     "weinre": {
       "port": 80
     }
