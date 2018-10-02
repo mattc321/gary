@@ -1,0 +1,30 @@
+<?php
+Use Drupal\image\Entity\ImageStyle;
+
+/**
+ * Implements template_preprocess_block().
+ */
+function gary_preprocess_block(&$variables) {
+
+  if ($user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id())) {
+    //pass username
+    $username = $user->getAccountName();
+    $variables['username'] = ($username == '') ? 'Admin' : $username;
+    //pass user img
+    if (!$user->user_picture->isEmpty()) {
+      $file_uri = $user->get('user_picture')->entity->getFileUri();
+      $styled_image_url = ImageStyle::load("user_pic")->buildUrl($file_uri);
+      $picture = $styled_image_url;
+    } else {
+      $field = \Drupal\field\Entity\FieldConfig::loadByName('user', 'user', 'user_picture');
+      $default_image = $field->getSetting('default_image');
+      $file = \Drupal::entityManager()->loadEntityByUuid('file', $default_image['uuid']);
+      $file_uri = $file->getFileUri();
+      $styled_image_url = ImageStyle::load("user_pic")->buildUrl($file_uri);
+      $picture = $styled_image_url;
+    }
+    $variables['user_pic'] = $picture;
+  }
+
+
+}

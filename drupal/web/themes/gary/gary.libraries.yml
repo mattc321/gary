@@ -23,6 +23,7 @@ global:
       dist/theme/search.css: {}
       dist/theme/print.css: { media: print }
   js:
+    /libraries/polyfill.min.js: { minified: true }
     dist/global/global.js: {}
     dist/global/models/AppStateModel.js: {}
     dist/forms.js: {}
@@ -35,3 +36,32 @@ global:
     - core/underscore
     - core/backbone
     - core/drupal.dialog.ajax
+    - gary/muuri
+
+gsap:
+  js:
+    /libraries/gsap/src/minified/TweenMax.min.js: { minified: true }
+    /libraries/gsap/src/minified/TimelineMax.min.js: { minified: true }
+    /libraries/gsap/src/minified/plugins/ScrollToPlugin.min.js: { minified: true }
+    
+scrollmagic:
+  js:
+    /libraries/scrollmagic/minified/ScrollMagic.min.js: { minified: true }
+    /libraries/scrollmagic/minified/plugins/animation.gsap.min.js: { minified: true }
+#    @todo: Remove on golive
+    /libraries/scrollmagic/minified/plugins/debug.addIndicators.min.js: { minified: true }
+
+muuri:
+   js:
+     /libraries/muuri/dist/muuri.min.js: { minified: true }
+   dependencies:
+     - gary/web-animations
+     - gary/hammer
+
+hammer:
+    js:
+      /libraries/hammer/hammer.min.js: { minified: true }
+
+web-animations:
+            js:
+              /libraries/web-animations/web-animations.min.js: { minified: true }
