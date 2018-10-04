@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+$break-small: 600px;
+$break-medium: 850px;
+$break-large: 1100px;
+$break-xl: 1400px;
+
+@mixin max-width($width) {
+  @media screen and (max-width: $width) {
+    @content
+  }
+}
+
+@mixin min-width($width) {
+  @media screen and (min-width: $width) {
+    @content
+  }
+}
+
+
+
+$max-width: 1200px;
+$max-width-alt: 700px;
+
+$light: #fff;
+$dark: #242424;
+$light-grey: #ddd;
+$lighter-grey: #eee;
+$grey: #717d8c;
+$light-blue: #72bdcf;
+$blue: #41aac4;
+
+$green: #80ceb9;
+$dark-green: #48b799;
+
+$red: #e27676;
+$brown: #bdb69c;
+
+$light-green: #a1cd39;
+$dark-purple: #60245f;
+$light-purple: #ac79b3;
+
+
+$orange: #ff9900;
+
+$text: $brown;
+$text-light: $light;
+
+$base-font-size: 16px;
+$block-spacing: 25px;
+$copy-spacing: $base-font-size;
+
+
+$font-primary: "Quicksand", sans-serif;
+$font-secondary: "verveine", sans-serif;
+%font-primary {
+  font-family: $font-primary;
+  font-weight: 400;
+  -moz-osx-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+}
+%font-primary-semibold {
+  font-family: $font-primary;
+  font-weight: 600;
+  -moz-osx-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+}
+%font-primary-bold {
+  font-family: $font-primary;
+  font-weight: 700;
+  -moz-osx-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+}
+%font-secondary {
+  font-family: $font-secondary;
+  font-weight: 400;
+  line-height: 1;
+}
+
+%h2 {
+  @extend %font-primary-bold;
+  font-size: 32px;
+  line-height: 1.2;
+}
+%h2-handwriting {
+  @extend %font-secondary;
+  font-size: 40px;
+  line-height: 1;
+}
+%h3 {
+  @extend %font-secondary;
+  font-size: 32px;
+  line-height: 1;
+}
+%h3-plain {
+  @extend %font-primary-bold;
+  font-size: 26px;
+  line-height: 1.2;
+}
+%h4 {
+  @extend %font-primary-bold;
+  font-size: 22px;
+  line-height: 1.2;
+}
+%h4-handwriting {
+  @extend %font-secondary;
+  font-size: 26px;
+  line-height: 1;
+}
+
+%menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+%clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+%inherit-fill {
+  fill: inherit;
+  g, path {
+    fill: inherit;
+  }
+}

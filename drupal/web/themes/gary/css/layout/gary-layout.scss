@@ -1,0 +1,13 @@
+@import "../variables";
+
+body, a {
+  font-family: $font-primary;
+}
+
+a {
+  color:$blue;
+  text-decoration: none;
+}
+.layout-container {
+  background: $light-grey;
+}

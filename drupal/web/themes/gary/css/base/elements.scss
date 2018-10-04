@@ -1,0 +1,30 @@
+@import "../variables";
+
+/*
+Generic Styling, for Desktops/Laptops
+*/
+table {
+  width: 100%;
+  border-collapse: collapse;
+  transition: .5s;
+}
+/* Zebra striping */
+tr:nth-of-type(odd) {
+  background: $lighter-grey;
+}
+th {
+  background: $light;
+  color: $dark;
+  font-weight: bold;
+}
+th {
+  padding: 6px;
+  border-bottom: 4px solid $light-grey;
+  text-align: left;
+}
+td {
+  padding: 6px;
+  border-top: 1px solid $light-grey;
+  border-bottom: 1px solid $light-grey;
+  text-align: left;
+}

@@ -1,0 +1,35 @@
+@import "../variables";
+
+.block-search {
+  float: right;
+  background: $lighter-grey;
+  padding: 5px;
+
+  input[type=search] {
+    transition: .3s;
+    width: 150px;
+
+    &:focus,
+    &:active,
+    &:hover {
+      width: 300px;
+    }
+
+  }
+  @include max-width($break-medium) {
+    transform: translateX(0);
+  }
+  @include min-width($break-large) {
+    transform: translateX(-300px);
+  }
+
+  svg {
+    display: none;
+    width: 20px;
+    height: 20px;
+    fill: #000;
+    -webkit-transition: fill .5s;
+    transition: fill .5s;
+  }
+
+}

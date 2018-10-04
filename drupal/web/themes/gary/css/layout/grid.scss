@@ -1,0 +1,149 @@
+@import "../variables";
+
+
+//flexes
+.flex {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: $max-width;
+
+  > div {
+    box-sizing: border-box;
+    flex: 0 1 auto;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+.flex-padding {
+  margin-left: -$block-spacing/2;
+  margin-right: -$block-spacing/2;
+  > div {
+    padding: $block-spacing/2;
+  }
+}
+.flex-extra-padding {
+  margin-left: -$block-spacing;
+  margin-right: -$block-spacing;
+  > div {
+    padding: $block-spacing;
+  }
+}
+.flex-rows {
+  flex-direction: column;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+.flex-center {
+  justify-content: center;
+  text-align: center;
+}
+.flex-end {
+  justify-content: flex-end;
+  text-align: right;
+}
+.flex-align-start {
+  align-items: flex-start;
+}
+.flex-align-center {
+  align-items: center;
+}
+.flex-align-end{
+  align-items: flex-end;
+}
+.flex-fill {
+  > div {
+    box-sizing: border-box;
+    flex: 1 0 100%;
+    min-width: 100%;
+    text-align: justify;
+
+    img {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+    }
+  }
+}
+
+@include max-width($break-medium) {
+  .flex {
+    flex-direction: column;
+    align-items: center;
+  }
+  @for $i from 1 through 12 {
+    .flex > .col-#{$i} {
+      flex: 0 1 auto;
+      max-width: 100%;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .flex > .offset-#{$i} {
+      margin-left: 0;
+    }
+  }
+}
+
+@include min-width($break-medium) {
+  @for $i from 1 through 12 {
+    $width: percentage($i / 12);
+
+    .flex > .col-#{$i} {
+      flex-basis: $width;
+      max-width: $width;
+      min-width: $width;
+    }
+
+    .flex > .offset-#{$i} {
+      margin-left: $width;
+    }
+  }
+}
+
+@media all and (min-width: $break-small) and (max-width: $break-medium) {
+  .flex-sm {
+    flex-direction: row;
+  }
+  @for $i from 1 through 12 {
+    $width: percentage($i / 12);
+
+    .flex > .col-sm-#{$i} {
+      flex-basis: $width;
+      max-width: $width;
+      min-width: $width;
+    }
+
+    .flex > .offset-sm-#{$i} {
+      margin-left: $width;
+    }
+  }
+}
+
+@include max-width($break-small) {
+  .flex-xs {
+    flex-direction: row;
+  }
+  @for $i from 1 through 12 {
+    $width: percentage($i / 12);
+
+    .flex > .col-xs-#{$i} {
+      flex-basis: $width;
+      max-width: $width;
+      min-width: $width;
+    }
+
+    .flex > .offset-xs-#{$i} {
+      margin-left: $width;
+    }
+  }
+}

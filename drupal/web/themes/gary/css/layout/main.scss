@@ -1,0 +1,36 @@
+
+@import "../variables";
+
+main,
+#before-content {
+    width: 80%;
+    margin-left: 10vw;
+}
+main {
+  min-height: 80vh;
+  background: $light;
+  padding: 5px;
+  box-shadow: 2px 2px 5px $dark;
+  border-radius: 5px;
+
+  .layout-content {
+    padding:10px;
+  }
+
+}
+.field--type-block-field {
+    border: 2px solid $light-grey;
+    margin: 5px;
+    border-radius: 5px;
+   .field__item {
+      margin: 5px;
+    }
+
+    h3 {
+      background: $light-blue;
+      margin: 0;
+      padding: 5px;
+      border: 1px solid $light-grey;
+      font-weight: normal;
+    }
+}

@@ -1,0 +1,377 @@
+@import "../variables";
+
+// -----------------------------------------------------------------------------
+// Main Menu
+// -----------------------------------------------------------------------------
+// Logo block
+
+#block-gary-branding {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  @include min-width($break-large) {
+    left: 4%;
+  }
+
+  transform-origin: top;
+  transition: top .25s ease-out;
+  z-index: 20;
+
+  .site-name {
+    @include min-width($break-xl) {
+      visibility: visible;
+      opacity: 100;
+      float: right;
+      padding:27px 0 0 5px;
+      transition: .5s;
+    }
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+    a {
+      font-size: 20px;
+      color: $light;
+
+      &.is-active,
+      &:focus {
+        color: $light;
+      }
+
+      &:hover,
+      &:active {
+        color: $blue;
+      }
+    }
+
+
+  }
+
+  img {
+    transform: translateY(2px);
+    height: 115px;
+  }
+}
+
+#mobile-toggle {
+  display: none;
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  width: 35px;
+  height: 35px;
+  z-index: 20;
+  cursor: pointer;
+
+  > div {
+    position: absolute;
+    width: 33px;
+    height: 3px;
+    background-color: $brown;
+    transform-origin: center center;
+    transition: all .3s;
+  }
+  div.top {
+    top: 10px;
+  }
+  div.bottom {
+    top: 20px;
+  }
+}
+#menu-wrap.expanded #mobile-toggle {
+  div.top {
+    top: 15px;
+    transform: rotate(135deg);
+  }
+  div.bottom {
+    top: 15px;
+    transform: rotate(-135deg);
+  }
+}
+
+#menu-wrap {
+  position: fixed;
+  transform: matrix(1, 0, 0, 1, 0, -50);
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: $dark;
+  display: flex;
+  justify-content: flex-end;
+
+  z-index: 10;
+
+  &.stuck {
+    box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+  }
+
+  nav#block-gary-main-menu {
+    display: flex; // Needed so safari fills height
+    position: relative; // Needed for IE 10 z-indexing
+    box-sizing: border-box;
+    right: 25%; // Make room for user menu
+    z-index: 5;
+    height: 100%;
+  }
+
+  nav#block-gary-account-menu {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    height: 75px;
+    max-height: 600px;
+    overflow: hidden;
+    transition: height .3s ease-in;
+
+    &:hover {
+      // transition: 1s;
+      height:600px;
+      // overflow: auto;
+    }
+
+    .user-info {
+      margin-top: 10px;
+      display: block;
+      padding: 4px;
+      border-radius: 4px;
+      transition: .2s;
+      border: 1px solid $dark;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      span {
+        position: relative;
+        top: -15px;
+        left: 10px;
+      }
+
+      img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+      }
+
+    }
+
+  > ul {
+      list-style: none;
+      display: inline;
+      float: right;
+      padding: 0;
+
+    > li {
+        background: $dark;
+        transition: .2s;
+        padding: 0;
+      > a {
+          height: 100%;
+          width: 100%;
+          padding: 20px 40px 20px 25px;
+        }
+      }
+    }
+  }
+
+  ul.menu {  // Common menu
+    @extend %menu;
+
+    a {
+      color: $light;
+      text-decoration: none;
+
+      &.is-active,
+      &:focus {
+        color: $blue;
+      }
+
+      &:hover,
+      &:active {
+        color: $blue;
+      }
+    }
+  }
+  // Main level
+  nav > ul.menu {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 20px 20px;
+  }
+
+
+  nav > ul.menu {
+    > li {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 10px 0 10px 0;
+
+      > a {
+        font-size: 18px;
+        line-height: 1;
+        padding: 30px 25px;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.7);
+        }
+      }
+
+      &:hover ul.menu {
+        display: block;
+        opacity: 1;
+      }
+    }
+  }
+
+
+  // Sub menus
+  $sub-width: 265px;
+  ul.menu ul.menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -$sub-width/2;
+    padding: 8px 0;
+
+    width: $sub-width;
+    background-color: rgba(255, 255, 255, .65);
+    opacity: 0;
+    transition: opacity .3s;
+
+    a {
+      display: block;
+      padding: 7px;
+
+      font-size: 16px;
+      line-height: 1.2;
+      text-align: center;
+    }
+  }
+
+  div.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, .65);
+    z-index: 1;
+  }
+}
+
+//tabs menu
+.block-local-tasks-block {
+    
+}
+nav.tabs {
+    margin-top: 5px;
+
+    > ul > li > a {
+      padding: 15px;
+      color: $dark;
+      border-radius: 4px;
+    }
+}
+
+@include max-width($break-large) {
+  #block-gary-branding img {
+    transform: translateY(0px);
+    height: 115px;
+  }
+  #menu-wrap {
+    height: 75px;
+    nav {
+      padding-right: 100px;
+      > ul.menu > li {
+        padding: 10px 15px 10px 15px;
+      }
+    }
+  }
+}
+
+@include max-width($break-medium) {
+  #block-gary-branding {
+    left: 50%;
+    margin-left: -55px;
+    img {
+      transform: translateY(0px);
+      height: 115px;
+    }
+    .site-name {
+      display: none;
+    }
+  }
+  #mobile-toggle {
+    display: block;
+  }
+  #menu-wrap {
+    top: 0;
+    height: 67px;
+
+    nav {
+      display: none;
+      position: absolute;
+      top: -100vh;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      padding: 130px 35px 35px 35px;
+      background-color: $light-green;
+      overflow-y: auto;
+
+      > ul.menu {
+        display: block;
+        padding: 0;
+
+        li {
+          display: block; // No longer need to center and showing sub navs
+          padding: 0;
+          border-bottom: 1px solid #fff;
+        }
+        a {
+          display: block;
+          padding: 15px 35px;
+          color: $light;
+        }
+
+        ul.menu {
+          display: block;
+          position: relative;
+          top: auto;
+          left: auto;
+          padding: 0;
+          margin: 0 0 0 35px;
+          width: auto;
+
+          opacity: 1;
+          background-color: transparent;
+
+          li {
+            border-top: 1px solid transparentize(#fff, .6);
+            border-bottom: none;
+            a {
+              display: block;
+              padding-left: 35px;
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+
+    div.bg {
+      box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+      background-color: #fff;
+      z-index: 10;
+    }
+  }
+}
+
+.ani {
+    transform: scale(.25, 0);
+}
