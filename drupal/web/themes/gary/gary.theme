@@ -32,3 +32,18 @@ function gary_preprocess_block(&$variables) {
 function gary_preprocess_field(&$variables, $hook) {
   // ksm($variables);
 }
+
+function gary_preprocess_page_title(&$variables) {
+
+  // Load the node entity from current route
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+
+    //get the account ref title if it's there append to page title
+    if ($node->hasField('field_account_reference')) {
+      $entity_id = $node->get('field_account_reference')->first()->getValue()['target_id'];
+      $entity = \Drupal\node\Entity\Node::load($entity_id)->toArray();
+      $account_title = $entity['title'][0]['value'];
+      $variables['account_title'] = $account_title;
+    }
+  }
+}
