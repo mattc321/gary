@@ -67,3 +67,11 @@ function gary_preprocess_page_title(&$variables) {
     }
   }
 }
+
+function gary_preprocess_form_element(&$variables) {
+  // $element = $variables['element'];
+  // if ($element['#type'] == 'search') {
+  //   $element['#wrapper_attributes']['class'] = ['visually-hidden'];
+  //   ksm($element);
+  // }
+}

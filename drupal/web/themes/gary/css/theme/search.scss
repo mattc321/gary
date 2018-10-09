@@ -5,18 +5,31 @@
   display: inline-flex;
   position: relative;
   left: 15%;
+  width: 280px;
+  height: 60px;
 
   input[type=search] {
-    transition: .3s;
+    transition: .4s;
     width: 250px;
 
     &:focus,
     &:active,
     &:hover {
       // width: 300px;
+      border: 2px solid $green;
+    }
+
+    &::placeholder {
+      font-size: 14px;
+      font-style: italic;
     }
 
   }
+
+  div#edit-actions {
+    visibility: hidden;
+  }
+
   @include max-width($break-medium) {
     transform: translateX(0);
   }
