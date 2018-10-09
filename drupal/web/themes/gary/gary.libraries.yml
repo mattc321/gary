@@ -20,6 +20,7 @@ global:
       dist/theme/svg.css: {}
       dist/theme/forms.css: { media: screen }
       dist/theme/pages.css: {}
+      dist/theme/projects.css: {}
       dist/theme/search.css: {}
       dist/theme/print.css: { media: print }
   js:
@@ -43,7 +44,7 @@ gsap:
     /libraries/gsap/src/minified/TweenMax.min.js: { minified: true }
     /libraries/gsap/src/minified/TimelineMax.min.js: { minified: true }
     /libraries/gsap/src/minified/plugins/ScrollToPlugin.min.js: { minified: true }
-    
+
 scrollmagic:
   js:
     /libraries/scrollmagic/minified/ScrollMagic.min.js: { minified: true }

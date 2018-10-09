@@ -25,6 +25,7 @@
         "drupal/core": "~8.6.1",
         "drupal/ctools": "^3.0",
         "drupal/devel": "~1.0",
+        "drupal/easy_breadcrumb": "^1.8",
         "drupal/entity_reference_revisions": "^1.5",
         "drupal/feeds": "^3.0@alpha",
         "drupal/field_collection": "3.x-dev",

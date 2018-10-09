@@ -29,7 +29,7 @@
     opacity: 0;
     transition: visibility 0s, opacity 0.5s linear;
     a {
-      font-size: 20px;
+      font-size: 18px;
       color: $light;
 
       &.is-active,
@@ -48,7 +48,7 @@
 
   img {
     transform: translateY(2px);
-    height: 115px;
+    height: 100px;
   }
 }
 
@@ -211,7 +211,7 @@
       padding: 10px 0 10px 0;
 
       > a {
-        font-size: 18px;
+        font-size: 16px;
         line-height: 1;
         padding: 30px 25px;
 
@@ -266,7 +266,7 @@
 
 //tabs menu
 .block-local-tasks-block {
-    
+
 }
 nav.tabs {
     margin-top: 5px;

@@ -69,6 +69,11 @@
     <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
     <div class="layout-content">
+      {% if bundle %}
+        <div class="bundle-label {{ bundle|lower }}">
+          <h2>{{ bundle }}</h2>
+        </div>
+      {% endif %}
       {{ page.content }}
     </div>{# /.layout-content #}
 
