@@ -104,13 +104,19 @@
     box-shadow: 0 0 3px rgba(0, 0, 0, .3);
   }
 
+  .region-menu {
+    width: 80%;
+  }
+
   nav#block-gary-main-menu {
-    display: flex; // Needed so safari fills height
-    position: relative; // Needed for IE 10 z-indexing
+    display: inline-flex;
+    position: relative;
+    left: 15%;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    right: 25%; // Make room for user menu
     z-index: 5;
     height: 100%;
+
   }
 
   nav#block-gary-account-menu {

@@ -1,18 +1,19 @@
 @import "../variables";
 
 .block-search {
-  float: right;
-  background: $lighter-grey;
-  padding: 5px;
+
+  display: inline-flex;
+  position: relative;
+  left: 15%;
 
   input[type=search] {
     transition: .3s;
-    width: 150px;
+    width: 250px;
 
     &:focus,
     &:active,
     &:hover {
-      width: 300px;
+      // width: 300px;
     }
 
   }
@@ -20,7 +21,7 @@
     transform: translateX(0);
   }
   @include min-width($break-large) {
-    transform: translateX(-300px);
+    // transform: translateX(-225px);
   }
 
   svg {
