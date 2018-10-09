@@ -11,6 +11,7 @@ global:
       dist/layout/footer.css: {}
       dist/layout/gary-layout.css: {}
     component:
+      dist/components/breadcrumbs.css: {}
       dist/components/messages.css: {}
       dist/components/modal.css: {}
       dist/components/expand.css: {}
