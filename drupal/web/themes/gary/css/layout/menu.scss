@@ -22,7 +22,7 @@
       visibility: visible;
       opacity: 100;
       float: right;
-      padding:27px 0 0 5px;
+      padding:20px 0 0 5px;
       transition: .5s;
     }
     visibility: hidden;
@@ -93,7 +93,7 @@
   transform: matrix(1, 0, 0, 1, 0, -50);
   left: 0;
   width: 100%;
-  height: 80px;
+  height: 65px;
   background: $dark;
   display: flex;
   justify-content: flex-end;
@@ -111,31 +111,38 @@
   nav#block-gary-main-menu {
     display: inline-flex;
     position: relative;
-    left: 15%;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     z-index: 5;
     height: 100%;
 
+    @include min-width($break-xl) {
+      left: 10%;
+    }
+    @include min-width(1540px) {
+      left: 15%;
+    }
   }
 
   nav#block-gary-account-menu {
     position: absolute;
     top: 0;
     right: 10px;
-    height: 75px;
+    height: 65px;
     max-height: 600px;
     overflow: hidden;
     transition: height .3s ease-in;
+    color:$light;
+
+    &.user-nav-expanded {
+      height: 600px;
+    }
 
     &:hover {
-      // transition: 1s;
-      height:600px;
-      // overflow: auto;
+      cursor: pointer;
     }
 
     .user-info {
-      margin-top: 10px;
       display: block;
       padding: 4px;
       border-radius: 4px;
@@ -143,6 +150,7 @@
       border: 1px solid $dark;
 
       &:hover {
+        color: $blue;
         background: rgba(0, 0, 0, 0.7);
         border: 1px solid rgba(255, 255, 255, 0.3);
       }
@@ -214,12 +222,12 @@
       display: flex;
       align-items: center;
       margin: 0;
-      padding: 10px 0 10px 0;
+      padding: 6px 0 6px 0;
 
       > a {
-        font-size: 16px;
+        font-size: 15px;
         line-height: 1;
-        padding: 30px 25px;
+        padding: 24px 20px;
 
         &:hover {
           background: rgba(0, 0, 0, 0.7);
@@ -285,32 +293,33 @@ nav.tabs {
 }
 
 @include max-width($break-large) {
-  #block-gary-branding img {
-    transform: translateY(0px);
-    height: 115px;
+  #block-gary-branding {
+    width: 100px;
+    img {
+      // transform: translateY(0px);
+      // height: 115px;
+    }
   }
+
+  #block-gary-main-menu {
+      left:-100px;
+  }
+
   #menu-wrap {
-    height: 75px;
     nav {
-      padding-right: 100px;
+      // padding-right: 100px;
       > ul.menu > li {
-        padding: 10px 15px 10px 15px;
+        // padding: 10px 15px 10px 15px;
       }
     }
   }
+
+
 }
 
 @include max-width($break-medium) {
   #block-gary-branding {
-    left: 50%;
-    margin-left: -55px;
-    img {
-      transform: translateY(0px);
-      height: 115px;
-    }
-    .site-name {
-      display: none;
-    }
+    display: none;
   }
   #mobile-toggle {
     display: block;
@@ -319,7 +328,7 @@ nav.tabs {
     top: 0;
     height: 67px;
 
-    nav {
+    nav#block-gary-main-menu {
       display: none;
       position: absolute;
       top: -100vh;

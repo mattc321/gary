@@ -51,10 +51,10 @@
   <h2{{ title_attributes.setAttribute('id', heading_id) }}>{{ configuration.label }}</h2>
   {{ title_suffix }}
 
-  <a href="/user" class="user-info">
+  <div class="user-info">
     <img src="{{ user_pic }}">
     <span class="user-name">{{ username }}</span>
-  </a>
+  </div>
 
   {# Menu. #}
   {% block content %}

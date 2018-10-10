@@ -25,7 +25,7 @@
   &.contacts {
     background: linear-gradient(#48b799, #308770);
   }
-
+  
   > h2 {
     background-color: #000;
     color: transparent;
@@ -35,6 +35,13 @@
     background-clip: text;
     margin: 0;
   }
+}
+
+
+.sticky-header {
+  transition: .4s;
+  background: linear-gradient(#48b799, #308770);
+  transform: scale(.75) translate(-60px, -115px);
 }
 
 .node__content {

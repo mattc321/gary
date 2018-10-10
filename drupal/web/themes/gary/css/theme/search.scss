@@ -1,16 +1,14 @@
 @import "../variables";
 
 .block-search {
-
-  display: inline-flex;
   position: relative;
-  left: 15%;
-  width: 280px;
+  width: 15%;
   height: 60px;
+  transition: .3s;
 
   input[type=search] {
     transition: .4s;
-    width: 250px;
+    width: 100%;
 
     &:focus,
     &:active,
@@ -30,13 +28,6 @@
     visibility: hidden;
   }
 
-  @include max-width($break-medium) {
-    transform: translateX(0);
-  }
-  @include min-width($break-large) {
-    // transform: translateX(-225px);
-  }
-
   svg {
     display: none;
     width: 20px;
@@ -45,5 +36,29 @@
     -webkit-transition: fill .5s;
     transition: fill .5s;
   }
+
+  @include min-width($break-large) {
+    display: inline-flex;
+  }
+  @include min-width($break-xl) {
+    left: 10%;
+  }
+  @include min-width(1540px) {
+    left: 15%;
+    width: 17%;
+  }
+  @include max-width($break-large) {
+    width:20%;
+  }
+  @include max-width($break-medium) {
+    position: absolute;
+    top: 10px;
+    left: 100px;
+    width: 40%;
+  }
+
+
+
+
 
 }

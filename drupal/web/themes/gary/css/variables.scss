@@ -2,7 +2,7 @@
 
 $break-small: 600px;
 $break-medium: 850px;
-$break-large: 1100px;
+$break-large: 1175px;
 $break-xl: 1400px;
 
 @mixin max-width($width) {
@@ -16,7 +16,6 @@ $break-xl: 1400px;
     @content
   }
 }
-
 
 
 $max-width: 1200px;

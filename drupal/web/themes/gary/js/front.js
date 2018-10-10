@@ -4,14 +4,41 @@
   Drupal.behaviors.garyFront = {
     attach: function (context, settings) {
 
+
+      //user menu handler
+      var expanded = 0;
+      $('#block-gary-account-menu .user-info').click( function(){
+        if (expanded == 0) {
+          $('#block-gary-account-menu').toggleClass('user-nav-expanded');
+          expanded = 1;
+        } else {
+          $('#block-gary-account-menu').toggleClass('user-nav-expanded');
+          expanded = 0;
+        }
+      });
+      $('#block-gary-account-menu').mouseleave(function(){
+        if (expanded == 1) {
+          $('#block-gary-account-menu').toggleClass('user-nav-expanded');
+          expanded = 0;
+        }
+
+      });
+
+
       // TweenMax.to("#menu-wrap", .5, {y:0});
       $('.field--type-block-field').fadeIn();
 
       // var grid = new Muuri('.field--name-field-page-content', {dragEnabled: true});
+
+
+      var hide_tween = TweenMax.to("#menu-wrap", .5, {
+        transform: 'translate(0, -60px)'
+      });
+
       var hideController = new ScrollMagic.Controller();
       var hideScene = new ScrollMagic.Scene(
         {offset: 500})
-            .setTween("#menu-wrap", .5, {y:-60})
+            .setTween(hide_tween)
             // .setClassToggle("#menu-wrap", "ani")
             .addTo(hideController);
 
@@ -22,6 +49,23 @@
             .setTween("#menu-wrap", .5, {y:0})
             // .setClassToggle("#menu-wrap", "ani")
             .addTo(controller);
+
+      // var scale_tween = TweenMax.to("#block-gary-page-title", .3, {
+      //   transform: 'translate(40px, -35px) scale(.75)'
+      // });
+
+      var titleController = new ScrollMagic.Controller();
+      var titleScene = new ScrollMagic.Scene({
+        triggerHook: .1,
+        triggerElement: '#block-gary-page-title'
+        })
+            // .setPin('#block-gary-page-title')
+            // .setTween(scale_tween)
+            // .addIndicators(true)
+            // .setTween("#block-gary-page-title", .1, {transform: 'scale(.75)'})
+            // .setTween(hide_tween)
+            // .setClassToggle("#block-gary-page-title", "sticky-header")
+            // .addTo(titleController);
    }
   };
 
