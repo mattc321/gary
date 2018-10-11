@@ -12,6 +12,9 @@
       scrollTop: $(window).scrollTop(),
     });
 
+    Drupal.gary.mobileMenu = new Drupal.gary.MobileMenuView({
+      model: Drupal.gary.appState,
+    });
     // Drupal.gary.globalView = new Drupal.gary.GlobalView({
     //   model: Drupal.gary.appState,
     // });
@@ -20,7 +23,7 @@
     //   model: Drupal.gary.appState,
     //   el: '#gary-modal',
     // });
-    
+
   });
 
 })(jQuery, Drupal);

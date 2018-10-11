@@ -28,6 +28,7 @@ global:
     /libraries/polyfill.min.js: { minified: true }
     dist/global/global.js: {}
     dist/global/models/AppStateModel.js: {}
+    dist/global/views/MobileMenuView.js: {}
     dist/forms.js: {}
     dist/front.js: {}
 

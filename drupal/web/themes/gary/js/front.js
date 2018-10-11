@@ -21,8 +21,18 @@
           $('#block-gary-account-menu').toggleClass('user-nav-expanded');
           expanded = 0;
         }
-
       });
+
+      //mobile main menu handler
+
+      // $('#mobile-toggle').click( function(){
+      //   $('#menu-wrap').toggleClass('expanded');
+      //   $('#block-gary-main-menu').show();
+      //   TweenLite.to('#block-gary-main-menu', .5, {top: 0, ease: Power4.easeOut, onComplete: () => {
+      //     console.log(1);
+      //   }});
+      //   // TweenMax.to("#block-gary-main-menu", .5, {transform:'translateY(100vh)'});
+      // });
 
 
       // TweenMax.to("#menu-wrap", .5, {y:0});
