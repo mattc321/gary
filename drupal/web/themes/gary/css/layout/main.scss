@@ -35,6 +35,12 @@ main {
     }
 }
 
+#content-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
+}
 .freeze {
   height: 100%;
   width: 100%;

@@ -59,7 +59,7 @@ function gary_preprocess_page_title(&$variables) {
   // Load the node entity from current route
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
     //send account ref title to page title
-    if ($node->hasField('field_account_reference')) {
+    if ($node->hasField('field_account_reference') && !$node->get('field_account_reference')->isEmpty()) {
       $entity_id = $node->get('field_account_reference')->first()->getValue()['target_id'];
       $entity = \Drupal\node\Entity\Node::load($entity_id)->toArray();
       $account_title = $entity['title'][0]['value'];

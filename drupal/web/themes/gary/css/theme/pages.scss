@@ -5,11 +5,9 @@
 }
 
 .bundle-label {
-  padding: 10px 20px;
-  display: inline-block;
+  padding: 10px 25px;
   border-radius: 4px;
   position: relative;
-  top: -20px;
   left: -20px;
   box-shadow: -5px 3px 5px rgba(96, 96, 96, 0.32);
 
@@ -25,7 +23,7 @@
   &.contacts {
     background: linear-gradient(#48b799, #308770);
   }
-  
+
   > h2 {
     background-color: #000;
     color: transparent;
@@ -33,10 +31,13 @@
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
-    margin: 0;
+    margin: auto 0;
   }
 }
 
+.tabs-container {
+    align-self: stretch;
+}
 
 .sticky-header {
   transition: .4s;
@@ -51,8 +52,7 @@
       padding: 10px;
 
       > .field__label {
-        min-width: 175px;
-        text-align: right;
+
       }
 
       > .field__items__multiple {
@@ -74,19 +74,29 @@
           }
 
         }
-
-
       }
-
     }
 
     .field--name-field-project-image {
         float: right;
         box-shadow: inset 0 0 10px 0 $light-grey;
-
+        margin-bottom: 10px;
         > img {
           border-radius: 4px;
+          max-width: 100%;
+          height: auto;
         }
 
     }
+}
+
+@include min-width($break-large) {
+  .node__content {
+    .field {
+      > .field__label {
+        min-width: 175px;
+        text-align: right;
+      }
+    }
+  }
 }

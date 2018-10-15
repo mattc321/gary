@@ -24,7 +24,7 @@
 
   }
 
-  div#edit-actions {
+  div[id^="edit-actions"] {
     visibility: hidden;
   }
 

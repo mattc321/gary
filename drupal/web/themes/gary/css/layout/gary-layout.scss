@@ -7,6 +7,9 @@ body, a {
 a {
   color:$blue;
   text-decoration: none;
+  &:hover {
+    color: $red;
+  }
 }
 .layout-container {
   background: $light-grey;

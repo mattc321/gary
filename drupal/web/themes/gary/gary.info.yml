@@ -25,6 +25,7 @@ regions:
   top: Top
   menu: Main Menu
   before_content: 'Before Content'
+  content_top: 'Content Top'
   content: Content
   sidebar: 'Sidebar'
   footer: Footer
