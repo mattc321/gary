@@ -1,4 +1,0 @@
-administer homebox:
-  title: 'Administer Homebox'
-  description: 'Allow to access to configure Homebox.'
-  restrict access: true

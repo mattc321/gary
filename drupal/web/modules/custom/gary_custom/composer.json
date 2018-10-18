@@ -1,0 +1,14 @@
+{
+  "name": "drupal/gary_custom",
+  "type": "drupal-module",
+  "description": "Primary Module for Custom Gary Code",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/gary_custom",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/gary_custom",
+    "source": "http://cgit.drupalcode.org/gary_custom"
+  },
+  "require": { }
+}

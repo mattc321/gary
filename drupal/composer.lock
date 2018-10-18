@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbc064d1578cf4c10a01cba78f0a3fdb",
+    "content-hash": "58f9db33fc20453580f3034d8f9f7400",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2802,6 +2802,64 @@
                 "issues": "https://drupal.org/project/issues/field_collection"
             },
             "time": "2018-09-06T12:58:26+00:00"
+        },
+        {
+            "name": "drupal/homebox",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/homebox",
+                "reference": "8d3ba099ef5ccc8994aef559de33dd4180868627"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1539714780",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "brianV",
+                    "homepage": "https://www.drupal.org/user/46854"
+                },
+                {
+                    "name": "drumm",
+                    "homepage": "https://www.drupal.org/user/3064"
+                },
+                {
+                    "name": "mstef",
+                    "homepage": "https://www.drupal.org/user/107190"
+                },
+                {
+                    "name": "stBorchert",
+                    "homepage": "https://www.drupal.org/user/36942"
+                }
+            ],
+            "description": "Port Homebox to Drupal 8",
+            "homepage": "https://www.drupal.org/project/homebox",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/homebox",
+                "issues": "https://www.drupal.org/project/issues/homebox"
+            },
+            "time": "2018-10-16T18:27:26+00:00"
         },
         {
             "name": "drupal/paragraphs",
@@ -7902,6 +7960,7 @@
     "stability-flags": {
         "drupal/feeds": 15,
         "drupal/field_collection": 20,
+        "drupal/homebox": 20,
         "drush/drush": 20
     },
     "prefer-stable": true,

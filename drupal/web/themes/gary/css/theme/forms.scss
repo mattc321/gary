@@ -8,6 +8,8 @@ textarea {
   border: 1px solid $light-grey;
   border-radius: 4px;
   resize: vertical;
+  // width: 100%;
+  // max-width: 300px;
 }
 input[type=search] {
   padding: 12px;
@@ -33,3 +35,25 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: $dark-green;
 }
+
+
+  // tr.draggable td:nth-child(2) {
+  //   > div {
+  //     float: left;
+  //     width: 20%;
+  //     margin-right: 15px;
+  //   }
+  //   > div:last-child {
+  //     clear: left;
+  //   }
+  //   #ajax-new-content {
+  //     > div {
+  //       float: left;
+  //       width: 20%;
+  //       margin-right: 15px;
+  //     }
+  //     > div:last-child {
+  //       clear: left;
+  //     }
+  //   }
+  // }
