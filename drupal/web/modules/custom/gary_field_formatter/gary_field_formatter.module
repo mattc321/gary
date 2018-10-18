@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains gary_field_formatter.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function gary_field_formatter_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gary_field_formatter module.
+    case 'help.page.gary_field_formatter':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom Gary Field Collection Formatter') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function gary_field_formatter_theme() {
+  return [
+    'gary_field_formatter' => [
+      'render element' => 'children',
+    ],
+  ];
+}
