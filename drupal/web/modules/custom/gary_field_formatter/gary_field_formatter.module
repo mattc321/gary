@@ -26,10 +26,35 @@ function gary_field_formatter_help($route_name, RouteMatchInterface $route_match
 /**
  * Implements hook_theme().
  */
-function gary_field_formatter_theme() {
-  return [
-    'gary_field_formatter' => [
-      'render element' => 'children',
-    ],
-  ];
+ function gary_field_formatter_theme() {
+   return [
+     'fc_table_formatter' => [
+       'variables' => [
+         'header' => NULL,
+         'rows' => NULL,
+         'attributes' => NULL,
+         'inline_form' => NULL,
+         'caption' => NULL,
+         'colgroups' => NULL,
+         'sticky' => NULL,
+         'footer' => NULL,
+         'empty' => NULL,
+         'no_striping' => 0,
+         'header_columns' => NULL,
+         'inline_form' => NULL
+         ],
+       'template' => 'fc-table-formatter',
+       '#type' => 'table'
+     ],
+     'fc_form_table' => [
+       'template' => 'fc-form-table'
+     ]
+   ];
+ }
+
+ /**
+  * Implements hook_preprocess_hook().
+  */
+function gary_field_formatter_preprocess_fc_table_formatter(&$variables) {
+  template_preprocess_table($variables);
 }

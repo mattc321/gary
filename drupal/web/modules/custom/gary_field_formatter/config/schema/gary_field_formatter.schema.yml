@@ -1,7 +1,7 @@
-field.formatter.settings.text_length_formatter:
+field.formatter.settings.fc_table_formatter:
   type: mapping
-  label: 'Formatter for Text Length'
+  label: 'Formatter for FC'
   mapping:
-    text_length:
+    fc_table_formatter:
       type: string
-      lable: 'Text Length'
+      lable: 'Field Collection Formatter'
