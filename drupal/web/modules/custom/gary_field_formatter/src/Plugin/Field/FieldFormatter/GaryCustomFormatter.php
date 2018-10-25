@@ -59,20 +59,11 @@ class GaryCustomFormatter extends FormatterBase {
     $numItems = count($elements['#rows']);
 
     //we only need one record to load the entity form
-    // $myshit = $this->getFCForm($items->get(0), $fc_name);
-
-    // ksm(array_intersect($fields,$myshit));
-
     //if building a custom form
     $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $items->get(0), $fc_name);
     $elements['#theme'] = 'fc_table_formatter';
     // $form = \Drupal\gary_field_formatter\Form\InlineForm::getFCForm($items->get(0), $fc_name);
 
-    // $elements['#header'] = $myshit;
-    // $elements['#rows'] = $myshit;
-
-    // $elements['#rows'][$numItems] = $myshit;
-    // ksm($elements['#rows'][1]);
 
     //vars to template
     $elements['#caption'] = '';
