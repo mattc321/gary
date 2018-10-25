@@ -37,6 +37,7 @@
  * @see template_preprocess_field()
  */
 #}
+{# {{ kint(_context|keys)}} #}
 {%
 set classes = [
 'field',
@@ -56,6 +57,7 @@ label_display == 'visually_hidden' ? 'visually-hidden',
   {% if multiple %}
     <div{{ attributes.addClass(classes, 'field__items') }}>
       {% for item in items %}
+
         <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
       {% endfor %}
     </div>
