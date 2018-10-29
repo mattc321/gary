@@ -25,12 +25,34 @@ class GaryCustomFormatter extends FormatterBase {
 
 
   /**
+   * The new table id.
+   *
+   * @var string
+   */
+  protected $tableId;
+
+
+  /**
    * {@inheritdoc}
    */
   public function settingsSummary() {
     $summary = [];
     $summary[] = $this->t('Displays the Field Collection as a responsive table with ajax inputs');
     return $summary;
+  }
+
+  /**
+     * {@inheritdoc}
+     */
+  protected function setTableId($tid) {
+    $this->tableId = $tid;
+  }
+
+  /**
+     * {@inheritdoc}
+     */
+  public function getTableId() {
+    return $this->tableId;
   }
 
   /**
@@ -58,11 +80,15 @@ class GaryCustomFormatter extends FormatterBase {
     }
     $numItems = count($elements['#rows']);
 
+    //set table id
+    $this->setTableId(str_replace("_","-", $fc_name).'-table');
+
     //we only need one record to load the entity form
     //if building a custom form
-    $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $items->get(0), $fc_name);
+    $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $items->get(0), $fc_name, $this->getTableId());
     $elements['#theme'] = 'fc_table_formatter';
     // $form = \Drupal\gary_field_formatter\Form\InlineForm::getFCForm($items->get(0), $fc_name);
+
 
 
     //vars to template
@@ -78,7 +104,10 @@ class GaryCustomFormatter extends FormatterBase {
     // Add classes.
     $elements['#attributes']['class'] = [
       $items->name,
-      'fc_table',
+      'fc-table',
+    ];
+    $elements['#attributes']['id'] = [
+      $this->getTableId()
     ];
 
     // $elements['#elements'] = $elements + ['#type' => 'table'];
@@ -208,7 +237,7 @@ class GaryCustomFormatter extends FormatterBase {
         'label' => 'hidden',
       ] + $display_settings)];
     }
-
+    
     return $row;
   }
 }
