@@ -116,55 +116,11 @@ class GaryCustomFormatter extends FormatterBase {
     return $elements;
   }
 
-  // /**
-  //  * {@inheritdoc}
-  //  */
-  // public function viewElements(FieldItemListInterface $items, $langcode) {
-  //   $element = [];
-  //
-  //   if (count($items) <= 0) {
-  //     return $elements;
-  //   }
-  //
-  //   foreach ($items as $delta => $item) {
-  //     // ksm($item);
-  //
-  //     if ($item->target_id !== NULL) {
-  //       $fc = FieldCollectionItem::load($item->target_id);
-  //       // $to_render = \Drupal::EntityTypeManager()->getViewBuilder('field_collection_item')->view($item->getFieldCollectionItem());
-  //
-  //       // $fields = \Drupal::FieldableEntityInterface()->getFields();
-  //       $fcArray = [];
-  //       foreach ($fc as $fckey => $field){
-  //         $fcArray[$delta][$fckey] = $field->value;
-  //       }
-  //     }
-  //     $element[$delta] = [
-  //       '#theme' => 'fc_table_formatter',
-  //       '#url' => $fcArray
-  //     ];
-  //   }
-  //
-  //   return $element;
-  // }
-  //
-  // /**
-  //  * {@inheritdoc}
-  //  */
-  // public static function defaultSettings() {
-  //   return [
-  //     // Declare a setting named 'text_length', with
-  //     // a default value of 'short'
-  //     'fc_table_formatter' => 'short',
-  //   ] + parent::defaultSettings();
-  // }
-
-
   /**
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $element['fc_table_formatter'] = [
+    $element['use_ajax_inputs'] = [
       '#title' => $this->t('Use Ajax Inputs'),
       '#type' => 'checkbox',
       '#return_value' => true,
@@ -237,7 +193,7 @@ class GaryCustomFormatter extends FormatterBase {
         'label' => 'hidden',
       ] + $display_settings)];
     }
-    
+
     return $row;
   }
 }
