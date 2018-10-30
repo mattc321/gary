@@ -60,21 +60,32 @@ class GaryViewsFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $element['use_ajax_inputs'] = [
+    $element['ajax_inputs'] = [
       '#title' => $this->t('Use Ajax Inputs'),
       '#type' => 'checkbox',
-      '#return_value' => true,
-      '#default_value' => true,
+      '#default_value' => $this->getSetting('ajax_inputs'),
     ];
 
     $element['view_machine_name'] = [
       '#title' => $this->t('The machine name of the view'),
       '#type' => 'textfield',
+      '#default_value' => $this->getSetting('view_machine_name'),
     ];
 
     return $element;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+      // Declare a setting named 'text_length', with
+      // a default value of 'short'
+      'ajax_inputs' => FALSE,
+      'view_machine_name' => "",
+    ] + parent::defaultSettings();
+  }
 
   protected function viewValue(FieldItemInterface $item, $fields_to_output = []) {
     $row = [];

@@ -123,11 +123,21 @@ class GaryCustomFormatter extends FormatterBase {
     $element['use_ajax_inputs'] = [
       '#title' => $this->t('Use Ajax Inputs'),
       '#type' => 'checkbox',
-      '#return_value' => true,
-      '#default_value' => true,
+      '#default_value' => $this->getSetting('use_ajax_inputs'),
     ];
 
     return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+      // Declare a setting named 'text_length', with
+      // a default value of 'short'
+      'use_ajax_inputs' => FALSE,
+    ] + parent::defaultSettings();
   }
 
   /**

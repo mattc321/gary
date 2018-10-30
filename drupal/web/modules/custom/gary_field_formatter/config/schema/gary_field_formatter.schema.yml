@@ -2,6 +2,17 @@ field.formatter.settings.fc_table_formatter:
   type: mapping
   label: 'Formatter for FC'
   mapping:
-    fc_table_formatter:
+    use_ajax_inputs:
+      type: boolean
+      label: 'Display ajax inputs'
+
+field.formatter.settings.fc_views_formatter:
+  type: mapping
+  label: 'Views Formatter for FC'
+  mapping:
+    ajax_inputs:
+      type: boolean
+      label: 'Display ajax form'
+    view_machine_name:
       type: string
-      lable: 'Field Collection Formatter'
+      label: 'Machine name of view'
