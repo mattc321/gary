@@ -1,11 +1,3 @@
-field.formatter.settings.fc_table_formatter:
-  type: mapping
-  label: 'Formatter for FC'
-  mapping:
-    use_ajax_inputs:
-      type: boolean
-      label: 'Display ajax inputs'
-
 field.formatter.settings.fc_views_formatter:
   type: mapping
   label: 'Views Formatter for FC'

@@ -11,13 +11,13 @@ use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Plugin implementation of the 'fc_views_formatter' formatter.
+ * Plugin implementation of the 'paragraph_views_formatter' formatter.
  *
  * @FieldFormatter(
- *   id = "fc_views_formatter",
- *   label = @Translation("Field Collection View Formatter"),
+ *   id = "paragraph_views_formatter",
+ *   label = @Translation("Paragraph View Formatter"),
  *   field_types = {
- *     "field_collection"
+ *     "entity_reference_revisions"
  *   }
  * )
  */
@@ -52,7 +52,7 @@ class GaryViewsFormatter extends FormatterBase {
    */
   public function settingsSummary() {
     $summary = [];
-    $summary[] = $this->t('Display a field collection view');
+    $summary[] = $this->t('Display a paragraph view');
     return $summary;
   }
 
@@ -72,14 +72,28 @@ class GaryViewsFormatter extends FormatterBase {
       return $elements;
     }
 
+    ksm($items);
 
-    //get name of field collection (id)
-    $fc_name = $items->getName();
+    // $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->getValue()[0]['target_id']);
+    //
+    // $node = $items->getEntity();
+    // $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg->bundle(),]);
+    // $pg_item->set('field_description', 'test');
+    // $pg_item->isNew();
+    // $pg_item->save();
+    //
+    // // Grab any existing paragraphs from the node, and add this one
+    // $current = $node->get('field_project_contacts')->getValue();
+    // $current[] = array(
+    //     'target_id' => $pg_item->id(),
+    //     'target_revision_id' => $pg_item->getRevisionId(),
+    //   );
+    // $node->set('field_project_contacts', $current);
+    // $node->save();
 
-    ////set table id
-    $this->setTableId(str_replace("_","-", $fc_name).'-view-formatter');
 
     //load up the view
+    // $args = [$items->getEntity()->id()];
     $args = [$items->getEntity()->id()];
     $view =  \Drupal\views\Views::getView($this->getSetting('view_machine_name'));
     $view->setArguments($args);
@@ -90,26 +104,36 @@ class GaryViewsFormatter extends FormatterBase {
     }
 
     // $view->getStyle()->definition['id']= 'poop';
-    $view->dom_id = $this->getTableId();
-    $dom_id = 'js-view-dom-id-'.$this->getTableId();
+    // $view->dom_id = $this->getTableId();
+    // $dom_id = 'js-view-dom-id-'.$this->getTableId();
     $view->execute();
-    $elements['#theme'] = 'fc_views_formatter';
 
-    if ($view->getStyle()->definition['id'] != 'table') {
-      $elements['#error'] = 'View must be in table format';
-      return $elements;
-    }
+    // if ($view->getStyle()->definition['id'] != 'table') {
+    //   $elements['#error'] = 'View must be in table format';
+    //   return $elements;
+    // }
 
     //load the entity form if ajax_inputs is true
     $form = [];
     if ($this->getSetting('ajax_inputs')) {
-      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $items->get(0), $fc_name, $dom_id);
+      // $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $items->get(0), $fc_name, $dom_id);
     }
 
     // $elements['#plugin_id'] = $view->getStyle()->getPluginId(); //table
-    $elements['#inline_form'] = $form;
+    // $elements['#inline_form'] = $form;
+    // ksm($view);
     $elements['#view'] = $view->buildRenderable();
-    $elements['#theme'] = 'fc_views_formatter';
+    $elements['#theme'] = 'paragraph_views_formatter';
+
+    // ksm($items->first());
+    // $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($items->getName());
+    // ksm($paragraph);
+    // ksm($paragraph);
+    //
+
+
+    //
+    // $form = \Drupal::service('entity.form_builder')->getForm($field_collection_item);
 
     return $elements;
   }
