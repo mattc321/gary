@@ -86,12 +86,9 @@ class GaryCustomFormatter extends FormatterBase {
     //we only need one record to load the entity form
     //if building a custom form
     $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $items->get(0), $fc_name, $this->getTableId());
-    $elements['#theme'] = 'fc_table_formatter';
-    // $form = \Drupal\gary_field_formatter\Form\InlineForm::getFCForm($items->get(0), $fc_name);
-
-
 
     //vars to template
+    $elements['#theme'] = 'fc_table_formatter';
     $elements['#caption'] = '';
     $elements['#colgroups'] = [];
     $elements['#sticky'] = FALSE;
@@ -99,7 +96,7 @@ class GaryCustomFormatter extends FormatterBase {
     $elements['#empty'] = '';
     $elements['#no_striping'] = 0;
     $elements['#header_columns'] = $numItems;
-    $elements['#inline_form'] = $form;
+    $elements['#inline_form'] = ($this->getSetting('use_ajax_inputs') ? $form : NULL);
 
     // Add classes.
     $elements['#attributes']['class'] = [

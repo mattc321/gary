@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b223a5b94f43928150fad1728f0d0402",
+    "content-hash": "b8bdaf9c65b63ff6f4e060cfde18426b",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2743,67 +2743,6 @@
             }
         },
         {
-            "name": "drupal/field_collection",
-            "version": "dev-3.x",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/field_collection",
-                "reference": "56eca91817d5fe6e261cb56d427e4c5431aa61a3"
-            },
-            "require": {
-                "drupal/core": "*"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-3.x": "3.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-3.x-dev",
-                    "datestamp": "1536176580",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Wolfgang Ziegler (fago)",
-                    "homepage": "https://www.drupal.org/u/fago",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Joel Muzzerall (jmuzz)",
-                    "homepage": "https://www.drupal.org/u/jmuzz",
-                    "role": "Co-maintainer"
-                },
-                {
-                    "name": "jmuzz",
-                    "homepage": "https://www.drupal.org/user/2607886"
-                },
-                {
-                    "name": "larowlan",
-                    "homepage": "https://www.drupal.org/user/395439"
-                },
-                {
-                    "name": "ram4nd",
-                    "homepage": "https://www.drupal.org/user/601534"
-                }
-            ],
-            "description": "Provides a field collection field, to which any number of fields can be attached.",
-            "homepage": "https://drupal.org/project/field_collection",
-            "support": {
-                "source": "http://cgit.drupalcode.org/field_collection",
-                "issues": "https://drupal.org/project/issues/field_collection"
-            },
-            "time": "2018-09-06T12:58:26+00:00"
-        },
-        {
             "name": "drupal/homebox",
             "version": "dev-1.x",
             "source": {
@@ -3296,6 +3235,67 @@
                 "source": "http://cgit.drupalcode.org/views_bulk_operations",
                 "issues": "https://www.drupal.org/project/issues/views_bulk_operations?version=8.x",
                 "docs": "https://www.drupal.org/docs/8/modules/views-bulk-operations-vbo"
+            }
+        },
+        {
+            "name": "drupal/views_field_formatter",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/views_field_formatter",
+                "reference": "8.x-1.8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_field_formatter-8.x-1.8.zip",
+                "reference": "8.x-1.8",
+                "shasum": "b9fb31393f17208f07c4aae552d3756782c56588"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2",
+                "phpmd/phpmd": "~2",
+                "phpro/grumphp": "^0.12",
+                "sebastian/phpcpd": "~3",
+                "sensiolabs/security-checker": "~4",
+                "squizlabs/php_codesniffer": "~3"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.8",
+                    "datestamp": "1528884525",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "scripts": {
+                "grumphp": [
+                    "./vendor/bin/grumphp run"
+                ]
+            },
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Pol Dellaiera",
+                    "homepage": "https://www.drupal.org/user/47194",
+                    "email": "pol.dellaiera@protonmail.com"
+                }
+            ],
+            "description": "Provide a new field formatter: 'View' for each field types and allows you to select a View and to use its result instead of the original field value.",
+            "homepage": "https://drupal.org/project/views_field_formatter",
+            "support": {
+                "source": "http://cgit.drupalcode.org/views_field_formatter"
             }
         },
         {
@@ -8018,7 +8018,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/feeds": 15,
-        "drupal/field_collection": 20,
         "drupal/homebox": 20,
         "drush/drush": 20
     },

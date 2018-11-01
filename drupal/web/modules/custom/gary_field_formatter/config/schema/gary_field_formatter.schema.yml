@@ -16,3 +16,6 @@ field.formatter.settings.fc_views_formatter:
     view_machine_name:
       type: string
       label: 'Machine name of view'
+    view_display_name:
+      type: string
+      label: 'Display name'
