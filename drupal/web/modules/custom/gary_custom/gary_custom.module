@@ -43,6 +43,11 @@ function gary_custom_entity_view(array &$build, \Drupal\Core\Entity\EntityInterf
 
 function gary_custom_entity_update(EntityInterface $entity) {
   $helper = new GaryFunctions;
-  
+
+  //remove any old revisions on parahraphs
   $helper->cleanParagraphs($entity);
+}
+
+function gary_custom_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // ksm($form['field_project_contacts']);
 }

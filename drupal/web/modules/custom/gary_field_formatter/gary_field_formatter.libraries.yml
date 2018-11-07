@@ -1,0 +1,7 @@
+append_handler:
+  version: 1.x
+  js:
+    js/appendhandler.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

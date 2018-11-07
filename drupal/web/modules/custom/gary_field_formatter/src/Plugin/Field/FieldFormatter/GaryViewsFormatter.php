@@ -29,22 +29,22 @@ class GaryViewsFormatter extends FormatterBase {
    *
    * @var string
    */
-  protected $tableId;
+  protected $dom_id;
 
   /**
    * Set the new table id
    * @param string $tid the table id string
    */
-  protected function setTableId($tid) {
-      $this->tableId = $tid;
+  protected function setDomId($did) {
+      $this->dom_id = $did;
   }
 
   /**
    * Get the new table id
    * @return string TableId
    */
-  public function getTableId() {
-    return $this->tableId;
+  public function getDomId() {
+    return $this->dom_id;
   }
 
   /**
@@ -72,28 +72,13 @@ class GaryViewsFormatter extends FormatterBase {
       return $elements;
     }
 
-    ksm($items);
-
-    // $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->getValue()[0]['target_id']);
-    //
-    // $node = $items->getEntity();
-    // $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg->bundle(),]);
-    // $pg_item->set('field_description', 'test');
-    // $pg_item->isNew();
-    // $pg_item->save();
-    //
-    // // Grab any existing paragraphs from the node, and add this one
-    // $current = $node->get('field_project_contacts')->getValue();
-    // $current[] = array(
-    //     'target_id' => $pg_item->id(),
-    //     'target_revision_id' => $pg_item->getRevisionId(),
-    //   );
-    // $node->set('field_project_contacts', $current);
-    // $node->save();
+    $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->getValue()[0]['target_id']);
+    $pg_name = $pg->bundle();
+    $dom_string = str_replace("_","-",$pg_name);
+    $this->setDomId($dom_string);
 
 
     //load up the view
-    // $args = [$items->getEntity()->id()];
     $args = [$items->getEntity()->id()];
     $view =  \Drupal\views\Views::getView($this->getSetting('view_machine_name'));
     $view->setArguments($args);
@@ -104,27 +89,27 @@ class GaryViewsFormatter extends FormatterBase {
     }
 
     // $view->getStyle()->definition['id']= 'poop';
-    // $view->dom_id = $this->getTableId();
-    // $dom_id = 'js-view-dom-id-'.$this->getTableId();
-    $view->execute();
-
-    // if ($view->getStyle()->definition['id'] != 'table') {
-    //   $elements['#error'] = 'View must be in table format';
-    //   return $elements;
-    // }
+    $view->dom_id = $this->getDomId();
+    $final_dom_id = 'js-view-dom-id-'.$this->getDomId();
 
     //load the entity form if ajax_inputs is true
     $form = [];
     if ($this->getSetting('ajax_inputs')) {
-      // $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $items->get(0), $fc_name, $dom_id);
+      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg, $pg_name, $final_dom_id);
+      // $form = \Drupal::service('entity.form_builder')->getForm($pg);
     }
 
     // $elements['#plugin_id'] = $view->getStyle()->getPluginId(); //table
-    // $elements['#inline_form'] = $form;
+    $elements['#inline_form'] = $form;
     // ksm($view);
-    $elements['#view'] = $view->buildRenderable();
-    $elements['#theme'] = 'paragraph_views_formatter';
 
+    $elements['#theme'] = 'paragraph_views_formatter';
+    // if ($view->getStyle()->definition['id'] == 'table') {
+    //   $elements['#error'] = 'View must be in table format';
+    //   return $elements;
+    // }
+    $view->execute();
+    $elements['#view'] = $view->buildRenderable();
     // ksm($items->first());
     // $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($items->getName());
     // ksm($paragraph);
