@@ -31,6 +31,8 @@ class GaryViewsFormatter extends FormatterBase {
    */
   protected $dom_id;
 
+  public static $form_field_name;
+
   /**
    * Set the new table id
    * @param string $tid the table id string
@@ -38,6 +40,12 @@ class GaryViewsFormatter extends FormatterBase {
   protected function setDomId($did) {
       $this->dom_id = $did;
   }
+
+
+  public static function getFormFieldName(){
+    return self::$form_field_name;
+  }
+
 
   /**
    * Get the new table id
@@ -91,13 +99,16 @@ class GaryViewsFormatter extends FormatterBase {
     // $view->getStyle()->definition['id']= 'poop';
     $view->dom_id = $this->getDomId();
     $final_dom_id = 'js-view-dom-id-'.$this->getDomId();
-
+    self::$form_field_name = $items->get(0)->getParent()->getName();
     //load the entity form if ajax_inputs is true
-    $form = [];
+    $form = [
+    ];
     if ($this->getSetting('ajax_inputs')) {
-      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg, $pg_name, $final_dom_id);
+      $host_field = $this->getFormFieldName();
+      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg, $pg_name, $final_dom_id, $host_field);
       // $form = \Drupal::service('entity.form_builder')->getForm($pg);
     }
+    // $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->getValue()[0]['target_id']);
 
     // $elements['#plugin_id'] = $view->getStyle()->getPluginId(); //table
     $elements['#inline_form'] = $form;

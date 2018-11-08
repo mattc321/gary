@@ -10,7 +10,7 @@ namespace Drupal\gary_field_formatter\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\UrlHelper;
-use Drupal\gary_field_formatter\Plugin\Field\FieldFormatter\GaryCustomFormatter;
+use Drupal\gary_field_formatter\Plugin\Field\FieldFormatter;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\field_collection\Controller\FieldCollectionItemController;
@@ -28,19 +28,22 @@ class InlineForm extends FormBase {
 
   protected $submittedValues;
 
-  protected $newFcItem;
+  protected $newPcItem;
 
   protected $fieldDefs;
 
+  protected $hostFieldName;
+
   public function getFormId() {
-    return 'inline_pg_form';
+    $form_field_name = \Drupal\gary_field_formatter\Plugin\Field\FieldFormatter\GaryViewsFormatter::getFormFieldName();
+    return 'inline_pg_form_'.$form_field_name;
   }
 
-  public function getNewFcItem() {
-    return $this->newFcItem;
+  public function getNewPcItem() {
+    return $this->newPcItem;
   }
 
-  public function getFcValues() {
+  public function getPcValues() {
     return $this->submittedValues;
   }
 
@@ -48,8 +51,12 @@ class InlineForm extends FormBase {
     return $this->fieldDefs;
   }
 
-  protected function setNewFcItem($item) {
-    $this->newFcItem = $item;
+  public function getHostFieldName() {
+    return $this->hostFieldName;
+  }
+
+  protected function setNewPgItem($item) {
+    $this->newPcItem = $item;
   }
 
 
@@ -60,7 +67,7 @@ class InlineForm extends FormBase {
       $fields_by_weight[$options['weight']] = $name;
     }
     ksort($fields_by_weight);
-    $this->fieldDefs = $fields_by_weight;
+
     return $fields_by_weight;
   }
 
@@ -70,125 +77,76 @@ class InlineForm extends FormBase {
    * @param  string             $fc_name The name of the field collection
    * @return array                      The sliced form containing fc fields
    */
-  // private function getFCForm(FieldItemInterface $item, $fc_name) {
-  //
-  //   $fields_by_weight = $this->getFieldDefs($item);
-  //   //load fc entity
-  //   $fieldCollection = \Drupal\field_collection\Entity\FieldCollection::load($fc_name);
-  //
-  //
-  //   $field_collection_item = \Drupal::entityTypeManager()
-  //     ->getStorage('field_collection_item')
-  //     ->create([
-  //       'field_name' => $fieldCollection->id(),
-  //       'host_type' => 'node',
-  //       'revision_id' => 0,
-  //     ]);
-  //
-  //   $form = \Drupal::service('entity.form_builder')->getForm($field_collection_item);
-  //
-  //   $form['actions']['submit']['#submit']=['::ajaxFormSubmitHandler'];
-  //   $form['#prefix'] = '<div id="inline_fc_form">';
-  //   $form['#suffix'] = '</div>';
-  //   $form['actions']['submit']['#ajax_processed'] = TRUE;
-  //   $form['#validate'] = ['::validateForm'];
-  //   $form['#submit'] = ['::ajaxFormSubmitHandler'];
-  //
-  //
-  //   $sliced_form = [];
-  //   foreach($fields_by_weight as $field_key => $field) {
-  //       $i = array_search($field, array_keys($form));
-  //       $sliced_form = array_merge($sliced_form, array_slice($form, $i, 1, TRUE));
-  //   }
-  //
-  //   return $sliced_form;
-  // }
+  private function GetPgForm($pg, $pg_name) {
+
+    $fields_by_weight = $this->getFieldDefs($pg);
+    $this->fieldDefs = $fields_by_weight;
+    //load fc entity
+    $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg->bundle(),]);
+    $form = \Drupal::service('entity.form_builder')->getForm($pg_item);
+    $sliced_form = [];
+    foreach($fields_by_weight as $field_key => $field) {
+        $i = array_search($field, array_keys($form));
+        $sliced_form = array_merge($sliced_form, array_slice($form, $i, 1, TRUE));
+    }
+    return $sliced_form;
+  }
 
   /**
    * Remove unwanted keys from form elements
    * @param  array $form The $form array
    * @return array       $form stripped of bad keys
    */
-  // private function cleanIt($form) {
-  //     $bad_keys = [
-  //       '#parents',
-  //       '#value',
-  //       '#id',
-  //       '#name'
-  //     ];
-  //
-  //     foreach ($bad_keys as $key) {
-  //       if (array_key_exists($key, $form)) {
-  //         unset($form[$key]);
-  //       }
-  //     }
-  //     return $form;
-  // }
+  private function cleanIt($form) {
+      $bad_keys = [
+        '#parents',
+        '#value',
+        '#id',
+        '#name'
+      ];
 
-  public function buildForm(array $form, FormStateInterface $form_state, $pg = NULL, $pg_name = NULL, $dom_id = NULL) {
+      foreach ($bad_keys as $key) {
+        if (array_key_exists($key, $form)) {
+          unset($form[$key]);
+        }
+      }
+      return $form;
+  }
 
-    // $form_fields = $this->getFCForm($item, $fc_name);
-    $form=[];
-    $fields_by_weight = $this->getFieldDefs($pg);
+  public function buildForm(array $form, FormStateInterface $form_state, $pg = NULL, $pg_name = NULL, $dom_id = NULL, $host_field = NULL) {
 
-    // $entity_form = \Drupal::service('entity.form_builder')->getForm($pg);
-    $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg->bundle(),]);
-    // ksm($pg_item);
-    $entity_form = \Drupal::service('entity.form_builder')->getForm($pg_item);
-
-    ksm($entity_form['field_contact_reference']['widget'][0]);
-    // ksm(\Drupal::service('entity.form_builder')->getForm($pg));
+    $form_fields = $this->GetPgForm($pg, $pg_name);
+    $this->hostFieldName = $host_field;
     //build new form based on field collection fields
-    // $form = [];
-
-
-    $element = [];
-    foreach ($fields_by_weight as $key => $field) {
-        // dpm($key);
+    $form = [];
+    foreach ($form_fields as $el_key => $field) {
         //init the top level of the element array
-        // $form[$field] = entity_get_form_display('paragraph', 'project_contacts', 'default')->getComponent($field);
-        $el = \Drupal::entityTypeManager()
-          ->getStorage('entity_form_display')
-          ->load('paragraph' . '.' . 'project_contacts' . '.' . 'default');
-          // $ff = \Drupal::formBuilder()->getForm($entity_form);
-        // ksm($el->getRenderer($field)->getPluginDefinition());
-
-        // $renderer = \Drupal::service('renderer');
-        // ksm($renderer->renderPlain($el->getComponent($field)));
-        // $wtf = \Drupal\Core\Render\Renderer::renderPlain($field);
-        // ksm($wtf);
-        // $delta = 0;
-        // $element = [
-        //   '#title' => $el->getLabel(),
-        //   '#description' => 'test'
-        // ];
-        // ksm($element);
-        // $form[$field] = $this->cleanIt($form[$el_key]);
-        // $settings = entity_get_form_display('paragraph', 'project_contacts', 'default')->getComponent($field);
+        $form[$el_key] = (isset($field['widget'][0]['value']) ? $field['widget'][0]['value'] : $field['widget'][0]['target_id']);
+        $form[$el_key] = $this->cleanIt($form[$el_key]);
+        ksm($form[$el_key]);
     }
-    // ksm(\Drupal::formBuilder()->getForm($el));
-    //
-    // //pass these to the submit handlers
-    // $form['#field_definitions'] = $fields_by_weight;
-    // $form['#host'] = $item;
-    // $form['#field_name'] = $fc_name;
-    // $form['#table_id'] = $table_id;
-    // $form['submit'] = [
-    //   '#type' => 'submit',
-    //   '#weight' => count($form) +2,
-    //   '#value' => t('Submit'),
-    //   '#ajax' => [
-    //     'callback' => '::ajaxFormRebuild',
-    //     'wrapper' => 'inline_fc_form',
-    //   ],
-    // ];
-    //
-    // $form['#submit'] = ['::ajaxFormSubmitHandler'];
-    // $form['#prefix'] = '<div id="'.$this->getFormId().'">';
-    // $form['#suffix'] = '</div>';
 
-    // $form['#attached']['library'][] = 'gary_field_formatter/append_handler';
+    // pass these to the submit handlers
+    // $form['#field_definitions'] = $fields_by_weight;
+    $form['#host'] = $pg;
+    $form['#field_name'] = $pg_name;
+    $form['#dom_id'] = $dom_id;
+    $form['submit'] = [
+      '#type' => 'submit',
+      '#weight' => count($form) +1,
+      '#value' => t('Submit'),
+      '#ajax' => [
+        'callback' => '::ajaxFormRebuild',
+        'wrapper' => $this->getFormId(),
+      ],
+    ];
+    $form['#submit'] = ['::ajaxFormSubmitHandler'];
+    $form['#prefix'] = '<div id="'.$this->getFormId().'">';
+    $form['#suffix'] = '</div>';
+    $form['#attached']['library'][] = 'gary_field_formatter/append_handler';
     // $form['#attached']['drupalSettings']['appendhandler']['target'] = $table_id;
+    // ksm($form['field_role']);
+
 
     return $form;
   }
@@ -203,37 +161,54 @@ class InlineForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function ajaxFormRebuild(array &$form, FormStateInterface $form_state) {
+  public function ajaxFormSubmitHandler(array &$form, FormStateInterface $form_state) {
+    \Drupal::logger('poop')->error('ajaxFormSubmitHandler');
+    $form_values = $form_state->getValues();
+    // $host = $form['#host']->getEntity();
+    $pg = $form['#host'];
+    $pg_name = $form['#field_name'];
+    $field_list = $this->getFieldList();
 
-    // if ($form_state->hasAnyErrors()) {
-    //   return $form;
-    // }
-    //
-    // $table_id = $form['#table_id'];
-    // $form_values = $this->prepRows($form_state->getValues());
-    // $response = new \Drupal\Core\Ajax\AjaxResponse();
-    // // $response->addCommand(new \Drupal\Core\Ajax\AppendCommand($table_id, $form_values));
-    // $response->addCommand(new InvokeCommand(NULL, 'appendRow', [$form_values, $table_id]));
-    // return $response;
+    $pg_values = [];
+    foreach ($field_list as $key => $field) {
+      $i = array_search($field, array_keys($form_values));
+      $pg_values = array_merge($pg_values, array_slice($form_values, $i, 1, TRUE));
+    }
+    // ksm($pg_values);
+    // $this->submittedValues = $fc_values;
+    $this->addPgItem($pg, $pg_name, $pg_values);
+    $input = $form_state->getUserInput();
+    // We should not clear the system items from the user input.
+    $clean_keys = $form_state->getCleanValueKeys();
+    $clean_keys[] = 'ajax_page_state';
+    foreach ($input as $key => $item) {
+      if (!in_array($key, $clean_keys) && substr($key, 0, 1) !== '_') {
+        unset($input[$key]);
+      }
+    }
+    $form_state->setUserInput($input);
+    // Rebuild the form state values.
+    $form_state->setRebuild();
+    $form_state->setStorage([]);
   }
+
 
   /**
    * {@inheritdoc}
    */
-  public function ajaxFormSubmitHandler(array &$form, FormStateInterface $form_state) {
-    // \Drupal::logger('poop')->error('ajaxFormSubmitHandler');
-    // $form_values = $form_state->getValues();
-    // $host = $form['#host']->getEntity();
-    // $fc_name = $form['#field_name'];
-    // $field_list = $form['#field_definitions'];
-    //
-    // $fc_values = [];
-    // foreach ($field_list as $key => $field) {
-    //   $i = array_search($field, array_keys($form_values));
-    //   $fc_values = array_merge($fc_values, array_slice($form_values, $i, 1, TRUE));
-    // }
-    // $this->submittedValues = $fc_values;
-    // $this->addFCItem($host, $fc_name, $fc_values);
+  public function ajaxFormRebuild(array &$form, FormStateInterface $form_state) {
+    \Drupal::logger('poop')->error('ajaxFormRebuild');
+    if ($form_state->hasAnyErrors()) {
+      $form_state->setRebuild();
+      return $form;
+    }
+
+    $dom_id = $form['#dom_id'];
+    // $form_values = $this->prepRows($form_state->getValues());
+    $response = new \Drupal\Core\Ajax\AjaxResponse();
+    // $response->addCommand(new \Drupal\Core\Ajax\AppendCommand($table_id, $form_values));
+    $response->addCommand(new InvokeCommand(NULL, 'appendRow', [$dom_id]));
+    return $response;
   }
 
   /**
@@ -248,7 +223,7 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public static function valueCallback(&$element, $input, FormStateInterface $form_state) {
-    return NULL;
+
   }
 
   /**
@@ -257,53 +232,56 @@ class InlineForm extends FormBase {
    * @param string $fc_name   The name of the parent field collection
    * @param array $fc_values Array containing submitted values
    */
-  private function addFCItem($host, $fc_name, &$fc_values) {
-    //create pg item
-    // $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->getValue()[0]['target_id']);
-    //
-    // $node = $items->getEntity();
-    // $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg->bundle(),]);
+  private function addPgItem($pg, $pg_name, &$pg_values) {
+    // //create pg item
+    $node = $pg->getParentEntity(); //the node entity
+    $host_field = $this->getHostFieldName(); //the ph field name on the node
+    $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg->bundle(),]);
+
+    foreach ($pg_values as $field_name => $value) {
+      if (!trim($value) == "" || !empty($value)) {
+        $pg_item->set($field_name, $value);
+      }
+    }
     // $pg_item->set('field_description', 'test');
-    // $pg_item->isNew();
-    // $pg_item->save();
+
+    $pg_item->isNew();
+    $pg_item->save();
 
     // Grab any existing paragraphs from the node, and add this one
-    // $current = $node->get('field_project_contacts')->getValue();
-    // $current[] = array(
-    //     'target_id' => $pg_item->id(),
-    //     'target_revision_id' => $pg_item->getRevisionId(),
-    //   );
-    // $node->set('field_project_contacts', $current);
-    // $node->save();
+    $current = $node->get($host_field)->getValue();
+    $current[] = array(
+        'target_id' => $pg_item->id(),
+        'target_revision_id' => $pg_item->getRevisionId(),
+      );
+    $node->set($host_field, $current);
+    $node->save();
+    return;
   }
+
 
 
   /**
-   * Prepare the row using the newly added fc item
-   * @return string html row
+   * Clears form input.
+   *
+   * @param array $form
+   *   The form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    */
-  private function prepRows() {
-
-    $item = $this->getNewFcItem();
-    $field_list = $this->getFieldList();
-
-    $source = \Drupal::entityManager()->getStorage('field_collection_item')->load($item->id());
-    $view_builder = \Drupal::entityManager()->getViewBuilder('field_collection_item');
-
-    $html = '<tr>';
-    foreach ($field_list as $field_name) {
-      if ($source->hasField($field_name) && $source->access('view')) {
-          $f = $source->$field_name->view(['label' => 'hidden']);
-          if ($source->$field_name->isEmpty()) {
-            $field_string = '';
-          } else {
-            $field_string =  \Drupal::service('renderer')->renderRoot($f)->__toString();
-          }
-          $html .= '<td>' . $field_string . '</td>';
+  protected function clearFormInput(array $form, FormStateInterface $form_state) {
+    $input = $form_state->getUserInput();
+    // We should not clear the system items from the user input.
+    $clean_keys = $form_state->getCleanValueKeys();
+    $clean_keys[] = 'ajax_page_state';
+    foreach ($input as $key => $item) {
+      if (!in_array($key, $clean_keys) && substr($key, 0, 1) !== '_') {
+        unset($input[$key]);
       }
     }
-    $html .= '</tr>';
-    return $html;
+    $form_state->setUserInput($input);
+    // Rebuild the form state values.
+    $form_state->setRebuild();
+    $form_state->setStorage([]);
   }
-
 }
