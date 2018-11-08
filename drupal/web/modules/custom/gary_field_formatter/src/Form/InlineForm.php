@@ -115,19 +115,42 @@ class InlineForm extends FormBase {
 
   public function buildForm(array $form, FormStateInterface $form_state, $pg = NULL, $pg_name = NULL, $dom_id = NULL, $host_field = NULL) {
 
+
     $form_fields = $this->GetPgForm($pg, $pg_name);
     $this->hostFieldName = $host_field;
-    //build new form based on field collection fields
-    $form = [];
-    foreach ($form_fields as $el_key => $field) {
-        //init the top level of the element array
-        $form[$el_key] = (isset($field['widget'][0]['value']) ? $field['widget'][0]['value'] : $field['widget'][0]['target_id']);
-        $form[$el_key] = $this->cleanIt($form[$el_key]);
-        ksm($form[$el_key]);
-    }
 
-    // pass these to the submit handlers
-    // $form['#field_definitions'] = $fields_by_weight;
+    $field_defs = $this->getFieldList();
+
+
+    $node = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(array(
+                    'type' => $pg_name
+                )
+            );
+    //Get the EntityFormDisplay (i.e. the default Form Display) of this content type
+    $entity_form_display = \Drupal::service('entity_type.manager')->getStorage('entity_form_display')
+                                            ->load('paragraph.'.$pg_name.'.default');
+
+
+    $form = [];
+    $form['#parents'] = [];
+    foreach ($field_defs as $el_key => $field) {
+        //init the top level of the element array
+        // $form[$el_key] = (isset($field['widget'][0]['value']) ? $field['widget'][0]['value'] : $field['widget'][0]['target_id']);
+        // $form[$el_key] = $this->cleanIt($form[$el_key]);
+        // $form[$el_key]['#attributes']['class'][] = 'ajax-processed';
+        // ksm($form[$el_key]);
+        //Get the body field widget and add it to the form
+
+        if ($widget = $entity_form_display->getRenderer($field)) { //Returns the widget class
+          $items = $node->get($field); //Returns the FieldItemsList interface
+          $items->filterEmptyItems();
+          $form[$field] = $widget->form($items, $form, $form_state);
+          // ksm($form[$field]);
+        }
+    }
+    // ksm($form);
+
+    //set additional properties
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
     $form['#dom_id'] = $dom_id;
@@ -144,9 +167,6 @@ class InlineForm extends FormBase {
     $form['#prefix'] = '<div id="'.$this->getFormId().'">';
     $form['#suffix'] = '</div>';
     $form['#attached']['library'][] = 'gary_field_formatter/append_handler';
-    // $form['#attached']['drupalSettings']['appendhandler']['target'] = $table_id;
-    // ksm($form['field_role']);
-
 
     return $form;
   }
@@ -170,26 +190,13 @@ class InlineForm extends FormBase {
     $field_list = $this->getFieldList();
 
     $pg_values = [];
+    //clean dirty nested arrays
     foreach ($field_list as $key => $field) {
       $i = array_search($field, array_keys($form_values));
-      $pg_values = array_merge($pg_values, array_slice($form_values, $i, 1, TRUE));
+      $sliced_array = array_map('end', array_slice($form_values, $i, 1, TRUE));
+      $pg_values = array_merge($pg_values, array_map('end',$sliced_array));
     }
-    // ksm($pg_values);
-    // $this->submittedValues = $fc_values;
     $this->addPgItem($pg, $pg_name, $pg_values);
-    $input = $form_state->getUserInput();
-    // We should not clear the system items from the user input.
-    $clean_keys = $form_state->getCleanValueKeys();
-    $clean_keys[] = 'ajax_page_state';
-    foreach ($input as $key => $item) {
-      if (!in_array($key, $clean_keys) && substr($key, 0, 1) !== '_') {
-        unset($input[$key]);
-      }
-    }
-    $form_state->setUserInput($input);
-    // Rebuild the form state values.
-    $form_state->setRebuild();
-    $form_state->setStorage([]);
   }
 
 
@@ -204,7 +211,6 @@ class InlineForm extends FormBase {
     }
 
     $dom_id = $form['#dom_id'];
-    // $form_values = $this->prepRows($form_state->getValues());
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     // $response->addCommand(new \Drupal\Core\Ajax\AppendCommand($table_id, $form_values));
     $response->addCommand(new InvokeCommand(NULL, 'appendRow', [$dom_id]));
@@ -223,7 +229,7 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public static function valueCallback(&$element, $input, FormStateInterface $form_state) {
-
+    return NULL;
   }
 
   /**
@@ -257,31 +263,5 @@ class InlineForm extends FormBase {
     $node->set($host_field, $current);
     $node->save();
     return;
-  }
-
-
-
-  /**
-   * Clears form input.
-   *
-   * @param array $form
-   *   The form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   */
-  protected function clearFormInput(array $form, FormStateInterface $form_state) {
-    $input = $form_state->getUserInput();
-    // We should not clear the system items from the user input.
-    $clean_keys = $form_state->getCleanValueKeys();
-    $clean_keys[] = 'ajax_page_state';
-    foreach ($input as $key => $item) {
-      if (!in_array($key, $clean_keys) && substr($key, 0, 1) !== '_') {
-        unset($input[$key]);
-      }
-    }
-    $form_state->setUserInput($input);
-    // Rebuild the form state values.
-    $form_state->setRebuild();
-    $form_state->setStorage([]);
   }
 }

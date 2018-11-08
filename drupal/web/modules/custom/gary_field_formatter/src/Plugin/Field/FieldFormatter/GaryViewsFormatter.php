@@ -100,9 +100,10 @@ class GaryViewsFormatter extends FormatterBase {
     $view->dom_id = $this->getDomId();
     $final_dom_id = 'js-view-dom-id-'.$this->getDomId();
     self::$form_field_name = $items->get(0)->getParent()->getName();
+
+
     //load the entity form if ajax_inputs is true
-    $form = [
-    ];
+    $form = [];
     if ($this->getSetting('ajax_inputs')) {
       $host_field = $this->getFormFieldName();
       $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg, $pg_name, $final_dom_id, $host_field);
