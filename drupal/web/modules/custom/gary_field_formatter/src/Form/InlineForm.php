@@ -132,6 +132,7 @@ class InlineForm extends FormBase {
 
 
     $form = [];
+    $default_values = [];
     $form['#parents'] = [];
     foreach ($field_defs as $el_key => $field) {
         //init the top level of the element array
@@ -145,12 +146,14 @@ class InlineForm extends FormBase {
           $items = $node->get($field); //Returns the FieldItemsList interface
           $items->filterEmptyItems();
           $form[$field] = $widget->form($items, $form, $form_state);
-          // ksm($form[$field]);
+          // ksm($form[$field]['widget'][0]);
         }
     }
     // ksm($form);
 
     //set additional properties
+    $form['#prefix'] = '<div id="'.$this->getFormId().'">';
+    $form['#suffix'] = '</div>';
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
     $form['#dom_id'] = $dom_id;
@@ -164,10 +167,17 @@ class InlineForm extends FormBase {
       ],
     ];
     $form['#submit'] = ['::ajaxFormSubmitHandler'];
-    $form['#prefix'] = '<div id="'.$this->getFormId().'">';
-    $form['#suffix'] = '</div>';
+
     $form['#attached']['library'][] = 'gary_field_formatter/append_handler';
 
+    $form['user_email'] = [
+       '#type' => 'textfield',
+       '#title' => 'User or Email',
+       '#description' => 'Please enter in a user or email'
+     ];
+
+
+    // ksm($form['field_role']['widget'][0]);
     return $form;
   }
 
@@ -175,7 +185,7 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    //no additional validation needed
+
   }
 
   /**
@@ -206,13 +216,10 @@ class InlineForm extends FormBase {
   public function ajaxFormRebuild(array &$form, FormStateInterface $form_state) {
     \Drupal::logger('poop')->error('ajaxFormRebuild');
     if ($form_state->hasAnyErrors()) {
-      $form_state->setRebuild();
       return $form;
     }
-
     $dom_id = $form['#dom_id'];
     $response = new \Drupal\Core\Ajax\AjaxResponse();
-    // $response->addCommand(new \Drupal\Core\Ajax\AppendCommand($table_id, $form_values));
     $response->addCommand(new InvokeCommand(NULL, 'appendRow', [$dom_id]));
     return $response;
   }
@@ -221,7 +228,9 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    \Drupal::logger('poop')->error('subtitform');
     $form_state->setRebuild();
+    $this->step++;
     return $form;
   }
 

@@ -101,7 +101,6 @@ class GaryViewsFormatter extends FormatterBase {
     $final_dom_id = 'js-view-dom-id-'.$this->getDomId();
     self::$form_field_name = $items->get(0)->getParent()->getName();
 
-
     //load the entity form if ajax_inputs is true
     $form = [];
     if ($this->getSetting('ajax_inputs')) {
