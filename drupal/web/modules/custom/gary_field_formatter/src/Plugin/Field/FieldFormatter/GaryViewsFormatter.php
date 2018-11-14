@@ -79,10 +79,11 @@ class GaryViewsFormatter extends FormatterBase {
     if (count($items) <= 0) {
       return $elements;
     }
-    // ksm($items->first()->getParent()->getName());
+
+
     $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->first()->getValue()['target_id']);
     $pg_name = $pg->bundle();
-    // ksm($pg->pa+rent_field_name->value);
+
     $dom_string = str_replace("_","-",$pg_name);
     $this->setDomId($dom_string);
 
@@ -97,8 +98,13 @@ class GaryViewsFormatter extends FormatterBase {
       $view->setDisplay($this->getSetting('view_display_name'));
     }
 
+    //set the dom id of the view
     $view->dom_id = $this->getDomId();
+
+    //build the final dom id
     $final_dom_id = 'js-view-dom-id-'.$this->getDomId();
+
+    //set the static field name for the inline form to build a variable form id
     self::$form_field_name = $items->get(0)->getParent()->getName();
 
     //load the entity form if ajax_inputs is true
@@ -129,8 +135,15 @@ class GaryViewsFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
+    $element['instructions'] = [
+      '#title' => $this->t('How:'),
+      '#description' => $this->t('Create a paragraph view, add contextual filter for parent id, enable ajax on the view.'),
+      '#type' => 'item',
+    ];
+
     $element['ajax_inputs'] = [
       '#title' => $this->t('Use Ajax Inputs'),
+      '#description' => $this->t('Display an entity form to ajax submit a new paragraph item'),
       '#type' => 'checkbox',
       '#default_value' => $this->getSetting('ajax_inputs'),
     ];
@@ -161,11 +174,5 @@ class GaryViewsFormatter extends FormatterBase {
       'view_machine_name' => "",
       'view_display_name' => "",
     ] + parent::defaultSettings();
-  }
-
-  protected function viewValue(FieldItemInterface $item, $fields_to_output = []) {
-    $row = [];
-
-    return $row;
   }
 }
