@@ -79,9 +79,10 @@ class GaryViewsFormatter extends FormatterBase {
     if (count($items) <= 0) {
       return $elements;
     }
-
-    $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->getValue()[0]['target_id']);
+    // ksm($items->first()->getParent()->getName());
+    $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->first()->getValue()['target_id']);
     $pg_name = $pg->bundle();
+    // ksm($pg->pa+rent_field_name->value);
     $dom_string = str_replace("_","-",$pg_name);
     $this->setDomId($dom_string);
 
@@ -113,6 +114,8 @@ class GaryViewsFormatter extends FormatterBase {
     // $elements['#plugin_id'] = $view->getStyle()->getPluginId(); //table
     $elements['#inline_form'] = $form;
     // ksm($view);
+    $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
+    $elements['#attached']['drupalSettings']['dom_id'] = $final_dom_id;
 
     $elements['#theme'] = 'paragraph_views_formatter';
     // if ($view->getStyle()->definition['id'] == 'table') {

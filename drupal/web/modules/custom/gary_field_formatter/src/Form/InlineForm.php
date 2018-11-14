@@ -20,6 +20,8 @@ use Drupal\Core\Entity;
 use Drupal\Core\Ajax;
 use Drupal\Core\Ajax\InvokeCommand;
 
+
+
 /**
  * Contribute form.
  */
@@ -33,6 +35,13 @@ class InlineForm extends FormBase {
   protected $fieldDefs;
 
   protected $hostFieldName;
+
+  protected $builtForm;
+
+
+  private function getWholeForm(){
+    return $this->builtForm;
+  }
 
   public function getFormId() {
     $form_field_name = \Drupal\gary_field_formatter\Plugin\Field\FieldFormatter\GaryViewsFormatter::getFormFieldName();
@@ -167,17 +176,7 @@ class InlineForm extends FormBase {
       ],
     ];
     $form['#submit'] = ['::ajaxFormSubmitHandler'];
-
-    $form['#attached']['library'][] = 'gary_field_formatter/append_handler';
-
-    $form['user_email'] = [
-       '#type' => 'textfield',
-       '#title' => 'User or Email',
-       '#description' => 'Please enter in a user or email'
-     ];
-
-
-    // ksm($form['field_role']['widget'][0]);
+    $this->builtForm = $form;
     return $form;
   }
 
@@ -220,7 +219,9 @@ class InlineForm extends FormBase {
     }
     $dom_id = $form['#dom_id'];
     $response = new \Drupal\Core\Ajax\AjaxResponse();
-    $response->addCommand(new InvokeCommand(NULL, 'appendRow', [$dom_id]));
+    $response->addCommand(new InvokeCommand(NULL, 'refreshView', []));
+    // $response->addCommand(new \Drupal\Core\Ajax\AppendCommand('#'.$this->getFormId(),$this->getWholeForm()));
+    // ksm($this->getWholeForm());
     return $response;
   }
 
@@ -230,7 +231,6 @@ class InlineForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     \Drupal::logger('poop')->error('subtitform');
     $form_state->setRebuild();
-    $this->step++;
     return $form;
   }
 

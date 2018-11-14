@@ -1,7 +1,8 @@
-append_handler:
+refresh:
   version: 1.x
   js:
-    js/appendhandler.js: {}
+    js/refresh.js: {}
   dependencies:
     - core/jquery
+    - core/drupal.ajax
     - core/drupalSettings
