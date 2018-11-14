@@ -9,6 +9,7 @@ use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 
 /**
  * Plugin implementation of the 'paragraph_views_formatter' formatter.
@@ -55,6 +56,10 @@ class GaryViewsFormatter extends FormatterBase {
     return $this->dom_id;
   }
 
+  // public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition) {
+  //   ksm($plugin_id);
+  // }
+
   /**
    * {@inheritdoc}
    */
@@ -76,20 +81,28 @@ class GaryViewsFormatter extends FormatterBase {
     }
 
     // Return nothing if there are no items in this array.
-    if (count($items) <= 0) {
-      return $elements;
-    }
+    // if (count($items) <= 0) {
+    //
+    //   $pg_name = reset($items->getFieldDefinition()->getSettings()['handler_settings']['target_bundles']);
+    // } else {
+    //   $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->first()->getValue()['target_id']);
+    //   $pg_name = $pg->bundle();
+    // }
 
 
-    $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->first()->getValue()['target_id']);
-    $pg_name = $pg->bundle();
+    // $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->first()->getValue()['target_id']);
+    // $pg_name = $pg->bundle();
+    $pg_name = reset($items->getFieldDefinition()->getSettings()['handler_settings']['target_bundles']);
+
+    //set the static field name for the inline form to build a variable form id
+    self::$form_field_name = $items->getName();
 
     $dom_string = str_replace("_","-",$pg_name);
     $this->setDomId($dom_string);
 
-
+    $host_node_id = $items->getEntity()->id();
     //load up the view
-    $args = [$items->getEntity()->id()];
+    $args = [$host_node_id];
     $view =  \Drupal\views\Views::getView($this->getSetting('view_machine_name'));
     $view->setArguments($args);
 
@@ -104,14 +117,11 @@ class GaryViewsFormatter extends FormatterBase {
     //build the final dom id
     $final_dom_id = 'js-view-dom-id-'.$this->getDomId();
 
-    //set the static field name for the inline form to build a variable form id
-    self::$form_field_name = $items->get(0)->getParent()->getName();
-
     //load the entity form if ajax_inputs is true
     $form = [];
     if ($this->getSetting('ajax_inputs')) {
       $host_field = $this->getFormFieldName();
-      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg, $pg_name, $host_field);
+      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id);
     }
 
     // $elements['#plugin_id'] = $view->getStyle()->getPluginId(); //table

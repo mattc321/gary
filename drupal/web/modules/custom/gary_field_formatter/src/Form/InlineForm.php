@@ -38,9 +38,15 @@ class InlineForm extends FormBase {
 
   protected $builtForm;
 
+  protected $hostNodeId;
+
 
   private function getWholeForm(){
     return $this->builtForm;
+  }
+
+  public function getHostNodeId() {
+    return $this->host_node_id;
   }
 
   public function getFormId() {
@@ -86,12 +92,11 @@ class InlineForm extends FormBase {
    * @param  string             $fc_name The name of the field collection
    * @return array                      The sliced form containing fc fields
    */
-  private function GetPgForm($pg, $pg_name) {
+  private function GetPgForm($pg_name) {
 
-    $fields_by_weight = $this->getFieldDefs($pg);
+    $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg_name,]);
+    $fields_by_weight = $this->getFieldDefs($pg_item);
     $this->fieldDefs = $fields_by_weight;
-    //load fc entity
-    $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg->bundle(),]);
     $form = \Drupal::service('entity.form_builder')->getForm($pg_item);
     $sliced_form = [];
     foreach($fields_by_weight as $field_key => $field) {
@@ -122,16 +127,15 @@ class InlineForm extends FormBase {
       return $form;
   }
 
-  public function buildForm(array $form, FormStateInterface $form_state, $pg = NULL, $pg_name = NULL, $host_field = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL) {
 
-
-    $form_fields = $this->GetPgForm($pg, $pg_name);
+    $form_fields = $this->GetPgForm($pg_name);
     $this->hostFieldName = $host_field;
-
+    $this->host_node_id = $host_node_id;
     $field_defs = $this->getFieldList();
 
 
-    $node = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(array(
+    $pg = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(array(
                     'type' => $pg_name
                 )
             );
@@ -152,7 +156,7 @@ class InlineForm extends FormBase {
         //Get the body field widget and add it to the form
 
         if ($widget = $entity_form_display->getRenderer($field)) { //Returns the widget class
-          $items = $node->get($field); //Returns the FieldItemsList interface
+          $items = $pg->get($field); //Returns the FieldItemsList interface
           $items->filterEmptyItems();
           $form[$field] = $widget->form($items, $form, $form_state);
           // ksm($form[$field]['widget'][0]);
@@ -247,8 +251,9 @@ class InlineForm extends FormBase {
    */
   private function addPgItem($pg, $pg_name, &$pg_values) {
     // //create pg item
-    $node = $pg->getParentEntity(); //the node entity
-    $host_field = $this->getHostFieldName(); //the ph field name on the node
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+    $host_field = $this->getHostFieldName(); //the pg field name on the node
+
     $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg->bundle(),]);
 
     foreach ($pg_values as $field_name => $value) {
