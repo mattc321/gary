@@ -97,7 +97,6 @@ class GaryViewsFormatter extends FormatterBase {
       $view->setDisplay($this->getSetting('view_display_name'));
     }
 
-    // $view->getStyle()->definition['id']= 'poop';
     $view->dom_id = $this->getDomId();
     $final_dom_id = 'js-view-dom-id-'.$this->getDomId();
     self::$form_field_name = $items->get(0)->getParent()->getName();
@@ -106,14 +105,11 @@ class GaryViewsFormatter extends FormatterBase {
     $form = [];
     if ($this->getSetting('ajax_inputs')) {
       $host_field = $this->getFormFieldName();
-      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg, $pg_name, $final_dom_id, $host_field);
-      // $form = \Drupal::service('entity.form_builder')->getForm($pg);
+      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg, $pg_name, $host_field);
     }
-    // $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->getValue()[0]['target_id']);
 
     // $elements['#plugin_id'] = $view->getStyle()->getPluginId(); //table
     $elements['#inline_form'] = $form;
-    // ksm($view);
     $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
     $elements['#attached']['drupalSettings']['dom_id'] = $final_dom_id;
 
@@ -124,15 +120,6 @@ class GaryViewsFormatter extends FormatterBase {
     // }
     $view->execute();
     $elements['#view'] = $view->buildRenderable();
-    // ksm($items->first());
-    // $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($items->getName());
-    // ksm($paragraph);
-    // ksm($paragraph);
-    //
-
-
-    //
-    // $form = \Drupal::service('entity.form_builder')->getForm($field_collection_item);
 
     return $elements;
   }

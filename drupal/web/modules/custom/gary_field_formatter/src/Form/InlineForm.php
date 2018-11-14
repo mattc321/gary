@@ -122,7 +122,7 @@ class InlineForm extends FormBase {
       return $form;
   }
 
-  public function buildForm(array $form, FormStateInterface $form_state, $pg = NULL, $pg_name = NULL, $dom_id = NULL, $host_field = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $pg = NULL, $pg_name = NULL, $host_field = NULL) {
 
 
     $form_fields = $this->GetPgForm($pg, $pg_name);
@@ -165,7 +165,6 @@ class InlineForm extends FormBase {
     $form['#suffix'] = '</div>';
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
-    $form['#dom_id'] = $dom_id;
     $form['submit'] = [
       '#type' => 'submit',
       '#weight' => count($form) +1,
@@ -217,7 +216,6 @@ class InlineForm extends FormBase {
     if ($form_state->hasAnyErrors()) {
       return $form;
     }
-    $dom_id = $form['#dom_id'];
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', []));
     // $response->addCommand(new \Drupal\Core\Ajax\AppendCommand('#'.$this->getFormId(),$this->getWholeForm()));
