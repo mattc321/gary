@@ -75,32 +75,29 @@ class InlineForm extends FormBase {
   }
 
 
-  public function getFieldDefs($pg) {
-    $displays = EntityViewDisplay::collectRenderDisplays([$pg], 'full');
-    $display = $displays[$pg->bundle()];
+  private function setFieldDefs($pg_name) {
+    $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg_name,]);
+    $displays = EntityViewDisplay::collectRenderDisplays([$pg_item], 'full');
+    $display = $displays[$pg_item->bundle()];
     foreach ($display->getComponents() as $name => $options) {
       $fields_by_weight[$options['weight']] = $name;
     }
     ksort($fields_by_weight);
-
-    return $fields_by_weight;
+    $this->fieldDefs = $fields_by_weight;
   }
-  
+
   public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL) {
-    //set vars
+
+    $this->setFieldDefs($pg_name);
     $this->hostFieldName = $host_field;
     $this->host_node_id = $host_node_id;
-
-    //get fields from pg
     $field_defs = $this->getFieldList();
 
-    //load the pg entity
     $pg = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(array(
                     'type' => $pg_name
                 )
             );
-
-    //Get the EntityFormDisplay for the pg
+    //Get the EntityFormDisplay (i.e. the default Form Display) of this content type
     $entity_form_display = \Drupal::service('entity_type.manager')->getStorage('entity_form_display')
                                     ->load('paragraph.'.$pg_name.'.default');
     $form = [];
