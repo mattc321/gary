@@ -85,85 +85,35 @@ class InlineForm extends FormBase {
 
     return $fields_by_weight;
   }
-
-  /**
-   * Load the field collection entity form
-   * @param  FieldItemInterface $item    item from formatter
-   * @param  string             $fc_name The name of the field collection
-   * @return array                      The sliced form containing fc fields
-   */
-  private function GetPgForm($pg_name) {
-
-    $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg_name,]);
-    $fields_by_weight = $this->getFieldDefs($pg_item);
-    $this->fieldDefs = $fields_by_weight;
-    $form = \Drupal::service('entity.form_builder')->getForm($pg_item);
-    $sliced_form = [];
-    foreach($fields_by_weight as $field_key => $field) {
-        $i = array_search($field, array_keys($form));
-        $sliced_form = array_merge($sliced_form, array_slice($form, $i, 1, TRUE));
-    }
-    return $sliced_form;
-  }
-
-  /**
-   * Remove unwanted keys from form elements
-   * @param  array $form The $form array
-   * @return array       $form stripped of bad keys
-   */
-  private function cleanIt($form) {
-      $bad_keys = [
-        '#parents',
-        '#value',
-        '#id',
-        '#name'
-      ];
-
-      foreach ($bad_keys as $key) {
-        if (array_key_exists($key, $form)) {
-          unset($form[$key]);
-        }
-      }
-      return $form;
-  }
-
+  
   public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL) {
-
-    $form_fields = $this->GetPgForm($pg_name);
+    //set vars
     $this->hostFieldName = $host_field;
     $this->host_node_id = $host_node_id;
+
+    //get fields from pg
     $field_defs = $this->getFieldList();
 
-
+    //load the pg entity
     $pg = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(array(
                     'type' => $pg_name
                 )
             );
-    //Get the EntityFormDisplay (i.e. the default Form Display) of this content type
+
+    //Get the EntityFormDisplay for the pg
     $entity_form_display = \Drupal::service('entity_type.manager')->getStorage('entity_form_display')
-                                            ->load('paragraph.'.$pg_name.'.default');
-
-
+                                    ->load('paragraph.'.$pg_name.'.default');
     $form = [];
     $default_values = [];
     $form['#parents'] = [];
     foreach ($field_defs as $el_key => $field) {
-        //init the top level of the element array
-        // $form[$el_key] = (isset($field['widget'][0]['value']) ? $field['widget'][0]['value'] : $field['widget'][0]['target_id']);
-        // $form[$el_key] = $this->cleanIt($form[$el_key]);
-        // $form[$el_key]['#attributes']['class'][] = 'ajax-processed';
-        // ksm($form[$el_key]);
-        //Get the body field widget and add it to the form
-
+        //load each widget from the field defs
         if ($widget = $entity_form_display->getRenderer($field)) { //Returns the widget class
           $items = $pg->get($field); //Returns the FieldItemsList interface
           $items->filterEmptyItems();
           $form[$field] = $widget->form($items, $form, $form_state);
-          // ksm($form[$field]['widget'][0]);
         }
     }
-    // ksm($form);
-
     //set additional properties
     $form['#prefix'] = '<div id="'.$this->getFormId().'">';
     $form['#suffix'] = '</div>';
@@ -245,12 +195,12 @@ class InlineForm extends FormBase {
 
   /**
    * Add a new field collection item
-   * @param array $host      The field collection host
-   * @param string $fc_name   The name of the parent field collection
-   * @param array $fc_values Array containing submitted values
+   * @param array $pg      The pg host
+   * @param string $pg_name   The pg name
+   * @param array $pg_values Array containing submitted values
    */
   private function addPgItem($pg, $pg_name, &$pg_values) {
-    // //create pg item
+    //load the parent node
     $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
     $host_field = $this->getHostFieldName(); //the pg field name on the node
 
