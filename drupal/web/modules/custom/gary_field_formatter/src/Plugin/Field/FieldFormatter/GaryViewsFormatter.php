@@ -124,8 +124,9 @@ class GaryViewsFormatter extends FormatterBase {
       $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id);
     }
 
-    // $elements['#plugin_id'] = $view->getStyle()->getPluginId(); //table
     $elements['#inline_form'] = $form;
+
+    //attach js and set domid so we know which view to refresh
     $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
     $elements['#attached']['drupalSettings']['dom_id'] = $final_dom_id;
 

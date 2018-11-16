@@ -19,6 +19,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity;
 use Drupal\Core\Ajax;
 use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 
 
 
@@ -74,7 +75,10 @@ class InlineForm extends FormBase {
     $this->newPcItem = $item;
   }
 
-
+  /**
+   * set the Field List
+   * @param string $pg_name the field name of the paragraph bundle
+   */
   private function setFieldDefs($pg_name) {
     $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg_name,]);
     $displays = EntityViewDisplay::collectRenderDisplays([$pg_item], 'full');
@@ -86,6 +90,9 @@ class InlineForm extends FormBase {
     $this->fieldDefs = $fields_by_weight;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL) {
 
     $this->setFieldDefs($pg_name);
@@ -102,6 +109,8 @@ class InlineForm extends FormBase {
                                     ->load('paragraph.'.$pg_name.'.default');
     $form = [];
     $default_values = [];
+
+    //loading the form widget will fail without this
     $form['#parents'] = [];
     foreach ($field_defs as $el_key => $field) {
         //load each widget from the field defs
@@ -115,6 +124,7 @@ class InlineForm extends FormBase {
     $form['#prefix'] = '<div id="'.$this->getFormId().'">';
     $form['#suffix'] = '</div>';
     $form['#host'] = $pg;
+    $form['#attributes']['class'][] = 'use-ajax';
     $form['#field_name'] = $pg_name;
     $form['submit'] = [
       '#type' => 'submit',
@@ -167,10 +177,20 @@ class InlineForm extends FormBase {
     if ($form_state->hasAnyErrors()) {
       return $form;
     }
+
+    $pg = $form['#host'];
+    $definitions = \Drupal::service('entity_field.manager')->getFieldDefinitions('paragraph', $pg->bundle());
+    $field_list = $this->getFieldList();
+    foreach ($field_list as $item => $field) {
+      $def = $definitions[$field]->getDefaultValue($pg);
+      if (!empty($def)) {
+        dpm($def[0]);
+      }
+
+    }
+
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', []));
-    // $response->addCommand(new \Drupal\Core\Ajax\AppendCommand('#'.$this->getFormId(),$this->getWholeForm()));
-    // ksm($this->getWholeForm());
     return $response;
   }
 
@@ -223,4 +243,30 @@ class InlineForm extends FormBase {
     $node->save();
     return;
   }
+
+
+  protected function clearFormInput(array $form, FormStateInterface $form_state) {
+    // Replace the form entity with an empty instance.
+    // $pg = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(array(
+    //                 'type' => $pg_name
+    //             )
+    //         );
+
+
+    // Clear user input.
+    $input = $form_state->getUserInput();
+    // We should not clear the system items from the user input.
+    $clean_keys = $form_state->getCleanValueKeys();
+    $clean_keys[] = 'ajax_page_state';
+    foreach ($input as $key => $item) {
+      if (!in_array($key, $clean_keys) && substr($key, 0, 1) !== '_') {
+        unset($input[$key]);
+      }
+    }
+    $form_state->setUserInput($input);
+    // Rebuild the form state values.
+    $form_state->setRebuild();
+    $form_state->setStorage([]);
+  }
+
 }
