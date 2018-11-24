@@ -38,6 +38,7 @@ function gary_custom_theme() {
 }
 
 function gary_custom_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+// ksm($entity);
 
 }
 
@@ -48,6 +49,59 @@ function gary_custom_entity_update(EntityInterface $entity) {
   $helper->cleanParagraphs($entity);
 }
 
+function gary_custom_entity_presave(EntityInterface $entity) {
+  $helper = new GaryFunctions;
+
+  //calculate fields on project_units
+  switch ($entity->bundle()){
+    case 'project_units':
+      if ($entity->hasField('field_ach50')) {
+        $new_value = $helper->calculateField($entity, 'field_ach50');
+        $entity->set('field_ach50', $new_value);
+      }
+      break;
+
+      default:
+      break;
+  }
+
+}
+
 function gary_custom_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   // ksm($form['field_project_contacts']);
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function gary_custom_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface $entity_type)  {
+  // dpm($entity_type->id());
+  // if ($entity_type->id() === 'paragraph') {
+  //   $fields = [];
+  //
+  //   // Add a field that shows the completeness of the user profile.
+  //   // This is computed whenever the profile changes, and then saved
+  //   // to the database.
+  //   $fields['completeness'] = BaseFieldDefinition::create('float')
+  //     ->setLabel(t('Complete profile'))
+  //     ->setDescription(t('User profile complete percentage, such as 0.40, i.e, 40%'))
+  //     ->setDisplayOptions('view', [
+  //       'label' => 'above',
+  //       'weight' => -5,
+  //     ]);
+  //   //
+  //   // // Add a field that shows a link to the user's current company.
+  //   $fields['current_company'] = BaseFieldDefinition::create('current_company_link')
+  //     ->setName('current_company')
+  //     ->setLabel(t('Current company'))
+  //     ->setComputed(TRUE)
+  //     ->setClass('\Drupal\mymodule\CurrentCompanyLinkItemList')
+  //     ->setDisplayConfigurable('view', TRUE)
+  //     ->setDisplayOptions('view', [
+  //       'label' => 'hidden',
+  //       'weight' => -5,
+  //     ]);
+  //     ksm($fields);
+  //   return $fields;
+  // }
 }

@@ -14,7 +14,18 @@
 
 class GaryFunctions {
 
+  public function calculateField(EntityInterface $entity, $field_name) {
 
+    if ($field_name == 'field_ach50') {
+      //(CFM50 * 60) / (CFA * Height)
+      $cfm = (!empty($entity->get('field_cfm_50')->getValue()) ? $entity->get('field_cfm_50')->getValue() : 0);
+      $cfa = (!empty($entity->get('field_cfa')->getValue()) ? $entity->get('field_cfa')->getValue() : 0);
+      $ht = (!empty($entity->get('field_height')->getValue()) ? $entity->get('field_height')->getValue() : 0);
+      $calc = ($cfm + $cfa + $ht <= 0 ? 0 : ($cfm * 60) / ($cfa * $ht));
+      return $calc;
+    }
+    return;
+  }
 
   public function cleanParagraphs(EntityInterface $entity) {
     // Check to make sure method exists.
