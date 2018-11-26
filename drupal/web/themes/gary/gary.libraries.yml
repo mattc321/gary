@@ -30,7 +30,7 @@ global:
     dist/global/models/AppStateModel.js: {}
     dist/global/views/MobileMenuView.js: {}
     dist/forms.js: {}
-    dist/front.js: {}
+    # dist/front.js: {}
 
   dependencies:
     - core/drupal

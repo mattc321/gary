@@ -176,15 +176,12 @@ class InlineForm extends FormBase {
     \Drupal::logger('poop')->error('ajaxFormRebuild');
     if ($form_state->hasAnyErrors()) {
       return $form;
-    }
-
-    $pg = $form['#host'];
-    $definitions = \Drupal::service('entity_field.manager')->getFieldDefinitions('paragraph', $pg->bundle());
+   \Drupal::service('entity_field.manager')->getFieldDefinitions('paragraph', $pg->bundle());
+      $field_list = $this->preSave();
     $field_list = $this->getFieldList();
-    foreach ($field_list as $item => $field) {
       $def = $definitions[$field]->getDefaultValue($pg);
       if (!empty($def)) {
-        dpm($def[0]);
+        // dpm($def[0]);
       }
 
     }
@@ -228,7 +225,6 @@ class InlineForm extends FormBase {
         $pg_item->set($field_name, $value);
       }
     }
-    // $pg_item->set('field_description', 'test');
 
     $pg_item->isNew();
     $pg_item->save();

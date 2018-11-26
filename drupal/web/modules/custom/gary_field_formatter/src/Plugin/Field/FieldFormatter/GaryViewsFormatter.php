@@ -125,11 +125,9 @@ class GaryViewsFormatter extends FormatterBase {
     }
 
     $elements['#inline_form'] = $form;
-
     //attach js and set domid so we know which view to refresh
-    $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
-    $elements['#attached']['drupalSettings']['dom_id'] = $final_dom_id;
-
+    // $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
+    // $elements['#attached']['drupalSettings']['dom_id'] = $final_dom_id;
     $elements['#theme'] = 'paragraph_views_formatter';
     // if ($view->getStyle()->definition['id'] == 'table') {
     //   $elements['#error'] = 'View must be in table format';

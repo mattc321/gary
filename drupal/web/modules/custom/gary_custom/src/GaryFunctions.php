@@ -18,11 +18,15 @@ class GaryFunctions {
 
     if ($field_name == 'field_ach50') {
       //(CFM50 * 60) / (CFA * Height)
-      $cfm = (!empty($entity->get('field_cfm_50')->getValue()) ? $entity->get('field_cfm_50')->getValue() : 0);
-      $cfa = (!empty($entity->get('field_cfa')->getValue()) ? $entity->get('field_cfa')->getValue() : 0);
-      $ht = (!empty($entity->get('field_height')->getValue()) ? $entity->get('field_height')->getValue() : 0);
-      $calc = ($cfm + $cfa + $ht <= 0 ? 0 : ($cfm * 60) / ($cfa * $ht));
-      return $calc;
+      $cfm = (!empty($entity->get('field_cfm_50')->getValue()) ? $entity->get('field_cfm_50')->get(0)->getValue()['value'] : 0.00);
+      $cfa = (!empty($entity->get('field_cfa')->getValue()) ? $entity->get('field_cfa')->get(0)->getValue()['value'] : 0.00);
+      $ht = (!empty($entity->get('field_height')->getValue()) ? $entity->get('field_height')->get(0)->getValue()['value'] : 0.00);
+
+      if ($cfm > 0 && $cfa > 0 && $ht > 0 ) {
+        $calc = ($cfm * 60) / ($cfa * $ht);
+        return $calc;
+      }
+      return 0;
     }
     return;
   }
