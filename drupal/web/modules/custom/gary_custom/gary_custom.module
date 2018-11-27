@@ -59,9 +59,17 @@ function gary_custom_entity_presave(EntityInterface $entity) {
   //calculate fields on project_units
   switch ($entity->bundle()){
     case 'project_units':
+
+      //calculate ach50 field if its there
       if ($entity->hasField('field_ach50')) {
         $new_value = $helper->calculateField($entity, 'field_ach50');
         $entity->set('field_ach50', $new_value);
+      }
+
+      //calculate ach50 field if its there
+      if ($entity->hasField('field_volume')) {
+        $new_value = $helper->calculateField($entity, 'field_volume');
+        $entity->set('field_volume', $new_value);
       }
       break;
 

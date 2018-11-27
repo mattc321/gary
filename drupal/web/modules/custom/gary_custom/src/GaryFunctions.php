@@ -16,6 +16,8 @@ class GaryFunctions {
 
   public function calculateField(EntityInterface $entity, $field_name) {
 
+
+    //calculate ACH50
     if ($field_name == 'field_ach50') {
       //(CFM50 * 60) / (CFA * Height)
       $cfm = (!empty($entity->get('field_cfm_50')->getValue()) ? $entity->get('field_cfm_50')->get(0)->getValue()['value'] : 0.00);
@@ -28,6 +30,20 @@ class GaryFunctions {
       }
       return 0;
     }
+
+    //calculate Volume
+    if ($field_name == 'field_volume') {
+      //CFA * Height
+      $cfa = (!empty($entity->get('field_cfa')->getValue()) ? $entity->get('field_cfa')->get(0)->getValue()['value'] : 0.00);
+      $ht = (!empty($entity->get('field_height')->getValue()) ? $entity->get('field_height')->get(0)->getValue()['value'] : 0.00);
+
+      if ($cfa > 0 && $ht > 0 ) {
+        $calc = $cfa * $ht;
+        return $calc;
+      }
+      return 0;
+    }
+
     return;
   }
 
