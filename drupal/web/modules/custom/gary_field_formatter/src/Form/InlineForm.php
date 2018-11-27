@@ -93,7 +93,7 @@ class InlineForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL, $dom_id = NULL) {
 
     $this->setFieldDefs($pg_name);
     $this->hostFieldName = $host_field;
@@ -120,12 +120,13 @@ class InlineForm extends FormBase {
           $form[$field] = $widget->form($items, $form, $form_state);
         }
     }
+
     //set additional properties
     $form['#prefix'] = '<div id="'.$this->getFormId().'">';
     $form['#suffix'] = '</div>';
     $form['#host'] = $pg;
-    $form['#attributes']['class'][] = 'use-ajax';
     $form['#field_name'] = $pg_name;
+    $form['#dom_id'] = $dom_id;
     $form['submit'] = [
       '#type' => 'submit',
       '#weight' => count($form) +1,
@@ -187,7 +188,7 @@ class InlineForm extends FormBase {
     }
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
-    $response->addCommand(new InvokeCommand(NULL, 'refreshView', []));
+    $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
     return $response;
   }
 

@@ -1,5 +1,5 @@
 gary_field_formatter.delete_paragraph:
-  path: '/paragraph/delete/{pid}'
+  path: '/paragraph/delete/{pid}/{vid}'
   defaults:
     _controller: '\Drupal\gary_field_formatter\Controller\GaryFormatterController::DeleteEntityParagraph'
   requirements:

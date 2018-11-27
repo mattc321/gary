@@ -121,18 +121,15 @@ class GaryViewsFormatter extends FormatterBase {
     $form = [];
     if ($this->getSetting('ajax_inputs')) {
       $host_field = $this->getFormFieldName();
-      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id);
+      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id);
     }
 
     $elements['#inline_form'] = $form;
+
     //attach js and set domid so we know which view to refresh
-    // $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
-    // $elements['#attached']['drupalSettings']['dom_id'] = $final_dom_id;
+    $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
     $elements['#theme'] = 'paragraph_views_formatter';
-    // if ($view->getStyle()->definition['id'] == 'table') {
-    //   $elements['#error'] = 'View must be in table format';
-    //   return $elements;
-    // }
+
     $view->execute();
     $elements['#view'] = $view->buildRenderable();
 

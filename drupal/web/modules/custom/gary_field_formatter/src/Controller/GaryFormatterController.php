@@ -13,7 +13,7 @@ use Drupal\Core\Ajax\InvokeCommand;
 
 class GaryFormatterController extends ControllerBase {
 
-  public function DeleteEntityParagraph($pid) {
+  public function DeleteEntityParagraph($pid, $vid) {
     $storage_handler = \Drupal::entityTypeManager()->getStorage('paragraph');
     $paragraph = $storage_handler->load($pid);
     $parent_field_name = $paragraph->parent_field_name->value;
@@ -33,8 +33,8 @@ class GaryFormatterController extends ControllerBase {
     $node->save();
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
-    $response->addCommand(new \Drupal\Core\Ajax\AlertCommand('shitfuck'));
-    // $response->addCommand(new InvokeCommand(NULL, 'refreshView', []));
+    $vid = "view-id-".$vid;
+    $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
 
     return $response;
   }
