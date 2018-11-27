@@ -40,6 +40,7 @@ function gary_custom_theme() {
 function gary_custom_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
 
   if ($entity->bundle() == 'project_units') {
+
         // dpm($entity->get('field_height')->get(0)->getValue()['value']);
         // dpm($entity->get('field_cfm_50')->get(0)->getValue()['value']);
         // dpm($entity->get('field_cfa')->get(0)->getValue()['value']);
@@ -71,6 +72,16 @@ function gary_custom_entity_presave(EntityInterface $entity) {
         $new_value = $helper->calculateField($entity, 'field_volume');
         $entity->set('field_volume', $new_value);
       }
+
+      //update last updated field if pg item has changed
+      if ($helper->entityHasChanged($entity)) {
+        if ($entity->hasField('field_last_updated')) {
+          $dt = new DateTime;
+          $date = $dt->format("Y-m-d\Th:i:s");
+          $entity->set('field_last_updated', $date);
+        }
+      }
+
       break;
 
       default:

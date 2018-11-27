@@ -5,12 +5,12 @@
  */
 
 
- namespace Drupal\gary_custom;
+namespace Drupal\gary_custom;
 
- use Drupal\Core\Routing\RouteMatchInterface;
- use Drupal\Core\Entity\EntityInterface;
- use Drupal\Core\Entity\FieldableEntityInterface;
-
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 
 class GaryFunctions {
 
@@ -85,4 +85,63 @@ class GaryFunctions {
       }
     }
   }
+
+  /**
+   * Check if entity field content has changed
+   * @param  EntityInterface $entity     The entity being saved
+   * @return boolean                     True if field has change, false if hasnt changed or is not found
+   */
+  public function entityHasChanged(EntityInterface $entity) {
+
+    if (!$entity->original) {
+      return false;
+    }
+
+    $field_names = $this->getFieldList($entity->bundle());
+    foreach($field_names as $key => $field_name) {
+      if(!$entity->get($field_name)->equals($entity->original->get($field_name))){
+         return true;
+      }
+    }
+     return false;
+  }
+
+  /**
+   * Check if entity field content has changed
+   * @param  EntityInterface $entity     The entity being saved
+   * @param  array          $field_names The name of the field to check
+   * @return boolean                     True if field has change, false if hasnt changed or is not found
+   */
+  public function fieldHasChanged(EntityInterface $entity, string $field_name) {
+
+    if (!$entity->hasField($field_name)) {
+      return false;
+    }
+
+    if (!$entity->original) {
+      return false;
+    }
+
+    if(!$entity->get($field_name)->equals($entity->original->get($field_name))){
+       return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Get list of field names from bundle
+   * @param  string $bundle Bundle name
+   * @return array         Array of field names
+   */
+  public function getFieldList($bundle) {
+    $entity = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $bundle,]);
+    $displays = EntityViewDisplay::collectRenderDisplays([$entity], 'full');
+    $display = $displays[$entity->bundle()];
+    foreach ($display->getComponents() as $name => $options) {
+      $fields_by_weight[] = $name;
+    }
+    return $fields_by_weight;
+  }
+
 }
