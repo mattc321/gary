@@ -77,7 +77,7 @@ function gary_custom_entity_presave(EntityInterface $entity) {
       if ($helper->entityHasChanged($entity)) {
         if ($entity->hasField('field_last_updated')) {
           $dt = new DateTime;
-          $date = $dt->format("Y-m-d\Th:i:s");
+          $date = $dt->format("Y-m-d");
           $entity->set('field_last_updated', $date);
         }
       }
