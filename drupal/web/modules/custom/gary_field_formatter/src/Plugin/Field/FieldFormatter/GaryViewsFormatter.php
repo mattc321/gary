@@ -121,7 +121,11 @@ class GaryViewsFormatter extends FormatterBase {
     $form = [];
     if ($this->getSetting('ajax_inputs')) {
       $host_field = $this->getFormFieldName();
-      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id);
+      $form_class = [];
+      if (!empty($this->getSetting('form_class'))) {
+        $form_class = explode(' ', $this->getSetting('form_class'), 0);
+      }
+      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id, $form_class);
     }
 
     $elements['#inline_form'] = $form;
@@ -165,6 +169,12 @@ class GaryViewsFormatter extends FormatterBase {
       '#type' => 'textfield',
       '#default_value' => $this->getSetting('view_display_name'),
     ];
+    $element['form_class'] = [
+      '#title' => $this->t('Add a custom form class'),
+      '#description' => $this->t('i.e. my-form-class another-form-class'),
+      '#type' => 'textfield',
+      '#default_value' => $this->getSetting('form_class'),
+    ];
 
     return $element;
   }
@@ -179,6 +189,7 @@ class GaryViewsFormatter extends FormatterBase {
       'ajax_inputs' => FALSE,
       'view_machine_name' => "",
       'view_display_name' => "",
+      'form_class' => "",
     ] + parent::defaultSettings();
   }
 }

@@ -93,7 +93,7 @@ class InlineForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL, $dom_id = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL, $dom_id = NULL, $form_class = NULL) {
 
     $this->setFieldDefs($pg_name);
     $this->hostFieldName = $host_field;
@@ -127,6 +127,13 @@ class InlineForm extends FormBase {
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
     $form['#dom_id'] = $dom_id;
+
+    if (!empty($form_class)) {
+      foreach ($form_class as $key => $class) {
+        $form['#attributes']['class'][] = $class;
+      }
+    }
+
     $form['submit'] = [
       '#type' => 'submit',
       '#weight' => count($form) +1,
