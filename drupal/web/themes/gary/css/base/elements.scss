@@ -7,6 +7,12 @@ table {
   width: 100%;
   border-collapse: collapse;
   transition: .5s;
+
+  .form-item,
+  .form-actions {
+    margin: 0;
+  }
+
 }
 /* Zebra striping */
 tr:nth-of-type(odd) {
@@ -27,4 +33,33 @@ td {
   border-top: 1px solid $light-grey;
   border-bottom: 1px solid $light-grey;
   text-align: left;
+
+  input[type=text],
+  input[type=password],
+  input[type=number],
+  input[type=date],
+  select, textarea {
+    max-width: 140px;
+    width: 100%;
+    padding: 0;
+  }
+
+}
+
+
+details.inline-pg-details {
+    border: none;
+    transition: .3s;
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+    summary:after {
+        content: "\002B";
+
+    }
+
+    &[open] summary:after {
+      content: "\2212";
+    }
 }

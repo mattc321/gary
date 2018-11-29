@@ -46,12 +46,19 @@ input[type=submit]:hover {
     flex-flow: row wrap;
     align-items: center;
 
-    input[type="text"],
-    input[type="number"],
-    input[type="date"] {
+    input[type=text],
+    input[type=number],
+    input[type=date] {
       vertical-align: middle;
       margin: 5px 10px 5px 0;
       width: 120px;
       height: 20px;
+    }
+    input[type=submit] {
+      margin: 45px 0 0 0;
+      padding: 5px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
     }
 }

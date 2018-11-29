@@ -122,8 +122,8 @@ class InlineForm extends FormBase {
     }
 
     //set additional properties
-    $form['#prefix'] = '<div id="'.$this->getFormId().'">';
-    $form['#suffix'] = '</div>';
+    $form['#prefix'] = '<details class="inline-pg-details"><summary></summary><div id="'.$this->getFormId().'">';
+    $form['#suffix'] = '</div></details>';
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
     $form['#dom_id'] = $dom_id;
@@ -137,7 +137,7 @@ class InlineForm extends FormBase {
     $form['submit'] = [
       '#type' => 'submit',
       '#weight' => count($form) +1,
-      '#value' => t('Submit'),
+      '#value' => t('&#10004;'),
       '#ajax' => [
         'callback' => '::ajaxFormRebuild',
         'wrapper' => $this->getFormId(),
