@@ -10,6 +10,9 @@ a {
   &:hover {
     color: $red;
   }
+  &.delete-pg-item {
+    font-size: 20px;
+  }
 }
 .layout-container {
   background: $light-grey;

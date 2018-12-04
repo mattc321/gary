@@ -93,7 +93,7 @@ class InlineForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL, $dom_id = NULL, $form_class = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL, $dom_id = NULL, $switch_dom_id = NULL, $form_class = NULL) {
 
     $this->setFieldDefs($pg_name);
     $this->hostFieldName = $host_field;
@@ -127,6 +127,7 @@ class InlineForm extends FormBase {
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
     $form['#dom_id'] = $dom_id;
+    $form['#switch_dom_id'] = $switch_dom_id;
 
     if (!empty($form_class)) {
       foreach ($form_class as $key => $class) {
@@ -137,7 +138,7 @@ class InlineForm extends FormBase {
     $form['submit'] = [
       '#type' => 'submit',
       '#weight' => count($form) +1,
-      '#value' => t('&#10004;'),
+      '#value' => t('&#43;'),
       '#ajax' => [
         'callback' => '::ajaxFormRebuild',
         'wrapper' => $this->getFormId(),
@@ -196,6 +197,7 @@ class InlineForm extends FormBase {
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
+    // $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#switch_dom_id']]));
     return $response;
   }
 

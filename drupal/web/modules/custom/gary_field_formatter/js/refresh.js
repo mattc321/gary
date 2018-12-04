@@ -11,7 +11,7 @@
         $.fn.refreshView = function(dom_id) {
           if($('.'+dom_id).length > 0) {
             var $target = $('.'+dom_id);
-            $target.closest('.view').trigger('RefreshView');
+            $target.trigger('RefreshView');
           }
         };
 

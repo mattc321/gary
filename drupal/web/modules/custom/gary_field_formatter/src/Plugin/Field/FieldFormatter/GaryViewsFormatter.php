@@ -97,7 +97,7 @@ class GaryViewsFormatter extends FormatterBase {
     }
 
     //create a unique dom id and set it
-    $display_id = $view->getDisplay()->getPluginId();
+    $display_id = (!empty($view->current_display) ? $view->current_display : $view->getDisplay()->getPluginId());
     $dom_string = str_replace("_","-",$pg_name) . "-" . $display_id;
 
     //store it
@@ -109,27 +109,12 @@ class GaryViewsFormatter extends FormatterBase {
     //build the final dom id
     $final_dom_id = 'js-view-dom-id-'.$this->getDomId();
 
-    //load the entity form if ajax_inputs is true
-    $form = [];
-    if ($this->getSetting('ajax_inputs')) {
-      $host_field = $this->getFormFieldName();
-      $form_class = [];
-      if (!empty($this->getSetting('form_class'))) {
-        $form_class = explode(' ', $this->getSetting('form_class'), 0);
-      }
-      $form = \Drupal::formBuilder()->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id, $form_class);
-    }
-
-    $elements['#inline_form'] = $form;
-
-    //attach js and set domid so we know which view to refresh
-    $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
-    $elements['#theme'] = 'paragraph_views_formatter';
-
     $view->execute();
     $elements['#view'] = $view->buildRenderable();
 
 
+    //init $switch_dom_id
+    $switch_dom_id = "";
     //check if a switch view is there
     if (!empty($this->getSetting('switch_view'))) {
 
@@ -146,7 +131,7 @@ class GaryViewsFormatter extends FormatterBase {
       $switch_view->getDisplay()->setOption('css_class', 'hidden');
 
       //create a unique dom id and set it
-      $switch_display_id = $switch_view->getDisplay()->getPluginId();
+      $switch_display_id = $switch_view->current_display;
       $switch_dom_string = str_replace("_","-",$pg_name) . "-" . $switch_display_id;
 
       //set the dom id
@@ -168,7 +153,24 @@ class GaryViewsFormatter extends FormatterBase {
       ];
     }
 
+    //load the entity form if ajax_inputs is true
+    $form = [];
+    if ($this->getSetting('ajax_inputs')) {
+      $host_field = $this->getFormFieldName();
+      $form_class = [];
+      if (!empty($this->getSetting('form_class'))) {
+        $form_class = explode(' ', $this->getSetting('form_class'), 0);
+      }
+      $form = \Drupal::formBuilder()
+        ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id, $switch_dom_id, $form_class);
+    }
 
+    //attach the loaded entity form
+    $elements['#inline_form'] = $form;
+
+    //attach js and set domid so we know which view to refresh
+    $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
+    $elements['#theme'] = 'paragraph_views_formatter';
     return $elements;
   }
 

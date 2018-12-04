@@ -39,7 +39,6 @@ class GaryFormatterController extends ControllerBase {
     $node->save();
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
-    $vid = "view-id-".$vid;
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
 
     return $response;
