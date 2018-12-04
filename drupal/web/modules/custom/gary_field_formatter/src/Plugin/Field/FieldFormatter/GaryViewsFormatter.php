@@ -80,25 +80,10 @@ class GaryViewsFormatter extends FormatterBase {
       return $elements;
     }
 
-    // Return nothing if there are no items in this array.
-    // if (count($items) <= 0) {
-    //
-    //   $pg_name = reset($items->getFieldDefinition()->getSettings()['handler_settings']['target_bundles']);
-    // } else {
-    //   $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->first()->getValue()['target_id']);
-    //   $pg_name = $pg->bundle();
-    // }
-
-
-    // $pg = \Drupal\paragraphs\Entity\Paragraph::load($items->first()->getValue()['target_id']);
-    // $pg_name = $pg->bundle();
     $pg_name = reset($items->getFieldDefinition()->getSettings()['handler_settings']['target_bundles']);
 
     //set the static field name for the inline form to build a variable form id
     self::$form_field_name = $items->getName();
-
-    $dom_string = str_replace("_","-",$pg_name);
-    $this->setDomId($dom_string);
 
     $host_node_id = $items->getEntity()->id();
     //load up the view
@@ -110,6 +95,13 @@ class GaryViewsFormatter extends FormatterBase {
     if (!empty($this->getSetting('view_display_name'))) {
       $view->setDisplay($this->getSetting('view_display_name'));
     }
+
+    //create a unique dom id and set it
+    $display_id = $view->getDisplay()->getPluginId();
+    $dom_string = str_replace("_","-",$pg_name) . "-" . $display_id;
+
+    //store it
+    $this->setDomId($dom_string);
 
     //set the dom id of the view
     $view->dom_id = $this->getDomId();
@@ -149,6 +141,20 @@ class GaryViewsFormatter extends FormatterBase {
       }
 
       $switch_view->execute();
+
+      //set hidden class to hide by default
+      $switch_view->getDisplay()->setOption('css_class', 'hidden');
+
+      //create a unique dom id and set it
+      $switch_display_id = $switch_view->getDisplay()->getPluginId();
+      $switch_dom_string = str_replace("_","-",$pg_name) . "-" . $switch_display_id;
+
+      //set the dom id
+      $switch_view->dom_id = $switch_dom_string;
+
+      //build the final dom id
+      $switch_dom_id = 'js-view-dom-id-'.$switch_dom_string;
+
       $elements['#switch_view'] = $switch_view->buildRenderable();
       $elements['#switch_view']['switcher'] =[
         '#title' => t('Edit Mode'),
@@ -156,9 +162,10 @@ class GaryViewsFormatter extends FormatterBase {
         '#attributes' => [
           'class' => 'use-ajax'
         ],
-        '#url' => \Drupal\Core\Url::fromRoute('gary_field_formatter.switch_view', ['vid' => 'butt'], []),
+        '#url' => \Drupal\Core\Url::fromRoute('gary_field_formatter.switch_view', [
+                        'vid_from' => $final_dom_id,
+                        'vid_to' => $switch_dom_id], []),
       ];
-      ksm($elements['#switch_view']);
     }
 
 

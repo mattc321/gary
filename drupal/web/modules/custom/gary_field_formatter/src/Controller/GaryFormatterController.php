@@ -46,10 +46,11 @@ class GaryFormatterController extends ControllerBase {
   }
 
 
-  public function SwitchView($vid) {
+  public function SwitchView($vid_from, $vid_to) {
     $response = new \Drupal\Core\Ajax\AjaxResponse();
-    $vid = "view-id-".$vid;
-    $response->addCommand(new \Drupal\Core\Ajax\AlertCommand($vid));
+
+    // $vid = "view-id-".$vid;
+    $response->addCommand(new InvokeCommand(NULL, 'switchView', [$vid_from, $vid_to]));
     return $response;
   }
 

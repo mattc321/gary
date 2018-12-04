@@ -16,8 +16,13 @@
         };
 
         //switch the desired view
-         $.fn.switchView = function(vid) {
-           console.log(vid);
+         $.fn.switchView = function(vid_from, vid_to) {
+           var $vid_from = $('.'+vid_from);
+           var $vid_to = $('.'+vid_to);
+
+           $vid_from.toggle('hidden');
+           $vid_to.toggle('hidden');
+
          };
      }
    };
