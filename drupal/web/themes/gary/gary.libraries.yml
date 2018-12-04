@@ -30,7 +30,7 @@ global:
     dist/global/models/AppStateModel.js: {}
     dist/global/views/MobileMenuView.js: {}
     dist/forms.js: {}
-    # dist/front.js: {}
+    dist/front.js: {}
 
   dependencies:
     - core/drupal
@@ -39,7 +39,6 @@ global:
     - core/underscore
     - core/backbone
     - core/drupal.dialog.ajax
-    - gary/muuri
 
 gsap:
   js:

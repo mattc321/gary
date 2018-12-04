@@ -35,10 +35,8 @@
       // });
 
 
-      // TweenMax.to("#menu-wrap", .5, {y:0});
+      TweenMax.to("#menu-wrap", .5, {y:0});
       $('.field--type-block-field').fadeIn();
-
-      // var grid = new Muuri('.field--name-field-page-content', {dragEnabled: true});
 
 
       var hide_tween = TweenMax.to("#menu-wrap", .5, {
