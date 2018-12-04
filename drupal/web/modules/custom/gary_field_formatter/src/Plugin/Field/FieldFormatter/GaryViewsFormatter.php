@@ -137,7 +137,41 @@ class GaryViewsFormatter extends FormatterBase {
     $view->execute();
     $elements['#view'] = $view->buildRenderable();
 
+
+    //check if a switch view is there
+    if (!empty($this->getSetting('switch_view'))) {
+
+      $switch_view =  \Drupal\views\Views::getView($this->getSetting('switch_view'));
+      $switch_view->setArguments($args);
+
+      if (!empty($this->getSetting('switch_view_display'))) {
+        $switch_view->setDisplay($this->getSetting('switch_view_display'));
+      }
+
+      $switch_view->execute();
+      $elements['#switch_view'] = $switch_view->buildRenderable();
+      $elements['#switch_view']['switcher'] =[
+        '#title' => t('Edit Mode'),
+        '#type' => 'link',
+        '#attributes' => [
+          'class' => 'use-ajax'
+        ],
+        '#url' => \Drupal\Core\Url::fromRoute('gary_field_formatter.switch_view', ['vid' => 'butt'], []),
+      ];
+      ksm($elements['#switch_view']);
+    }
+
+
     return $elements;
+  }
+
+
+
+
+  public function switchViewCallback(array &$form, FormStateInterface $form_state) {
+    $response = new \Drupal\Core\Ajax\AjaxResponse();
+    $response->addCommand(new \Drupal\Core\Ajax\AlertCommand('fricking test'));
+    return $response;
   }
 
 
@@ -175,6 +209,16 @@ class GaryViewsFormatter extends FormatterBase {
       '#type' => 'textfield',
       '#default_value' => $this->getSetting('form_class'),
     ];
+    $element['switch_view'] = [
+      '#title' => $this->t('Another view name to switch with'),
+      '#type' => 'textfield',
+      '#default_value' => $this->getSetting('switch_view'),
+    ];
+    $element['switch_view_display'] = [
+      '#title' => $this->t('The display name of the switch view. Leave blank for default'),
+      '#type' => 'textfield',
+      '#default_value' => $this->getSetting('switch_view_display'),
+    ];
 
     return $element;
   }
@@ -190,6 +234,8 @@ class GaryViewsFormatter extends FormatterBase {
       'view_machine_name' => "",
       'view_display_name' => "",
       'form_class' => "",
+      'switch_view' => "",
+      'switch_view_display' => "",
     ] + parent::defaultSettings();
   }
 }

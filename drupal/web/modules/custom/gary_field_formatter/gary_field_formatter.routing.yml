@@ -4,3 +4,10 @@ gary_field_formatter.delete_paragraph:
     _controller: '\Drupal\gary_field_formatter\Controller\GaryFormatterController::DeleteEntityParagraph'
   requirements:
     _permission: 'delete content'
+
+gary_field_formatter.switch_view:
+  path: '/switch/view/{vid}'
+  defaults:
+    _controller: '\Drupal\gary_field_formatter\Controller\GaryFormatterController::SwitchView'
+  requirements:
+    _permission: 'access content'

@@ -13,6 +13,12 @@ use Drupal\Core\Ajax\InvokeCommand;
 
 class GaryFormatterController extends ControllerBase {
 
+
+  /**
+   * Delete a paragraph item by id
+   * @param string $pid Paragraph Id
+   * @param string $vid The view id to refresh
+   */
   public function DeleteEntityParagraph($pid, $vid) {
     $storage_handler = \Drupal::entityTypeManager()->getStorage('paragraph');
     $paragraph = $storage_handler->load($pid);
@@ -38,5 +44,14 @@ class GaryFormatterController extends ControllerBase {
 
     return $response;
   }
+
+
+  public function SwitchView($vid) {
+    $response = new \Drupal\Core\Ajax\AjaxResponse();
+    $vid = "view-id-".$vid;
+    $response->addCommand(new \Drupal\Core\Ajax\AlertCommand($vid));
+    return $response;
+  }
+
 
 }
