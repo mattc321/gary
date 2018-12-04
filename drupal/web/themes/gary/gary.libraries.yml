@@ -53,18 +53,3 @@ scrollmagic:
     /libraries/scrollmagic/minified/plugins/animation.gsap.min.js: { minified: true }
 #    @todo: Remove on golive
     /libraries/scrollmagic/minified/plugins/debug.addIndicators.min.js: { minified: true }
-
-muuri:
-   js:
-     /libraries/muuri/dist/muuri.min.js: { minified: true }
-   dependencies:
-     - gary/web-animations
-     - gary/hammer
-
-hammer:
-    js:
-      /libraries/hammer/hammer.min.js: { minified: true }
-
-web-animations:
-            js:
-              /libraries/web-animations/web-animations.min.js: { minified: true }
