@@ -9,9 +9,6 @@ libraries:
   - gary/global
   - gary/gsap
   - gary/scrollmagic
-  - gary/muuri
-  - gary/web-animations
-  - gary/hammer
 
 ckeditor_stylesheets:
   - dist/base/elements.css
