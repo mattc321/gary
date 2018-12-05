@@ -22,6 +22,15 @@ class GaryFormatterController extends ControllerBase {
   public function DeleteEntityParagraph($pid, $vid) {
     $storage_handler = \Drupal::entityTypeManager()->getStorage('paragraph');
     $paragraph = $storage_handler->load($pid);
+
+    //if $paragraph is null item doesnt exist just refresh view
+    if (empty($paragraph)) {
+      $response = new \Drupal\Core\Ajax\AjaxResponse();
+      $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
+
+      return $response;
+    }
+
     $parent_field_name = $paragraph->parent_field_name->value;
     $node = $paragraph->getParentEntity(); //the node entity
 

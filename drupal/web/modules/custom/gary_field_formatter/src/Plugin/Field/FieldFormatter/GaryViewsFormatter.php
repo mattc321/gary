@@ -141,11 +141,22 @@ class GaryViewsFormatter extends FormatterBase {
       $switch_dom_id = 'js-view-dom-id-'.$switch_dom_string;
 
       $elements['#switch_view'] = $switch_view->buildRenderable();
-      $elements['#switch_view']['switcher'] =[
+      $elements['#switch_view']['switch_container'] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'switch-link-container'
+          ],
+        ],
+      ];
+      $elements['#switch_view']['switch_container']['switcher'] = [
         '#title' => t('Edit Mode'),
         '#type' => 'link',
         '#attributes' => [
-          'class' => 'use-ajax'
+          'class' => [
+            'use-ajax',
+            'switch-link'
+          ],
         ],
         '#url' => \Drupal\Core\Url::fromRoute('gary_field_formatter.switch_view', [
                         'vid_from' => $final_dom_id,
@@ -162,7 +173,7 @@ class GaryViewsFormatter extends FormatterBase {
         $form_class = explode(' ', $this->getSetting('form_class'), 0);
       }
       $form = \Drupal::formBuilder()
-        ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id, $switch_dom_id, $form_class);
+        ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id, $form_class);
     }
 
     //attach the loaded entity form
