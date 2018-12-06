@@ -172,12 +172,14 @@ class GaryViewsFormatter extends FormatterBase {
       if (!empty($this->getSetting('form_class'))) {
         $form_class = explode(' ', $this->getSetting('form_class'), 0);
       }
+
+      //load the form
       $form = \Drupal::formBuilder()
         ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id, $form_class);
+
+      $elements['#inline_form']['container']['form'] = $form;
     }
 
-    //attach the loaded entity form
-    $elements['#inline_form'] = $form;
 
     //attach js and set domid so we know which view to refresh
     $elements['#attached']['library'][] = 'gary_field_formatter/refresh';

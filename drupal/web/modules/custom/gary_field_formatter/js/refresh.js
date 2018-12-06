@@ -24,6 +24,12 @@
            $vid_to.toggle('hidden');
 
          };
+
+         //toggle an element
+          $.fn.toggleElement = function(selector, property) {
+            var $element = $(selector);
+            $element.toggle(property);
+          };
      }
    };
  })(jQuery, Drupal, drupalSettings);

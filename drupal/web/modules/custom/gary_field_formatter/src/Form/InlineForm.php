@@ -107,8 +107,43 @@ class InlineForm extends FormBase {
     //Get the EntityFormDisplay (i.e. the default Form Display) of this content type
     $entity_form_display = \Drupal::service('entity_type.manager')->getStorage('entity_form_display')
                                     ->load('paragraph.'.$pg_name.'.default');
+    //init $form
     $form = [];
     $default_values = [];
+
+    //create container attach form and add button
+    $form['container'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => 'pg-form-container'
+      ],
+    ];
+    $form['add_item_container'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => 'add-item-container'
+      ],
+    ];
+
+    $form['add_item_container']['add_item'] = [
+      '#type' => 'button',
+      '#value' => 'Add',
+      '#description' => 'Enter a number to be validated via ajax.',
+      '#attributes' => [
+        'class' => [
+          'add-pg-item'
+        ],
+      ],
+      '#ajax' => [
+        'callback' => '::sayHello',
+        'event' => 'click',
+        'wrapper' => $this->getFormId(),
+        'progress' => [
+          'type' => 'throbber'
+        ],
+      ],
+    ];
+
 
     //loading the form widget will fail without this
     $form['#parents'] = [];
@@ -117,13 +152,13 @@ class InlineForm extends FormBase {
         if ($widget = $entity_form_display->getRenderer($field)) { //Returns the widget class
           $items = $pg->get($field); //Returns the FieldItemsList interface
           $items->filterEmptyItems();
-          $form[$field] = $widget->form($items, $form, $form_state);
+          $form['container'][$field] = $widget->form($items, $form, $form_state);
         }
     }
 
     //set additional properties
-    $form['#prefix'] = '<details class="inline-pg-details"><summary></summary><div id="'.$this->getFormId().'">';
-    $form['#suffix'] = '</div></details>';
+    $form['container']['#prefix'] = '<div id="'.$this->getFormId().'">';
+    $form['container']['#suffix'] = '</div>';
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
     $form['#dom_id'] = $dom_id;
@@ -134,7 +169,7 @@ class InlineForm extends FormBase {
       }
     }
 
-    $form['submit'] = [
+    $form['container']['submit'] = [
       '#type' => 'submit',
       '#weight' => count($form) +1,
       '#value' => t('&#43;'),
@@ -143,12 +178,17 @@ class InlineForm extends FormBase {
         'wrapper' => $this->getFormId(),
       ],
     ];
-    $form['#submit'] = ['::ajaxFormSubmitHandler'];
+    $form['container']['#submit'] = ['::ajaxFormSubmitHandler'];
     $this->builtForm = $form;
-
+    ksm($form);
     return $form;
   }
 
+  public function sayHello(array &$form, FormStateInterface $form_state) {
+    $response = new \Drupal\Core\Ajax\AjaxResponse();
+    $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$this->getFormId(), 'hidden']));
+    return $response;
+  }
   /**
    * {@inheritdoc}
    */

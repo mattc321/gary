@@ -63,4 +63,12 @@ class GaryFormatterController extends ControllerBase {
   }
 
 
+  public function ToggleElement($selector, $property) {
+    $response = new \Drupal\Core\Ajax\AjaxResponse();
+
+    // $vid = "view-id-".$vid;
+    $response->addCommand(new InvokeCommand(NULL, 'toggleElement', [$selector, $property]));
+    return $response;
+  }
+
 }

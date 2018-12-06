@@ -11,3 +11,10 @@ gary_field_formatter.switch_view:
     _controller: '\Drupal\gary_field_formatter\Controller\GaryFormatterController::SwitchView'
   requirements:
     _permission: 'access content'
+
+gary_field_formatter.toggle_element:
+  path: '/toggle/{selector}/{property}'
+  defaults:
+    _controller: '\Drupal\gary_field_formatter\Controller\GaryFormatterController::ToggleElement'
+  requirements:
+    _permission: 'access content'
