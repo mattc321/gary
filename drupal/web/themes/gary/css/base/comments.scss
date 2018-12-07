@@ -1,9 +1,61 @@
 @import "../variables";
 
-.comment__meta {
-  .field--name-user-picture img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+//main comment styles
+article.comment {
+
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  footer {
+
+      width: 5%;
+
+      &.comment__meta {
+        .field--name-user-picture img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+    }
   }
+
+  .content {
+    margin: 5px 10px;
+    background: #f0f6ff;
+    padding: 5px 30px;
+    border: 1px dashed #c3dbff;
+    border-radius: 0px 5px 0px 20px;
+    width: 80%;
+  }
+
+  ul.links li:first-child {
+    padding: 0;
+  }
+
+  p.comment__submitted {
+    font-size: .85em;
+    color: $grey;
+  }
+
+}
+
+
+.ajax-comments-form-reply {
+    width: 70%;
+    /* height: 200px; */
+    margin-left: 10%;
+
+    .text-format-wrapper {
+      label {
+        display: none;
+      }
+    }
+}
+
+//reply comment
+.indented .comment .content {
+    background: #fafbfd;
+    border-radius: 0;
+    
 }

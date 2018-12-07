@@ -3,6 +3,7 @@ global:
     base:
       dist/base/drupal.css: {}
       dist/base/elements.css: {}
+      dist/base/comments.css: {}
     layout:
       dist/layout/header.css: {}
       dist/layout/menu.css: {}

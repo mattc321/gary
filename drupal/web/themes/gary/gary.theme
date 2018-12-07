@@ -72,6 +72,20 @@ function gary_preprocess_comment(&$variables) {
   //change the view mode of user_picture
   $variables['user_picture']['#view_mode'] = 'ultra_compact';
 
+  //change submitted format and output
+  $date = date('D, m-d-Y', $variables['comment']->getCreatedTime());
+  $author = $variables['comment']->getAuthorName();
+  $submitted = [
+    '#theme' => 'rdf_wrapper',
+    '#content' => t('Submitted by @author on @cdate', [
+      '@author' => $author,
+      '@cdate' => $date,
+    ])
+  ];
+  $variables['ec_submitted'][] = $submitted;
+
+
+
 }
 
 function gary_preprocess_form_element(&$variables) {

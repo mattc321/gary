@@ -85,4 +85,18 @@ main {
     }
   }
 
+  &.comments {
+    &:before {
+      // background-image: url(https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/128x128/plain/houses.png);
+      background-image:url(https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-004_comment_chat-512.png);
+      background-size: 30px 30px;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      content: "";
+      position: relative;
+      top: 8px;
+    }
+  }
 }

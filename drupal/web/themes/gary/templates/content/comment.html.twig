@@ -82,11 +82,9 @@
     server which comments are new for the user. Rendering the final "new"
     indicator here would break the render cache.
   #}
-  <mark class="hidden" data-comment-timestamp="{{ new_indicator_timestamp }}"></mark>
 
   <footer class="comment__meta">
     {{ user_picture }}
-    <p class="comment__submitted">{{ submitted|date('m-d-Y') }}</p>
 
     {#
       Indicate the semantic relationship between parent and child comments for
@@ -97,15 +95,10 @@
       <p class="parent visually-hidden">{{ parent }}</p>
     {% endif %}
 
-    {{ permalink }}
   </footer>
 
   <div{{ content_attributes.addClass('content') }}>
-    {% if title %}
-      {{ title_prefix }}
-      <h3{{ title_attributes }}>{{ title }}</h3>
-      {{ title_suffix }}
-    {% endif %}
+    <p class="comment__submitted">{{ ec_submitted }}</p>
     {{ content }}
   </div>
 </article>
