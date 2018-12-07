@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3b9d16150c936787d08ff49919fa7f5",
+    "content-hash": "a9ee02cb7d6e8059e07443aa8ca2c325",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -1819,6 +1819,77 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/admin_toolbar",
                 "issues": "https://www.drupal.org/project/issues/admin_toolbar"
+            }
+        },
+        {
+            "name": "drupal/ajax_comments",
+            "version": "1.0.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/ajax_comments",
+                "reference": "8.x-1.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/ajax_comments-8.x-1.0-beta2.zip",
+                "reference": "8.x-1.0-beta2",
+                "shasum": "a63dbe780b4ef519e12812c7e220fea40e0e228e"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-beta2",
+                    "datestamp": "1539817084",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "acouch",
+                    "homepage": "https://www.drupal.org/user/151868"
+                },
+                {
+                    "name": "danmuzyka",
+                    "homepage": "https://www.drupal.org/user/48685"
+                },
+                {
+                    "name": "formatC&#039;vt",
+                    "homepage": "https://www.drupal.org/user/1853874"
+                },
+                {
+                    "name": "muschpusch",
+                    "homepage": "https://www.drupal.org/user/257634"
+                },
+                {
+                    "name": "neochief",
+                    "homepage": "https://www.drupal.org/user/233667"
+                },
+                {
+                    "name": "qzmenko",
+                    "homepage": "https://www.drupal.org/user/3220037"
+                },
+                {
+                    "name": "rjbrown99",
+                    "homepage": "https://www.drupal.org/user/367845"
+                }
+            ],
+            "description": "Module makes comments load without a page refresh via AJAX",
+            "homepage": "https://www.drupal.org/project/ajax_comments",
+            "support": {
+                "source": "http://cgit.drupalcode.org/ajax_comments"
             }
         },
         {
