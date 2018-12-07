@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\gary_comments\Controller\CommentTag;
+use \Drupal\node\Entity\Node;
 
 /**
  * Implements hook_help().
@@ -32,4 +34,22 @@ function gary_comments_theme() {
       'render element' => 'children',
     ],
   ];
+}
+
+function gary_comments_entity_insert(Drupal\Core\Entity\EntityInterface $entity) {
+  if($entity->bundle() == 'comment') {
+
+    //need to add user tag validation
+
+    $tag_controller = new CommentTag();
+    $tag_controller->AddMessage($entity);
+    $tag_controller->SendNotification($entity, 'to', 'from');
+  }
+}
+
+function gary_comments_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+    if($entity->bundle() == 'comment') {
+      // ksm($entity->subject->value);
+    }
+
 }

@@ -54,6 +54,11 @@ function gary_preprocess_page(&$variables) {
   }
 }
 
+function gary_preprocess_links__node(&$variables) {
+  //unset core add comment link
+  unset($variables['links']['comment-add']);
+}
+
 function gary_preprocess_page_title(&$variables) {
 
   // Load the node entity from current route
