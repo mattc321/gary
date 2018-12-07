@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains gary_comments.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function gary_comments_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gary_comments module.
+    case 'help.page.gary_comments':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Comments controller for Gary') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function gary_comments_theme() {
+  return [
+    'gary_comments' => [
+      'render element' => 'children',
+    ],
+  ];
+}

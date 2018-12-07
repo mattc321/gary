@@ -1,0 +1,7 @@
+name: 'Gary Comments'
+type: module
+description: 'Comments controller for Gary'
+core: 8.x
+package: 'Custom'
+dependencies:
+  - comment
