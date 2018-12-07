@@ -68,6 +68,12 @@ function gary_preprocess_page_title(&$variables) {
   }
 }
 
+function gary_preprocess_comment(&$variables) {
+  //change the view mode of user_picture
+  $variables['user_picture']['#view_mode'] = 'ultra_compact';
+
+}
+
 function gary_preprocess_form_element(&$variables) {
   // $element = $variables['element'];
   // if ($element['#type'] == 'search') {
