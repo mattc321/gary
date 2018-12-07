@@ -111,13 +111,7 @@ class InlineForm extends FormBase {
     $form = [];
     $default_values = [];
 
-    //create container attach form and add button
-    $form['container'] = [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' => 'pg-form-container'
-      ],
-    ];
+    //container for add more button
     $form['add_item_container'] = [
       '#type' => 'container',
       '#attributes' => [
@@ -144,6 +138,13 @@ class InlineForm extends FormBase {
       ],
     ];
 
+    //container attach form and add button
+    $form['container'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => 'pg-form-container'
+      ],
+    ];
 
     //loading the form widget will fail without this
     $form['#parents'] = [];
@@ -157,30 +158,32 @@ class InlineForm extends FormBase {
     }
 
     //set additional properties
-    $form['container']['#prefix'] = '<div id="'.$this->getFormId().'">';
+    $form['container']['#prefix'] = '<div id="'.$this->getFormId().'" class="hidden">';
     $form['container']['#suffix'] = '</div>';
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
     $form['#dom_id'] = $dom_id;
 
     if (!empty($form_class)) {
+      $form_classes=[];
       foreach ($form_class as $key => $class) {
-        $form['#attributes']['class'][] = $class;
+        $form_classes[] = $class;
       }
+      $form['container']['#attributes']['class'] = $form_classes;
     }
 
     $form['container']['submit'] = [
       '#type' => 'submit',
       '#weight' => count($form) +1,
-      '#value' => t('&#43;'),
+      '#value' => t('+'),
       '#ajax' => [
         'callback' => '::ajaxFormRebuild',
         'wrapper' => $this->getFormId(),
       ],
     ];
-    $form['container']['#submit'] = ['::ajaxFormSubmitHandler'];
+    $form['#submit'] = ['::ajaxFormSubmitHandler'];
     $this->builtForm = $form;
-    ksm($form);
+
     return $form;
   }
 
@@ -227,7 +230,7 @@ class InlineForm extends FormBase {
       return $form;
    \Drupal::service('entity_field.manager')->getFieldDefinitions('paragraph', $pg->bundle());
       $field_list = $this->preSave();
-    $field_list = $this->getFieldList();
+      $field_list = $this->getFieldList();
       $def = $definitions[$field]->getDefaultValue($pg);
       if (!empty($def)) {
         // dpm($def[0]);
