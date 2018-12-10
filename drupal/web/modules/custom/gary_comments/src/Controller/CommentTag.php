@@ -44,7 +44,7 @@ class CommentTag extends ControllerBase {
     $comment_id =  $entity->get('cid')->value;
     $content_id = $entity->getCommentedEntity()->id();
     $by =  $entity->getOwner();
-    $to = $user;
+    $to = 'mcampbell@ashlandfod.coop';
 
     $message = Node::create([
        'type' => 'messages',
@@ -61,7 +61,47 @@ class CommentTag extends ControllerBase {
 
   public function SendNotification(EntityInterface $entity, $to, $from) {
     $host_entity_bundle = $entity->getCommentedEntity()->bundle();
-    ksm($host_entity_bundle);
+
+    switch ($host_entity_bundle) {
+      case 'tasks':
+      break;
+
+      case 'projects':
+      case 'opportunities':
+
+      $node_title = $entity->getCommentedEntity()->title->valuem;
+      $account_title = $entity->getCommentedEntity()->get('field_account_reference')->getEntity()->title->value;
+      $body = $entity->get('comment_body')->value;
+      $node_id =  $entity->getCommentedEntity()->id();
+
+      $values = array(
+      'uemail' => $to,
+      'poster' => $from,
+      'body' => $body,
+      'bundle' => $host_entity_bundle,
+      'node_title' => $node_title,
+      'node_id' => $node_id,
+      'account_title' => $account_title,
+      );
+
+      $mailManager = \Drupal::service('plugin.manager.mail');
+      $module = 'gary_comments';
+      $key = 'comment_project_tag';
+      $params['values'] = $values;
+      $langcode = \Drupal::currentUser()->getPreferredLangcode();
+      $send = true;
+      $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+      if ($result['result'] !== true) {
+        $messenger = \Drupal::messenger();
+        $messenger->addMessage('An error happened and the notification was not sent', $messenger::TYPE_WARNING);
+      }
+
+      break;
+
+      case 'tasks':
+      break;
+    }
+
   }
 
   protected function GetTaggedUsers($body) {
