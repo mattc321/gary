@@ -49,22 +49,27 @@ function gary_comments_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
 function gary_comments_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
     if($entity->bundle() == 'comment') {
       // ksm($entity->getOwner());
-      ksm($entity->getCommentedEntity()->title->value);
+      // ksm($entity->getOwner()->getDisplayName());
     }
 
 }
 
+
+function gary_comments_mail_alter(&$message) {
+  \Drupal::logger('gary_comments')->error('mail alter');
+  // ksm($message);
+}
 /**
 * Implements hook_mail().
 */
 function gary_comments_mail($key, &$message, $params) {
+\Drupal::logger('gary_comments')->error('wtf');
  $options = array(
    'langcode' => $message['langcode'],
  );
  switch ($key) {
    case 'comment_project_tag':
      $message['from'] = \Drupal::config('system.site')->get('mail');
-     $message['reply-to'] = \Drupal::config('system.site')->get('mail');
 
      // $message['to'] = $params['uemail'];
      $message['subject'] = t('Comment Tag: @account - @title', array('@account' => $params['account_title'], '@title' => $params['node_title']));
@@ -76,10 +81,17 @@ function gary_comments_mail($key, &$message, $params) {
      $message['body'][] = '</br>';
      $message['body'][] = t('Comment: @cbod', array('@cbod' => $params['body']));
      $message['body'][] = '</br>';
-     $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$param['node_id']);
+
+     $message['headers'] = [
+      'content-type' => 'text/html',
+      'MIME-Version' => '1.0',
+      'reply-to' => 'cascadiamatt@gmail.com',
+      'from' => 'sender name <'.$params['poster_name'].'>'
+     ];
+     $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
 
      $message['body'][] = t('Go here to view: https://ecteam.net/@alias', array('@alias' => $alias));
-
+     ksm($message);
 
      break;
  }

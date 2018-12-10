@@ -74,14 +74,15 @@ class CommentTag extends ControllerBase {
       $body = $entity->get('comment_body')->value;
       $node_id =  $entity->getCommentedEntity()->id();
 
-      $values = array(
-      'uemail' => $to,
-      'poster' => $from,
-      'body' => $body,
-      'bundle' => $host_entity_bundle,
-      'node_title' => $node_title,
-      'node_id' => $node_id,
-      'account_title' => $account_title,
+      $params = array(
+        'uemail' => $to,
+        'poster' => $from->getEmail(),
+        'poster_name' => $from->getDisplayName(),
+        'body' => $body,
+        'bundle' => $host_entity_bundle,
+        'node_title' => $node_title,
+        'node_id' => $node_id,
+        'account_title' => $account_title,
       );
 
       $mailManager = \Drupal::service('plugin.manager.mail');
@@ -90,7 +91,7 @@ class CommentTag extends ControllerBase {
       $params['values'] = $values;
       $langcode = \Drupal::currentUser()->getPreferredLangcode();
       $send = true;
-      $result = $mailManager->mail($module, $key, $to, $langcode, $params, NULL, $send);
+      $result = $mailManager->mail($module, $key, $to, $langcode, $params, 'cascadiamatt@gmail.com', $send);
       if ($result['result'] !== true) {
         $messenger = \Drupal::messenger();
         $messenger->addMessage('An error happened and the notification was not sent', $messenger::TYPE_WARNING);
