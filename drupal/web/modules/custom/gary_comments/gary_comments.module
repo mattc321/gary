@@ -7,7 +7,9 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\gary_comments\Controller\CommentTag;
-use \Drupal\node\Entity\Node;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\gary_custom\GaryFunctions;
 
 /**
  * Implements hook_help().
@@ -48,32 +50,28 @@ function gary_comments_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
 
 function gary_comments_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
     if($entity->bundle() == 'comment') {
-      // ksm($entity->getOwner());
+      // ksm($entity->getCommentEntity()->bundle());
+      ksm(\Drupal::request()->getSchemeAndHttpHost());
       // ksm($entity->getOwner()->getDisplayName());
     }
 
 }
 
-
-function gary_comments_mail_alter(&$message) {
-  \Drupal::logger('gary_comments')->error('mail alter');
-  // ksm($message);
-}
 /**
 * Implements hook_mail().
 */
 function gary_comments_mail($key, &$message, $params) {
-\Drupal::logger('gary_comments')->error('wtf');
+
  $options = array(
    'langcode' => $message['langcode'],
  );
  switch ($key) {
    case 'comment_project_tag':
+
      $message['from'] = \Drupal::config('system.site')->get('mail');
 
-     // $message['to'] = $params['uemail'];
      $message['subject'] = t('Comment Tag: @account - @title', array('@account' => $params['account_title'], '@title' => $params['node_title']));
-     $message['body'][] = t('Posted by: @who', array('@who' => $params['poster']));
+     $message['body'][] = t('Posted by: @who', array('@who' => $params['poster_name']));
      $message['body'][] = '</br>';
      $message['body'][] = t('Builder/Account: @account', array('@account' => $params['account_title']));
      $message['body'][] = '</br>';
@@ -85,14 +83,47 @@ function gary_comments_mail($key, &$message, $params) {
      $message['headers'] = [
       'content-type' => 'text/html',
       'MIME-Version' => '1.0',
-      'reply-to' => 'cascadiamatt@gmail.com',
-      'from' => 'sender name <'.$params['poster_name'].'>'
+      'reply-to' => $message['from'],
+      'from' => 'Admin <'.$message['from'].'>'
      ];
+
      $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
-
-     $message['body'][] = t('Go here to view: https://ecteam.net/@alias', array('@alias' => $alias));
-     ksm($message);
-
+     $host = \Drupal::request()->getSchemeAndHttpHost();
+     $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
      break;
+
+     case 'comment_task_tag':
+
+       $message['from'] = \Drupal::config('system.site')->get('mail');
+
+       //Comment Tag: Account - Task Title (Project Title)
+       $message['subject'] = t('Comment Tag: @account - @task_title (@parent_title)', array(
+          '@account' => $params['account_title'],
+          '@task_title' => $params['node_title'],
+          '@parent_title' => $params['parent_title']));
+
+       $message['body'][] = t('Posted by: @who', array('@who' => $params['poster_name']));
+       $message['body'][] = '</br>';
+       $message['body'][] = t('Builder/Account: @account', array('@account' => $params['account_title']));
+       $message['body'][] = '</br>';
+       $message['body'][] = t('Title/@bundle: @title (@parent_title)', array(
+          '@title' => $params['node_title'],
+          '@bundle' => ucfirst($params['parent_bundle']),
+          '@parent_title' => $params['parent_title']));
+       $message['body'][] = '</br>';
+       $message['body'][] = t('Comment: @cbod', array('@cbod' => $params['body']));
+       $message['body'][] = '</br>';
+
+       $message['headers'] = [
+        'content-type' => 'text/html',
+        'MIME-Version' => '1.0',
+        'reply-to' => $message['from'],
+        'from' => 'Admin <'.$message['from'].'>'
+       ];
+
+       $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
+       $host = \Drupal::request()->getSchemeAndHttpHost();
+       $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
+       break;
  }
 }

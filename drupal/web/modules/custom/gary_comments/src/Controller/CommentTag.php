@@ -5,6 +5,7 @@ namespace Drupal\gary_comments\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\node\Entity\Node;
+use Drupal\gary_custom\GaryFunctions;
 
 class CommentTag extends ControllerBase {
 
@@ -44,7 +45,7 @@ class CommentTag extends ControllerBase {
     $comment_id =  $entity->get('cid')->value;
     $content_id = $entity->getCommentedEntity()->id();
     $by =  $entity->getOwner();
-    $to = 'mcampbell@ashlandfod.coop';
+    $to = $user;
 
     $message = Node::create([
        'type' => 'messages',
@@ -63,43 +64,95 @@ class CommentTag extends ControllerBase {
     $host_entity_bundle = $entity->getCommentedEntity()->bundle();
 
     switch ($host_entity_bundle) {
-      case 'tasks':
-      break;
-
       case 'projects':
       case 'opportunities':
 
-      $node_title = $entity->getCommentedEntity()->title->valuem;
-      $account_title = $entity->getCommentedEntity()->get('field_account_reference')->getEntity()->title->value;
-      $body = $entity->get('comment_body')->value;
-      $node_id =  $entity->getCommentedEntity()->id();
+        $node_title = $entity->getCommentedEntity()->title->value;
+        $account_target = $entity->getCommentedEntity()->get('field_account_reference')->target_id;
+        $account_title = \Drupal::entityTypeManager()->getStorage('node')->load($account_target)->getTitle();
+        $body = $entity->get('comment_body')->value;
+        $node_id =  $entity->getCommentedEntity()->id();
 
-      $params = array(
-        'uemail' => $to,
-        'poster' => $from->getEmail(),
-        'poster_name' => $from->getDisplayName(),
-        'body' => $body,
-        'bundle' => $host_entity_bundle,
-        'node_title' => $node_title,
-        'node_id' => $node_id,
-        'account_title' => $account_title,
-      );
+        $params = array(
+          'uemail' => $to->getEmail(),
+          'poster' => $from->getEmail(),
+          'poster_name' => $from->getDisplayName(),
+          'body' => $body,
+          'bundle' => $host_entity_bundle,
+          'node_title' => $node_title,
+          'node_id' => $node_id,
+          'account_title' => $account_title,
+        );
 
-      $mailManager = \Drupal::service('plugin.manager.mail');
-      $module = 'gary_comments';
-      $key = 'comment_project_tag';
-      $params['values'] = $values;
-      $langcode = \Drupal::currentUser()->getPreferredLangcode();
-      $send = true;
-      $result = $mailManager->mail($module, $key, $to, $langcode, $params, 'cascadiamatt@gmail.com', $send);
-      if ($result['result'] !== true) {
-        $messenger = \Drupal::messenger();
-        $messenger->addMessage('An error happened and the notification was not sent', $messenger::TYPE_WARNING);
-      }
+        $mailManager = \Drupal::service('plugin.manager.mail');
+        $module = 'gary_comments';
+        $key = 'comment_project_tag';
+        $params['values'] = $params;
+        $langcode = \Drupal::currentUser()->getPreferredLangcode();
+        $send = true;
+        $result = $mailManager->mail($module, $key, $to->getEmail(), $langcode, $params, NULL, $send);
+        if ($result['result'] !== true) {
+          $messenger = \Drupal::messenger();
+          $messenger->addMessage('An error happened and the notification was not sent', $messenger::TYPE_WARNING);
+          return FALSE;
+        } else {
+          return TRUE;
+        }
 
       break;
 
       case 'tasks':
+
+        //init helper functions from gary_custom
+        $helper = new GaryFunctions();
+
+        //the project or opportunity referencing this task
+        $task = $entity->getCommentedEntity();
+        $task_id =  $entity->getCommentedEntity()->id();
+        $task_title = $entity->getCommentedEntity()->getTitle();
+
+        $parent_nid = $helper->getParentNid($task);
+        $parent = \Drupal::entityTypeManager()->getStorage('node')->load($parent_nid);
+        $parent_title = $parent->title->value;
+        $parent_bundle = $parent->bundle();
+
+        $account_target = $parent->get('field_account_reference')->target_id;
+        $account_title = \Drupal::entityTypeManager()->getStorage('node')->load($account_target)->getTitle();
+
+        $comment_body = $entity->get('comment_body')->value;
+        $comment_id =  $entity->id();
+
+
+        $params = array(
+          'uemail' => $to->getEmail(),
+          'poster' => $from->getEmail(),
+          'poster_name' => $from->getDisplayName(),
+          'body' => $comment_body,
+          'bundle' => $host_entity_bundle,
+          'parent_bundle'  => $parent_bundle,
+          'node_title' => $task_title,
+          'node_id' => $task_id,
+          'parent_title' => $parent_title,
+          'parent_nid' => $parent_nid,
+          'account_title' => $account_title,
+        );
+
+        $mailManager = \Drupal::service('plugin.manager.mail');
+        $module = 'gary_comments';
+        $key = 'comment_task_tag';
+        $params['values'] = $params;
+        $langcode = \Drupal::currentUser()->getPreferredLangcode();
+        $send = true;
+        $result = $mailManager->mail($module, $key, $to->getEmail(), $langcode, $params, NULL, $send);
+        if ($result['result'] !== true) {
+          $messenger = \Drupal::messenger();
+          $messenger->addMessage('An error happened and the notification was not sent', $messenger::TYPE_WARNING);
+          return FALSE;
+        } else {
+          return TRUE;
+        }
+
+
       break;
     }
 

@@ -144,4 +144,26 @@ class GaryFunctions {
     return $fields_by_weight;
   }
 
+  /**
+   * Get the parent node id referencing this task
+   * @param  EntityInterface $task_entity The task entity
+   * @return string                       The parent node id
+   */
+  public function getParentNid(EntityInterface $task_entity) {
+    $query = \Drupal::database()->select('node__field_tasks', 'n');
+    $query->addField('n', 'entity_id');
+    $query->condition('n.field_tasks_target_id', $task_entity->id());
+    $results = $query->execute()->fetchAll();
+
+    //there should never be more than one parent. If so the first keyed one is likely wrong
+    if (count($results) > 1) {
+      $messenger = \Drupal::messenger();
+      $messenger->addMessage('An error occurred! Contact the site administrator and check the log', $messenger::TYPE_WARNING);
+      \Drupal::logger('gary_comments')->error('More than one parent node is referencing a single task id. No bueno');
+    }
+
+    //the parent nid referencing the task
+    return $results[0]->entity_id;
+  }
+
 }
