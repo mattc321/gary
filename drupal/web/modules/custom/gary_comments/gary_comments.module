@@ -38,6 +38,30 @@ function gary_comments_theme() {
   ];
 }
 
+function gary_comments_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'comment_comment_form') {
+    //change comment button value to add
+    $form['actions']['submit']['#value'] = t('Add');
+
+    //load taggable users by role assignees
+    $users = GaryFunctions::loadUsersByRole('assignees');
+    $user_string = "";
+    foreach ($users as $key => $user) {
+      $user_string .= ucfirst($user->getAccountName()) . ' ';
+    }
+    $msg = '<div class="comment-desc">To trigger a notification email to a team member, use @username anywhere in your comment with a space before and after.</br>';
+    $msg.= 'Example: "Hi @cybil read this comment."  <span class="userlist"> Users: '.$user_string;
+    $msg.= '</div>';
+    //append message to the comment form
+    $form['link'] = [
+          '#markup' => t($msg),
+          '#weight' => '2',
+        ];
+
+  }
+
+}
+
 
 /**
 * Implements hook_entity_insert().
@@ -46,9 +70,6 @@ function gary_comments_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
 
 
   if($entity->bundle() == 'comment') {
-
-    //need to add user tag validation
-
     //check if a user was tagged. Add message and send notification if true
     $tag_controller = new CommentTag();
     $tag_controller->CheckForTag($entity);
@@ -60,9 +81,7 @@ function gary_comments_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
 */
 function gary_comments_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
     if($entity->bundle() == 'comment') {
-      // ksm($entity->getCommentEntity()->bundle());
-      // ksm(\Drupal::request()->getSchemeAndHttpHost());
-      // ksm($entity->getOwner()->getDisplayName());
+
     }
 
 }

@@ -11,6 +11,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\user\Entity\User;
 
 class GaryFunctions {
 
@@ -96,6 +97,23 @@ class GaryFunctions {
       }
     }
     return;
+  }
+
+  /**
+   * Get an array of users with a specific role
+   * @param  string $role The role to select users by
+   * @return mixed       Mixed array of users
+   */
+  public static function loadUsersByRole(string $role = NULL) {
+
+    $ids = \Drupal::entityQuery('user')
+    ->condition('status', 1)
+    ->condition('roles', $role)
+    ->execute();
+    $users = [];
+    $users = User::loadMultiple($ids);
+
+    return $users;
   }
 
   /**

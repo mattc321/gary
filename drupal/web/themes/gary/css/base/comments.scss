@@ -57,5 +57,26 @@ article.comment {
 .indented .comment .content {
     background: #fafbfd;
     border-radius: 0;
-    
+
+}
+
+//Comments
+//hide formats and description on comment form
+[data-drupal-selector="edit-comment-body-0-format"] {
+  display: none;
+}
+
+h2.comment-form__title {
+    display: none;
+}
+
+.comment-comment-form {
+    margin-left: 75px;
+    max-width: 85%;
+}
+
+.comment-desc {
+    display: inline-block;
+    float: right;
+    color: $grey;
 }
