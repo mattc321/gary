@@ -1,5 +1,7 @@
 <?php
 
+//Formatter for paragraphs
+
 namespace Drupal\gary_field_formatter\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
@@ -18,7 +20,8 @@ use Drupal\Core\Field\FieldDefinitionInterface;
  *   id = "paragraph_views_formatter",
  *   label = @Translation("Paragraph View Formatter"),
  *   field_types = {
- *     "entity_reference_revisions"
+ *     "entity_reference_revisions",
+ *     "entity_reference"
  *   }
  * )
  */
