@@ -14,6 +14,12 @@ use Drupal\Core\Entity\Entity\EntityViewDisplay;
 
 class GaryFunctions {
 
+  /**
+   * Handler for calculating fields in gary
+   * @param  EntityInterface $entity     The entity containing the field we are calculating
+   * @param  string          $field_name The field name string of the field we are calculating
+   * @return boolean                      return
+   */
   public function calculateField(EntityInterface $entity, $field_name) {
 
 
@@ -47,6 +53,11 @@ class GaryFunctions {
     return;
   }
 
+  /**
+   * Delete revision entities on parapraph deletion
+   * @param  EntityInterface $entity The paragraph entity
+   * @return boolean                   Return
+   */
   public function cleanParagraphs(EntityInterface $entity) {
     // Check to make sure method exists.
     if (!($entity instanceof FieldableEntityInterface)) {
@@ -84,6 +95,7 @@ class GaryFunctions {
         $storage_handler->delete($entities);
       }
     }
+    return;
   }
 
   /**
@@ -150,6 +162,7 @@ class GaryFunctions {
    * @return string                       The parent node id
    */
   public function getParentNid(EntityInterface $task_entity) {
+    //connect db lookup entity_id referencing this target_id
     $query = \Drupal::database()->select('node__field_tasks', 'n');
     $query->addField('n', 'entity_id');
     $query->condition('n.field_tasks_target_id', $task_entity->id());
@@ -159,7 +172,7 @@ class GaryFunctions {
     if (count($results) > 1) {
       $messenger = \Drupal::messenger();
       $messenger->addMessage('An error occurred! Contact the site administrator and check the log', $messenger::TYPE_WARNING);
-      \Drupal::logger('gary_comments')->error('More than one parent node is referencing a single task id. No bueno');
+      \Drupal::logger('gary_custom')->error('More than one parent node is referencing a single task id. No bueno');
     }
 
     //the parent nid referencing the task

@@ -38,20 +38,30 @@ function gary_comments_theme() {
   ];
 }
 
+
+/**
+* Implements hook_entity_insert().
+*/
 function gary_comments_entity_insert(Drupal\Core\Entity\EntityInterface $entity) {
+
+
   if($entity->bundle() == 'comment') {
 
     //need to add user tag validation
 
+    //check if a user was tagged. Add message and send notification if true
     $tag_controller = new CommentTag();
     $tag_controller->CheckForTag($entity);
   }
 }
 
+/**
+* Implements hook_entity_view().
+*/
 function gary_comments_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
     if($entity->bundle() == 'comment') {
       // ksm($entity->getCommentEntity()->bundle());
-      ksm(\Drupal::request()->getSchemeAndHttpHost());
+      // ksm(\Drupal::request()->getSchemeAndHttpHost());
       // ksm($entity->getOwner()->getDisplayName());
     }
 
@@ -66,6 +76,8 @@ function gary_comments_mail($key, &$message, $params) {
    'langcode' => $message['langcode'],
  );
  switch ($key) {
+
+   //prepare email for comments tagged in opps or projects
    case 'comment_project_tag':
 
      $message['from'] = \Drupal::config('system.site')->get('mail');
@@ -92,6 +104,7 @@ function gary_comments_mail($key, &$message, $params) {
      $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
      break;
 
+     //prepare email for comment tags in tasks
      case 'comment_task_tag':
 
        $message['from'] = \Drupal::config('system.site')->get('mail');

@@ -13,6 +13,13 @@ class CommentTag extends ControllerBase {
 
   protected $error_string = NULL;
 
+
+
+  /**
+   * Check to see if the comment body has a tagged user
+   * @param EntityInterface $entity The comment entity
+   * @return boolean                True if found false if not
+   */
   public function CheckForTag(EntityInterface $entity) {
 
     $body =  $entity->get('comment_body')->value;
@@ -38,6 +45,12 @@ class CommentTag extends ControllerBase {
   }
 
 
+  /**
+   * Add a new messahe entity and send a notification
+   * @param EntityInterface $entity The comment entity
+   * @param mixed          $user   mixed user array of the tagged user
+   * @return boolean                return
+   */
   public function AddMessage(EntityInterface $entity, $user) {
 
     $title = $entity->subject->value;
@@ -58,11 +71,22 @@ class CommentTag extends ControllerBase {
      ]);
      $message->save();
      $this->SendNotification($entity, $to, $by);
+     return;
   }
 
+  /**
+   * Prepare and send the notification emails to the tagged users
+   * @param EntityInterface $entity The comment entity
+   * @param mixed          $to     Mixed user array of the recipient
+   * @param mixed          $from   Mixed user array of the comment author
+   * @return boolean               return
+   */
   public function SendNotification(EntityInterface $entity, $to, $from) {
+
+    //different emails go out for different parent bundles
     $host_entity_bundle = $entity->getCommentedEntity()->bundle();
 
+    //emails in hook_mail
     switch ($host_entity_bundle) {
       case 'projects':
       case 'opportunities':
@@ -155,15 +179,21 @@ class CommentTag extends ControllerBase {
 
       break;
     }
-
+    return;
   }
 
+  /**
+   * Process the body and build an array of tagged users
+   * @param string $body The body text
+   * @return mixed A mixed array of user objects
+   */
   protected function GetTaggedUsers($body) {
 
     $str = explode(" ",$body);
 
     $users = [];
 
+    //iterate through comment words and look for a tag
     foreach($str as $k=>$word){
       if(substr($word,0,1)=="@"){
         $uname = trim(substr($word,1));
@@ -171,10 +201,13 @@ class CommentTag extends ControllerBase {
         if(!empty($tuser)) {
           $users[] = $tuser;
         } else {
-          $this->error_string = t("You tagged a user that I could not find!");
+          //set an error string if the tagged user returns empty
+          $this->error_string = t("You tagged @user but I can't find that person!", ['@user' => $uname]);
         }
       }
     }
+
+    //set this for later use
     $this->tagged_users = $users;
     return $users;
   }
