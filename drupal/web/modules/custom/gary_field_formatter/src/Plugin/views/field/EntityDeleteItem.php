@@ -12,13 +12,13 @@ use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
 
 /**
- * Field handler for deleting paragraph item.
+ * Field handler for deleting entity item.
  *
  * @ingroup views_field_handlers
  *
- * @ViewsField("paragraph_delete_item")
+ * @ViewsField("entity_delete_item")
  */
-class ParagraphDeleteItem extends FieldPluginBase {
+class EntityDeleteItem extends FieldPluginBase {
 
   /**
    * @{inheritdoc}
@@ -42,27 +42,39 @@ class ParagraphDeleteItem extends FieldPluginBase {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
 
-    $form['paragraph_delete_item'] = [
-      '#title' => t('Ajaxed Delete Paragraph Item'),
+    $form['entity_delete_item'] = [
+      '#title' => t('Ajaxed Delete Entity Item'),
       '#type' => 'item',
-      '#description' => t('This field will create a link to delete the paragraph item')
+      '#description' => t('This field will create a link to delete the entity item')
     ];
 
     parent::buildOptionsForm($form, $form_state);
   }
+
 
   /**
    * @{inheritdoc}
    */
   public function render(ResultRow $values) {
 
+    //get the right id to delete
+    $relationship_id = $this->options['relationship'];
+
+    //apparently the route needs this values initialized they cant be blank or null
+    $host_id = 0;
+    $id = 0;
+    if ($relationship_id == 'none') {
+      $id = $values->_entity->id();
+    }
+    elseif (isset($values->_relationship_entities[$relationship_id])) {
+      $id = $values->_relationship_entities[$relationship_id]->id();
+      $host_id = $values->_entity->id();
+    }
+
     //create a matching dom_id as set in the field handler
     $display_id = (!empty($this->view->current_display) ? $this->view->current_display : $this->view->getDisplay()->getPluginId());
     $dom_string = str_replace("_","-",$this->view->id()) . "-" . $display_id;
     $final_dom_id = 'js-view-dom-id-'.$dom_string;
-
-    //the paragraph id to delete
-    $id = $values->id;
 
     $link = [
       '#title' => t('&times;'),
@@ -70,12 +82,14 @@ class ParagraphDeleteItem extends FieldPluginBase {
       '#attributes' => [
         'class' => [
           'use-ajax',
-          'delete-pg-item'
+          'delete-entity-item'
         ],
       ],
-      '#url' => \Drupal\Core\Url::fromRoute('gary_field_formatter.delete_paragraph', [
+      '#url' => \Drupal\Core\Url::fromRoute('gary_field_formatter.delete_entity', [
                       'pid' => $id,
-                      'vid' => $final_dom_id], []),
+                      'vid' => $final_dom_id,
+                      'host_id' => $host_id,
+                      'host_field' => $relationship_id], []),
     ];
     return $link;
   }

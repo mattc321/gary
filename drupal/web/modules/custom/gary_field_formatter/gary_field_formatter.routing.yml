@@ -5,6 +5,13 @@ gary_field_formatter.delete_paragraph:
   requirements:
     _permission: 'delete content'
 
+gary_field_formatter.delete_entity:
+  path: '/ent/delete/{pid}/{vid}/{host_id}/{host_field}'
+  defaults:
+    _controller: '\Drupal\gary_field_formatter\Controller\GaryFormatterController::DeleteEntityItem'
+  requirements:
+    _permission: 'delete content'
+
 gary_field_formatter.switch_view:
   path: '/switch/view/{vid_from}/{vid_to}'
   defaults:

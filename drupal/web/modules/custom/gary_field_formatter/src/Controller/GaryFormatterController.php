@@ -9,6 +9,7 @@ use Drupal\gary_field_formatter\Ajax\DeleteParagraph;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Ajax;
 use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\node\Entity\Node;
 
 
 class GaryFormatterController extends ControllerBase {
@@ -53,7 +54,56 @@ class GaryFormatterController extends ControllerBase {
     return $response;
   }
 
+  /**
+   * Delete an entity item by id
+   * @param string $pid Entity Id
+   * @param string $vid The view id to refresh
+   * @param string $host_id The host id containing the relationship if there is one
+   * @param string $host_field The host field containing the entity references
+   */
+  public function DeleteEntityItem($pid, $vid, $host_id = NULL, $host_field = NULL) {
+    $storage_handler = \Drupal::entityTypeManager()->getStorage('node');
+    $entity = $storage_handler->load($pid);
 
+    //if $entity is null item doesnt exist just refresh view
+    if (empty($entity)) {
+      $response = new \Drupal\Core\Ajax\AjaxResponse();
+      $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
+
+      return $response;
+    }
+
+    //delete paragraph item
+    $entity->delete();
+
+    //if the host id and host field have values, this is a referenced field
+    //load the parent and unset the deleted referenced entity
+    if ($host_id != 0 && $host_field != 'none' ) {
+      $parent_node = Node::load($host_id);
+
+      // Grab any existing references from the node, and unset the one deleted
+      $items = $parent_node->get($host_field)->getValue();
+      foreach ($items as $key => $item) {
+        if ($item['target_id'] == $pid) {
+          unset($items[$key]);
+        }
+      }
+      $parent_node->set($host_field, $items);
+      $parent_node->save();
+    }
+
+    $response = new \Drupal\Core\Ajax\AjaxResponse();
+    $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
+
+    return $response;
+  }
+
+
+  /**
+   * Toggle between views
+   * @param string $vid_from The view id to hide
+   * @param string $vid_to   The view id to unhide
+   */
   public function SwitchView($vid_from, $vid_to) {
     $response = new \Drupal\Core\Ajax\AjaxResponse();
 
@@ -63,6 +113,11 @@ class GaryFormatterController extends ControllerBase {
   }
 
 
+  /**
+   * Toggle an element by property
+   * @param string $selector The element to select
+   * @param string $property The property to toggle
+   */
   public function ToggleElement($selector, $property) {
     $response = new \Drupal\Core\Ajax\AjaxResponse();
 

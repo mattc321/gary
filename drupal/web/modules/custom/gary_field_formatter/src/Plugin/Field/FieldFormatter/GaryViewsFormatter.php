@@ -83,7 +83,17 @@ class GaryViewsFormatter extends FormatterBase {
       return $elements;
     }
 
+    //get entity type and fieldname
+    $type = $items->getFieldDefinition()->getSettings()['target_type'];
     $pg_name = reset($items->getFieldDefinition()->getSettings()['handler_settings']['target_bundles']);
+
+    //only continue if type is pg or node
+    if ($type != 'paragraph' && $type != 'node') {
+      $error = t('This field formatter only supports entities of type Paragraph or Node. Field @pgname is of type @type', ['@pgname' => $pg_name, '@type' => $type]);
+      $messenger = \Drupal::messenger();
+      $messenger->addMessage($error, $messenger::TYPE_WARNING);
+      return $elements;
+    }
 
     //set the static field name for the inline form to build a variable form id
     self::$form_field_name = $items->getName();
@@ -101,7 +111,7 @@ class GaryViewsFormatter extends FormatterBase {
 
     //create a unique dom id and set it
     $display_id = (!empty($view->current_display) ? $view->current_display : $view->getDisplay()->getPluginId());
-    $dom_string = str_replace("_","-",$pg_name) . "-" . $display_id;
+    $dom_string = str_replace("_","-",$view->id()) . "-" . $display_id;
 
     //store it
     $this->setDomId($dom_string);
@@ -178,7 +188,7 @@ class GaryViewsFormatter extends FormatterBase {
 
       //load the form
       $form = \Drupal::formBuilder()
-        ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id, $form_class);
+        ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id, $form_class, $type);
 
       $elements['#inline_form']['container']['form'] = $form;
     }

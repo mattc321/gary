@@ -20,7 +20,8 @@ use Drupal\Core\Entity;
 use Drupal\Core\Ajax;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
-
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\node\Entity\Node;
 
 
 /**
@@ -40,6 +41,8 @@ class InlineForm extends FormBase {
   protected $builtForm;
 
   protected $hostNodeId;
+
+  protected $targetType;
 
 
   private function getWholeForm(){
@@ -71,16 +74,28 @@ class InlineForm extends FormBase {
     return $this->hostFieldName;
   }
 
+  public function getTargetType() {
+    return $this->targetType;
+  }
+
   protected function setNewPgItem($item) {
     $this->newPcItem = $item;
   }
 
   /**
    * set the Field List
-   * @param string $pg_name the field name of the paragraph bundle
+   * @param string $pg_name The field name or the paragraph bundle
+   * @param string $type The entity type
    */
-  private function setFieldDefs($pg_name) {
-    $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg_name,]);
+  private function setFieldDefs($pg_name, $type) {
+
+    if ($type == 'node') {
+      $pg_item = Node::create(['type' => $pg_name,]);
+    }
+    if ($type == 'paragraph') {
+      $pg_item = Paragraph::create(['type' => $pg_name,]);
+    }
+
     $displays = EntityViewDisplay::collectRenderDisplays([$pg_item], 'full');
     $display = $displays[$pg_item->bundle()];
     foreach ($display->getComponents() as $name => $options) {
@@ -93,20 +108,23 @@ class InlineForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL, $dom_id = NULL, $form_class = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL, $dom_id = NULL, $form_class = NULL, $type = NULL) {
 
-    $this->setFieldDefs($pg_name);
+    //get and set the list of field defs and vars
+    $this->setFieldDefs($pg_name, $type);
     $this->hostFieldName = $host_field;
     $this->host_node_id = $host_node_id;
     $field_defs = $this->getFieldList();
+    $this->targetType = $type;
 
-    $pg = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(array(
+    $pg = \Drupal::service('entity_type.manager')->getStorage($type)->create(array(
                     'type' => $pg_name
                 )
             );
     //Get the EntityFormDisplay (i.e. the default Form Display) of this content type
     $entity_form_display = \Drupal::service('entity_type.manager')->getStorage('entity_form_display')
-                                    ->load('paragraph.'.$pg_name.'.default');
+                                    ->load($type.'.'.$pg_name.'.default');
+
     //init $form
     $form = [];
     $default_values = [];
@@ -154,6 +172,12 @@ class InlineForm extends FormBase {
           $items = $pg->get($field); //Returns the FieldItemsList interface
           $items->filterEmptyItems();
           $form['container'][$field] = $widget->form($items, $form, $form_state);
+
+          //unsetting required on entity reference because its firing a false positive for an empty title
+          //validation still works
+          if ($form['container'][$field]['widget']['#field_name'] == 'title') {
+            $form['container'][$field]['widget'][0]['value']['#required'] = FALSE;
+          }
         }
     }
 
@@ -183,7 +207,7 @@ class InlineForm extends FormBase {
     ];
     $form['#submit'] = ['::ajaxFormSubmitHandler'];
     $this->builtForm = $form;
-
+    // ksm($form);
     return $form;
   }
 
@@ -196,7 +220,7 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-
+    ksm($form_state);
   }
 
   /**
@@ -217,7 +241,16 @@ class InlineForm extends FormBase {
       $sliced_array = array_map('end', array_slice($form_values, $i, 1, TRUE));
       $pg_values = array_merge($pg_values, array_map('end',$sliced_array));
     }
-    $this->addPgItem($pg, $pg_name, $pg_values);
+    //add the new entity if its node
+    if ($this->getTargetType() == 'node') {
+      $this->addNodeItem($pg, $pg_name, $pg_values);
+    }
+
+    //add the new entity if its paragraph
+    if ($this->getTargetType() == 'paragraph') {
+      $this->addPgItem($pg, $pg_name, $pg_values);
+    }
+
   }
 
 
@@ -226,17 +259,22 @@ class InlineForm extends FormBase {
    */
   public function ajaxFormRebuild(array &$form, FormStateInterface $form_state) {
     \Drupal::logger('poop')->error('ajaxFormRebuild');
+
     if ($form_state->hasAnyErrors()) {
-      return $form;
-   \Drupal::service('entity_field.manager')->getFieldDefinitions('paragraph', $pg->bundle());
-      $field_list = $this->preSave();
-      $field_list = $this->getFieldList();
-      $def = $definitions[$field]->getDefaultValue($pg);
-      if (!empty($def)) {
-        // dpm($def[0]);
-      }
+      //return the form with errors but keep it open
+      $form['container']['#prefix'] = '<div id="'.$this->getFormId().'" class="">';
+      $form['container']['#suffix'] = '</div>';
+      return $form['container'];
+  //  \Drupal::service('entity_field.manager')->getFieldDefinitions('paragraph', $pg->bundle());
+  //     $field_list = $this->preSave();
+  //     $field_list = $this->getFieldList();
+  //     $def = $definitions[$field]->getDefaultValue($pg);
+  //     if (!empty($def)) {
+  //       // dpm($def[0]);
+  //     }
 
     }
+
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
@@ -244,11 +282,14 @@ class InlineForm extends FormBase {
     return $response;
   }
 
+
+
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     \Drupal::logger('poop')->error('subtitform');
+    $form_state->clearErrors();
     $form_state->setRebuild();
     return $form;
   }
@@ -271,14 +312,13 @@ class InlineForm extends FormBase {
     $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
     $host_field = $this->getHostFieldName(); //the pg field name on the node
 
-    $pg_item = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $pg->bundle(),]);
+    $pg_item = Paragraph::create(['type' => $pg->bundle(),]);
 
     foreach ($pg_values as $field_name => $value) {
-      if (!trim($value) == "" || !empty($value)) {
+      if (trim($value) != "" || !empty($value)) {
         $pg_item->set($field_name, $value);
       }
     }
-
     $pg_item->isNew();
     $pg_item->save();
 
@@ -293,6 +333,50 @@ class InlineForm extends FormBase {
     return;
   }
 
+  private function addNodeItem($pg, $pg_name, &$pg_values) {
+    //load the parent node
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+    $host_field = $this->getHostFieldName(); //the pg field name on the node
+
+    $pg_item = Node::create(['type' => $pg->bundle(),]);
+
+
+    foreach ($pg_values as $field_name => $value) {
+      if (trim($value) != "" || !empty($value)) {
+
+        //exception if we dont preformat the date field value idk why
+        if ($pg_item->get($field_name)->getFieldDefinition()->getType() == 'datetime') {
+
+          $pg_item->set($field_name, $value->format('Y-m-d'));
+
+        } else {
+
+          //setTitle if its title. This is lame
+          if ($field_name == 'title') {
+            $pg_item->setTitle($value);
+          } else {
+            $pg_item->set($field_name, $value);
+          }
+
+        }
+
+      }
+    }
+
+    $pg_item->isNew();
+    $pg_item->save();
+
+    // Grab any existing entities from the node, and add this one
+    $current = $node->get($host_field)->getValue();
+
+    $current[] = array(
+        'target_id' => $pg_item->id(),
+      );
+    ksm($current);
+    $node->set($host_field, $current);
+    $node->save();
+    return;
+  }
 
   protected function clearFormInput(array $form, FormStateInterface $form_state) {
     // Replace the form entity with an empty instance.
