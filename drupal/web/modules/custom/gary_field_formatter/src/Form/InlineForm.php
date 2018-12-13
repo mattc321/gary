@@ -140,7 +140,6 @@ class InlineForm extends FormBase {
     $form['add_item_container']['add_item'] = [
       '#type' => 'button',
       '#value' => 'Add',
-      '#description' => 'Enter a number to be validated via ajax.',
       '#attributes' => [
         'class' => [
           'add-pg-item'
@@ -207,7 +206,6 @@ class InlineForm extends FormBase {
     ];
     $form['#submit'] = ['::ajaxFormSubmitHandler'];
     $this->builtForm = $form;
-    // ksm($form);
     return $form;
   }
 
@@ -220,7 +218,14 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    ksm($form_state);
+    parent::validateForm($form, $form_state);
+    if (isset($form_state->getCompleteForm()['#cache_token'])) {
+      $values = $form_state->getValues();
+      if (trim($values['title'][0]['value']) == '') {
+          $form_state->setErrorByName('title', $this->t('This field is required!'));
+       }
+    }
+
   }
 
   /**
@@ -372,7 +377,6 @@ class InlineForm extends FormBase {
     $current[] = array(
         'target_id' => $pg_item->id(),
       );
-    ksm($current);
     $node->set($host_field, $current);
     $node->save();
     return;

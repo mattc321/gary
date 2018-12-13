@@ -18,7 +18,7 @@ use Drupal\Core\Field\FieldDefinitionInterface;
  *
  * @FieldFormatter(
  *   id = "paragraph_views_formatter",
- *   label = @Translation("Paragraph View Formatter"),
+ *   label = @Translation("Entity View Formatter"),
  *   field_types = {
  *     "entity_reference_revisions",
  *     "entity_reference"
@@ -68,7 +68,7 @@ class GaryViewsFormatter extends FormatterBase {
    */
   public function settingsSummary() {
     $summary = [];
-    $summary[] = $this->t('Display a paragraph view');
+    $summary[] = $this->t('Display a paragraph or entity view');
     return $summary;
   }
 
@@ -216,13 +216,13 @@ class GaryViewsFormatter extends FormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $element['instructions'] = [
       '#title' => $this->t('How:'),
-      '#description' => $this->t('Create a paragraph view, add contextual filter for parent id, enable ajax on the view.'),
+      '#description' => $this->t('Create a view, add contextual filter for parent id, enable ajax on the view.'),
       '#type' => 'item',
     ];
 
     $element['ajax_inputs'] = [
       '#title' => $this->t('Use Ajax Inputs'),
-      '#description' => $this->t('Display an entity form to ajax submit a new paragraph item'),
+      '#description' => $this->t('Display an entity form to ajax submit a new paragraph or entity item'),
       '#type' => 'checkbox',
       '#default_value' => $this->getSetting('ajax_inputs'),
     ];
