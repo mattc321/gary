@@ -29,6 +29,24 @@ function gary_preprocess_block(&$variables) {
 
 }
 
+function gary_preprocess_datetime_form(&$variables) {
+  // $element = $variables['element'];
+  // ksm($variables);
+  // ksm($variables['element']);
+  // dpm(1);
+  // ksm($variables['#parents']['']);
+}
+
+function gary_preprocess_form_element_label(&$variables) {
+  // $element = $variables['element'];
+  // $id = $variables['element']['#id'];
+  // if (strpos($id, 'date') !== false) {
+  //   ksm($variables);
+  //   $variables['title']=NULL;
+  // }
+  // ksm($variables['element']['#id']);
+}
+
 function gary_preprocess_field(&$variables, $hook) {
   // ksm($variables);
 }

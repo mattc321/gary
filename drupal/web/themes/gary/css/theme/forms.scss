@@ -54,12 +54,27 @@ input[type=submit]:hover {
       width: 120px;
       height: 20px;
     }
+    input[type=date] {
+      width: 160px;
+    }
     input[type=submit] {
       margin: 45px 0 0 0;
       padding: 5px 10px;
       font-weight: bold;
     }
 }
+
+//stupid date label output is garbage
+h4.label {
+    font-weight: normal;
+    position: relative;
+    top: -13px;
+}
+div#edit-field-task-due-date-wrapper {
+    margin-top: 23px;
+}
+
+
 
 //add item button
 input[type=submit].add-pg-item {
