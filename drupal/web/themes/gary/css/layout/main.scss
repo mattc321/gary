@@ -85,6 +85,20 @@ main {
     }
   }
 
+  &.tasks {
+    &:before {
+      background-image: url(http://cdn.onlinewebfonts.com/svg/img_55800.png);
+      background-size: 20px 26px;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 20px;
+      height: 29px;
+      content: "";
+      position: relative;
+      top: 8px;
+    }
+  }
+
   &.comments {
     &:before {
       // background-image: url(https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/128x128/plain/houses.png);
@@ -97,6 +111,26 @@ main {
       content: "";
       position: relative;
       top: 8px;
+    }
+  }
+}
+
+.switch-link-container {
+  float: right;
+  width: 55px;
+  a {
+    background-image:url(https://cdn3.iconfinder.com/data/icons/simplius-pack/512/pencil_and_paper-512.png);
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    opacity: .3;
+    transition: .3s;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    content: "";
+
+    &:hover {
+      opacity: 1;
     }
   }
 }

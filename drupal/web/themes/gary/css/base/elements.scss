@@ -37,29 +37,18 @@ td {
   input[type=text],
   input[type=password],
   input[type=number],
-  input[type=date],
   select, textarea {
     max-width: 140px;
     width: 100%;
     padding: 0;
   }
+  input[type=date] {
+    max-width: 150px;
+    width: 100%;
+    padding: 0;
+  }
+  h4.label {
+    display: none;
+  }
 
-}
-
-
-details.inline-pg-details {
-    border: none;
-    transition: .3s;
-
-    summary::-webkit-details-marker {
-      display: none;
-    }
-    summary:after {
-        content: "\002B";
-
-    }
-
-    &[open] summary:after {
-      content: "\2212";
-    }
 }

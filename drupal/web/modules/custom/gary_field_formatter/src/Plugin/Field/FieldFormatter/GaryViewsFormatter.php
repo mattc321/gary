@@ -162,8 +162,12 @@ class GaryViewsFormatter extends FormatterBase {
           ],
         ],
       ];
+
+      //link text from settings
+      $link_text = (!empty($this->getSetting('switch_view_link_text')) ? $this->getSetting('switch_view_link_text') : "");
+
       $elements['#switch_view']['switch_container']['switcher'] = [
-        '#title' => t('Edit Mode'),
+        '#title' => t($link_text),
         '#type' => 'link',
         '#attributes' => [
           'class' => [
@@ -254,7 +258,11 @@ class GaryViewsFormatter extends FormatterBase {
       '#type' => 'textfield',
       '#default_value' => $this->getSetting('switch_view_display'),
     ];
-
+    $element['switch_view_link_text'] = [
+      '#title' => $this->t('The link text to display for switching the view'),
+      '#type' => 'textfield',
+      '#default_value' => $this->getSetting('switch_view_link_text'),
+    ];
     return $element;
   }
 
@@ -271,6 +279,7 @@ class GaryViewsFormatter extends FormatterBase {
       'form_class' => "",
       'switch_view' => "",
       'switch_view_display' => "",
+      'switch_view_link_text' => "",
     ] + parent::defaultSettings();
   }
 }
