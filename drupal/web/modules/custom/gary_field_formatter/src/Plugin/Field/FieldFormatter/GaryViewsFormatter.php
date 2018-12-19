@@ -37,6 +37,8 @@ class GaryViewsFormatter extends FormatterBase {
 
   public static $form_field_name;
 
+
+
   /**
    * Set the new table id
    * @param string $tid the table id string
@@ -190,27 +192,21 @@ class GaryViewsFormatter extends FormatterBase {
         $form_class = explode(' ', $this->getSetting('form_class'), 0);
       }
 
+      //keep form expanded?
+      $keep_expanded = $this->getSetting('keep_form_expanded');
+
       //load the form
       $form = \Drupal::formBuilder()
-        ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field, $host_node_id, $final_dom_id, $form_class, $type);
-
+        ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field,
+        $host_node_id, $final_dom_id, $form_class, $type, $keep_expanded);
       $elements['#inline_form']['container']['form'] = $form;
-    }
 
+    }
 
     //attach js and set domid so we know which view to refresh
     $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
     $elements['#theme'] = 'paragraph_views_formatter';
     return $elements;
-  }
-
-
-
-
-  public function switchViewCallback(array &$form, FormStateInterface $form_state) {
-    $response = new \Drupal\Core\Ajax\AjaxResponse();
-    $response->addCommand(new \Drupal\Core\Ajax\AlertCommand('fricking test'));
-    return $response;
   }
 
 
@@ -229,6 +225,11 @@ class GaryViewsFormatter extends FormatterBase {
       '#description' => $this->t('Display an entity form to ajax submit a new paragraph or entity item'),
       '#type' => 'checkbox',
       '#default_value' => $this->getSetting('ajax_inputs'),
+    ];
+    $element['keep_form_expanded'] = [
+      '#title' => $this->t('Keep the Form Expanded after Submission'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('keep_form_expanded'),
     ];
 
     $element['view_machine_name'] = [
@@ -274,6 +275,7 @@ class GaryViewsFormatter extends FormatterBase {
       // Declare a setting named 'text_length', with
       // a default value of 'short'
       'ajax_inputs' => FALSE,
+      'keep_form_expanded' => FALSE,
       'view_machine_name' => "",
       'view_display_name' => "",
       'form_class' => "",

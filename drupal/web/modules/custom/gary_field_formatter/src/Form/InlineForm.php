@@ -10,15 +10,17 @@ namespace Drupal\gary_field_formatter\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\UrlHelper;
-use Drupal\gary_field_formatter\Plugin\Field\FieldFormatter;
+use Drupal\gary_field_formatter\Plugin\Field\FieldFormatter\GaryViewsFormatter;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\field_collection\Controller\FieldCollectionItemController;
 use Drupal\Core\Entity\EntityFormBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity;
 use Drupal\Core\Ajax;
 use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\node\Entity\Node;
@@ -38,15 +40,15 @@ class InlineForm extends FormBase {
 
   protected $hostFieldName;
 
-  protected $builtForm;
+  protected $preBuiltForm;
 
   protected $hostNodeId;
 
   protected $targetType;
 
 
-  private function getWholeForm(){
-    return $this->builtForm;
+  private function getPreBuiltForm(){
+    return $this->preBuiltForm;
   }
 
   public function getHostNodeId() {
@@ -54,7 +56,7 @@ class InlineForm extends FormBase {
   }
 
   public function getFormId() {
-    $form_field_name = \Drupal\gary_field_formatter\Plugin\Field\FieldFormatter\GaryViewsFormatter::getFormFieldName();
+    $form_field_name = GaryViewsFormatter::getFormFieldName();
     return 'inline_pg_form_'.$form_field_name;
   }
 
@@ -96,9 +98,10 @@ class InlineForm extends FormBase {
       $pg_item = Paragraph::create(['type' => $pg_name,]);
     }
 
-    $displays = EntityViewDisplay::collectRenderDisplays([$pg_item], 'full');
-    $display = $displays[$pg_item->bundle()];
-    foreach ($display->getComponents() as $name => $options) {
+
+    $displays = EntityFormDisplay::collectRenderDisplay($pg_item, 'default');
+
+    foreach ($displays->getComponents() as $name => $options) {
       $fields_by_weight[$options['weight']] = $name;
     }
     ksort($fields_by_weight);
@@ -108,7 +111,8 @@ class InlineForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL, $host_field = NULL, $host_node_id = NULL, $dom_id = NULL, $form_class = NULL, $type = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL,
+        $host_field = NULL, $host_node_id = NULL, $dom_id = NULL, $form_class = NULL, $type = NULL, $keep_expanded = NULL) {
 
     //get and set the list of field defs and vars
     $this->setFieldDefs($pg_name, $type);
@@ -124,7 +128,9 @@ class InlineForm extends FormBase {
     //Get the EntityFormDisplay (i.e. the default Form Display) of this content type
     $entity_form_display = \Drupal::service('entity_type.manager')->getStorage('entity_form_display')
                                     ->load($type.'.'.$pg_name.'.default');
-
+    if($dom_id == 'js-view-dom-id-project-units-default') {
+      // ksm($entity_form_display);
+    }
     //init $form
     $form = [];
     $default_values = [];
@@ -133,7 +139,10 @@ class InlineForm extends FormBase {
     $form['add_item_container'] = [
       '#type' => 'container',
       '#attributes' => [
-        'class' => 'add-item-container'
+        'class' => [
+          'add-item-container',
+          'add-item-button-'.$dom_id
+        ],
       ],
     ];
 
@@ -146,7 +155,7 @@ class InlineForm extends FormBase {
         ],
       ],
       '#ajax' => [
-        'callback' => '::sayHello',
+        'callback' => '::addItemToggle',
         'event' => 'click',
         'wrapper' => $this->getFormId(),
         'progress' => [
@@ -171,7 +180,6 @@ class InlineForm extends FormBase {
           $items = $pg->get($field); //Returns the FieldItemsList interface
           $items->filterEmptyItems();
           $form['container'][$field] = $widget->form($items, $form, $form_state);
-
           //unsetting required on entity reference because its firing a false positive for an empty title
           //validation still works
           if ($form['container'][$field]['widget']['#field_name'] == 'title') {
@@ -186,7 +194,9 @@ class InlineForm extends FormBase {
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
     $form['#dom_id'] = $dom_id;
+    $form['#keep_expanded'] = $keep_expanded;
 
+    //get custom form classes if there are any
     if (!empty($form_class)) {
       $form_classes=[];
       foreach ($form_class as $key => $class) {
@@ -199,17 +209,21 @@ class InlineForm extends FormBase {
       '#type' => 'submit',
       '#weight' => count($form) +1,
       '#value' => t('+'),
+      '#attributes' => [
+        'class' => [
+          'use-ajax'
+        ],
+      ],
       '#ajax' => [
         'callback' => '::ajaxFormRebuild',
         'wrapper' => $this->getFormId(),
       ],
     ];
     $form['#submit'] = ['::ajaxFormSubmitHandler'];
-    $this->builtForm = $form;
     return $form;
   }
 
-  public function sayHello(array &$form, FormStateInterface $form_state) {
+  public function addItemToggle(array &$form, FormStateInterface $form_state) {
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$this->getFormId(), 'hidden']));
     return $response;
@@ -219,9 +233,10 @@ class InlineForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
+
     if (isset($form_state->getCompleteForm()['#cache_token'])) {
       $values = $form_state->getValues();
-      if (trim($values['title'][0]['value']) == '') {
+      if (isset($values['title']) && trim($values['title'][0]['value']) == '') {
           $form_state->setErrorByName('title', $this->t('This field is required!'));
        }
     }
@@ -270,20 +285,19 @@ class InlineForm extends FormBase {
       $form['container']['#prefix'] = '<div id="'.$this->getFormId().'" class="">';
       $form['container']['#suffix'] = '</div>';
       return $form['container'];
-  //  \Drupal::service('entity_field.manager')->getFieldDefinitions('paragraph', $pg->bundle());
-  //     $field_list = $this->preSave();
-  //     $field_list = $this->getFieldList();
-  //     $def = $definitions[$field]->getDefaultValue($pg);
-  //     if (!empty($def)) {
-  //       // dpm($def[0]);
-  //     }
 
     }
 
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
-    // $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#switch_dom_id']]));
+    $response->addCommand(new InvokeCommand(NULL, 'testValues', ['#'.$this->getFormId()]));
+
+    //if keep_expanded is false hide it
+    if (!$form['#keep_expanded']) {
+      $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$this->getFormId(), 'hidden']));
+    }
+
     return $response;
   }
 

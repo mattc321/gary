@@ -30,6 +30,18 @@
             var $element = $(selector);
             $element.toggle(property);
           };
+
+          //toggle an element
+           $.fn.testValues = function(form_selector) {
+             let $form = $(form_selector);
+             $(form_selector+" input:not(:hidden)").each(function(index){
+               console.log($(this).prop('id'));
+                if ($(this).prop('type') != 'submit') {
+                  $(this).val('');
+                }
+              });
+           };
+
      }
    };
  })(jQuery, Drupal, drupalSettings);

@@ -109,6 +109,8 @@ class GaryFormatterController extends ControllerBase {
 
     // $vid = "view-id-".$vid;
     $response->addCommand(new InvokeCommand(NULL, 'switchView', [$vid_from, $vid_to]));
+    //dont display the add button when switching the view, too many ux issues
+    $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['.'.'add-item-button-'.$vid_from, 'hidden']));
     return $response;
   }
 
