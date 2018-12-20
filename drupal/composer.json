@@ -103,7 +103,8 @@
         },
         "patches": {
           "drupal/core": {
-            "Entity Reference Views 2174633": "https://www.drupal.org/files/issues/2018-12-12/2174633-227.patch"
+            "Entity Reference Views 2174633": "https://www.drupal.org/files/issues/2018-12-12/2174633-227.patch",
+            "Firewall stripping ajax header 2580191": "https://www.drupal.org/files/issues/ajax-remove-X-Drupal-Ajax-Token-verification-2580191-33.patch"
           }
         }
     }

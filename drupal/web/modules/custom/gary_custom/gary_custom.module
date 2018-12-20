@@ -104,9 +104,16 @@ function gary_custom_entity_presave(EntityInterface $entity) {
 }
 
 function gary_custom_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  // ksm($form['field_project_contacts']);
-  // ksm($form);
-  // ksm($form['default_value']);
+
+
+  //Opportunity Services Calculation
+  if ($form_id == 'inline_pg_form_field_opportunity_services_ref') {
+    $form['#attached']['library'][] = 'gary_custom/service_price';
+
+    //js listeners in js/service-price
+    $form['container']['field_opportunity_service']['widget']['#attributes']['class'][] = "calculate-price";
+    $form['container']['field_quantity']['widget'][0]['value']['#attributes']['class'][] = "update-price";
+  }
 }
 
 /**
