@@ -1,0 +1,7 @@
+service_price:
+  version: 1.x
+  js:
+    js/service-price.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax

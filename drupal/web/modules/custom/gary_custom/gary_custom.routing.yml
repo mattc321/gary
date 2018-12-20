@@ -1,0 +1,6 @@
+gary_custom.get_service_price:
+  path: '/service_price/{sid}'
+  defaults:
+    _controller: '\Drupal\gary_custom\Controller\CallbackController::getServicePrice'
+  requirements:
+    _permission: 'access content'
