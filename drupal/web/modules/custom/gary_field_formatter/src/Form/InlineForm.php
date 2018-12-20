@@ -128,9 +128,7 @@ class InlineForm extends FormBase {
     //Get the EntityFormDisplay (i.e. the default Form Display) of this content type
     $entity_form_display = \Drupal::service('entity_type.manager')->getStorage('entity_form_display')
                                     ->load($type.'.'.$pg_name.'.default');
-    if($dom_id == 'js-view-dom-id-project-units-default') {
-      // ksm($entity_form_display);
-    }
+
     //init $form
     $form = [];
     $default_values = [];
@@ -291,7 +289,7 @@ class InlineForm extends FormBase {
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
-    $response->addCommand(new InvokeCommand(NULL, 'testValues', ['#'.$this->getFormId()]));
+    $response->addCommand(new InvokeCommand(NULL, 'clearValues', ['#'.$this->getFormId()]));
 
     //if keep_expanded is false hide it
     if (!$form['#keep_expanded']) {

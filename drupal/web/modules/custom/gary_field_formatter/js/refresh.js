@@ -31,11 +31,9 @@
             $element.toggle(property);
           };
 
-          //toggle an element
-           $.fn.testValues = function(form_selector) {
-             let $form = $(form_selector);
+          //clear form values
+           $.fn.clearValues = function(form_selector) {
              $(form_selector+" input:not(:hidden)").each(function(index){
-               console.log($(this).prop('id'));
                 if ($(this).prop('type') != 'submit') {
                   $(this).val('');
                 }

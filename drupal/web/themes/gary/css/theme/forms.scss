@@ -62,6 +62,9 @@ input[type=submit]:hover {
       padding: 5px 10px;
       font-weight: bold;
     }
+    .field--name-revision-log {
+      display: none;
+    }
 }
 
 //stupid date label output is garbage
