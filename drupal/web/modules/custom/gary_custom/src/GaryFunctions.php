@@ -55,6 +55,27 @@ class GaryFunctions {
   }
 
   /**
+   * update the the sum of all services on the parent entity
+   * @param  EntityInterface $entity The paragraph entity
+   * @return boolean         Return true of the parent field was found and set
+   */
+  public function updateTotalAmount(EntityInterface $entity) {
+    //calculate the total amount of services on the parent node
+    if ($entity->getParentEntity()->hasField('field_opportunity_services_ref')) {
+      $total_price = 0;
+      foreach($entity->getParentEntity()->get('field_opportunity_services_ref')->referencedEntities() as $key => $pg_item) {
+        if ($pg_item->hasField('field_line_total')) {
+          $total_price = $total_price + $pg_item->get('field_line_total')->value;
+        }
+      }
+      $entity->getParentEntity()->set('field_amount', $total_price);
+      $entity->getParentEntity()->save();
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Delete revision entities on parapraph deletion
    * @param  EntityInterface $entity The paragraph entity
    * @return boolean                   Return

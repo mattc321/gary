@@ -40,27 +40,35 @@ function gary_custom_theme() {
 function gary_custom_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
 
   if ($entity->bundle() == 'projects') {
-    //
-    // if ($_GET['ss'] ==1) {
-    //   $message = \Drupal\node\Entity\Node::create([
-    //      'type' => 'tasks',
-    //      'title' => 'poop',
-    //      'field_task_assigned_to' => 1,
-    //    ]);
-    //    ksm($message);
-    //    $message->isNew();
-    //    $message->save();
-    //
-    // }
+
 
   }
 }
+function gary_custom_entity_delete(EntityInterface $entity) {
+  $helper = new GaryFunctions;
 
+  switch ($entity->bundle()){
+    case 'opportunity_services':
+
+      //update total amount on parent
+      $helper->updateTotalAmount($entity);
+    break;
+  }
+
+}
 function gary_custom_entity_update(EntityInterface $entity) {
   $helper = new GaryFunctions;
 
   //remove any old revisions on parahraphs
   $helper->cleanParagraphs($entity);
+
+  switch ($entity->bundle()){
+    case 'opportunity_services':
+
+      //update total amount on parent
+      $helper->updateTotalAmount($entity);
+    break;
+  }
 }
 
 function gary_custom_entity_presave(EntityInterface $entity) {
@@ -93,8 +101,7 @@ function gary_custom_entity_presave(EntityInterface $entity) {
 
     break;
 
-    case 'tasks':
-
+    case 'opportunity_services':
     break;
 
     default:

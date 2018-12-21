@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0b2397233910432d92011e65e02dda6",
+    "content-hash": "513e85abbb17e5c9555a958c453e5c14",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2416,6 +2416,10 @@
                     "recurse": false,
                     "replace": false,
                     "merge-extra": false
+                },
+                "patches_applied": {
+                    "Entity Reference Views 2174633": "https://www.drupal.org/files/issues/2018-12-12/2174633-227.patch",
+                    "Firewall stripping ajax header 2580191": "https://www.drupal.org/files/issues/ajax-remove-X-Drupal-Ajax-Token-verification-2580191-33.patch"
                 }
             },
             "autoload": {
@@ -3479,6 +3483,53 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/token"
             }
+        },
+        {
+            "name": "drupal/viewfield",
+            "version": "dev-3.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/viewfield",
+                "reference": "558f2142f9a3b8cd8a096c5c519bdd2c1fbb857f"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-3.x": "3.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-3.0-alpha2+1-dev",
+                    "datestamp": "1490392084",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "keithm",
+                    "homepage": "https://www.drupal.org/user/691250"
+                },
+                {
+                    "name": "sun",
+                    "homepage": "https://www.drupal.org/user/54136"
+                }
+            ],
+            "description": "Defines an entity reference field type to display a view.",
+            "homepage": "http://drupal.org/project/viewfield",
+            "support": {
+                "source": "http://cgit.drupalcode.org/viewfield",
+                "issues": "https://www.drupal.org/project/issues/viewfield"
+            },
+            "time": "2017-03-24T21:43:17+00:00"
         },
         {
             "name": "drupal/views_bulk_edit",
@@ -8450,6 +8501,7 @@
     "stability-flags": {
         "drupal/feeds": 15,
         "drupal/homebox": 20,
+        "drupal/viewfield": 20,
         "drush/drush": 20
     },
     "prefer-stable": true,
