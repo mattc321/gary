@@ -80,11 +80,15 @@
         {% if page.content_top %}
           <div class="tabs-container">
             {{ page.content_top }}
+            <div class="last-modified">
+              <p>Created on: {{ created|date("m/d/Y") }}
+              <p>Updated by: {{ last_updated_by|capitalize }} on {{ last_updated_date|date("m/d/Y") }}</p>
+            </div>
           </div>
         {% endif %}
 
       </div>
-      
+
       {{ page.content }}
     </div>{# /.layout-content #}
 

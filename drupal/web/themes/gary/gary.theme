@@ -51,6 +51,10 @@ function gary_preprocess_field(&$variables, $hook) {
   // ksm($variables);
 }
 
+function gary_preprocess_node(&$variables) {
+
+}
+
 function gary_preprocess_page(&$variables) {
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
     $bundle_label = \Drupal::entityTypeManager()
@@ -62,12 +66,18 @@ function gary_preprocess_page(&$variables) {
               'projects',
               'opportunities',
               'accounts',
-              'contacts'
+              'contacts',
+              'tasks'
     ];
 
     if (in_array(strtolower($bundle_label), $bundles)) {
       $variables['bundle'] = $bundle_label;
     }
+
+    //pass modified by and date
+    $variables['created'] = $variables['node']->getCreatedTime();
+    $variables['last_updated_by'] = $variables['node']->getRevisionUser()->getAccountName();
+    $variables['last_updated_date'] = $variables['node']->getChangedTime();
 
   }
 }

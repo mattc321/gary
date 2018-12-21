@@ -394,28 +394,4 @@ class InlineForm extends FormBase {
     return;
   }
 
-  protected function clearFormInput(array $form, FormStateInterface $form_state) {
-    // Replace the form entity with an empty instance.
-    // $pg = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(array(
-    //                 'type' => $pg_name
-    //             )
-    //         );
-
-
-    // Clear user input.
-    $input = $form_state->getUserInput();
-    // We should not clear the system items from the user input.
-    $clean_keys = $form_state->getCleanValueKeys();
-    $clean_keys[] = 'ajax_page_state';
-    foreach ($input as $key => $item) {
-      if (!in_array($key, $clean_keys) && substr($key, 0, 1) !== '_') {
-        unset($input[$key]);
-      }
-    }
-    $form_state->setUserInput($input);
-    // Rebuild the form state values.
-    $form_state->setRebuild();
-    $form_state->setStorage([]);
-  }
-
 }

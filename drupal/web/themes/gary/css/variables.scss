@@ -17,6 +17,17 @@ $break-xl: 1400px;
   }
 }
 
+@mixin highlight($color) {
+  background: $color;
+  padding: 10px;
+  margin: 2px 0 2px 0;
+  display: inline-block;
+
+  &:hover {
+    background: $hover-blue;
+  }
+
+}
 
 $max-width: 1200px;
 $max-width-alt: 700px;
