@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains gary_custom_views.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function gary_custom_views_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gary_custom_views module.
+    case 'help.page.gary_custom_views':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom views, view fields, etc. for Gary') . '</p>';
+      return $output;
+
+    default:
+  }
+}

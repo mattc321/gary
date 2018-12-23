@@ -1,0 +1,7 @@
+name: 'Gary Custom Views'
+type: module
+description: 'Custom views, view fields, etc. for Gary'
+core: 8.x
+package: 'Custom'
+dependencies:
+  - gary_custom
