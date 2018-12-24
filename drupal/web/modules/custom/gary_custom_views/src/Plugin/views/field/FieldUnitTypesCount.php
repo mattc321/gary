@@ -12,7 +12,7 @@ use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
 
 /**
- * Field handler for deleting entity item.
+ * Field handler for displaying unit counts.
  *
  * @ingroup views_field_handlers
  *
@@ -78,7 +78,7 @@ class FieldUnitTypesCount extends FieldPluginBase {
 
     if ($sumall == 1 || $sumall == 'No') {
 
-      //IF TID = 96 (MF) then we do not want to count it. We want to return field_mf_qty
+      //IF TID = 96 (MF) then we do not want to count it. We want to return the sum of field_mf_qty
       if ($tid == 96) {
         $sql = "SELECT sum(field_mf_qty_value)
           FROM node__field_project_units pu
@@ -87,14 +87,22 @@ class FieldUnitTypesCount extends FieldPluginBase {
           WHERE pu.entity_id = node_field_data.nid
           AND pq.bundle = 'project_units'
           AND pq.deleted = 0";
-        // $this->ensureMyTable();
-        // $this->field_alias = $this->query->add_field(NULL, "($sql)", 'field_unit_types_count');
-
-        // Add the field.
-        $params = ['aggregate' => TRUE];
-        $this->field_alias = $this->query->addField(NULL, "(".$sql.")", 'field_unit_types_count', $params);
-        $this->addAdditionalFields();
+      } else {
+        $sql = "SELECT COUNT(*)
+          FROM node__field_project_units as pu
+          JOIN paragraph__field_unit_types ut
+          ON ut.entity_id = pu.field_project_units_target_id
+	        WHERE pu.entity_id = node_field_data.nid
+          AND ut.bundle = 'project_units'
+          AND ut.deleted = 0
+          AND ut.field_unit_types_target_id = " . $tid;
       }
+      // Add the field.
+      $params = ['aggregate' => TRUE];
+      $this->field_alias = $this->query->addField(NULL, "(".$sql.")", 'field_unit_types_count', $params);
+      $this->addAdditionalFields();
+    } else {
+
     }
   }
 
@@ -103,6 +111,6 @@ class FieldUnitTypesCount extends FieldPluginBase {
    */
   public function render(ResultRow $values) {
     $alias = $this->field_alias;
-    return $values->$alias;
+    return (empty($values->$alias) ? '' : $values->$alias);
   }
 }

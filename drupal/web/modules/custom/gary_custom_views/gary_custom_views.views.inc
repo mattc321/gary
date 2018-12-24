@@ -11,14 +11,16 @@ function gary_custom_views_views_data_alter(array &$data) {
       'id' => 'field_unit_types_count',
     ],
   ];
-  // 
-  // $data['node']['field_next_sv'] = array(
-  //   'title' => t('Next SV'),
-  //   'help' => t('Next open task title.'),
-  //   'field' => array(
-  //     'handler' => 'ec_app_handler_field_next_sv',
-  //   ),
-  // );
+
+  $data['node']['field_next_sv'] = [
+    'title' => t('Next SV'),
+    'help' => t('Next open Service Task title.'),
+    'field' => [
+      'title' => t('Next Service Task'),
+      'help' => t('Display title of next service task'),
+      'id' => 'field_next_sv',
+    ],
+  ];
   // $data['node']['field_next_sv_date'] = array(
   //   'title' => t('Next SV Date'),
   //   'help' => t('Next due date for open task.'),
