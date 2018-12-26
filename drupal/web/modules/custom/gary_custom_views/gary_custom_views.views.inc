@@ -14,20 +14,25 @@ function gary_custom_views_views_data_alter(array &$data) {
 
   $data['node']['field_next_sv'] = [
     'title' => t('Next SV'),
-    'help' => t('Next open Service Task title.'),
+    'help' => t('Next open Site Visit Task title.'),
     'field' => [
-      'title' => t('Next Service Task'),
-      'help' => t('Display title of next service task'),
+      'title' => t('Next Site Visit Task'),
+      'help' => t('Display title of next site visit'),
       'id' => 'field_next_sv',
     ],
   ];
-  // $data['node']['field_next_sv_date'] = array(
-  //   'title' => t('Next SV Date'),
-  //   'help' => t('Next due date for open task.'),
-  //   'field' => array(
-  //     'handler' => 'ec_app_handler_field_next_sv_date',
-  //   ),
-  // );
+
+  $data['node']['field_next_sv_date'] = [
+    'title' => t('Next SV Date'),
+    'help' => t('Next Site Visit due date.'),
+    'field' => [
+      'title' => t('Next Site Visit Task Date'),
+      'help' => t('Display the next due date for site visit'),
+      'id' => 'field_next_sv_date',
+    ],
+  ];
+
+
   //  $data['node']['field_display_all_services'] = array(
   //   'title' => t('Display All Services'),
   //   'help' => t('Return all services for a project onto one record.'),
