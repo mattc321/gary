@@ -36,8 +36,8 @@ class LastComment extends FieldPluginBase {
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
   	$form['field_info'] = [
       '#type' => 'item',
-      '#title' => t('Next SV Task Info'),
-  	  '#description' => t('This field will look up the next service task associated with the project node'),
+      '#title' => t('Last Comment on The Entity'),
+  	  '#description' => t('This field will show the last comment made on a node'),
       ];
     parent::buildOptionsForm($form, $form_state);
   }
@@ -46,7 +46,7 @@ class LastComment extends FieldPluginBase {
    * {@inheritdoc}
    */
   protected function addSelfTokens(&$tokens, $item) {
-    $tokens['{{ '.$item['field_name'].' }}'] = $item['value'];
+    // $tokens['{{ '.$item['field_name'].' }}'] = $item['value'];
   }
 
   /**
