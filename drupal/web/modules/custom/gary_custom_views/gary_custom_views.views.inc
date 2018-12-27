@@ -32,6 +32,15 @@ function gary_custom_views_views_data_alter(array &$data) {
     ],
   ];
 
+  $data['node']['field_last_comment'] = [
+    'title' => t('Last Comment'),
+    'help' => t('Last Comment on Entity'),
+    'field' => [
+      'title' => t('Last Comment'),
+      'help' => t('Gary Custom - Display the last comment on the entity'),
+      'id' => 'field_last_comment',
+    ],
+  ];
 
   //  $data['node']['field_display_all_services'] = array(
   //   'title' => t('Display All Services'),
