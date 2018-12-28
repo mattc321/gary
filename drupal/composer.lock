@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42221aa9e6d0cb1b18a35be9b583bc35",
+    "content-hash": "57a872525c1387c8123c231b2c23108b",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -4613,6 +4613,51 @@
             ]
         },
         {
+            "name": "npm-asset/ev-emitter",
+            "version": "1.1.1",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/ev-emitter/-/ev-emitter-1.1.1.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/imagesloaded",
+            "version": "4.1.4",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/imagesloaded/-/imagesloaded-4.1.4.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "npm-asset/ev-emitter": ">=1.0.0,<2.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/jquery",
+            "version": "3.3.1",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/jquery/-/jquery-3.3.1.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
             "name": "npm-asset/jquery-mousewheel",
             "version": "3.1.13",
             "dist": {
@@ -4620,6 +4665,21 @@
                 "url": "https://registry.npmjs.org/jquery-mousewheel/-/jquery-mousewheel-3.1.13.tgz",
                 "reference": null,
                 "shasum": null
+            },
+            "type": "npm-asset"
+        },
+        {
+            "name": "npm-asset/qtip2",
+            "version": "3.0.3",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/qtip2/-/qtip2-3.0.3.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "npm-asset/imagesloaded": ">=3.0.0",
+                "npm-asset/jquery": ">=1.6.0"
             },
             "type": "npm-asset"
         },

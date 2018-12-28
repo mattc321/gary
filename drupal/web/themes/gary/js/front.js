@@ -4,7 +4,6 @@
   Drupal.behaviors.garyFront = {
     attach: function (context, settings) {
 
-
       //user menu handler
       var expanded = 0;
       $('#block-gary-account-menu .user-info').click( function(){

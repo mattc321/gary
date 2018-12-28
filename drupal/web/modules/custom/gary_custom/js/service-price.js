@@ -7,6 +7,7 @@
     Drupal.behaviors.garyServicePrices = {
       attach: function (context, settings) {
 
+
         //attach event listener to field - attached in form_alter
         $('.calculate-price', context).once(this.id).change(function () {
           $(this).servicePrice($(this).val());
