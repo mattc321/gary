@@ -111,7 +111,6 @@ function gary_custom_entity_presave(EntityInterface $entity) {
 
 function gary_custom_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
 
-
   //use select2 type on some of these selects
   if ($form['#id'] == 'views-exposed-form-projects-page-1') {
     $form['field_project_status_target_id']['#type'] = 'select2';
