@@ -67,12 +67,11 @@ class UserIndex extends ManyToOne {
    */
   public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
     parent::init($view, $display, $options);
-    // ksm($this->definition);
-    // ksm($this->options);
     // if (!empty($this->definition['node'])) {
     //   $this->options['bundle'] = $this->definition['node'];
     // }
   }
+
   public function hasExtraOptions() {
     return TRUE;
   }
@@ -91,6 +90,8 @@ class UserIndex extends ManyToOne {
     return $options;
   }
   public function buildExtraOptionsForm(&$form, FormStateInterface $form_state) {
+    // dpm('buildExtraOptionsForm');
+    // ksm($this->value);
     $users = $this->userTypeStorage->loadMultiple();
     $options = array();
     $roles = \Drupal::entityManager()
@@ -108,8 +109,8 @@ class UserIndex extends ManyToOne {
       if (empty($this->definition['bundle'])) {
         $form['bundle'] = array(
           '#type' => 'select',
-          '#multiple' => TRUE,
           '#required' => TRUE,
+          '#multiple' => TRUE,
           '#title' => $this->t('Role'),
           '#options' => $options,
           '#description' => $this->t('Select which role(s) to show users for in the regular options.'),
@@ -128,40 +129,63 @@ class UserIndex extends ManyToOne {
     );
   }
   protected function valueForm(&$form, FormStateInterface $form_state) {
-
+    // dpm('valueForm');
+    // ksm($this->value);
       if ($this->options['type'] == 'textfield') {
-          $roles = $this->options['bundle'];
-          $allowed_roles = [];
+        $roles = $this->options['bundle'];
+        $query = $this->userTypeStorage->getQuery();
+
+        if (count($roles) > 1) {
+          $group = $query->orConditionGroup();
           foreach ($roles as $role) {
-            $allowed_roles[] = $role;
+            $group->condition('roles',$role);
           }
-          $form['value'] = array(
-          '#title' => $this->t('Select a User'),
-          '#type' => 'entity_autocomplete',
-          '#required' => FALSE,
-          '#target_type' => 'user',
-          '#default_value' => '',
-          '#selection_handler' => 'default:user',
-          '#selection_settings' => [
-            'include_anonymous' => FALSE,
-            'filter' => [
-              'type' => 'role',
-              'role' => $allowed_roles,
-            ],
-          ],
-        );
+          $ids = $query
+            ->condition('status', 1)
+            ->condition($group)
+            ->execute();
+        } else {
+          $ids = $query
+            ->condition('status', 1)
+            ->condition('roles', $roles)
+            ->execute();
+        }
+        $users = $this->value ? User::loadMultiple(($this->value)) : [];
+        $form['value'] = [
+          '#title' => $this->t('Select terms'),
+          '#type' => 'textfield',
+          '#size' => 20,
+          '#default_value' => EntityAutocomplete::getEntityLabels($users),
+        ];
+
+        if ($this->options['limit']) {
+          $form['value']['#type'] = 'entity_autocomplete';
+          $form['value']['#target_type'] = 'user';
+          $form['value']['#tags'] = TRUE;
+          $form['value']['#process_default_value'] = FALSE;
+        }
       }
     else {
       $roles = $this->options['bundle'];
       $query = $this->userTypeStorage->getQuery();
-      $group = $query->orConditionGroup();
-      foreach ($roles as $role) {
-        $group->condition('roles',$role);
+
+      if (count($roles) > 1) {
+        $group = $query->orConditionGroup();
+        foreach ($roles as $role) {
+          $group->condition('roles',$role);
+        }
+        $ids = $query
+          ->condition('status', 1)
+          ->condition($group)
+          ->execute();
+      } else {
+        $ids = $query
+          ->condition('status', 1)
+          ->condition('roles', $roles)
+          ->execute();
       }
-      $ids = $query
-        ->condition('status', 1)
-        ->condition($group)
-        ->execute();
+
+
       $users = $this->userTypeStorage->loadMultiple($ids);
       $options = [];
       foreach ($users as $id => $user) {
@@ -169,14 +193,17 @@ class UserIndex extends ManyToOne {
       }
       $default_value = (array) $this->value;
 
+      //exposed form
       if ($exposed = $form_state->get('exposed')) {
         $identifier = $this->options['expose']['identifier'];
+
         if (!empty($this->options['expose']['reduce'])) {
           $options = $this->reduceValueOptions($options);
           if (!empty($this->options['expose']['multiple']) && empty($this->options['expose']['required'])) {
             $default_value = array();
           }
         }
+
         if (empty($this->options['expose']['multiple'])) {
           if (empty($this->options['expose']['required']) && (empty($default_value) || !empty($this->options['expose']['reduce']))) {
             $default_value = 'All';
@@ -196,12 +223,12 @@ class UserIndex extends ManyToOne {
           }
         }
       }
+
       $form['value'] = array(
         '#type' => 'select',
-        '#title' => $this->t('Select a User'),
-        '#multiple' => FALSE,
+        '#multiple' => TRUE,
+        '#title' => $this->t('Select a Default User'),
         '#options' => $options,
-        '#size' => min(9, count($users) + 5),
         '#default_value' => $default_value,
       );
       $user_input = $form_state->getUserInput();
@@ -224,6 +251,7 @@ class UserIndex extends ManyToOne {
       return;
     }
     $tids = array();
+
     if ($values = $form_state->getValue(array('options', 'value'))) {
       foreach ($values as $value) {
         $tids[] = $value['target_id'];
@@ -265,10 +293,12 @@ class UserIndex extends ManyToOne {
     }
     return $rc;
   }
+
   public function validateExposed(&$form, FormStateInterface $form_state) {
     if (empty($this->options['exposed'])) {
       return;
     }
+
     $identifier = $this->options['expose']['identifier'];
     // We only validate if they've chosen the text field style.
     if ($this->options['type'] != 'textfield') {
@@ -280,7 +310,8 @@ class UserIndex extends ManyToOne {
     if (empty($this->options['expose']['identifier'])) {
       return;
     }
-    if ($values = $form_state->getValue($identifier)) {
+    if (!empty($form_state->getValue($identifier))) {
+      $values = $form_state->getValue($identifier);
       foreach ($values as $value) {
         $this->validated_exposed_input[] = $value['target_id'];
       }
@@ -292,6 +323,7 @@ class UserIndex extends ManyToOne {
   }
 
   public function buildExposeForm(&$form, FormStateInterface $form_state) {
+
     parent::buildExposeForm($form, $form_state);
     if ($this->options['type'] != 'select') {
       unset($form['expose']['reduce']);
@@ -304,42 +336,41 @@ class UserIndex extends ManyToOne {
   }
 
   public function adminSummary() {
-    // // set up $this->valueOptions for the parent summary
-    // $this->valueOptions = array();
-    // if ($this->value) {
-    //   $this->value = array_filter($this->value);
-    //   $nodes = Node::loadMultiple($this->value);
-    //   foreach ($nodes as $node) {
-    //     $this->valueOptions[$node->id()] = \Drupal::entityManager()
-    //       ->getTranslationFromContext($node)
-    //       ->label();
-    //   }
-    // }
-    // return parent::adminSummary();
+    // set up $this->valueOptions for the parent summary
+    $this->valueOptions = array();
+    if ($this->value) {
+      $this->value = array_filter($this->value);
+      $users = $this->userTypeStorage->loadMultiple($this->value);
+      foreach ($users as $user) {
+        $this->valueOptions[$user->id()] = $user->getAccountName();
+      }
+    }
+    return parent::adminSummary();
   }
 
   /**
    * {@inheritdoc}
    */
   public function getCacheContexts() {
-    // $contexts = parent::getCacheContexts();
-    // // The result potentially depends on term access and so is just cacheable
-    // // per user.
-    // // @todo See https://www.drupal.org/node/2352175.
-    // $contexts[] = 'user';
-    // return $contexts;
+    $contexts = parent::getCacheContexts();
+    // The result potentially depends on term access and so is just cacheable
+    // per user.
+    // @todo See https://www.drupal.org/node/2352175.
+    $contexts[] = 'user';
+    return $contexts;
   }
 
   /**
    * {@inheritdoc}
    */
   public function calculateDependencies() {
-    // $dependencies = parent::calculateDependencies();
-    // $bundle = $this->nodeTypeStorage->load($this->options['bundle']);
+    $dependencies = parent::calculateDependencies();
+    $bundle = $this->userTypeStorage;
+    // $bundle = $this->userTypeStorage->load($this->options['bundle']);
     // $dependencies[$bundle->getConfigDependencyKey()][] = $bundle->getConfigDependencyName();
-    // foreach ($this->nodeStorage->loadMultiple($this->options['value']) as $term) {
-    //   $dependencies[$term->getConfigDependencyKey()][] = $term->getConfigDependencyName();
-    // }
-    // return $dependencies;
+    foreach ($this->userTypeStorage->loadMultiple($this->options['value']) as $user) {
+      $dependencies[$user->getConfigDependencyKey()][] = $user->getConfigDependencyName();
+    }
+    return $dependencies;
   }
 }
