@@ -34,28 +34,33 @@ $max-width-alt: 700px;
 
 $light: #fff;
 $dark: #242424;
+
 $light-grey: #ddd;
 $lighter-grey: #eee;
 $grey: #717d8c;
-$blue: #41aac4;
-$light-blue: #72bdcf;
+
+// $blue: #41aac4;
+$blue: #8dcbca;
+$light-blue: #dae9e4;
+
 $lighter-blue: rgba(114, 189, 207, 0.22);
 $hover-blue: rgba(114, 189, 207, 0.48);
 
 
-$green: #80ceb9;
+// $green: #80ceb9;
+$green: #4db89b;
 $dark-green: #48b799;
+$light-green: #8bc1b2;
+
 
 $red: #e27676;
 $brown: #bdb69c;
 
-$light-green: #a1cd39;
 $dark-purple: #60245f;
 $light-purple: #ac79b3;
 
-
 $orange: #f88e58;
-$light-orange: #fdae85;
+$light-orange: #ecc7bf;
 
 $text: $brown;
 $text-light: $light;

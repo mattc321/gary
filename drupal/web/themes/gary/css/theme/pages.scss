@@ -12,16 +12,19 @@
   box-shadow: -5px 3px 5px rgba(96, 96, 96, 0.32);
 
   &.projects {
-    background: linear-gradient(#48b799, #308770);
+    background: linear-gradient($dark-green, $green);
   }
   &.opportunities {
-    background: linear-gradient($light-orange, $orange);
+    background: $light-orange;
   }
   &.accounts {
-    background: linear-gradient(#48b799, #308770);
+    background: $blue;
   }
   &.contacts {
-    background: linear-gradient(#48b799, #308770);
+    background: $light-green;
+  }
+  &.tasks {
+    background: $light-blue;
   }
 
   > h2 {
