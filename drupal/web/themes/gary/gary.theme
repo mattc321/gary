@@ -48,7 +48,6 @@ function gary_preprocess_form_element_label(&$variables) {
 }
 
 function gary_preprocess_field(&$variables, $hook) {
-  // ksm($variables);
 }
 
 function gary_preprocess_node(&$variables) {

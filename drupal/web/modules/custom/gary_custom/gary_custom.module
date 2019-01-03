@@ -26,6 +26,10 @@ function gary_custom_help($route_name, RouteMatchInterface $route_match) {
   }
 }
 
+function gary_custom_preprocess_node(&$variables) {
+
+}
+
 /**
  * Implements hook_theme().
  */
@@ -37,10 +41,62 @@ function gary_custom_theme() {
   ];
 }
 
+function gary_custom_entity_display_build_alter(&$build, $context) {
+
+  //display empty fields and labels
+  if ($context['entity']->getEntityTypeId() == 'node' && $context['view_mode'] == 'full') {
+    $node = $context['entity'];
+    $field_instances = \Drupal\Core\Entity\Entity\EntityViewDisplay::collectRenderDisplay($node, 'full')->getComponents();
+    //hidden fields naturally wont be in $field_instances
+    foreach ($field_instances as $field_name => $field_instance) {
+      //make sure its a real existant field
+      if ($node->hasField($field_name)) {
+         if (empty($node->get($field_name)->getValue())) {
+           $type = $node->$field_name->getFieldDefinition()->getType();
+            if ($field_name != 'uid' && $type != 'comment' && $type != 'viewfield') {
+              $label = $node->$field_name->getFieldDefinition()->getLabel();
+              $label_display = $field_instance['label'];
+              $weight = $field_instance['weight'];
+              $is_multiple = FALSE;
+              $build[$field_name] = array(
+                '#theme' => 'field',
+                '#title' => $label,
+                '#label_display' => $label_display,
+                '#view_mode' => 'full',
+                '#language' => 'en',
+                '#field_type' => $type,
+                '#field_name' => $field_name,
+                '#entity_type' => 'node',
+                '#is_multiple' => $is_multiple,
+                '#bundle' => $node->bundle(),
+                '#object' => $node,
+                '#items' => array(),
+                '#weight' => $weight,
+                '#comment_display_mode' => '',
+                0 => array('#markup' => '&nbsp;'),
+              );
+
+            }
+         }
+
+      }
+
+    }
+
+  }
+}
+
 function gary_custom_entity_view(array &$build, EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
 
-  if ($entity->bundle() == 'opportunities') {
+  if ($entity->bundle() == 'projects') {
+    $node_storage = Drupal::getContainer()->get('entity_type.manager')->getStorage('node');
+    $node_ids = $node_storage->getQuery();
 
+    // This returns all nodes with a value for *field_category*.
+    $nodes = $node_ids->condition('type','projects')
+      ->exists('field_permit_city')
+      ->condition('status', 1)
+      ->execute();
   }
 }
 function gary_custom_entity_delete(EntityInterface $entity) {
