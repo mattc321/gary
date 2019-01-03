@@ -1,0 +1,7 @@
+name: 'Gary Custom Fields'
+type: module
+description: 'Custom fields for Gary'
+core: 8.x
+package: 'Custom'
+dependencies:
+  - gary_custom

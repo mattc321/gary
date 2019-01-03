@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains gary_fields.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function gary_fields_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gary_fields module.
+    case 'help.page.gary_fields':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom fields for Gary') . '</p>';
+      return $output;
+
+    default:
+  }
+}

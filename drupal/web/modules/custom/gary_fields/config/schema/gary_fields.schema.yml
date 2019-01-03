@@ -1,0 +1,18 @@
+field.field_settings.entity_reverse_lookup:
+  type: mapping
+  label: 'Entity Reverse Lookup Settings'
+  mapping:
+    parent_bundle:
+      type: string
+      label: 'Parent Bundle'
+    parent_field_name:
+      type: string
+      label: 'Parent Field Name'
+
+field.widget.settings.entity_reverse_widget:
+  type: mapping
+  label: 'entity_reverse_widget widget settings'
+  mapping:
+    size:
+      type: string
+      label: 'Parent Bundle'
