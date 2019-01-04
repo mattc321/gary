@@ -143,15 +143,15 @@ class GaryFunctions {
    * @return boolean                     True if field has change, false if hasnt changed or is not found
    */
   public function entityHasChanged(EntityInterface $entity) {
-
+    // $changed_fields = [];
     if (!$entity->original) {
       return false;
     }
-
-    $field_names = $this->getFieldList($entity->bundle());
+    $field_names = $this->getFieldList($entity->bundle(), $entity->getEntityTypeId());
     foreach($field_names as $key => $field_name) {
-      if(!$entity->get($field_name)->equals($entity->original->get($field_name))){
-         return true;
+      if($entity->hasField($field_name) && $field_name != 'field_comments' && !$entity->get($field_name)->equals($entity->original->get($field_name))){
+        // $changed_fields[] = $field_name;
+        return true;
       }
     }
      return false;
@@ -185,11 +185,17 @@ class GaryFunctions {
    * @param  string $bundle Bundle name
    * @return array         Array of field names
    */
-  public function getFieldList($bundle) {
-    $entity = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $bundle,]);
-    $displays = EntityViewDisplay::collectRenderDisplays([$entity], 'full');
-    $display = $displays[$entity->bundle()];
-    foreach ($display->getComponents() as $name => $options) {
+  public function getFieldList($bundle, $entity_type_id) {
+    $fields_by_weight = [];
+    // $entity = \Drupal\paragraphs\Entity\Paragraph::create(['type' => $bundle,]);
+    $bundle_fields = \Drupal::entityTypeManager()
+      ->getStorage('entity_view_display')
+      ->load($entity_type_id . '.' . $bundle . '.' . 'default')
+      ->getComponents();
+
+    // $displays = EntityViewDisplay::collectRenderDisplays([$entity], 'full');
+    // $display = $displays[$entity->bundle()];
+    foreach ($bundle_fields as $name => $options) {
       $fields_by_weight[] = $name;
     }
     return $fields_by_weight;

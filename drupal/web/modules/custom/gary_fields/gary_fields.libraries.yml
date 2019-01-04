@@ -1,0 +1,8 @@
+garyfields:
+  version: 1.x
+  js:
+    js/garyfields.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupalSettings

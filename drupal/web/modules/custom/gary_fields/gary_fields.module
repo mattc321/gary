@@ -1,5 +1,8 @@
 <?php
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 /**
  * @file
  * Contains gary_fields.module.
@@ -20,5 +23,70 @@ function gary_fields_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+ function gary_fields_theme() {
+   return [
+     'entity_reverse_output' => [
+       'variables' => [
+         'entity_container' => NULL,
+       ],
+       'template' => 'entity-reverse-output'
+     ]
+   ];
+ }
+
+function gary_fields_entity_display_build_alter(&$build, $context) {
+  if ($context['entity']->getEntityTypeId() == 'node') {
+    $node = $context['entity'];
+    $field_instances = EntityViewDisplay::collectRenderDisplay($node, 'default')->getComponents();
+
+    foreach ($field_instances as $field_name => $field_instance) {
+      //make sure its a real existant field
+      if ($node->hasField($field_name)) {
+        $type = $node->$field_name->getFieldDefinition()->getType();
+
+         if (empty($node->get($field_name)->getValue())) {
+           if ($type=='entity_reverse_lookup') {
+
+             
+
+           }
+          //  dpm($field_name.' '.$type);
+            // if ($field_name != 'uid' && $type != 'comment' && $type != 'viewfield') {
+            //   $label = $node->$field_name->getFieldDefinition()->getLabel();
+            //   $label_display = $field_instance['label'];
+            //   $weight = $field_instance['weight'];
+            //   $is_multiple = FALSE;
+            //   $build[$field_name] = array(
+            //     '#theme' => 'field',
+            //     '#title' => $label,
+            //     '#label_display' => $label_display,
+            //     '#view_mode' => 'full',
+            //     '#language' => 'en',
+            //     '#field_type' => $type,
+            //     '#field_name' => $field_name,
+            //     '#entity_type' => 'node',
+            //     '#is_multiple' => $is_multiple,
+            //     '#bundle' => $node->bundle(),
+            //     '#object' => $node,
+            //     '#items' => array(),
+            //     '#weight' => $weight,
+            //     '#comment_display_mode' => '',
+            //     0 => array('#markup' => '&nbsp;'),
+            //   );
+            //
+            // }
+         }
+
+      }
+
+    }
+
+
   }
 }

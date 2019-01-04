@@ -1,0 +1,6 @@
+gary_fields.get_field_options:
+  path: '/get_field_options/{bundle}'
+  defaults:
+    _controller: '\Drupal\gary_fields\Controller\CallbackController::getFieldOptions'
+  requirements:
+    _permission: 'access content'

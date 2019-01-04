@@ -8,11 +8,6 @@ field.field_settings.entity_reverse_lookup:
     parent_field_name:
       type: string
       label: 'Parent Field Name'
-
-field.widget.settings.entity_reverse_widget:
-  type: mapping
-  label: 'entity_reverse_widget widget settings'
-  mapping:
-    size:
+    value:
       type: string
-      label: 'Parent Bundle'
+      label: 'Value'

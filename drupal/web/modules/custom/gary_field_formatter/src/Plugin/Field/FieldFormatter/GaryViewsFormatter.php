@@ -202,7 +202,6 @@ class GaryViewsFormatter extends FormatterBase {
       $elements['#inline_form']['container']['form'] = $form;
 
     }
-
     //attach js and set domid so we know which view to refresh
     $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
     $elements['#theme'] = 'paragraph_views_formatter';
