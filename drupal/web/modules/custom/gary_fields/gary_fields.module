@@ -33,8 +33,13 @@ function gary_fields_help($route_name, RouteMatchInterface $route_match) {
    return [
      'entity_reverse_output' => [
        'variables' => [
-         'entity_container' => NULL,
+         'items' => NULL,
          'label' => NULL,
+         'label_hidden' => NULL,
+         'multiple' => NULL,
+         'field_name' => NULL,
+         'field_type' => NULL,
+         'label_display' => NULL,
        ],
        'template' => 'entity-reverse-output'
      ]
@@ -53,33 +58,29 @@ function gary_fields_entity_display_build_alter(&$build, $context) {
 
          if ($type=='entity_reverse_lookup') {
 
-             // ksm($node);
+            $label = $node->$field_name->getFieldDefinition()->label();
+            $label_display = $field_instance['label'];
+            $weight = $field_instance['weight'];
+            $is_multiple = FALSE;
+            $build[$field_name] = array(
+              '#theme' => 'entity_reverse_output',
+              '#label' => $label,
+              '#label_display' => $label_display,
+              '#view_mode' => 'full',
+              '#language' => 'en',
+              '#field_type' => $type,
+              '#field_name' => $field_name,
+              '#entity_type' => 'node',
+              '#is_multiple' => $is_multiple,
+              '#bundle' => $node->bundle(),
+              '#object' => $node,
+              '#items' => array(),
+              '#weight' => $weight,
+              '#comment_display_mode' => '',
+              0 => array('#markup' => 'test'),
+            );
 
-           // dpm($field_name.' '.$type);
-            // if ($field_name != 'uid' && $type != 'comment' && $type != 'viewfield') {
-            //   $label = $node->$field_name->getFieldDefinition()->getLabel();
-            //   $label_display = $field_instance['label'];
-            //   $weight = $field_instance['weight'];
-            //   $is_multiple = FALSE;
-            //   $build[$field_name] = array(
-            //     '#theme' => 'field',
-            //     '#title' => $label,
-            //     '#label_display' => $label_display,
-            //     '#view_mode' => 'full',
-            //     '#language' => 'en',
-            //     '#field_type' => $type,
-            //     '#field_name' => $field_name,
-            //     '#entity_type' => 'node',
-            //     '#is_multiple' => $is_multiple,
-            //     '#bundle' => $node->bundle(),
-            //     '#object' => $node,
-            //     '#items' => array(),
-            //     '#weight' => $weight,
-            //     '#comment_display_mode' => '',
-            //     0 => array('#markup' => '&nbsp;'),
-            //   );
-            //
-            // }
+
          }
 
       }

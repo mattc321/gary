@@ -30,8 +30,9 @@ use Drupal\field\Entity\FieldStorageConfig;
     * {@inheritdoc}
     */
    public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
+    // ksm($form_state->getFormObject());
     $element = [];
-    $item = $items[$delta];
+    $item = $items[0];
     $form_type = $form_state->getFormObject()->getBaseFormId();
     $default_bundle = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_bundle'];
     $default_parent_field_name = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'];
@@ -70,7 +71,6 @@ use Drupal\field\Entity\FieldStorageConfig;
           }
       }
     }
-
     $element['parent_field_name'] = [
       '#title' => $this->t('Parent Field Name'),
       '#type' => $form_type == 'field_config_form' ? 'textfield' : 'hidden',
@@ -89,26 +89,9 @@ use Drupal\field\Entity\FieldStorageConfig;
    }
 
    public function updateFields(array &$form, FormStateInterface $form_state) {
-
-     // return $form;
      $response = new \Drupal\Core\Ajax\AjaxResponse();
-     // $response->addCommand(new \Drupal\Core\Ajax\AlertCommand('test'));
      $response->addCommand(new InvokeCommand(NULL, 'updateFieldsSelect', ['parent-bundle-select', 'parent-field-name-options .description']));
      return $response;
    }
-
-   // private function getDefaultValue($bundle) {
-   //   if ($type == 'node') {
-   //     $pg_item = Node::create(['type' => $pg_name,]);
-   //   }
-   //
-   //   $displays = EntityFormDisplay::collectRenderDisplay($pg_item, 'default');
-   //
-   //   foreach ($displays->getComponents() as $name => $options) {
-   //     $fields_by_weight[$options['weight']] = $name;
-   //   }
-   //   ksort($fields_by_weight);
-   //   $this->fieldDefs = $fields_by_weight;
-   // }
 
  }
