@@ -24,16 +24,16 @@ class EntityReverseFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    ksm($items);
     $element = [];
     $settings =$items->getFieldDefinition()->getSettings();
     $cardinality = $items->getFieldDefinition()->getFieldStorageDefinition()->getCardinality();
     $id = $items->getEntity()->id();
     $entity_type = $items->getEntity()->getEntityTypeId();
-
-    $parent_bundle = $settings['parent_bundle'];
-    $parent_field_table = $entity_type.'__'.$settings['parent_field_name'];
-    $parent_field_column = $settings['parent_field_name'].'_target_id';
+    $field_name = $items->getName();
+    $field_label = $items->getFieldDefinition()->label();
+    $parent_bundle = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_bundle'];
+    $parent_field_table = 'node__'.$items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'];
+    $parent_field_column = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'].'_target_id';
 
     $query = \Drupal::database()->select($parent_field_table, 'n');
     $query->addField('n', 'entity_id');
@@ -41,7 +41,6 @@ class EntityReverseFormatter extends FormatterBase {
     $query->condition('n.'.$parent_field_column, $id);
     $query->condition('n.deleted', 0);
     $results = $query->execute()->fetchAll();
-
     $entities_relating = [];
     if (count($results) > 0) {
       foreach ($results as $key => $result) {
@@ -49,32 +48,21 @@ class EntityReverseFormatter extends FormatterBase {
         $options = ['absolute' => FALSE];
         $url = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()], $options)
           ->toString();
-        $entities_relating[$node->id()] = [
-          'title' => $node->getTitle(),
-          'path' => $url
-        ];
+        $entities_relating[$node->id()]['title']=$node->getTitle();
+        $entities_relating[$node->id()]['path']=$url;
       }
     } else {
       return $element;
     }
 
-    $element['#entity_container'] = [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' => [
-          'entity-reverse-markup-container'
-        ],
-      ],
-    ];
     foreach ($entities_relating as $delta => $item) {
-      $element['#entity_container'][$delta] = [
-        '#type' => 'link',
-        '#title' => $item['title'],
-        '#url' => $item['path'],
+      $element['#entity_container'][] = [
+        'title' => $item['title'],
+        'path' => $item['path']
       ];
     }
+    $element['#label']=$field_label;
     $element['#theme'] = 'entity_reverse_output';
-
     return $element;
   }
 

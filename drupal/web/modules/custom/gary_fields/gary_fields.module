@@ -34,6 +34,7 @@ function gary_fields_help($route_name, RouteMatchInterface $route_match) {
      'entity_reverse_output' => [
        'variables' => [
          'entity_container' => NULL,
+         'label' => NULL,
        ],
        'template' => 'entity-reverse-output'
      ]
@@ -50,13 +51,11 @@ function gary_fields_entity_display_build_alter(&$build, $context) {
       if ($node->hasField($field_name)) {
         $type = $node->$field_name->getFieldDefinition()->getType();
 
-         if (empty($node->get($field_name)->getValue())) {
-           if ($type=='entity_reverse_lookup') {
+         if ($type=='entity_reverse_lookup') {
 
-             
+             // ksm($node);
 
-           }
-          //  dpm($field_name.' '.$type);
+           // dpm($field_name.' '.$type);
             // if ($field_name != 'uid' && $type != 'comment' && $type != 'viewfield') {
             //   $label = $node->$field_name->getFieldDefinition()->getLabel();
             //   $label_display = $field_instance['label'];

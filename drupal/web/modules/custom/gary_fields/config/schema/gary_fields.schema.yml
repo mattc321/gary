@@ -1,4 +1,4 @@
-field.field_settings.entity_reverse_lookup:
+gary_fields.field.entity_reverse_lookup:
   type: mapping
   label: 'Entity Reverse Lookup Settings'
   mapping:
@@ -8,6 +8,3 @@ field.field_settings.entity_reverse_lookup:
     parent_field_name:
       type: string
       label: 'Parent Field Name'
-    value:
-      type: string
-      label: 'Value'
