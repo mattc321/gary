@@ -27,8 +27,9 @@ class EntityReverseFormatter extends FormatterBase {
     $element = [];
     //build definitions
     $settings =$items->getFieldDefinition()->getSettings();
+    //not going to be looking at $cardinality for now. Displayed based on result count
     $cardinality = $items->getFieldDefinition()->getFieldStorageDefinition()->getCardinality();
-    $multiple = $cardinality == 1 ? FALSE : TRUE;
+    $multiple = FALSE;
     $id = $items->getEntity()->id();
     $entity_type = $items->getEntity()->getEntityTypeId();
     $field_name = $items->getName();
@@ -39,13 +40,7 @@ class EntityReverseFormatter extends FormatterBase {
     $parent_field_column = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'].'_target_id';
     $label_display = $this->label;
 
-    //query nodes for references to this node
-    $query = \Drupal::database()->select($parent_field_table, 'n');
-    $query->addField('n', 'entity_id');
-    $query->condition('n.bundle', $parent_bundle);
-    $query->condition('n.'.$parent_field_column, $id);
-    $query->condition('n.deleted', 0);
-    $results = $query->execute()->fetchAll();
+    $results = $this->getReverseResults($parent_field_table, $parent_bundle, $parent_field_column, $id);
     $entities_relating = [];
     if (count($results) > 0) {
       foreach ($results as $key => $result) {
@@ -56,6 +51,8 @@ class EntityReverseFormatter extends FormatterBase {
         $entities_relating[$node->id()]['title']=$node->getTitle();
         $entities_relating[$node->id()]['path']=$url;
       }
+      $multiple = (count($results) == 1 ? FALSE : TRUE);
+
     } else {
       $element['#theme'] = 'entity_reverse_output';
       $element['#label'] = $field_label;
@@ -90,6 +87,25 @@ class EntityReverseFormatter extends FormatterBase {
     $element['#field_type'] = $field_type;
     $element['#label_display'] = $label_display;
     return $element;
+  }
+
+  /**
+   * Helper function for fetching results of entities that reference the given
+   * @param  string $parent_field_table  The table name for the default parent_bundle
+   * @param  string $parent_bundle       The default bundle to look for results
+   * @param  string $parent_field_column The colomn containing target ids
+   * @param  string $id                  The ID of the entity to look for
+   * @return array                      Results of the query
+   */
+  public static function getReverseResults(string $parent_field_table, string $parent_bundle, string $parent_field_column, string $id) {
+    //query nodes for references to this node
+    $query = \Drupal::database()->select($parent_field_table, 'n');
+    $query->addField('n', 'entity_id');
+    $query->condition('n.bundle', $parent_bundle);
+    $query->condition('n.'.$parent_field_column, $id);
+    $query->condition('n.deleted', 0);
+    $results = $query->execute()->fetchAll();
+    return $results;
   }
 
 }

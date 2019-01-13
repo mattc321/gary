@@ -1,15 +1,16 @@
 <?php
 
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
+
 /**
  * @file
  * Contains gary_fields.module.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\gary_fields\Plugin\Field\FieldFormatter\EntityReverseFormatter;
 /**
  * Implements hook_help().
  */
@@ -46,7 +47,12 @@ function gary_fields_help($route_name, RouteMatchInterface $route_match) {
    ];
  }
 
+/**
+ * implements hook_entity_display_build_alter()
+ */
 function gary_fields_entity_display_build_alter(&$build, $context) {
+
+  //If no value exists yet we need to force display one using the same method as the field formatter
   if ($context['entity']->getEntityTypeId() == 'node') {
     $node = $context['entity'];
     $field_instances = EntityViewDisplay::collectRenderDisplay($node, 'default')->getComponents();
@@ -56,12 +62,52 @@ function gary_fields_entity_display_build_alter(&$build, $context) {
       if ($node->hasField($field_name)) {
         $type = $node->$field_name->getFieldDefinition()->getType();
 
-         if ($type=='entity_reverse_lookup') {
+         if ($type=='entity_reverse_lookup' && $node->$field_name->isEmpty()) {
+            $parent_bundle = $node->$field_name
+              ->getFieldDefinition()
+              ->getDefaultValueLiteral()[0]['parent_bundle'];
+            $parent_field_table = 'node__'.$node->$field_name
+              ->getFieldDefinition()
+              ->getDefaultValueLiteral()[0]['parent_field_name'];
+            $parent_field_column = $node->$field_name
+              ->getFieldDefinition()
+              ->getDefaultValueLiteral()[0]['parent_field_name'].'_target_id';
 
+            $results = EntityReverseFormatter::getReverseResults($parent_field_table, $parent_bundle, $parent_field_column, $node->id());
             $label = $node->$field_name->getFieldDefinition()->label();
             $label_display = $field_instance['label'];
             $weight = $field_instance['weight'];
             $is_multiple = FALSE;
+            $entities_relating = [];
+            $items = [];
+
+            if (count($results) > 0) {
+              foreach ($results as $key => $result) {
+                $relating_node = \Drupal::entityTypeManager()
+                  ->getStorage('node')
+                  ->load($result->entity_id);
+                $options = ['absolute' => FALSE];
+                $url = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $relating_node->id()], $options)
+                  ->toString();
+                $entities_relating[$relating_node->id()]['title']=$relating_node->getTitle();
+                $entities_relating[$relating_node->id()]['path']=$url;
+              }
+
+              foreach ($entities_relating as $delta => $item) {
+                $items[$delta]['content'] = [
+                  'title' => $item['title'],
+                  'path' => $item['path']
+                ];
+              }
+
+            }
+
+            $is_multiple = (count($results) == 1 ? FALSE : TRUE);
+
+
+
+
+
             $build[$field_name] = array(
               '#theme' => 'entity_reverse_output',
               '#label' => $label,
@@ -71,15 +117,14 @@ function gary_fields_entity_display_build_alter(&$build, $context) {
               '#field_type' => $type,
               '#field_name' => $field_name,
               '#entity_type' => 'node',
-              '#is_multiple' => $is_multiple,
+              '#multiple' => $is_multiple,
               '#bundle' => $node->bundle(),
               '#object' => $node,
-              '#items' => array(),
+              '#items' => $items,
               '#weight' => $weight,
               '#comment_display_mode' => '',
-              0 => array('#markup' => 'test'),
+              0 => array('#markup' => ''),
             );
-
 
          }
 
