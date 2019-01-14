@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 
 /**
  * Implements hook_help().
@@ -40,19 +41,65 @@ function gary_field_formatter_help($route_name, RouteMatchInterface $route_match
    ];
  }
 
- /**
-  * Implements hook_preprocess_hook().
-  */
-function gary_field_formatter_preprocess_page(&$variables) {
-  // template_preprocess_table($variables);
-  // $variables['page']['#attached']['library'][] = 'gary_field_formatter/refresh';
-  // $elements['#attached']['drupalSettings']['dom_id'] = $final_dom_id;
-  // ksm($variables['page']['#attached']);
-}
-
 /**
- * Implements hook_preprocess_hook().
+ * implements hook_entity_display_build_alter()
  */
-// function gary_field_formatter_preprocess_fc_views_formatter(&$variables) {
-//  template_preprocess_views_view($variables);
-// }
+function gary_field_formatter_entity_display_build_alter(&$build, $context) {
+
+  if ($context['entity']->getEntityTypeId() == 'node') {
+    $node = $context['entity'];
+    $field_instances = EntityViewDisplay::collectRenderDisplay($node, 'default')->getComponents();
+
+    foreach ($field_instances as $field_name => $field_instance) {
+      //make sure its a real existant field
+      if ($node->hasField($field_name)) {
+        $type = $field_instance['type'];
+        if ($type=='paragraph_views_formatter' && $node->$field_name->isEmpty()) {
+         $settings = $field_instance['settings'];
+
+         $form = [];
+         if ($settings['ajax_inputs']) {
+           $form_class = [];
+           if (!empty($settings['form_class'])) {
+             $form_class = explode(' ', $settings['form_class'], 0);
+           }
+           $form_id = 'inline_pg_form_'.$field_name;
+           $pg_name = key($node->$field_name->getSettings()['handler_settings']['target_bundles']);
+           $host_field = $field_name;
+           $host_node_id = $node->id();
+           $final_dom_id = '';
+           $type = $node->$field_name->getFieldDefinition()->getSettings()['target_type'];
+           $keep_expanded = $settings['keep_form_expanded'];
+$form = [];
+           //load the form
+           $form = \Drupal::formBuilder()
+             ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field,
+             $host_node_id, $final_dom_id, $form_class, $type, $keep_expanded);
+           $label = $node->$field_name->getFieldDefinition()->label();
+           $label_display = $field_instance['label'];
+           $weight = $field_instance['weight'];
+           $form['#form_id'] = $form_id;
+           $build[$field_name] = array(
+             '#theme' => 'paragraph_views_formatter',
+             '#label' => $label,
+             '#label_display' => $label_display,
+             '#view_mode' => 'full',
+             '#language' => 'en',
+             '#field_type' => $type,
+             '#field_name' => $field_name,
+             '#entity_type' => 'node',
+             '#multiple' => FALSE,
+             '#bundle' => $node->bundle(),
+             '#object' => $node,
+             '#items' => array(),
+             '#inline_form' => $form,
+             '#weight' => $weight,
+             '#comment_display_mode' => '',
+             0 => array('#markup' => ''),
+           );
+         }
+        }
+      }
+    }
+  }
+}

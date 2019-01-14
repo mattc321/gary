@@ -9,6 +9,9 @@
 
        //refresh the desired view
         $.fn.refreshView = function(dom_id) {
+          if (dom_id.length == 0) {
+            location.reload();
+          }
           if($('.'+dom_id).length > 0) {
             var $target = $('.'+dom_id);
             $target.trigger('RefreshView');

@@ -46,6 +46,9 @@ class InlineForm extends FormBase {
 
   protected $targetType;
 
+  private static $slug;
+
+  private static $form_id;
 
   private function getPreBuiltForm(){
     return $this->preBuiltForm;
@@ -57,7 +60,10 @@ class InlineForm extends FormBase {
 
   public function getFormId() {
     $form_field_name = GaryViewsFormatter::getFormFieldName();
-    return 'inline_pg_form_'.$form_field_name;
+    $random = self::$slug;
+    $form_id = 'inline_pg_form_'.$form_field_name.'_'.$random;
+    self::$form_id = $form_id;
+    return $form_id;
   }
 
   public function getNewPcItem() {
@@ -82,6 +88,11 @@ class InlineForm extends FormBase {
 
   protected function setNewPgItem($item) {
     $this->newPcItem = $item;
+  }
+
+
+  public function __construct() {
+    self::$slug = rand(1111,9999);
   }
 
   /**
@@ -155,7 +166,7 @@ class InlineForm extends FormBase {
       '#ajax' => [
         'callback' => '::addItemToggle',
         'event' => 'click',
-        'wrapper' => $this->getFormId(),
+        'wrapper' => self::$form_id,
         'progress' => [
           'type' => 'throbber'
         ],
@@ -187,7 +198,7 @@ class InlineForm extends FormBase {
     }
 
     //set additional properties
-    $form['container']['#prefix'] = '<div id="'.$this->getFormId().'" class="hidden">';
+    $form['container']['#prefix'] = '<div id="'.self::$form_id.'" class="hidden">';
     $form['container']['#suffix'] = '</div>';
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
@@ -214,7 +225,7 @@ class InlineForm extends FormBase {
       ],
       '#ajax' => [
         'callback' => '::ajaxFormRebuild',
-        'wrapper' => $this->getFormId(),
+        'wrapper' => self::$form_id,
       ],
     ];
     $form['#submit'] = ['::ajaxFormSubmitHandler'];
@@ -223,7 +234,8 @@ class InlineForm extends FormBase {
 
   public function addItemToggle(array &$form, FormStateInterface $form_state) {
     $response = new \Drupal\Core\Ajax\AjaxResponse();
-    $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$this->getFormId(), 'hidden']));
+    // $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.self::$form_id, 'hidden']));
+    $response->addCommand(new AlertCommand('test'));
     return $response;
   }
   /**
@@ -280,7 +292,7 @@ class InlineForm extends FormBase {
 
     if ($form_state->hasAnyErrors()) {
       //return the form with errors but keep it open
-      $form['container']['#prefix'] = '<div id="'.$this->getFormId().'" class="">';
+      $form['container']['#prefix'] = '<div id="'.self::$form_id.'" class="">';
       $form['container']['#suffix'] = '</div>';
       return $form['container'];
 
@@ -289,11 +301,11 @@ class InlineForm extends FormBase {
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
-    $response->addCommand(new InvokeCommand(NULL, 'clearValues', ['#'.$this->getFormId()]));
+    $response->addCommand(new InvokeCommand(NULL, 'clearValues', ['#'.self::$form_id]));
 
     //if keep_expanded is false hide it
     if (!$form['#keep_expanded']) {
-      $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$this->getFormId(), 'hidden']));
+      $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.self::$form_id, 'hidden']));
     }
 
     return $response;

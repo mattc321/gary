@@ -99,7 +99,7 @@ class GaryViewsFormatter extends FormatterBase {
 
     //set the static field name for the inline form to build a variable form id
     self::$form_field_name = $items->getName();
-
+    
     $host_node_id = $items->getEntity()->id();
     //load up the view
     $args = [$host_node_id];
@@ -200,11 +200,11 @@ class GaryViewsFormatter extends FormatterBase {
         ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field,
         $host_node_id, $final_dom_id, $form_class, $type, $keep_expanded);
       $elements['#inline_form']['container']['form'] = $form;
-
     }
     //attach js and set domid so we know which view to refresh
     $elements['#attached']['library'][] = 'gary_field_formatter/refresh';
     $elements['#theme'] = 'paragraph_views_formatter';
+
     return $elements;
   }
 

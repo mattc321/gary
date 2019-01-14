@@ -101,13 +101,7 @@ function gary_fields_entity_display_build_alter(&$build, $context) {
               }
 
             }
-
             $is_multiple = (count($results) == 1 ? FALSE : TRUE);
-
-
-
-
-
             $build[$field_name] = array(
               '#theme' => 'entity_reverse_output',
               '#label' => $label,
@@ -125,13 +119,8 @@ function gary_fields_entity_display_build_alter(&$build, $context) {
               '#comment_display_mode' => '',
               0 => array('#markup' => ''),
             );
-
          }
-
       }
-
     }
-
-
   }
 }
