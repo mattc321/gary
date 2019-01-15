@@ -46,10 +46,6 @@ class InlineForm extends FormBase {
 
   protected $targetType;
 
-  private static $slug;
-
-  private static $form_id;
-
   private function getPreBuiltForm(){
     return $this->preBuiltForm;
   }
@@ -60,9 +56,7 @@ class InlineForm extends FormBase {
 
   public function getFormId() {
     $form_field_name = GaryViewsFormatter::getFormFieldName();
-    $random = self::$slug;
-    $form_id = 'inline_pg_form_'.$form_field_name.'_'.$random;
-    self::$form_id = $form_id;
+    $form_id = 'inline_pg_form_'.$form_field_name;
     return $form_id;
   }
 
@@ -90,10 +84,6 @@ class InlineForm extends FormBase {
     $this->newPcItem = $item;
   }
 
-
-  public function __construct() {
-    self::$slug = rand(1111,9999);
-  }
 
   /**
    * set the Field List
@@ -143,6 +133,8 @@ class InlineForm extends FormBase {
     //init $form
     $form = [];
     $default_values = [];
+    $wrapper = 'inline_pg_form_'.$this->getHostFieldName();
+
 
     //container for add more button
     $form['add_item_container'] = [
@@ -162,15 +154,21 @@ class InlineForm extends FormBase {
         'class' => [
           'add-pg-item'
         ],
-      ],
-      '#ajax' => [
-        'callback' => '::addItemToggle',
-        'event' => 'click',
-        'wrapper' => self::$form_id,
-        'progress' => [
-          'type' => 'throbber'
+        'data-id' => [
+          $wrapper
         ],
+        'onclick' => 'return false;'
       ],
+      //no longer using a callback here, using a listener with selector
+      //as data-id to unhide. Incase form is called outside the formatter
+      // '#ajax' => [
+      //   'callback' => '::addItemToggle',
+      //   'event' => 'click',
+      //   'wrapper' => $wrapper,
+      //   'progress' => [
+      //     'type' => 'throbber'
+      //   ],
+      // ],
     ];
 
     //container attach form and add button
@@ -198,7 +196,7 @@ class InlineForm extends FormBase {
     }
 
     //set additional properties
-    $form['container']['#prefix'] = '<div id="'.self::$form_id.'" class="hidden">';
+    $form['container']['#prefix'] = '<div id="'.$wrapper.'" class="hidden">';
     $form['container']['#suffix'] = '</div>';
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
@@ -225,19 +223,21 @@ class InlineForm extends FormBase {
       ],
       '#ajax' => [
         'callback' => '::ajaxFormRebuild',
-        'wrapper' => self::$form_id,
+        'wrapper' => $wrapper,
       ],
     ];
     $form['#submit'] = ['::ajaxFormSubmitHandler'];
     return $form;
   }
 
-  public function addItemToggle(array &$form, FormStateInterface $form_state) {
-    $response = new \Drupal\Core\Ajax\AjaxResponse();
-    // $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.self::$form_id, 'hidden']));
-    $response->addCommand(new AlertCommand('test'));
-    return $response;
-  }
+  // public function addItemToggle(array &$form, FormStateInterface $form_state) {
+  //   $wrapper = 'inline_pg_form_'.$this->getHostFieldName();
+  //
+  //   $response = new \Drupal\Core\Ajax\AjaxResponse();
+  //   $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$wrapper, 'hidden']));
+  //   // $response->addCommand(new AlertCommand('test'));
+  //   return $response;
+  // }
   /**
    * {@inheritdoc}
    */
@@ -291,8 +291,10 @@ class InlineForm extends FormBase {
     \Drupal::logger('poop')->error('ajaxFormRebuild');
 
     if ($form_state->hasAnyErrors()) {
+      $wrapper = 'inline_pg_form_'.$this->getHostFieldName();
+
       //return the form with errors but keep it open
-      $form['container']['#prefix'] = '<div id="'.self::$form_id.'" class="">';
+      $form['container']['#prefix'] = '<div id="'.$wrapper.'" class="">';
       $form['container']['#suffix'] = '</div>';
       return $form['container'];
 
@@ -301,11 +303,11 @@ class InlineForm extends FormBase {
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
-    $response->addCommand(new InvokeCommand(NULL, 'clearValues', ['#'.self::$form_id]));
+    $response->addCommand(new InvokeCommand(NULL, 'clearValues', ['#'.$this->getFormId()]));
 
     //if keep_expanded is false hide it
     if (!$form['#keep_expanded']) {
-      $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.self::$form_id, 'hidden']));
+      $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$this->getFormId(), 'hidden']));
     }
 
     return $response;

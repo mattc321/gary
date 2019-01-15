@@ -6,15 +6,13 @@
  (function($, Drupal, drupalSettings) {
    Drupal.behaviors.garyFieldFormatter = {
      attach: function (context, settings) {
-
        //refresh the desired view
         $.fn.refreshView = function(dom_id) {
-          if (dom_id.length == 0) {
+          let $view = $('.'+dom_id);
+          if ($view.length == 0) {
             location.reload();
-          }
-          if($('.'+dom_id).length > 0) {
-            var $target = $('.'+dom_id);
-            $target.trigger('RefreshView');
+          } else {
+            $view.trigger('RefreshView');
           }
         };
 
@@ -42,6 +40,15 @@
                 }
               });
            };
+
+
+           //listener for add item button
+           $('.add-pg-item', context).once(this.id).click(function () {
+             formid = $(this).attr('data-id');
+             let $form = $('#'+formid);
+             $form.toggle('hidden');
+           });
+
 
      }
    };
