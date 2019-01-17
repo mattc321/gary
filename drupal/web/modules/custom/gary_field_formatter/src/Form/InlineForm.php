@@ -90,7 +90,7 @@ class InlineForm extends FormBase {
    * @param string $pg_name The field name or the paragraph bundle
    * @param string $type The entity type
    */
-  private function setFieldDefs($pg_name, $type) {
+  protected function setFieldDefs($pg_name, $type) {
 
     if ($type == 'node') {
       $pg_item = Node::create(['type' => $pg_name,]);
@@ -227,6 +227,8 @@ class InlineForm extends FormBase {
       ],
     ];
     $form['#submit'] = ['::ajaxFormSubmitHandler'];
+    $form['#attached']['library'][] = 'gary_field_formatter/refresh';
+
     return $form;
   }
 
@@ -259,7 +261,6 @@ class InlineForm extends FormBase {
   public function ajaxFormSubmitHandler(array &$form, FormStateInterface $form_state) {
     \Drupal::logger('poop')->error('ajaxFormSubmitHandler');
     $form_values = $form_state->getValues();
-    // $host = $form['#host']->getEntity();
     $pg = $form['#host'];
     $pg_name = $form['#field_name'];
     $field_list = $this->getFieldList();

@@ -6,12 +6,14 @@
  (function($, Drupal, drupalSettings) {
    Drupal.behaviors.garyFieldFormatter = {
      attach: function (context, settings) {
+
        //refresh the desired view
         $.fn.refreshView = function(dom_id) {
-          let $view = $('.'+dom_id);
-          if ($view.length == 0) {
+          //no domid is null just reload the page
+          if (dom_id.length == 0) {
             location.reload();
           } else {
+            let $view = $('.'+dom_id);
             $view.trigger('RefreshView');
           }
         };

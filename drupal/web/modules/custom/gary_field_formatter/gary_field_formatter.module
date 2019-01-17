@@ -7,6 +7,7 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\gary_field_formatter\Form\InlineFormNewItem;
 
 /**
  * Implements hook_help().
@@ -63,22 +64,22 @@ function gary_field_formatter_entity_display_build_alter(&$build, $context) {
            if (!empty($settings['form_class'])) {
              $form_class = explode(' ', $settings['form_class'], 0);
            }
-           $form_id = 'inline_pg_form_'.$field_name;
            $pg_name = key($node->$field_name->getSettings()['handler_settings']['target_bundles']);
            $host_field = $field_name;
            $host_node_id = $node->id();
            $final_dom_id = '';
            $type = $node->$field_name->getFieldDefinition()->getSettings()['target_type'];
            $keep_expanded = $settings['keep_form_expanded'];
-$form = [];
-           //load the form
+           $form = [];
+           $form_object = new InlineFormNewItem($field_name);
+
            $form = \Drupal::formBuilder()
-             ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field,
+             ->getForm($form_object, $pg_name, $host_field,
              $host_node_id, $final_dom_id, $form_class, $type, $keep_expanded);
+
            $label = $node->$field_name->getFieldDefinition()->label();
            $label_display = $field_instance['label'];
            $weight = $field_instance['weight'];
-           $form['#form_id'] = $form_id;
            $build[$field_name] = array(
              '#theme' => 'paragraph_views_formatter',
              '#label' => $label,
