@@ -24,9 +24,7 @@ class GaryCommentsForm extends CommentForm {
 
   protected function actions(array $form, FormStateInterface $form_state) {
     $element = parent::actions($form, $form_state);
-    ksm($element);
   }
   public function form(array $form, FormStateInterface $form_state) {
-    ksm($form);
   }
 }

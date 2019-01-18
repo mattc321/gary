@@ -70,6 +70,20 @@ main {
     }
   }
 
+  &.projects {
+    &:before {
+      background-image: url(http://cdn.onlinewebfonts.com/svg/download_211764.png);
+      background-size: 25px 25px;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      content: "";
+      position: relative;
+      top: 8px;
+    }
+  }
+
   &.units {
     &:before {
       background-image: url(https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/128x128/plain/houses.png);

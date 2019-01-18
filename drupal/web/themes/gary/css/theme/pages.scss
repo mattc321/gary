@@ -26,6 +26,9 @@
   &.tasks {
     background: $light-blue;
   }
+  &.sub_contractor {
+    background: $purple;
+  }
 
   > h2 {
     background-color: #000;

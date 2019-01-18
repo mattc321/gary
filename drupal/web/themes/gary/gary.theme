@@ -58,19 +58,20 @@ function gary_preprocess_page(&$variables) {
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
     $bundle_label = \Drupal::entityTypeManager()
       ->getStorage('node_type')
-      ->load($node->bundle())
-      ->label();
+      ->load($node->bundle());
 
     $bundles = [
               'projects',
               'opportunities',
               'accounts',
               'contacts',
-              'tasks'
+              'tasks',
+              'sub_contractor'
     ];
 
-    if (in_array(strtolower($bundle_label), $bundles)) {
-      $variables['bundle'] = $bundle_label;
+    if (in_array(strtolower($bundle_label->id()), $bundles)) {
+      $variables['bundle_id'] = $bundle_label->id();
+      $variables['bundle'] = $bundle_label->label();
       //pass modified by and date
       $variables['created'] = $variables['node']->getCreatedTime();
       $variables['last_updated_by'] = $variables['node']->getRevisionUser()->getAccountName();
