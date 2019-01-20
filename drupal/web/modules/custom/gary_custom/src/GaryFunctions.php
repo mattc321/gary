@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\user\Entity\User;
+use Drupal\paragraphs\Entity\Paragraph;
 
 class GaryFunctions {
 
@@ -216,12 +217,60 @@ class GaryFunctions {
     //there should never be more than one parent. If so the first keyed one is likely wrong
     if (count($results) > 1) {
       $messenger = \Drupal::messenger();
-      $messenger->addMessage('An error occurred! Contact the site administrator and check the log', $messenger::TYPE_WARNING);
+      $messenger->addMessage('Very unsavory error occurred! Contact the site administrator and check the log', $messenger::TYPE_WARNING);
       \Drupal::logger('gary_custom')->error('More than one parent node is referencing a single task id. No bueno');
     }
 
     //the parent nid referencing the task
     return $results[0]->entity_id;
+  }
+
+  /**
+   * Average a subcontractors grades and return the TID for that avg grade
+   * @param  string $sub_entity_id The entity id of the subcontractor reference
+   * @return array                The TID associated with the avg grade
+   */
+  protected function getAvgGrade($sub_entity_id) {
+
+    //get the avg the grade value
+    $query = \Drupal::database()->select('paragraph__field_sub_contractor', 'sc');
+    $query->addExpression('round(avg(t.field_grade_value_value))', 'avg_grade');
+    $query->addJoin('inner','paragraph__field_grade','g','sc.entity_id=g.entity_id');
+    $query->addJoin('inner','taxonomy_term__field_grade_value','t','g.field_grade_target_id=t.entity_id');
+    $query->condition('sc.field_sub_contractor_target_id', $sub_entity_id);
+    $query->condition('sc.deleted', 0);
+    $query->condition('g.deleted', 0);
+    $query->condition('g.deleted', 0);
+    $results = $query->execute()->fetchAll();
+    $avg_grade_val = $results[0]->avg_grade;
+
+    //get the tid associated with that value
+    $query = \Drupal::database()->select('taxonomy_term__field_grade_value', 't');
+    $query->addField('t','entity_id');
+    $query->condition('t.field_grade_value_value', $avg_grade_val);
+    $query->condition('t.deleted', 0);
+    $avg_tid = $query->execute()->fetchAll();
+    return $avg_tid[0]->entity_id;
+  }
+
+  /**
+   * Update a sub contractor record with a new average grade based on
+   * all projects its associated with
+   * @param  EntityInterface $entity The entity being updated
+   * @return boolean                  True if action is taken
+   */
+  public function updateSubGrade(EntityInterface $entity) {
+    if ($entity->hasField('field_sub_contractor') && $entity->hasField('field_grade')) {
+      if (!$entity->get('field_grade')->isEmpty()) {
+        $avg_grade = $this->getAvgGrade($entity->get('field_sub_contractor')->entity->id());
+        if (!empty($avg_grade)) {
+          $entity->get('field_sub_contractor')->entity->set('field_avg_grade', $avg_grade);
+          $entity->get('field_sub_contractor')->entity->save();
+          return TRUE;
+        }
+      }
+    }
+    return FALSE;
   }
 
 }

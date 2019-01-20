@@ -10,6 +10,8 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\gary_custom\GaryFunctions;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\paragraphs\Entity\Paragraph;
+
 /**
  * Implements hook_help().
  */
@@ -89,7 +91,7 @@ function gary_custom_entity_display_build_alter(&$build, $context) {
 function gary_custom_entity_view(array &$build, EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
 
   if ($entity->bundle() == 'projects') {
-
+    // $wtf = Paragraph::load(419);
   }
 }
 
@@ -102,13 +104,17 @@ function gary_custom_entity_delete(EntityInterface $entity) {
       //update total amount on parent
       $helper->updateTotalAmount($entity);
     break;
+    case 'sub_contractors':
+      //update the average grade for a sub contractor
+      $helper->updateSubGrade($entity);
+    break;
+
   }
 
 }
 
 function gary_custom_entity_update(EntityInterface $entity) {
   $helper = new GaryFunctions;
-  ksm($entity->bundle());
   //remove any old revisions on parahraphs
   $helper->cleanParagraphs($entity);
 
@@ -117,6 +123,12 @@ function gary_custom_entity_update(EntityInterface $entity) {
 
       //update total amount on parent
       $helper->updateTotalAmount($entity);
+    break;
+
+    case 'sub_contractors':
+      //update the average grade on a sub contractor
+      $helper->updateSubGrade($entity);
+
     break;
   }
 }
@@ -151,7 +163,8 @@ function gary_custom_entity_presave(EntityInterface $entity) {
 
     break;
 
-    case 'opportunity_services':
+    case 'sub_contractors':
+
     break;
 
     default:
