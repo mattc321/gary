@@ -11,6 +11,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\gary_custom\GaryFunctions;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\user\Entity\User;
 
 /**
  * Implements hook_help().
@@ -163,8 +164,74 @@ function gary_custom_entity_presave(EntityInterface $entity) {
 
     break;
 
-    case 'sub_contractors':
+    case 'comment':
 
+      //update the comment parent info when comment is saved
+      $dt = time();
+      $entity->getCommentedEntity()->setChangedTime($dt);
+      $entity->getCommentedEntity()->setRevisionAuthorId(\Drupal::currentUser()->id());
+      $entity->getCommentedEntity()->save();
+
+    break;
+
+    case 'tasks':
+
+      //If the assigned_to field has changed, alert the person whom the task is being assigned to
+      if ($helper->fieldHasChanged($entity, 'field_task_assigned_to')) {
+        $assigned_to = $entity->get('field_task_assigned_to')
+          ->first()
+          ->get('entity')
+          ->getTarget()
+          ->getValue();
+
+        $from = $entity->getRevisionAuthor();
+
+        $parent_nid = $helper->getParentNid($entity);
+        $parent_node = \Drupal::entityManager()
+          ->getStorage('node')
+          ->load($parent_nid);
+
+        if ($parent_node->hasField('field_account_reference')) {
+          $account_title = $parent_node->get('field_account_reference')
+            ->first()
+            ->get('entity')
+            ->getTarget()
+            ->getValue()
+            ->getTitle();
+        } else {
+          $account_title = 'No Account Set';
+        }
+
+        $parent_title = $parent_node->getTitle();
+        $bundle = $parent_node->bundle();
+
+        $params = array(
+          'to_email' => $assigned_to->getEmail(),
+          'from_email' => $from->getEmail(),
+          'from_name' => $from->getDisplayName(),
+          'task_title' => $entity->getTitle(),
+          'task_id' => $entity->id(),
+          'account_title' => $account_title,
+          'parent_title' => $parent_title,
+          'parent_bundle' => $bundle,
+        );
+
+        $mailManager = \Drupal::service('plugin.manager.mail');
+        $module = 'gary_custom';
+        $key = 'notify_assignee';
+        $params['values'] = $params;
+        $langcode = \Drupal::currentUser()->getPreferredLangcode();
+        $send = true;
+        $result = $mailManager->mail($module, $key, $assigned_to->getEmail(), $langcode, $params, NULL, $send);
+
+        if ($result['result'] !== true) {
+          $messenger = \Drupal::messenger();
+          $messenger->addMessage('An error happened and the notification to the assignee was not sent', $messenger::TYPE_WARNING);
+          return FALSE;
+        } else {
+          return TRUE;
+        }
+      }
     break;
 
     default:
@@ -204,36 +271,82 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
 }
 
 /**
- * Implements hook_entity_base_field_info().
- */
-function gary_custom_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface $entity_type)  {
-  // dpm($entity_type->id());
-  // if ($entity_type->id() === 'paragraph') {
-  //   $fields = [];
-  //
-  //   // Add a field that shows the completeness of the user profile.
-  //   // This is computed whenever the profile changes, and then saved
-  //   // to the database.
-  //   $fields['completeness'] = BaseFieldDefinition::create('float')
-  //     ->setLabel(t('Complete profile'))
-  //     ->setDescription(t('User profile complete percentage, such as 0.40, i.e, 40%'))
-  //     ->setDisplayOptions('view', [
-  //       'label' => 'above',
-  //       'weight' => -5,
-  //     ]);
-  //   //
-  //   // // Add a field that shows a link to the user's current company.
-  //   $fields['current_company'] = BaseFieldDefinition::create('current_company_link')
-  //     ->setName('current_company')
-  //     ->setLabel(t('Current company'))
-  //     ->setComputed(TRUE)
-  //     ->setClass('\Drupal\mymodule\CurrentCompanyLinkItemList')
-  //     ->setDisplayConfigurable('view', TRUE)
-  //     ->setDisplayOptions('view', [
-  //       'label' => 'hidden',
-  //       'weight' => -5,
-  //     ]);
-  //     ksm($fields);
-  //   return $fields;
-  // }
+* Implements hook_mail().
+*/
+function gary_custom_mail($key, &$message, $params) {
+
+ $options = array(
+   'langcode' => $message['langcode'],
+ );
+ switch ($key) {
+
+   //prepare email for comments tagged in opps or projects
+   case 'notify_assignee':
+
+     $message['from'] = \Drupal::config('system.site')->get('mail');
+    //  $message['from'] = $params['from_email'];
+    //  $message['to'] = $params['to_email'];
+
+     $message['subject'] = t('A task was assigned to you: @account - @title', array(
+      '@account' => $params['account_title'],
+      '@title' => $params['parent_title']));
+
+     $message['body'][] = t('@who has assigned a task to you: @ttitle', array(
+      '@who' => $params['from_name'],
+      '@ttitle' => $params['task_title']));
+
+     $message['body'][] = '<br/>';
+     $message['body'][] = t('Builder/Account: @account', array('@account' => $params['account_title']));
+     $message['body'][] = '<br/>';
+     $message['body'][] = t('Title/Project: @title', array('@title' => $params['parent_title']));
+     $message['body'][] = '<br/>';
+
+     $message['headers'] = [
+      'content-type' => 'text/html',
+      'MIME-Version' => '1.0',
+      'reply-to' => $message['from'],
+      'Return-Path' => $message['from'],
+      'from' => 'Admin <'.$message['from'].'>'
+     ];
+
+     $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['task_id']);
+     $host = \Drupal::request()->getSchemeAndHttpHost();
+     $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
+     break;
+
+     //prepare email for comment tags in tasks
+     case 'comment_task_tag':
+
+       $message['from'] = \Drupal::config('system.site')->get('mail');
+
+       //Comment Tag: Account - Task Title (Project Title)
+       $message['subject'] = t('Comment Tag: @account - @task_title (@parent_title)', array(
+          '@account' => $params['account_title'],
+          '@task_title' => $params['node_title'],
+          '@parent_title' => $params['parent_title']));
+
+       $message['body'][] = t('Posted by: @who', array('@who' => $params['poster_name']));
+       $message['body'][] = '</br>';
+       $message['body'][] = t('Builder/Account: @account', array('@account' => $params['account_title']));
+       $message['body'][] = '</br>';
+       $message['body'][] = t('Title/@bundle: @title (@parent_title)', array(
+          '@title' => $params['node_title'],
+          '@bundle' => ucfirst($params['parent_bundle']),
+          '@parent_title' => $params['parent_title']));
+       $message['body'][] = '</br>';
+       $message['body'][] = t('Comment: @cbod', array('@cbod' => $params['body']));
+       $message['body'][] = '</br>';
+
+       $message['headers'] = [
+        'content-type' => 'text/html',
+        'MIME-Version' => '1.0',
+        'reply-to' => $message['from'],
+        'from' => 'Admin <'.$message['from'].'>'
+       ];
+
+       $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
+       $host = \Drupal::request()->getSchemeAndHttpHost();
+       $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
+       break;
+ }
 }

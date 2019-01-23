@@ -1,12 +1,13 @@
 <?php
 Use Drupal\image\Entity\ImageStyle;
+use Drupal\user\Entity\User;
 
 /**
  * Implements template_preprocess_block().
  */
 function gary_preprocess_block(&$variables) {
 
-  if ($user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id())) {
+  if ($user = User::load(\Drupal::currentUser()->id())) {
     //pass username
     $username = ucfirst($user->getAccountName());
     $variables['username'] = ($username == '') ? 'Admin' : $username;

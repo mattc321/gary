@@ -102,18 +102,19 @@ function gary_comments_mail($key, &$message, $params) {
 
      $message['subject'] = t('Comment Tag: @account - @title', array('@account' => $params['account_title'], '@title' => $params['node_title']));
      $message['body'][] = t('Posted by: @who', array('@who' => $params['poster_name']));
-     $message['body'][] = '</br>';
+     $message['body'][] = '<br/>';
      $message['body'][] = t('Builder/Account: @account', array('@account' => $params['account_title']));
-     $message['body'][] = '</br>';
+     $message['body'][] = '<br/>';
      $message['body'][] = t('@bundle: @title', array('@title' => $params['node_title'], '@bundle' => $params['bundle']));
-     $message['body'][] = '</br>';
+     $message['body'][] = '<br/>';
      $message['body'][] = t('Comment: @cbod', array('@cbod' => $params['body']));
-     $message['body'][] = '</br>';
+     $message['body'][] = '<br/>';
 
      $message['headers'] = [
       'content-type' => 'text/html',
       'MIME-Version' => '1.0',
       'reply-to' => $message['from'],
+      'Return-Path' => $message['from'],
       'from' => 'Admin <'.$message['from'].'>'
      ];
 
