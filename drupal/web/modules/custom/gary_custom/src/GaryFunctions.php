@@ -56,6 +56,22 @@ class GaryFunctions {
   }
 
   /**
+   * Helper function for fetching results of entities that reference the opportunity
+   * @param  string $id                  The ID of the entity to look for
+   * @return array                      Results of the query
+   */
+  public static function getReferencedProject(string $id) {
+    //query nodes for references to this node
+    $query = \Drupal::database()->select('node__field_opportunity', 'n');
+    $query->addField('n', 'entity_id');
+    $query->condition('n.bundle', 'projects');
+    $query->condition('n.field_opportunity_target_id', $id);
+    $query->condition('n.deleted', 0);
+    $results = $query->execute()->fetchAll();
+    return $results;
+  }
+
+  /**
    * update the the sum of all services on the parent entity
    * @param  EntityInterface $entity The paragraph entity
    * @return boolean         Return true of the parent field was found and set
@@ -200,6 +216,61 @@ class GaryFunctions {
       $fields_by_weight[] = $name;
     }
     return $fields_by_weight;
+  }
+
+  public function notifyAssignee(EntityInterface $entity) {
+    $assigned_to = $entity->get('field_task_assigned_to')
+      ->first()
+      ->get('entity')
+      ->getTarget()
+      ->getValue();
+
+    $from = $entity->getRevisionAuthor();
+
+    $parent_nid = $helper->getParentNid($entity);
+    $parent_node = \Drupal::entityManager()
+      ->getStorage('node')
+      ->load($parent_nid);
+
+    if ($parent_node->hasField('field_account_reference')) {
+      $account_title = $parent_node->get('field_account_reference')
+        ->first()
+        ->get('entity')
+        ->getTarget()
+        ->getValue()
+        ->getTitle();
+    } else {
+      $account_title = 'No Account Set';
+    }
+
+    $parent_title = $parent_node->getTitle();
+    $bundle = $parent_node->bundle();
+
+    $params = array(
+      'to_email' => $assigned_to->getEmail(),
+      'from_email' => $from->getEmail(),
+      'from_name' => $from->getDisplayName(),
+      'task_title' => $entity->getTitle(),
+      'task_id' => $entity->id(),
+      'account_title' => $account_title,
+      'parent_title' => $parent_title,
+      'parent_bundle' => $bundle,
+    );
+
+    $mailManager = \Drupal::service('plugin.manager.mail');
+    $module = 'gary_custom';
+    $key = 'notify_assignee';
+    $params['values'] = $params;
+    $langcode = \Drupal::currentUser()->getPreferredLangcode();
+    $send = true;
+    $result = $mailManager->mail($module, $key, $assigned_to->getEmail(), $langcode, $params, NULL, $send);
+
+    if ($result['result'] !== true) {
+      $messenger = \Drupal::messenger();
+      $messenger->addMessage('An error happened and the notification to the assignee was not sent', $messenger::TYPE_WARNING);
+      return FALSE;
+    }
+    return TRUE;
   }
 
   /**
