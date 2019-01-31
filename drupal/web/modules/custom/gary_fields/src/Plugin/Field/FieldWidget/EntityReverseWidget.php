@@ -30,14 +30,20 @@ use Drupal\field\Entity\FieldStorageConfig;
     * {@inheritdoc}
     */
    public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
-    // ksm($form_state->getFormObject());
     $element = [];
     $item = $items[0];
+    //might be rendering outside the config page so just return
+    if (!method_exists($form_state->getFormObject(), 'getBaseFormId')) {
+      return $element;
+    }
     $form_type = $form_state->getFormObject()->getBaseFormId();
-    $default_bundle = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_bundle'];
-    $default_parent_field_name = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'];
-    $parent_bundle = isset($item->parent_bundle) ? $item->parent_bundle : $default_bundle;
-    $parent_field_name = isset($item->parent_field_name) ? $item->parent_field_name : $default_parent_field_name;
+    //TODO default value not pulling for some reason
+    // $default_bundle = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_bundle'];
+    $default_bundle = 'article';
+    $default_parent_field_name = '';
+    // $default_parent_field_name = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'];
+    $parent_bundle = !empty($item->parent_bundle) ? $item->parent_bundle : $default_bundle;
+    $parent_field_name = !empty($item->parent_field_name) ? $item->parent_field_name : $default_parent_field_name;
     $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('node');
     $options = [];
     foreach ($bundles as $machine_name => $bundle) {
@@ -60,7 +66,7 @@ use Drupal\field\Entity\FieldStorageConfig;
     $element['parent_bundle']['#attributes']['class'][]='parent-bundle-select';
     $bundle_fields = \Drupal::entityTypeManager()
       ->getStorage('entity_view_display')
-      ->load('node' . '.' . $parent_bundle . '.' . 'default')
+      ->load('node' . '.' .$parent_bundle. '.' . 'default')
       ->getComponents();
     $field_options = "";
     foreach($bundle_fields as $field_name => $bundle_field) {
