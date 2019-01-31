@@ -56,6 +56,30 @@ class GaryFunctions {
   }
 
   /**
+   * Update the new node with a default account manager located from its referenced account
+   * @param  EntityInterface $entity The entity being updated
+   * @return mixed                  The account manager empty if needed or an empty array if not
+   */
+  public function getDefaultAccountManagerIfNeeded(EntityInterface $entity) {
+    if ($entity->hasField('field_orig_account')) {
+      if (!empty($entity->get('field_orig_account')->referencedEntities())) {
+        $account = $entity->get('field_orig_account')->referencedEntities()[0];
+        if ($account->hasField('field_account_manager')) {
+          if (!empty($account->get('field_account_manager')->referencedEntities())) {
+            $account_mgr = $account->get('field_account_manager')->referencedEntities()[0];
+            if ($entity->hasField('field_account_manager')) {
+              if ($entity->get('field_account_manager')->isEmpty()) {
+                return $account_mgr;
+              }
+            }
+          }
+        }
+      }
+    }
+    return [];
+  }
+
+  /**
    * Helper function for fetching results of entities that reference the opportunity
    * @param  string $id                  The ID of the entity to look for
    * @return array                      Results of the query

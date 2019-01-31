@@ -159,12 +159,11 @@ function gary_custom_entity_insert(EntityInterface $entity) {
 
 function gary_custom_entity_update(EntityInterface $entity) {
   $helper = new GaryFunctions;
-  //remove any old revisions on parahraphs
+  //remove any old revisions on paragraphs
   $helper->cleanParagraphs($entity);
 
   switch ($entity->bundle()){
     case 'opportunity_services':
-
       //update total amount on parent
       $helper->updateTotalAmount($entity);
     break;
@@ -183,7 +182,6 @@ function gary_custom_entity_presave(EntityInterface $entity) {
   //calculate fields on project_units
   switch ($entity->bundle()){
     case 'project_units':
-
       //calculate ach50 field if its there
       if ($entity->hasField('field_ach50')) {
         $new_value = $helper->calculateField($entity, 'field_ach50');
@@ -208,7 +206,6 @@ function gary_custom_entity_presave(EntityInterface $entity) {
     break;
 
     case 'comment':
-
       //update the comment parent info when comment is saved
       $dt = time();
       $entity->getCommentedEntity()->setChangedTime($dt);
@@ -218,11 +215,21 @@ function gary_custom_entity_presave(EntityInterface $entity) {
     break;
 
     case 'tasks':
-
       //If the assigned_to field has changed, alert the person whom the task is being assigned to
       if ($helper->fieldHasChanged($entity, 'field_task_assigned_to')) {
         $helper->notifyAssignee($entity);
       }
+    break;
+
+    case 'opportunities':
+      //bring over account manager from the builder account
+      if (!$entity->isNew()) {
+        $account_mgr = $helper->getDefaultAccountManagerIfNeeded($entity);
+        if (!empty($account_mgr)) {
+          $entity->set('field_account_manager', $account_mgr);
+        }
+      }
+
     break;
 
     default:

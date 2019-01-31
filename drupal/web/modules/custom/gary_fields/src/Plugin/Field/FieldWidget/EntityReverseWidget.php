@@ -38,10 +38,10 @@ use Drupal\field\Entity\FieldStorageConfig;
     }
     $form_type = $form_state->getFormObject()->getBaseFormId();
     //TODO default value not pulling for some reason
-    // $default_bundle = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_bundle'];
-    $default_bundle = 'article';
-    $default_parent_field_name = '';
-    // $default_parent_field_name = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'];
+    $default_bundle = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_bundle'];
+    // $default_bundle = 'article';
+    // $default_parent_field_name = '';
+    $default_parent_field_name = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'];
     $parent_bundle = !empty($item->parent_bundle) ? $item->parent_bundle : $default_bundle;
     $parent_field_name = !empty($item->parent_field_name) ? $item->parent_field_name : $default_parent_field_name;
     $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('node');
