@@ -150,6 +150,7 @@ function gary_custom_entity_insert(EntityInterface $entity) {
 
   switch ($entity->bundle()){
     case 'tasks':
+      //
     break;
 
     default:
@@ -219,6 +220,7 @@ function gary_custom_entity_presave(EntityInterface $entity) {
       if ($helper->fieldHasChanged($entity, 'field_task_assigned_to')) {
         $helper->notifyAssignee($entity);
       }
+
     break;
 
     case 'opportunities':
@@ -231,7 +233,9 @@ function gary_custom_entity_presave(EntityInterface $entity) {
       }
 
     break;
+    case 'projects':
 
+    break;
     default:
     break;
   }
@@ -320,9 +324,6 @@ function gary_custom_mail($key, &$message, $params) {
    case 'notify_assignee':
 
      $message['from'] = \Drupal::config('system.site')->get('mail');
-    //  $message['from'] = $params['from_email'];
-    //  $message['to'] = $params['to_email'];
-
      $message['subject'] = t('A task was assigned to you: @account - @title', array(
       '@account' => $params['account_title'],
       '@title' => $params['parent_title']));
@@ -348,41 +349,41 @@ function gary_custom_mail($key, &$message, $params) {
      $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['task_id']);
      $host = \Drupal::request()->getSchemeAndHttpHost();
      $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
-     break;
+   break;
 
-     //prepare email for comment tags in tasks
-     case 'comment_task_tag':
+   //prepare email for comment tags in tasks
+   case 'comment_task_tag':
 
-       $message['from'] = \Drupal::config('system.site')->get('mail');
+     $message['from'] = \Drupal::config('system.site')->get('mail');
 
-       //Comment Tag: Account - Task Title (Project Title)
-       $message['subject'] = t('Comment Tag: @account - @task_title (@parent_title)', array(
-          '@account' => $params['account_title'],
-          '@task_title' => $params['node_title'],
-          '@parent_title' => $params['parent_title']));
+     //Comment Tag: Account - Task Title (Project Title)
+     $message['subject'] = t('Comment Tag: @account - @task_title (@parent_title)', array(
+        '@account' => $params['account_title'],
+        '@task_title' => $params['node_title'],
+        '@parent_title' => $params['parent_title']));
 
-       $message['body'][] = t('Posted by: @who', array('@who' => $params['poster_name']));
-       $message['body'][] = '</br>';
-       $message['body'][] = t('Builder/Account: @account', array('@account' => $params['account_title']));
-       $message['body'][] = '</br>';
-       $message['body'][] = t('Title/@bundle: @title (@parent_title)', array(
-          '@title' => $params['node_title'],
-          '@bundle' => ucfirst($params['parent_bundle']),
-          '@parent_title' => $params['parent_title']));
-       $message['body'][] = '</br>';
-       $message['body'][] = t('Comment: @cbod', array('@cbod' => $params['body']));
-       $message['body'][] = '</br>';
+     $message['body'][] = t('Posted by: @who', array('@who' => $params['poster_name']));
+     $message['body'][] = '</br>';
+     $message['body'][] = t('Builder/Account: @account', array('@account' => $params['account_title']));
+     $message['body'][] = '</br>';
+     $message['body'][] = t('Title/@bundle: @title (@parent_title)', array(
+        '@title' => $params['node_title'],
+        '@bundle' => ucfirst($params['parent_bundle']),
+        '@parent_title' => $params['parent_title']));
+     $message['body'][] = '</br>';
+     $message['body'][] = t('Comment: @cbod', array('@cbod' => $params['body']));
+     $message['body'][] = '</br>';
 
-       $message['headers'] = [
-        'content-type' => 'text/html',
-        'MIME-Version' => '1.0',
-        'reply-to' => $message['from'],
-        'from' => 'Admin <'.$message['from'].'>'
-       ];
+     $message['headers'] = [
+      'content-type' => 'text/html',
+      'MIME-Version' => '1.0',
+      'reply-to' => $message['from'],
+      'from' => 'Admin <'.$message['from'].'>'
+     ];
 
-       $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
-       $host = \Drupal::request()->getSchemeAndHttpHost();
-       $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
-       break;
+     $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
+     $host = \Drupal::request()->getSchemeAndHttpHost();
+     $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
+   break;
  }
 }

@@ -24,7 +24,7 @@ use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\node\Entity\Node;
-
+use Drupal\gary_custom\GaryFunctions;
 
 /**
  * Contribute form.
@@ -45,6 +45,8 @@ class InlineForm extends FormBase {
   protected $hostNodeId;
 
   protected $targetType;
+
+  private $helper;
 
   private function getPreBuiltForm(){
     return $this->preBuiltForm;
@@ -84,6 +86,9 @@ class InlineForm extends FormBase {
     $this->newPcItem = $item;
   }
 
+  protected function __construct() {
+    $this->helper = new GaryFunctions();
+  }
 
   /**
    * set the Field List
@@ -301,7 +306,6 @@ class InlineForm extends FormBase {
 
     }
 
-
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
     $response->addCommand(new InvokeCommand(NULL, 'clearValues', ['#'.$this->getFormId()]));
@@ -313,8 +317,6 @@ class InlineForm extends FormBase {
 
     return $response;
   }
-
-
 
   /**
    * {@inheritdoc}
@@ -406,6 +408,12 @@ class InlineForm extends FormBase {
       );
     $node->set($host_field, $current);
     $node->save();
+
+    //notify the assigned after appending
+    if($pg_item->bundle() == 'tasks') {
+      // $test = GaryFunctions::notifyAssignee($pg_item, $node);
+    }
+
     return;
   }
 

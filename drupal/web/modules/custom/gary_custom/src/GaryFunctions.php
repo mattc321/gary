@@ -242,7 +242,20 @@ class GaryFunctions {
     return $fields_by_weight;
   }
 
-  public function notifyAssignee(EntityInterface $entity) {
+  /**
+   * Email the assignee of a task
+   * @param  EntityInterface $entity The task node
+   * @return boolean                  True if it sent false if not
+   */
+  public static function notifyAssignee(EntityInterface $entity, $parent_node = NULL) {
+    if (!$entity->hasField('field_task_assigned_to')) {
+      return FALSE;
+    }
+
+    if ($entity->get('field_task_assigned_to')->isEmpty()) {
+      return FALSE;
+    }
+
     $assigned_to = $entity->get('field_task_assigned_to')
       ->first()
       ->get('entity')
@@ -251,10 +264,12 @@ class GaryFunctions {
 
     $from = $entity->getRevisionAuthor();
 
-    $parent_nid = $helper->getParentNid($entity);
-    $parent_node = \Drupal::entityManager()
-      ->getStorage('node')
-      ->load($parent_nid);
+    if (empty($parent_node)) {
+      $parent_nid = $helper->getParentNid($entity);
+      $parent_node = \Drupal::entityManager()
+        ->getStorage('node')
+        ->load($parent_nid);
+    }
 
     if ($parent_node->hasField('field_account_reference')) {
       $account_title = $parent_node->get('field_account_reference')
@@ -314,6 +329,8 @@ class GaryFunctions {
       $messenger = \Drupal::messenger();
       $messenger->addMessage('Very unsavory error occurred! Contact the site administrator and check the log', $messenger::TYPE_WARNING);
       \Drupal::logger('gary_custom')->error('More than one parent node is referencing a single task id. No bueno');
+    } elseif (count($results) == 0) {
+      return $results;
     }
 
     //the parent nid referencing the task
