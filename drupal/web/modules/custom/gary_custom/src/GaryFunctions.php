@@ -199,6 +199,31 @@ class GaryFunctions {
   }
 
   /**
+   * Close all of the tasks on an opp or project if it is closed
+   * @param  EntityInterface $entity The project or opportunity node
+   * @return boolean                  True if an update was made False if not
+   */
+  public function closeAllTasks(EntityInterface $entity) {
+
+    if (!$entity->hasField('field_tasks')) {
+      \Drupal::logger('gary_custom')
+        ->error('field_tasks does not exist. Cannot close them');
+      return FALSE;
+    }
+
+    if ($entity->get('field_tasks')->isEmpty()) {
+      return FALSE;
+    }
+
+    //set all of the tasks to closed - tid 1
+    foreach ($entity->get('field_tasks')->referencedEntities() as $key => $task) {
+      $task->set('field_task_status', 1);
+      $task->save();
+    }
+    return TRUE;
+  }
+
+  /**
    * Check if entity field content has changed
    * @param  EntityInterface $entity     The entity being saved
    * @param  array          $field_names The name of the field to check

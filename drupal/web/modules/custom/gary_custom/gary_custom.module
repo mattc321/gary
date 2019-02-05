@@ -121,7 +121,7 @@ function gary_custom_menu_local_tasks_alter(&$data, $route_name, RefinableCachea
 function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   switch ($entity->bundle()){
-    case 'opportunities':
+    case 'projects':
 
     break;
   }
@@ -233,9 +233,30 @@ function gary_custom_entity_presave(EntityInterface $entity) {
         }
       }
 
+      //if cancelling or closing the opp, close all of its tasks
+      if ($helper->fieldHasChanged($entity, 'field_opportunity_type')) {
+        //cancelled tid 60 closed 61
+        if (!$entity->get('field_opportunity_type')->isEmpty()) {
+          $tid = $entity->get('field_opportunity_type')->getValue()[0]['target_id'];
+          if ($tid == 60 || $tid == 61) {
+            $helper->closeAllTasks($entity);
+          }
+        }
+      }
+
     break;
     case 'projects':
 
+      //if cancelling or completing the project, close all of its tasks
+      if ($helper->fieldHasChanged($entity, 'field_project_status')) {
+        //cancelled tid 70 completed 72
+        if (!$entity->get('field_project_status')->isEmpty()) {
+          $tid = $entity->get('field_project_status')->getValue()[0]['target_id'];
+          if ($tid == 70 || $tid == 72) {
+            $helper->closeAllTasks($entity);
+          }
+        }
+      }
     break;
     default:
     break;
@@ -285,6 +306,15 @@ function gary_custom_form_node_projects_form_alter(&$form, FormStateInterface $f
       $form['field_opportunity']['widget'][0]['target_id']['#default_value']= $opportunity;
     }
   }
+}
+
+function gary_custom_form_node_tasks_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // $form['notifyassignee'] = [
+  //   '#type' => 'checkbox',
+  //   '#title' => t('Notify assignee upon save'),
+  //   '#default_value' => 0,
+  //   '#weight' => 5
+  // ];
 }
 
 function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
