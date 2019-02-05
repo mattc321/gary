@@ -43,6 +43,17 @@
               });
            };
 
+         //notify an assignee from route in gary_custom
+          $.fn.notifyAssignee = function(tid) {
+            var ajaxObject = Drupal.ajax({
+              type: 'GET',
+              url: '/notify/' + tid,
+              success: function(responseData) {
+                   //success
+               }
+             });
+            ajaxObject.execute();
+          };
 
            //listener for add item button
            $('.add-pg-item', context).once(this.id).click(function () {

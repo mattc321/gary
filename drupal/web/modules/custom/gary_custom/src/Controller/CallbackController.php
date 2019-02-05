@@ -11,7 +11,7 @@ use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Entity\Entity;
 use Symfony\Component\HttpFoundation\Response;
-
+use Drupal\gary_custom\GaryFunctions;
 
 class CallbackController extends ControllerBase {
 
@@ -20,7 +20,7 @@ class CallbackController extends ControllerBase {
    * @param  string $sid The ID of the service entity
    * @return string      The price or zero if not found
    */
-  public function getServicePrice($sid) {
+  public function getServicePrice(string $sid) {
 
     if ($sid == '_none') {
       return new Response(0);
@@ -34,6 +34,30 @@ class CallbackController extends ControllerBase {
     }
 
     return new Response($price);
+  }
+
+  /**
+   * Send notification to assignee
+   * @param  string $tid The id of the task
+   * @return string      0 if false 1 if True
+   */
+  public function getNotifyAssignee(string $tid) {
+
+    if (empty($tid)) {
+      return new Response(0);
+    }
+
+    $storage = \Drupal::entityTypeManager()->getStorage('node');
+    $task_node = $storage->load($tid);
+    $helper = new GaryFunctions();
+    $send = $helper->notifyAssignee($task_node);
+    
+    if ($send) {
+      return new Response(1);
+    } else {
+      return new Response(0);
+    }
+
   }
 
 }

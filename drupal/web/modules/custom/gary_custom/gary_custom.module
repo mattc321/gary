@@ -150,7 +150,8 @@ function gary_custom_entity_insert(EntityInterface $entity) {
 
   switch ($entity->bundle()){
     case 'tasks':
-      //
+      //the notify assignee upon new task event is handled in gary_field_formatter unfortunately.
+      //check InlineForm.php in the ajax rebuild 
     break;
 
     default:

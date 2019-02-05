@@ -247,7 +247,8 @@ class GaryFunctions {
    * @param  EntityInterface $entity The task node
    * @return boolean                  True if it sent false if not
    */
-  public static function notifyAssignee(EntityInterface $entity, $parent_node = NULL) {
+  public function notifyAssignee(EntityInterface $entity) {
+
     if (!$entity->hasField('field_task_assigned_to')) {
       return FALSE;
     }
@@ -264,12 +265,11 @@ class GaryFunctions {
 
     $from = $entity->getRevisionAuthor();
 
-    if (empty($parent_node)) {
-      $parent_nid = $helper->getParentNid($entity);
-      $parent_node = \Drupal::entityManager()
-        ->getStorage('node')
-        ->load($parent_nid);
-    }
+    $parent_nid = $this->getParentNid($entity);
+    $parent_node = \Drupal::entityManager()
+      ->getStorage('node')
+      ->load($parent_nid);
+
 
     if ($parent_node->hasField('field_account_reference')) {
       $account_title = $parent_node->get('field_account_reference')
@@ -303,7 +303,6 @@ class GaryFunctions {
     $langcode = \Drupal::currentUser()->getPreferredLangcode();
     $send = true;
     $result = $mailManager->mail($module, $key, $assigned_to->getEmail(), $langcode, $params, NULL, $send);
-
     if ($result['result'] !== true) {
       $messenger = \Drupal::messenger();
       $messenger->addMessage('An error happened and the notification to the assignee was not sent', $messenger::TYPE_WARNING);

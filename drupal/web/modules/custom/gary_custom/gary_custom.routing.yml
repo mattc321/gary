@@ -4,3 +4,10 @@ gary_custom.get_service_price:
     _controller: '\Drupal\gary_custom\Controller\CallbackController::getServicePrice'
   requirements:
     _permission: 'access content'
+
+gary_custom.notify:
+  path: '/notify/{tid}'
+  defaults:
+    _controller: '\Drupal\gary_custom\Controller\CallbackController::getNotifyAssignee'
+  requirements:
+    _permission: 'access content'

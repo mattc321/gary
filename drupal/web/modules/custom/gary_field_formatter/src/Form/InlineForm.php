@@ -44,6 +44,8 @@ class InlineForm extends FormBase {
 
   protected $hostNodeId;
 
+  protected $newNode;
+
   protected $targetType;
 
   private $helper;
@@ -295,7 +297,7 @@ class InlineForm extends FormBase {
    */
   public function ajaxFormRebuild(array &$form, FormStateInterface $form_state) {
     \Drupal::logger('poop')->error('ajaxFormRebuild');
-
+    $pg = $form['#host'];
     if ($form_state->hasAnyErrors()) {
       $wrapper = 'inline_pg_form_'.$this->getHostFieldName();
 
@@ -313,6 +315,16 @@ class InlineForm extends FormBase {
     //if keep_expanded is false hide it
     if (!$form['#keep_expanded']) {
       $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$this->getFormId(), 'hidden']));
+    }
+
+    //if tasks then send a notification
+    //had to do this here because the task gets created before its appended to a parent node
+    //and sending the mail directly in the ajax response breaks the process for some reason
+    if($pg->bundle() == 'tasks') {
+      if (!empty($this->newNode)) {
+        $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+        $response->addCommand(new InvokeCommand(NULL, 'notifyAssignee', [$this->newNode->id(), $node->id()]));
+      }
     }
 
     return $response;
@@ -400,6 +412,8 @@ class InlineForm extends FormBase {
     $pg_item->isNew();
     $pg_item->save();
 
+    $this->newNode = $pg_item;
+
     // Grab any existing entities from the node, and add this one
     $current = $node->get($host_field)->getValue();
 
@@ -408,11 +422,6 @@ class InlineForm extends FormBase {
       );
     $node->set($host_field, $current);
     $node->save();
-
-    //notify the assigned after appending
-    if($pg_item->bundle() == 'tasks') {
-      // $test = GaryFunctions::notifyAssignee($pg_item, $node);
-    }
 
     return;
   }
