@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains gary_email_views.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function gary_email_views_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gary_email_views module.
+    case 'help.page.gary_email_views':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Adds a header field and handler for emailing a particular view to a recipient') . '</p>';
+      return $output;
+
+    default:
+  }
+}

@@ -1,0 +1,7 @@
+name: 'Gary Email Views'
+type: module
+description: 'Adds a header field and handler for emailing a particular view to a recipient'
+core: 8.x
+package: 'Custom'
+dependencies:
+  - gary_custom

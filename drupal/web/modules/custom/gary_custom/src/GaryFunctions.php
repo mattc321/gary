@@ -232,18 +232,18 @@ class GaryFunctions {
   public function fieldHasChanged(EntityInterface $entity, string $field_name) {
 
     if (!$entity->hasField($field_name)) {
-      return false;
+      return FALSE;
     }
 
     if (!$entity->original) {
-      return false;
+      return FALSE;
     }
 
     if(!$entity->get($field_name)->equals($entity->original->get($field_name))){
-       return true;
+       return TRUE;
     }
 
-    return false;
+    return FALSE;
   }
 
   /**
