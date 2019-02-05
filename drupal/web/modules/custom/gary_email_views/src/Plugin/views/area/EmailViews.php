@@ -123,8 +123,8 @@ class EmailViews extends AreaPluginBase {
 
       $build['#attached']['library'][] = 'gary_email_views/emailview';
 
-      $output = '<div class="use-ajax email-view-link">';
-      $output .= $options['link_text'];
+      $output = '<div class="email-view-link">';
+      $output .= $this->options['link_text'];
       $output .= '</div>';
 
       $build['markup'] = [

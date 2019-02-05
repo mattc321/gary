@@ -1,8 +1,0 @@
-emailview:
-  version: 1.x
-  js:
-    js/email-view.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupal.ajax
-    - core/drupalSettings

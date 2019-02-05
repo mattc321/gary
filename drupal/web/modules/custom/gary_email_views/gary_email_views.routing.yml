@@ -1,0 +1,6 @@
+gary_email_views.send_email:
+  path: '/email_view'
+  defaults:
+    _controller: '\Drupal\gary_email_views\Controller\EmailViewsController::sendEmail'
+  requirements:
+    _permission: 'delete content'
