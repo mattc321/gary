@@ -151,7 +151,7 @@ function gary_custom_entity_insert(EntityInterface $entity) {
   switch ($entity->bundle()){
     case 'tasks':
       //the notify assignee upon new task event is handled in gary_field_formatter unfortunately.
-      //check InlineForm.php in the ajax rebuild 
+      //check InlineForm.php in the ajax rebuild
     break;
 
     default:
@@ -268,18 +268,21 @@ function gary_custom_form_node_projects_form_alter(&$form, FormStateInterface $f
     }
     //if no errors then set default values
     if (!$er) {
-      $builder = $node_storage
-        ->load($opportunity
-        ->get('field_account_reference')
-        ->getValue()[0]['target_id']);
 
+      if (!$opportunity->get('field_account_reference')->isEmpty()) {
+        $builder = $node_storage
+          ->load($opportunity
+          ->get('field_account_reference')
+          ->getValue()[0]['target_id']);
+
+        $form['field_account_reference']['widget'][0]['target_id']['#default_value']= $builder;
+      }
       $form['title']['widget'][0]['value']['#default_value']= $opportunity->getTitle();
       $form['field_address']['widget'][0]['value']['#default_value']= $opportunity->field_address->value;
       $form['field_city']['widget'][0]['value']['#default_value']=$opportunity->field_city->value;
       $form['field_state']['widget'][0]['value']['#default_value']=$opportunity->field_state->value;
       $form['field_zip']['widget'][0]['value']['#default_value']=$opportunity->field_zip->value;
       $form['field_opportunity']['widget'][0]['target_id']['#default_value']= $opportunity;
-      $form['field_account_reference']['widget'][0]['target_id']['#default_value']= $builder;
     }
   }
 }
