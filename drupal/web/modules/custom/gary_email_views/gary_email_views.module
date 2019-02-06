@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-
+use Drupal\views\ViewExecutable;
 /**
  * Implements hook_help().
  */
@@ -21,4 +21,11 @@ function gary_email_views_help($route_name, RouteMatchInterface $route_match) {
 
     default:
   }
+}
+
+function gary_email_views_views_pre_render(ViewExecutable $view) {
+  	if (isset($view->header['email_views'])) {
+      ksm($view->exposed_data);
+      ksm($view->header['email_views']->options);
+    }
 }
