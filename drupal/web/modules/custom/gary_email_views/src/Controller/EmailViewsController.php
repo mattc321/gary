@@ -9,12 +9,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\OpenModalDialogCommand;
 use Drupal\Core\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\Request;
 
 class EmailViewsController extends ControllerBase {
 
   public function sendEmail() {
     return true;
   }
+
 
 /**
   * The form builder.
@@ -28,6 +30,7 @@ class EmailViewsController extends ControllerBase {
   *
   * @param \Drupal\Core\Form\FormBuilder $formBuilder
   *   The form builder.
+
   */
  public function __construct(FormBuilder $formBuilder) {
    $this->formBuilder = $formBuilder;
@@ -50,10 +53,11 @@ class EmailViewsController extends ControllerBase {
  /**
   * Callback for opening the modal form.
   */
- public function openModalForm() {
-   $response = new AjaxResponse();
-   $modal_form = $this->formBuilder->getForm('Drupal\gary_email_views\Form\PopupEmail');
+ public function openModalForm($parent_view, $parent_display, $view_id, $display_id, Request $request) {
 
+   $response = new AjaxResponse();
+   $modal_form = $this->formBuilder->getForm('Drupal\gary_email_views\Form\PopupEmail',
+    $parent_view, $parent_display, $view_id, $display_id, $request);
    $response->addCommand(new OpenModalDialogCommand('Send Email', $modal_form, ['width' => '800']));
 
    return $response;

@@ -4,3 +4,20 @@ gary_email_views.send_email:
     _controller: '\Drupal\gary_email_views\Controller\EmailViewsController::sendEmail'
   requirements:
     _permission: 'delete content'
+
+#
+# gary_email_views.form:
+#   path: '/email_view/form'
+#   defaults:
+#     _form: 'Drupal\gary_email_views\Form\PopupEmail'
+#     _title: 'Send Email'
+#   requirements:
+#     _permission: 'access content'
+
+gary_email_views.open_email_form:
+  path: '/email_view/form/{parent_view}/{parent_display}/{view_id}/{display_id}'
+  defaults:
+    _title: 'Modal Form'
+    _controller: '\Drupal\gary_email_views\Controller\EmailViewsController::openModalForm'
+  requirements:
+    _permission: 'access content'

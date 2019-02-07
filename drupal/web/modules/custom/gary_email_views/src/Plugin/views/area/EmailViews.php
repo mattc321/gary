@@ -4,6 +4,8 @@ namespace Drupal\gary_email_views\Plugin\views\area;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\area\AreaPluginBase;
+use Drupal\Core\Url;
+
 /**
  * A special handler to add emailing the view functionality.
  *
@@ -81,7 +83,6 @@ class EmailViews extends AreaPluginBase {
        '#title' => $this
          ->t('Use the Current User\'s Email'),
        '#type' => 'checkbox',
-       '#required' => TRUE,
        '#description' => $this->t('Use the currently logged in user\'s email address as the senders email by default.'),
        '#default_value' => $this->options['use_current_users_email']
      ];
@@ -120,17 +121,51 @@ class EmailViews extends AreaPluginBase {
 
 
      if (!$empty || !empty($this->options['empty'])) {
+      //  ksm($this->view);
+      //  ksm($this->view->exposed_raw_input);
+
+       $options = [];
+       if (count($this->view->exposed_raw_input) > 0) {
+         foreach ($this->view->exposed_raw_input as $field_name => $value) {
+           if (is_array($value)) {
+             $options['query'][$field_name] = $value[0];
+           } else {
+             $options['query'][$field_name] = $value;
+           }
+         }
+       }
+
+       //should we load this view or another
+       if (!empty($this->options['alternate_view_id'])) {
+         $parts = explode($this->options['alternate_view_id']);
+         $view_id = $parts[0];
+         $display_id = $parts[1];
+       } else {
+         $view_id = $this->view->id();
+         $display_id = $this->view->current_display;
+       }
+
 
       $build['#attached']['library'][] = 'gary_email_views/emailview';
-
-      $output = '<div class="email-view-link">';
-      $output .= $this->options['link_text'];
-      $output .= '</div>';
-
-      $build['markup'] = [
-        '#markup' => $output,
+      // ksm($this->view->result);
+      $build['email_link'] = [
+        '#title' => t($this->options['link_text']),
+        '#type' => 'link',
+        '#attributes' => [
+          'class' => [
+            'use-ajax',
+            'email-link'
+          ],
+        ],
+        '#url' => Url::fromRoute('gary_email_views.open_email_form',[
+          'parent_view' => $this->view->id(),
+          'parent_display' => $this->view->current_display,
+          'view_id' => $view_id,
+          'display_id' => $display_id
+        ], $options),
       ];
-
+      // ksm($this->view->current_display);
+      //append the additional behavior in prerender
       return $build;
      }
      return [];
