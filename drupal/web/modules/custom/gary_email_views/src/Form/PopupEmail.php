@@ -16,9 +16,12 @@ use Drupal\Core\Entity\EntityFormBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity;
 use Drupal\Core\Ajax;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\AlertCommand;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\node\Entity\Node;
@@ -28,6 +31,9 @@ use Drupal\views\Views;
 use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use  Drupal\Core\Render\Renderer;
+use Drupal\Core\Render\Element\StatusMessages;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Mail\MailManager;
 
 /**
  * Contribute form.
@@ -38,13 +44,31 @@ class PopupEmail extends FormBase {
 
   protected $view;
 
+  /**
+  * The Messenger service.
+  *
+  * @var \Drupal\Core\Messenger\MessengerInterface
+  */
+  protected $messenger;
+
+  /**
+  * The Mailer service.
+  *
+  * @var \Drupal\Core\Mail\MailManager
+  */
+  protected $mailer;
+
+
   public function getFormId() {
     return 'email_views_form';
   }
 
-  public function __construct(AccountProxyInterface $user, Renderer $renderer) {
+  public function __construct(AccountProxyInterface $user, Renderer $renderer, MessengerInterface $messenger,
+    MailManager $mailer) {
     $this->user = $user;
     $this->renderer = $renderer;
+    $this->messenger = $messenger;
+    $this->mailer = $mailer;
   }
 
   /**
@@ -58,7 +82,9 @@ class PopupEmail extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('current_user'),
-      $container->get('renderer')
+      $container->get('renderer'),
+      $container->get('messenger'),
+      $container->get('plugin.manager.mail')
     );
   }
 
@@ -69,37 +95,67 @@ class PopupEmail extends FormBase {
    $view_id = NULL, $display_id = NULL, Request $request = NULL) {
 
 
-     //build args array
-     $args = [];
-     if (count($request->query->getIterator()) > 1) {
-       foreach ($request->query->getIterator() as $field_name => $value) {
-         $args[$field_name] = $value;
-       }
-     }
-     //unset ajax wrapper if its set
-     if (!empty($args)) {
-       if (isset($args['_wrapper_format'])) {
-         unset($args['_wrapper_format']);
-       }
-     }
+    //if the parent and view ids are the same were just loading the current view
+    if ($parent_view == $view_id && $parent_display == $display_id) {
+      //build args array
+      $args = [];
+      if (count($request->query->getIterator()) > 1) {
+        foreach ($request->query->getIterator() as $field_name => $value) {
+          $args[$field_name] = $value;
+        }
+      }
+      unset($args['_wrapper_format']);
+      unset($args['field_account_reference_target_id']);
+      $args['field_account_reference_target_id'] = [2494];
+      //unset ajax wrapper if its set
+      // if (!empty($args)) {
+      //   if (isset($args['_wrapper_format'])) {
+      //     unset($args['_wrapper_format']);
+      //     unset($args['field_account_reference_target_id']);
+      //   }
+      // }
+      ksm($args);
+      //exec the view
+      $view = Views::getView($view_id);
+      $view->setDisplay($display_id);
+      $view->setArguments($args);
+      $view->execute();
 
-    //exec the view
-    $view = Views::getView($view_id);
-    $view->setDisplay($display_id);
-    $view->setArguments($args);
-    $view->execute();
+      $parent_view = $view;
+
+    //if theyre not the same, load the parent view and match filter arguments
+    } else {
+
+      $parent_view = Views::getView($parent_view);
+      $parent_view->setDisplay($parent_display);
+      $parent_view->execute();
+
+      //build args array
+      $args = [];
+      if (count($request->query->getIterator()) > 1) {
+        foreach ($request->query->getIterator() as $field_name => $value) {
+          $args[$field_name] = $value;
+        }
+      }
+      //unset ajax wrapper if its set
+      if (!empty($args)) {
+        if (isset($args['_wrapper_format'])) {
+          unset($args['_wrapper_format']);
+        }
+      }
+
+      //exec the view
+      $view = Views::getView($view_id);
+      $view->setDisplay($display_id);
+      $view->setArguments($args);
+      $view->execute();
+    }
 
     //were going to use this later
     $this->view = $view;
 
-    //if the parent and view ids are the same were just loading the current view
-    if ($parent_view == $view_id && $parent_display == $display_id) {
-      $parent_view = $view;
-    } else {
-      $parent_view = Views::getView($parent_view);
-      $parent_view->setDisplay($parent_display);
-      $parent_view->execute();
-    }
+    // ksm($view->filter);
+    // ksm($parent_view->filter);
 
 
 
@@ -109,15 +165,18 @@ class PopupEmail extends FormBase {
     $from = $options['use_current_users_email'] ? $this->user->getEmail() : $options['from_alias'];
 
     $form = [];
+    $form['status'] = [
+      '#markup' => '<div id="form-status-messages"></div>'
+    ];
     $form['email_to'] = [
       '#title' => t('Email To:'),
-      '#type' => 'textfield',
+      '#type' => 'email',
       '#required' => TRUE,
       '#default_value' => $options['default_recipient'],
     ];
     $form['email_from'] = [
       '#title' => t('Email (alias) From:'),
-      '#type' => 'textfield',
+      '#type' => 'email',
       '#description' => t('Leave blank to use system email'),
       '#default_value' => $from,
     ];
@@ -145,11 +204,10 @@ class PopupEmail extends FormBase {
       ],
       '#ajax' => [
         'callback' => '::ajaxFormRebuild',
-        'wrapper' => 'test',
+        'wrapper' => $this->getFormId(),
       ],
     ];
     $form['#submit'] = ['::ajaxFormSubmitHandler'];
-    // $form['#attached']['library'][] = 'gary_field_formatter/refresh';
     $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
     return $form;
   }
@@ -158,27 +216,52 @@ class PopupEmail extends FormBase {
    * {@inheritdoc}
    */
   public function ajaxFormSubmitHandler(array &$form, FormStateInterface $form_state) {
-    $form_values = $form_state->getValues();
 
-    //do the stuff
+    $form_values = $form_state->getValues();
+    // ksm($form_values['body_msg']);
+    $params = [
+      'email_to' => $form_values['email_to'],
+      'email_from' => $form_values['email_from'],
+      'email_subject' => $form_values['email_subject'],
+      'body_msg' => $form_values['body_msg'],
+      'rendered_view' => $this->renderer->renderPlain($this->view->buildRenderable())
+    ];
+
+    $module = 'gary_email_views';
+    $key = 'email_view';
+    $params['values'] = $params;
+    $langcode = $this->user->getPreferredLangcode();
+    $send = TRUE;
+    $result = $this->mailer->mail($module, $key, $form_values['email_to'], $langcode, $params, NULL, $send);
+    if ($result['result'] !== TRUE) {
+      $this->messenger
+        ->addMessage('The email could not be sent. Contact site admin', $this->messenger::TYPE_WARNING);
+    }
   }
 
   /**
    * {@inheritdoc}
    */
   public function ajaxFormRebuild(array &$form, FormStateInterface $form_state) {
+    \Drupal::logger('this')->error('ajaxFormRebuild');
 
+    //respond with any form errors
     if ($form_state->hasAnyErrors()) {
-      return $form;
+      $response = new AjaxResponse();
+      $messages = StatusMessages::renderMessages('error');
+      $response
+        ->addCommand(new HtmlCommand('#form-status-messages', $this->renderer->renderPlain($messages)));
+      return $response;
     }
 
     $response = new AjaxResponse();
-    $response->addCommand(new AlertCommand('fuck yea');
-    // $response->addCommand(new InvokeCommand(NULL, 'clearValues', ['#'.$this->getFormId()]));
-
+    $this->messenger
+      ->addMessage(t('Email Sent!'), $this->messenger::TYPE_STATUS);
+    $response->addCommand(new CloseModalDialogCommand());
 
     return $response;
   }
+
   /**
  * {@inheritdoc}
  */

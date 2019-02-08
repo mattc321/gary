@@ -125,19 +125,23 @@ class EmailViews extends AreaPluginBase {
       //  ksm($this->view->exposed_raw_input);
 
        $options = [];
+      //  ksm($this->view->filter['field_account_reference_target_id']->definition);
+      //  ksm($this->view->filter['field_account_reference_target_id']->options);
+      //  ksm($this->view->filter['field_account_reference_target_id']->getEntityType());
        if (count($this->view->exposed_raw_input) > 0) {
          foreach ($this->view->exposed_raw_input as $field_name => $value) {
-           if (is_array($value)) {
-             $options['query'][$field_name] = $value[0];
-           } else {
+           ksm($this->view->filter[$field_name]);
+          //  if (is_array($value)) {
+          //    $options['query'][$field_name] = reset($value);
+          //  } else {
              $options['query'][$field_name] = $value;
-           }
+          //  }
          }
        }
 
        //should we load this view or another
        if (!empty($this->options['alternate_view_id'])) {
-         $parts = explode($this->options['alternate_view_id']);
+         $parts = explode('|',$this->options['alternate_view_id']);
          $view_id = $parts[0];
          $display_id = $parts[1];
        } else {

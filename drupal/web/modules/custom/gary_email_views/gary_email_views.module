@@ -25,22 +25,31 @@ function gary_email_views_help($route_name, RouteMatchInterface $route_match) {
   }
 }
 
-function gary_email_views_views_pre_render(ViewExecutable $view) {
-  	if (isset($view->header['email_views'])) {
-      // ksm($view->exposed_data);
-      $options = $view->header['email_views']->options;
+/**
+* Implements hook_mail().
+*/
+function gary_email_views_mail($key, &$message, $params) {
 
-      if ($options['use_current_users_email'] == 1) {
-        $user = '';
-      }
+ $options = array(
+   'langcode' => $message['langcode'],
+ );
 
-      $def_recipient = $options['default_recipient'];
-      $def_subject = $options['default_subject'];
-      $def_body = $options['default_body'];
-      // ksm($view->display_handler->handlers['header']);
-      // ksm($view->current_display);
+ if ($key == 'email_view') {
+  //  ksm($params['email_from']);
+   $from = !empty($params['email_from']) ? $params['email_from'] : \Drupal::config('system.site')->get('mail');
+   $message['from'] = $from;
+   $message['subject'] = t('@subject', ['@subject' => $params['email_subject']]);
+   $message['body'][] = $params['body_msg'];
+   $message['body'][] = $params['rendered_view'];
+   $message['headers'] = [
+    'content-type' => 'text/html',
+    'MIME-Version' => '1.0',
+    'reply-to' => $from,
+    'Return-Path' => $from,
+    'from' => 'Admin <'.$from.'>'
+   ];
 
-      // ksm($view->header['email_views']->render()['email_link']['#results']);
+ }
 
-    }
+
 }
