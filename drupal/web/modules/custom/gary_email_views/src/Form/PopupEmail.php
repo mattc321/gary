@@ -104,23 +104,18 @@ class PopupEmail extends FormBase {
           $args[$field_name] = $value;
         }
       }
-      unset($args['_wrapper_format']);
-      unset($args['field_account_reference_target_id']);
-      $args['field_account_reference_target_id'] = [2494];
       //unset ajax wrapper if its set
-      // if (!empty($args)) {
-      //   if (isset($args['_wrapper_format'])) {
-      //     unset($args['_wrapper_format']);
-      //     unset($args['field_account_reference_target_id']);
-      //   }
-      // }
-      ksm($args);
+      if (!empty($args)) {
+        if (isset($args['_wrapper_format'])) {
+          unset($args['_wrapper_format']);
+          // unset($args['field_account_reference_target_id']);
+        }
+      }
       //exec the view
       $view = Views::getView($view_id);
       $view->setDisplay($display_id);
-      $view->setArguments($args);
+      $view->setExposedInput($args);
       $view->execute();
-
       $parent_view = $view;
 
     //if theyre not the same, load the parent view and match filter arguments
@@ -129,12 +124,19 @@ class PopupEmail extends FormBase {
       $parent_view = Views::getView($parent_view);
       $parent_view->setDisplay($parent_display);
       $parent_view->execute();
+      $filters = $parent_view->getExposedInput();
 
-      //build args array
+      //build args array for any values set, and strip nested arrays
       $args = [];
       if (count($request->query->getIterator()) > 1) {
         foreach ($request->query->getIterator() as $field_name => $value) {
-          $args[$field_name] = $value;
+          if (isset($filters[$field_name]) && !empty($filters[$field_name])) {
+            $set_val = is_array($value) ? reset($value) : $value;
+            if (isset($set_val['target_id'])) {
+              $set_val = $set_val['target_id'];
+            }
+            $args[$field_name] = $set_val;
+          }
         }
       }
       //unset ajax wrapper if its set
@@ -153,11 +155,6 @@ class PopupEmail extends FormBase {
 
     //were going to use this later
     $this->view = $view;
-
-    // ksm($view->filter);
-    // ksm($parent_view->filter);
-
-
 
     //get default options
     $options = $parent_view->header['email_views']->options;
@@ -218,7 +215,6 @@ class PopupEmail extends FormBase {
   public function ajaxFormSubmitHandler(array &$form, FormStateInterface $form_state) {
 
     $form_values = $form_state->getValues();
-    // ksm($form_values['body_msg']);
     $params = [
       'email_to' => $form_values['email_to'],
       'email_from' => $form_values['email_from'],
@@ -253,12 +249,9 @@ class PopupEmail extends FormBase {
         ->addCommand(new HtmlCommand('#form-status-messages', $this->renderer->renderPlain($messages)));
       return $response;
     }
-
     $response = new AjaxResponse();
-    $this->messenger
-      ->addMessage(t('Email Sent!'), $this->messenger::TYPE_STATUS);
     $response->addCommand(new CloseModalDialogCommand());
-
+    $response->addCommand(new AlertCommand('Email sent!'));
     return $response;
   }
 

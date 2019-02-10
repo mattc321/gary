@@ -121,21 +121,11 @@ class EmailViews extends AreaPluginBase {
 
 
      if (!$empty || !empty($this->options['empty'])) {
-      //  ksm($this->view);
-      //  ksm($this->view->exposed_raw_input);
 
        $options = [];
-      //  ksm($this->view->filter['field_account_reference_target_id']->definition);
-      //  ksm($this->view->filter['field_account_reference_target_id']->options);
-      //  ksm($this->view->filter['field_account_reference_target_id']->getEntityType());
        if (count($this->view->exposed_raw_input) > 0) {
          foreach ($this->view->exposed_raw_input as $field_name => $value) {
-           ksm($this->view->filter[$field_name]);
-          //  if (is_array($value)) {
-          //    $options['query'][$field_name] = reset($value);
-          //  } else {
              $options['query'][$field_name] = $value;
-          //  }
          }
        }
 
@@ -151,7 +141,6 @@ class EmailViews extends AreaPluginBase {
 
 
       $build['#attached']['library'][] = 'gary_email_views/emailview';
-      // ksm($this->view->result);
       $build['email_link'] = [
         '#title' => t($this->options['link_text']),
         '#type' => 'link',
@@ -168,7 +157,6 @@ class EmailViews extends AreaPluginBase {
           'display_id' => $display_id
         ], $options),
       ];
-      // ksm($this->view->current_display);
       //append the additional behavior in prerender
       return $build;
      }
