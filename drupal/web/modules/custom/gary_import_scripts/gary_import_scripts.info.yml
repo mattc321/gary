@@ -1,0 +1,5 @@
+name: 'Gary Import Scripts'
+type: module
+description: 'Gary Import Scripts'
+core: 8.x
+package: 'Custom'
