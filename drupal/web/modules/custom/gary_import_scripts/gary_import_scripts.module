@@ -25,7 +25,14 @@ function gary_import_scripts_help($route_name, RouteMatchInterface $route_match)
 }
 
 function gary_import_scripts_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  ksm('test');
+  if ($entity->bundle() == 'services') {
+    if ($entity->hasField('field_service_tasks')) {
+      if ($_GET['process'] == 1) {
+        ksm($entity->id());
+      }
+    }
+  }
+
 }
 
 function serviceIds() {
