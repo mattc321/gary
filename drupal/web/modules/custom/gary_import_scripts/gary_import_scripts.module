@@ -25,16 +25,48 @@ function gary_import_scripts_help($route_name, RouteMatchInterface $route_match)
 }
 
 function gary_import_scripts_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  if ($entity->bundle() == 'services') {
-    if ($entity->hasField('field_service_tasks')) {
-      if ($_GET['process'] == 1) {
-        ksm($entity->id());
-      }
+  // ksm(count(autoTaskIds()));
+  if (isset($_GET['process']) == 1) {
+    // ksm($entity->get('field_service_tasks')->getValue());
+    $nodes = serviceIds();
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    foreach ($nodes as $node_id => $auto_task_ids) {
+        $node = $node_storage->load($node_id);
+        if ($node->bundle() == 'services') {
+          if ($node->hasField('field_service_tasks')) {
+            $current = $node->get('field_service_tasks')->getValue();
+            $auto_task_array = explode(',',$auto_task_ids);
+            foreach ($auto_task_array as $old_auto_task_id) {
+              $new_auto_task_id = getAutoTaskId($old_auto_task_id);
+              if (!empty($new_auto_task_id)) {
+                $current[] = [
+                  'target_id' => $new_auto_task_id
+                ];
+              } else {
+                $messenger = \Drupal::messenger();
+                $messenger->addMessage('COULD NOT FIND NEW ID!'.$old_auto_task_id, $messenger::TYPE_WARNING);
+              }
+            }
+            $node->set('field_service_tasks', $current);
+            $node->save();
+          } else {
+            // dpm('no field');
+          }
+        } else {
+          // dpm('no bundle');
+        }
     }
+    // $entity->set('field_service_tasks', 6796);
+    // $entity->set('field_service_tasks', 6820);
+    // $entity->save();
   }
 
-}
 
+}
+function getAutoTaskId($old_auto_task_id) {
+  $auto_task_ids = autoTaskIds();
+  return $auto_task_ids[$old_auto_task_id];
+}
 function serviceIds() {
   //key = new id
   //value = string of audit ids to attach to the service
