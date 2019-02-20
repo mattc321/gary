@@ -42,15 +42,37 @@ function gary_custom_views_views_data_alter(array &$data) {
     ],
   ];
 
-  $data['node']['field_entity_reverse_lookup'] = [
-    'title' => t('Entity Reverse Lookup'),
-    'help' => t('Gets host entity'),
-    'field' => [
-      'title' => t('Entity Reverse Lookup'),
-      'help' => t('Get the host entity'),
-      'id' => 'field_entity_reverse_lookup',
-    ],
-  ];
+  // $data['node']['field_entity_reverse_lookup'] = [
+  //   'title' => t('Entity Reverse Lookup'),
+  //   'help' => t('Gets host entity'),
+  //   'field' => [
+  //     'title' => t('Entity Reverse Lookup'),
+  //     'help' => t('Get the host entity'),
+  //     'id' => 'field_entity_reverse_lookup',
+  //   ],
+  // ];
+  // $data['node__field_service_tasks']['services']['relationship'] = [
+  //   'title' => t('Services Relating to Service Task'),
+  //   'label' => t('Services Relating to Service Task'),
+  //   'group' => 'Services',
+  //   'help' => t('Reference to service from a service task'),
+  //   'id' => 'entity_reverse',
+  //   'base' => 'node',
+  //   'base field' => 'nid',
+  //   'field' => 'entity_id',
+  // ];
+  //
+  // $data['node']['reverse_lookups']['relationship'] = [
+  //   'title' => t('Reverse Lookup For Services'),
+  //   'help' => t('Reverse Lookup For Services'),
+  //   'field_name' => 'field_service_tasks',
+  //   'field table' => 'node__field_service_tasks',
+  //   'field field' => 'field_service_tasks_target_id',
+  //   'base' => 'node',
+  //   'base field' => 'nid',
+  //   'id' => 'entity_reverse',
+  //   'label' => 'Smack the llama',
+  // ];
   //  $data['node']['field_display_all_services'] = array(
   //   'title' => t('Display All Services'),
   //   'help' => t('Return all services for a project onto one record.'),
