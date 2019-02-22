@@ -13,6 +13,19 @@ table {
     margin: 0;
   }
 
+  caption {
+    font-size: 20px;
+    padding: 5px 5px 10px 5px;
+    text-align: left;
+  }
+
+  tr {
+    &.disabled-yes,
+    &.disabled-Yes {
+      @include disabled();
+    }
+  }
+
 }
 /* Zebra striping */
 tr:nth-of-type(odd) {

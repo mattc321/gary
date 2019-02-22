@@ -12,7 +12,8 @@ use Drupal\node\Entity\Node;
 use Drupal\Core\Entity\Entity;
 use Symfony\Component\HttpFoundation\Response;
 use Drupal\gary_custom\GaryFunctions;
-
+use Drupal\views\Views;
+use Drupal\Core\Url;
 class CallbackController extends ControllerBase {
 
   /**
@@ -51,7 +52,7 @@ class CallbackController extends ControllerBase {
     $task_node = $storage->load($tid);
     $helper = new GaryFunctions();
     $send = $helper->notifyAssignee($task_node);
-    
+
     if ($send) {
       return new Response(1);
     } else {
@@ -59,5 +60,20 @@ class CallbackController extends ControllerBase {
     }
 
   }
+
+  /**
+   * Toggle 2 elements hidden properties
+   * @param  string $selector_from The first selector to toggle
+   * @param  string $selector_to   The second selector to toggle
+   * @return [type]                [description]
+   */
+  public function toggleHidden($selector_from, $selector_to) {
+    $response = new \Drupal\Core\Ajax\AjaxResponse();
+
+    // $vid = "view-id-".$vid;
+    $response->addCommand(new InvokeCommand(NULL, 'toggleHidden', [$selector_from, $selector_to]));
+    return $response;
+  }
+
 
 }

@@ -14,6 +14,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\user\Entity\User;
 use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_help().
@@ -119,9 +120,12 @@ function gary_custom_menu_local_tasks_alter(&$data, $route_name, RefinableCachea
 }
 
 function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  $helper = new GaryFunctions;
 
   switch ($entity->bundle()){
     case 'projects':
+
+      $helper->createReturnAutoTasks($entity);
 
     break;
   }
@@ -219,7 +223,9 @@ function gary_custom_entity_presave(EntityInterface $entity) {
     case 'tasks':
       //If the assigned_to field has changed, alert the person whom the task is being assigned to
       if ($helper->fieldHasChanged($entity, 'field_task_assigned_to')) {
-        $helper->notifyAssignee($entity);
+        // $helper->notifyAssignee($entity);
+        \Drupal::logger('gary_custom')->error('would have notified assignee');
+
       }
 
     break;
@@ -246,6 +252,16 @@ function gary_custom_entity_presave(EntityInterface $entity) {
 
     break;
     case 'projects':
+
+      //if project is new, load its opportunity then its service
+      //then load auto tasks associated with that service, create new
+      //tasks and attach them to the project
+      // if ($entity->isNew()) {
+      //   $auto_task_ids = $helper->createReturnAutoTasks($entity);
+      //   if (!empty($auto_task_ids)) {
+      //     //tasks were created
+      //   }
+      // }
 
       //if cancelling or completing the project, close all of its tasks
       if ($helper->fieldHasChanged($entity, 'field_project_status')) {
@@ -421,3 +437,38 @@ function gary_custom_mail($key, &$message, $params) {
    break;
  }
 }
+
+
+function gary_custom_page_attachments(array &$page) {
+    $page['#attached']['library'][] = 'gary_custom/custom';
+}
+
+// function gary_custom_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+//   if ($view->id() == 'manage_service_tasks' && $display_id === 'block_2') {
+//     $switch = [
+//       '#markup' => '
+//       <a class="use-ajax"
+//         href="/toggle-hidden/block-views-blockmanage-service-tasks-block-2/block-views-blockmanage-service-tasks-block-1">
+//         Switch ViewExecutable
+//       </a>',
+//     ];
+//
+//     $item = [
+//       'id' => 'area',
+//       'table' => 'views',
+//       'field' => 'area',
+//       'relationship' => 'none',
+//       'group_type' => 'none',
+//       'admin_label' => '',
+//       'empty' => NULL,
+//       'tokenize' => NULL,
+//       'content' => [
+//         'value' => render($switch),
+//         'format' => "full_html",
+//       ],
+//       'plugin_id' => 'text',
+//     ];
+//
+//     $view->setHandler('block_2', 'header', 'area', $item);
+//   }
+// }

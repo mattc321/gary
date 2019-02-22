@@ -11,3 +11,10 @@ gary_custom.notify:
     _controller: '\Drupal\gary_custom\Controller\CallbackController::getNotifyAssignee'
   requirements:
     _permission: 'access content'
+
+gary_custom.toggle_hidden:
+  path: '/toggle-hidden/{selector_from}/{selector_to}'
+  defaults:
+    _controller: '\Drupal\gary_custom\Controller\CallbackController::toggleHidden'
+  requirements:
+    _permission: 'access content'

@@ -409,4 +409,115 @@ class GaryFunctions {
     return FALSE;
   }
 
+  public function createReturnAutoTasks(EntityInterface $entity) {
+
+    //only procede if these fields are present and opp is not empty
+    if(!$entity->hasField('field_tasks')) {
+      return;
+    }
+
+    if(!$entity->hasField('field_opportunity')) {
+      return;
+    }
+
+    if ($entity->get('field_opportunity')->isEmpty()) {
+      return;
+    }
+    $opportunity = $this->loadEntityRef($entity, 'field_opportunity');
+    // $opportunity = $entity
+    //   ->get('field_opportunity')
+    //   ->first()
+    //   ->get('entity')
+    //   ->getTarget()
+    //   ->getValue()
+    // ;
+    if (!$opportunity->hasField('field_opportunity_services_ref')) {
+      return;
+    }
+
+    $services_ids = $opportunity->get('field_opportunity_services_ref');
+
+    foreach ($services_ids as $services_id) {
+
+      $service_paragraph_id = $services_id->getValue();
+      $service_paragraph = Paragraph::load(array_shift($service_paragraph_id));
+
+      if (!$service_paragraph->hasField('field_opportunity_service')) {
+        //dont even continue if the field isnt there
+        return;
+      }
+
+      $service_id = $service_paragraph->get('field_opportunity_service');
+
+      if ($service_paragraph->get('field_opportunity_service')->isEmpty()) {
+        continue;
+      }
+
+      $service = $this->loadEntityRef($service_paragraph, 'field_opportunity_service');
+
+      $auto_tasks = $service->get('field_service_tasks');
+
+      if ($auto_tasks->isEmpty()) {
+        continue;
+      }
+
+      $this->makeTasksFromAutoTasks($auto_tasks->referencedEntities());
+
+    }
+  }
+
+  public function makeTasksFromAutoTasks($auto_tasks) {
+    $values = [];
+    foreach ($auto_tasks as $index => $auto_task) {
+      $values[$index] = [
+      'title' => $auto_task->title->value,
+      'field_task_assigned_to' => $auto_task->field_st_assigned_to->value,
+      'field_priority' => $auto_task->field_priority->value,
+      'field_task_due_date' => NULL,
+      'field_task_list' => $auto_task->field_task_list->value,
+      'field_task_status' => 2
+      ];
+    }
+    ksm($values);
+  }
+
+  private function addNodeItem(array $values, string $bundle) {
+
+    $new_node = Node::create(['type' => $bundle,]);
+
+    foreach ($values as $field_name => $value) {
+      if (trim($value) == "" || empty($value)) {
+        continue;
+      }
+
+      //setTitle if its title.
+      if ($field_name == 'title') {
+        $new_node->setTitle($value);
+      } else {
+        $new_node->set($field_name, $value);
+      }
+    }
+
+    $new_node->isNew();
+    $new_node->save();
+
+    return $new_node->id();
+  }
+
+  /**
+   * Utility function to load an entity reference
+   * @param  EntityInterface $entity The entity containing the entity ref
+   * @param  string          $field  The entity ref fieldname
+   * @return object                  The loaded entity
+   */
+  public function loadEntityRef(EntityInterface $entity, $field) {
+    return
+      $entity
+      ->get($field)
+      ->first()
+      ->get('entity')
+      ->getTarget()
+      ->getValue();
+    }
+
 }

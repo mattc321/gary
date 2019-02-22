@@ -29,6 +29,14 @@ $break-xl: 1400px;
 
 }
 
+@mixin disabled() {
+  background: $light-red;
+}
+
+@mixin trans() {
+  transition: .3s;
+}
+
 $max-width: 1200px;
 $max-width-alt: 700px;
 
@@ -54,6 +62,7 @@ $light-green: #8bc1b2;
 
 
 $red: #e27676;
+$light-red: #f7d9d9;
 $brown: #bdb69c;
 
 $purple: #c9a8cb;

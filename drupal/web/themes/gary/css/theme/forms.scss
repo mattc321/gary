@@ -85,3 +85,25 @@ input[type=submit].add-pg-item {
     margin-top: 5px;
     padding: 5px 15px;
 }
+
+
+//management and views forms styles
+.view-manage-service-tasks {
+
+  .tabledrag-toggle-weight-wrapper {
+    display: none;
+  }
+  
+  input#edit-actions-submit,
+  input#edit-save-order {
+    position: fixed;
+    top: 40%;
+    left: -10px;
+    transition: .3s;
+    box-shadow: 0 3px 8px 2px rgba(0, 0, 0, 0.52);
+
+    &:hover {
+      left: -5px;
+    }
+  }
+}

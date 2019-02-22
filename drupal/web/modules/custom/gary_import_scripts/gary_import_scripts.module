@@ -24,45 +24,221 @@ function gary_import_scripts_help($route_name, RouteMatchInterface $route_match)
   }
 }
 
+function attachServiceTasksToServices() {
+  $nodes = serviceIds();
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  foreach ($nodes as $node_id => $auto_task_ids) {
+      $node = $node_storage->load($node_id);
+      if ($node->bundle() == 'services') {
+        if ($node->hasField('field_service_tasks')) {
+          $current = $node->get('field_service_tasks')->getValue();
+          $auto_task_array = explode(',',$auto_task_ids);
+          foreach ($auto_task_array as $old_auto_task_id) {
+            $new_auto_task_id = getAutoTaskId($old_auto_task_id);
+            if (!empty($new_auto_task_id)) {
+              $current[] = [
+                'target_id' => $new_auto_task_id
+              ];
+            } else {
+              $messenger = \Drupal::messenger();
+              $messenger->addMessage('COULD NOT FIND NEW ID!'.$old_auto_task_id, $messenger::TYPE_WARNING);
+            }
+          }
+          $node->set('field_service_tasks', $current);
+          $node->save();
+        } else {
+          // dpm('no field');
+        }
+      } else {
+        // dpm('no bundle');
+      }
+  }
+  // $entity->set('field_service_tasks', 6796);
+  // $entity->set('field_service_tasks', 6820);
+  // $entity->save();
+}
+
 function gary_import_scripts_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   // ksm(count(autoTaskIds()));
   if (isset($_GET['process']) == 1) {
     // ksm($entity->get('field_service_tasks')->getValue());
-    $nodes = serviceIds();
-    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-    foreach ($nodes as $node_id => $auto_task_ids) {
-        $node = $node_storage->load($node_id);
-        if ($node->bundle() == 'services') {
-          if ($node->hasField('field_service_tasks')) {
-            $current = $node->get('field_service_tasks')->getValue();
-            $auto_task_array = explode(',',$auto_task_ids);
-            foreach ($auto_task_array as $old_auto_task_id) {
-              $new_auto_task_id = getAutoTaskId($old_auto_task_id);
-              if (!empty($new_auto_task_id)) {
-                $current[] = [
-                  'target_id' => $new_auto_task_id
-                ];
-              } else {
-                $messenger = \Drupal::messenger();
-                $messenger->addMessage('COULD NOT FIND NEW ID!'.$old_auto_task_id, $messenger::TYPE_WARNING);
-              }
-            }
-            $node->set('field_service_tasks', $current);
-            $node->save();
-          } else {
-            // dpm('no field');
-          }
-        } else {
-          // dpm('no bundle');
-        }
-    }
-    // $entity->set('field_service_tasks', 6796);
-    // $entity->set('field_service_tasks', 6820);
-    // $entity->save();
+    // attachServiceTasksToServices();
+    // $x = importAutoTaskWeights();
   }
 
 
 }
+
+function importAutoTaskWeights() {
+  $tasks = autoTaskWeights();
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+
+  foreach ($tasks as $nid => $task_weight) {
+    if (!empty($task_weight)) {
+      $node = $node_storage->load($nid);
+      if ($node->hasField('field_task_weight')) {
+        // dpm($task_weight);
+        $node->set('field_task_weight', $task_weight);
+        // $node->save();
+      }
+    }
+  }
+}
+
+function autoTaskWeights() {
+
+  return [
+    '6699' => '0',
+    '6700' => '1',
+    '6701' => '2',
+    '6702' => '3',
+    '6703' => '4',
+    '6704' => '5',
+    '6705' => '',
+    '6706' => '',
+    '6707' => '',
+    '6708' => '0',
+    '6709' => '',
+    '6710' => '',
+    '6711' => '1',
+    '6712' => '2',
+    '6713' => '3',
+    '6714' => '5',
+    '6715' => '0',
+    '6716' => '1',
+    '6717' => '2',
+    '6718' => '3',
+    '6719' => '4',
+    '6720' => '5',
+    '6721' => '',
+    '6722' => '',
+    '6723' => '',
+    '6724' => '0',
+    '6725' => '',
+    '6726' => '1',
+    '6727' => '2',
+    '6728' => '3',
+    '6729' => '5',
+    '6730' => '0',
+    '6731' => '1',
+    '6732' => '2',
+    '6733' => '3',
+    '6734' => '4',
+    '6735' => '5',
+    '6736' => '6',
+    '6737' => '',
+    '6738' => '0',
+    '6739' => '1',
+    '6740' => '5',
+    '6741' => '2',
+    '6742' => '3',
+    '6743' => '4',
+    '6744' => '6',
+    '6745' => '0',
+    '6746' => '0',
+    '6747' => '1',
+    '6748' => '2',
+    '6749' => '3',
+    '6750' => '4',
+    '6751' => '5',
+    '6752' => '6',
+    '6753' => '',
+    '6754' => '',
+    '6755' => '0',
+    '6756' => '0',
+    '6757' => '',
+    '6758' => '1',
+    '6759' => '2',
+    '6760' => '3',
+    '6761' => '5',
+    '6762' => '0',
+    '6763' => '1',
+    '6764' => '2',
+    '6765' => '3',
+    '6766' => '4',
+    '6767' => '5',
+    '6768' => '6',
+    '6769' => '0',
+    '6770' => '1',
+    '6771' => '0',
+    '6772' => '4',
+    '6773' => '',
+    '6774' => '',
+    '6775' => '1',
+    '6776' => '2',
+    '6777' => '3',
+    '6778' => '5',
+    '6779' => '0',
+    '6780' => '4',
+    '6781' => '1',
+    '6782' => '2',
+    '6783' => '3',
+    '6784' => '5',
+    '6785' => '0',
+    '6786' => '4',
+    '6787' => '1',
+    '6788' => '2',
+    '6789' => '3',
+    '6790' => '5',
+    '6791' => '0',
+    '6792' => '4',
+    '6793' => '1',
+    '6794' => '2',
+    '6795' => '3',
+    '6796' => '0',
+    '6797' => '',
+    '6798' => '0',
+    '6799' => '1',
+    '6800' => '2',
+    '6801' => '3',
+    '6802' => '4',
+    '6803' => '6',
+    '6804' => '4',
+    '6805' => '5',
+    '6806' => '4',
+    '6807' => '4',
+    '6808' => '0',
+    '6809' => '1',
+    '6810' => '2',
+    '6811' => '3',
+    '6812' => '0',
+    '6813' => '1',
+    '6814' => '2',
+    '6815' => '3',
+    '6816' => '4',
+    '6817' => '5',
+    '6818' => '5',
+    '6819' => '7',
+    '6820' => '1',
+    '6821' => '0',
+    '6822' => '1',
+    '6823' => '2',
+    '6824' => '3',
+    '6825' => '4',
+    '6826' => '5',
+    '6827' => '0',
+    '6828' => '1',
+    '6829' => '2',
+    '6830' => '3',
+    '6831' => '4',
+    '6832' => '5',
+    '6833' => '0',
+    '6834' => '1',
+    '6835' => '2',
+    '6836' => '3',
+    '6837' => '4',
+    '6838' => '5',
+    '6839' => '0',
+    '6840' => '0',
+    '6841' => '0',
+    '6842' => '0',
+    '6843' => '0',
+    '6844' => '0'
+  ];
+
+}
+
+
 function getAutoTaskId($old_auto_task_id) {
   $auto_task_ids = autoTaskIds();
   return $auto_task_ids[$old_auto_task_id];
