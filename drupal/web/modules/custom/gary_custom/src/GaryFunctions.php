@@ -543,7 +543,6 @@ class GaryFunctions {
       $node_items[] = [
       'title' => $auto_task->title->value,
       'field_task_assigned_to' => $assign_to,
-      'field_priority' => $auto_task->field_priority->value,
       'field_task_due_date' => $date,
       'field_task_list' => $auto_task->field_task_list->target_id,
       'field_task_status' => 2,
