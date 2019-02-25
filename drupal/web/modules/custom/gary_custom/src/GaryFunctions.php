@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\user\Entity\User;
+use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 
 class GaryFunctions {
@@ -409,6 +410,7 @@ class GaryFunctions {
     return FALSE;
   }
 
+
   public function createReturnAutoTasks(EntityInterface $entity) {
 
     //only procede if these fields are present and opp is not empty
@@ -423,19 +425,16 @@ class GaryFunctions {
     if ($entity->get('field_opportunity')->isEmpty()) {
       return;
     }
+
     $opportunity = $this->loadEntityRef($entity, 'field_opportunity');
-    // $opportunity = $entity
-    //   ->get('field_opportunity')
-    //   ->first()
-    //   ->get('entity')
-    //   ->getTarget()
-    //   ->getValue()
-    // ;
+
     if (!$opportunity->hasField('field_opportunity_services_ref')) {
       return;
     }
 
     $services_ids = $opportunity->get('field_opportunity_services_ref');
+
+    $new_nodes = [];
 
     foreach ($services_ids as $services_id) {
 
@@ -460,33 +459,60 @@ class GaryFunctions {
       if ($auto_tasks->isEmpty()) {
         continue;
       }
-
-      $this->makeTasksFromAutoTasks($auto_tasks->referencedEntities());
-
+      foreach ($auto_tasks->referencedEntities() as $key => $value) {
+        ksm($value->field_task_weight->value);
+      }
+      // $new_nodes = $new_nodes + $this->makeTasksFromAutoTasks($auto_tasks->referencedEntities());
     }
+    return [];
   }
 
-  public function makeTasksFromAutoTasks($auto_tasks) {
-    $values = [];
+  /**
+   * Create new tasks for a set of auto tasks
+   * @param  array $auto_tasks An array of loaded autotasks
+   * @return array             An array of new task nodes
+   */
+  protected function makeTasksFromAutoTasks($auto_tasks) {
+
+    $new_nodes = [];
     foreach ($auto_tasks as $index => $auto_task) {
-      $values[$index] = [
+      //calculate a due date from the date offset value
+      $date_offset = !empty($auto_task->field_date_offset->value) ? $auto_task->field_date_offset->value : 0;
+      $op = $date_offset > -1 ? '+' : '-' ;
+      $date_string = $op . $date_offset . ' day';
+      $date = date('Y-m-d');
+      $date = date('Y-m-d', strtotime($date . $date_string));
+
+      $values = [
       'title' => $auto_task->title->value,
-      'field_task_assigned_to' => $auto_task->field_st_assigned_to->value,
+      'field_task_assigned_to' => $auto_task->field_st_assigned_to->target_id,
       'field_priority' => $auto_task->field_priority->value,
-      'field_task_due_date' => NULL,
-      'field_task_list' => $auto_task->field_task_list->value,
-      'field_task_status' => 2
+      'field_task_due_date' => $date_offset = 0 ? 0 : $date,
+      'field_task_list' => $auto_task->field_task_list->target_id,
+      'field_task_status' => 2,
+      'field_task_weight' => $auto_task->field_task_weight->value
       ];
+      // ksm($values);
+      $new_nodes[] = $this->createNodes($values, 'tasks');
     }
-    ksm($values);
+    return $new_nodes;
   }
 
-  private function addNodeItem(array $values, string $bundle) {
-
+  /**
+   * Creates a node from a keyed list of values
+   * @param  array  $values Array of values keyed by field name
+   * @param  string $bundle The bundle to create the node in
+   * @return object         The newly created node
+   */
+  public function createNodes(array $values, string $bundle) {
     $new_node = Node::create(['type' => $bundle,]);
 
     foreach ($values as $field_name => $value) {
-      if (trim($value) == "" || empty($value)) {
+      if (empty($value)) {
+        continue;
+      }
+
+      if (!$new_node->hasField($field_name)) {
         continue;
       }
 
@@ -494,14 +520,13 @@ class GaryFunctions {
       if ($field_name == 'title') {
         $new_node->setTitle($value);
       } else {
+        dpm($field_name.":".$value);
         $new_node->set($field_name, $value);
       }
     }
-
     $new_node->isNew();
     $new_node->save();
-
-    return $new_node->id();
+    return $new_node;
   }
 
   /**
@@ -510,7 +535,7 @@ class GaryFunctions {
    * @param  string          $field  The entity ref fieldname
    * @return object                  The loaded entity
    */
-  public function loadEntityRef(EntityInterface $entity, $field) {
+  public static function loadEntityRef(EntityInterface $entity, $field) {
     return
       $entity
       ->get($field)

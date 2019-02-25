@@ -124,8 +124,13 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
 
   switch ($entity->bundle()){
     case 'projects':
-
+    if ($_GET['p'] ==1 ) {
       $helper->createReturnAutoTasks($entity);
+      // $entity->set('field_task_weight', "2");
+      // $entity->save();
+    }
+    // ksm($entity->field_task_weight->value);
+
 
     break;
   }
@@ -256,12 +261,13 @@ function gary_custom_entity_presave(EntityInterface $entity) {
       //if project is new, load its opportunity then its service
       //then load auto tasks associated with that service, create new
       //tasks and attach them to the project
-      // if ($entity->isNew()) {
-      //   $auto_task_ids = $helper->createReturnAutoTasks($entity);
-      //   if (!empty($auto_task_ids)) {
-      //     //tasks were created
-      //   }
-      // }
+      if ($entity->isNew()) {
+        $new_nodes = $helper->createReturnAutoTasks($entity);
+        if (!empty($new_nodes)) {
+          //tasks were created
+          $entity->set('field_tasks', $new_nodes);
+        }
+      }
 
       //if cancelling or completing the project, close all of its tasks
       if ($helper->fieldHasChanged($entity, 'field_project_status')) {
