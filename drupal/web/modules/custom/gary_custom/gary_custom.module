@@ -119,16 +119,19 @@ function gary_custom_menu_local_tasks_alter(&$data, $route_name, RefinableCachea
   }
 }
 
+
 function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $helper = new GaryFunctions;
 
   switch ($entity->bundle()){
-    case 'projects':
-    if ($_GET['p'] ==1 ) {
-      $helper->createReturnAutoTasks($entity);
+    case 'service_tasks':
+    // ksm($entity->field_disable_auto_task->value);
+    // ksm($helper->loadEntityRef($entity, 'field_account_reference'));
+    // if ($_GET['p'] ==1 ) {
+      // ksm($helper->createReturnAutoTasks($entity));
       // $entity->set('field_task_weight', "2");
       // $entity->save();
-    }
+    // }
     // ksm($entity->field_task_weight->value);
 
 
@@ -139,17 +142,30 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
 function gary_custom_entity_delete(EntityInterface $entity) {
   $helper = new GaryFunctions;
 
-  switch ($entity->bundle()){
+  switch ($entity->bundle()) {
     case 'opportunity_services':
 
       //update total amount on parent
       $helper->updateTotalAmount($entity);
     break;
+
     case 'sub_contractors':
       //update the average grade for a sub contractor
       $helper->updateSubGrade($entity);
     break;
 
+    case 'projects':
+
+      //delete all tasks associated with a project if it is deleted
+      if ($entity->hasField('field_tasks')) {
+        if(!$entity->get('field_tasks')->isEmpty()) {
+          $tasks = $entity->get('field_tasks')->referencedEntities();
+          foreach ($tasks as $task) {
+            $task->delete();
+          }
+        }
+      }
+    break;
   }
 
 }

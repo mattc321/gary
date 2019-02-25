@@ -18,6 +18,23 @@ use Drupal\paragraphs\Entity\Paragraph;
 class GaryFunctions {
 
   /**
+   * Utility function to load an entity reference
+   * @param  EntityInterface $entity The entity containing the entity ref
+   * @param  string          $field  The entity ref fieldname
+   * @return object                  The loaded entity
+   */
+  public static function loadEntityRef(EntityInterface $entity, $field) {
+    return
+      $entity
+      ->get($field)
+      ->first()
+      ->get('entity')
+      ->getTarget()
+      ->getValue();
+  }
+
+
+  /**
    * Handler for calculating fields in gary
    * @param  EntityInterface $entity     The entity containing the field we are calculating
    * @param  string          $field_name The field name string of the field we are calculating
@@ -433,9 +450,7 @@ class GaryFunctions {
     }
 
     $services_ids = $opportunity->get('field_opportunity_services_ref');
-
     $new_nodes = [];
-
     foreach ($services_ids as $services_id) {
 
       $service_paragraph_id = $services_id->getValue();
@@ -459,90 +474,118 @@ class GaryFunctions {
       if ($auto_tasks->isEmpty()) {
         continue;
       }
-      foreach ($auto_tasks->referencedEntities() as $key => $value) {
-        ksm($value->field_task_weight->value);
-      }
-      // $new_nodes = $new_nodes + $this->makeTasksFromAutoTasks($auto_tasks->referencedEntities());
+      $new_nodes[] = $this->makeTasksFromAutoTasks($auto_tasks->referencedEntities(), $entity);
     }
-    return [];
-  }
 
-  /**
-   * Create new tasks for a set of auto tasks
-   * @param  array $auto_tasks An array of loaded autotasks
-   * @return array             An array of new task nodes
-   */
-  protected function makeTasksFromAutoTasks($auto_tasks) {
-
-    $new_nodes = [];
-    foreach ($auto_tasks as $index => $auto_task) {
-      //calculate a due date from the date offset value
-      $date_offset = !empty($auto_task->field_date_offset->value) ? $auto_task->field_date_offset->value : 0;
-      $op = $date_offset > -1 ? '+' : '-' ;
-      $date_string = $op . $date_offset . ' day';
-      $date = date('Y-m-d');
-      $date = date('Y-m-d', strtotime($date . $date_string));
-
-      $values = [
-      'title' => $auto_task->title->value,
-      'field_task_assigned_to' => $auto_task->field_st_assigned_to->target_id,
-      'field_priority' => $auto_task->field_priority->value,
-      'field_task_due_date' => $date_offset = 0 ? 0 : $date,
-      'field_task_list' => $auto_task->field_task_list->target_id,
-      'field_task_status' => 2,
-      'field_task_weight' => $auto_task->field_task_weight->value
-      ];
-      // ksm($values);
-      $new_nodes[] = $this->createNodes($values, 'tasks');
+    //if multiple services merge the array of created nodes
+    if (count($new_nodes) > 1) {
+      $node_merge = [];
+      foreach ($new_nodes as $node) {
+        $node_merge = array_merge($node_merge, $node);
+      }
+      return $node_merge;
     }
     return $new_nodes;
   }
 
   /**
-   * Creates a node from a keyed list of values
-   * @param  array  $values Array of values keyed by field name
-   * @param  string $bundle The bundle to create the node in
-   * @return object         The newly created node
+   * Create new tasks for a set of auto tasks
+   * @param  array $auto_tasks An array of loaded autotasks
+   * @param  array $entity The parent project entity
+   * @return array             An array of new task nodes
    */
-  public function createNodes(array $values, string $bundle) {
-    $new_node = Node::create(['type' => $bundle,]);
+  protected function makeTasksFromAutoTasks($auto_tasks, EntityInterface $entity) {
 
-    foreach ($values as $field_name => $value) {
-      if (empty($value)) {
-        continue;
+    //the created nodes to return
+    $new_nodes = [];
+
+    //the values to set in the new nodes
+    $node_items = [];
+
+    //the sort order based on field_task_weight
+    $order = [];
+
+    foreach ($auto_tasks as $index => $auto_task) {
+
+      //if the autotask disabled field is true skip it
+      if($auto_task->hasField('field_disable_auto_task')) {
+        if ($auto_task->field_disable_auto_task->value) {
+          continue;
+        }
       }
 
-      if (!$new_node->hasField($field_name)) {
-        continue;
-      }
-
-      //setTitle if its title.
-      if ($field_name == 'title') {
-        $new_node->setTitle($value);
+      //if assign to account mgr is true then get the
+      //account manager as the task assigned to
+      if ($auto_task->hasField('field_assign_to_account_manager')) {
+        if ($auto_task->field_assign_to_account_manager->value) {
+          $assign_to = $entity->field_account_manager->target_id;
+        } else {
+          $assign_to = $auto_task->field_st_assigned_to->target_id;
+        }
       } else {
-        dpm($field_name.":".$value);
-        $new_node->set($field_name, $value);
+        $assign_to = $auto_task->field_st_assigned_to->target_id;
       }
+
+      //calculate a due date from the date offset value
+      //if the project intake date is set then offset from that
+      $date = NULL;
+      if ($entity->hasField('field_intake_date')) {
+        if (!$entity->get('field_intake_date')->isEmpty()) {
+          $intake = $entity->get('field_intake_date')->getString();
+          $date_offset = !empty($auto_task->field_date_offset->value) ? $auto_task->field_date_offset->value : 0;
+          $op = $date_offset > -1 ? '+' : '-' ;
+          $date_string = $op . $date_offset . ' day';
+          $date = date('Y-m-d', strtotime($intake . $date_string));
+        }
+      }
+
+      $order[$index] = ['field_task_weight' => $auto_task->field_task_weight->value];
+      $node_items[] = [
+      'title' => $auto_task->title->value,
+      'field_task_assigned_to' => $assign_to,
+      'field_priority' => $auto_task->field_priority->value,
+      'field_task_due_date' => $date,
+      'field_task_list' => $auto_task->field_task_list->target_id,
+      'field_task_status' => 2,
+      'field_task_weight' => $auto_task->field_task_weight->value
+      ];
     }
-    $new_node->isNew();
-    $new_node->save();
-    return $new_node;
+    //sort by field_task_weight and create them in that order
+    array_multisort($node_items, SORT_ASC, SORT_NUMERIC, $order);
+
+    return $this->createNodes($node_items, 'tasks');
   }
 
   /**
-   * Utility function to load an entity reference
-   * @param  EntityInterface $entity The entity containing the entity ref
-   * @param  string          $field  The entity ref fieldname
-   * @return object                  The loaded entity
+   * Creates a node from a keyed list of values
+   * @param  array  $node_items Array of desired node items containing values keyed by field name
+   * @param  string $bundle The bundle to create the node in
+   * @return object         The newly created node
    */
-  public static function loadEntityRef(EntityInterface $entity, $field) {
-    return
-      $entity
-      ->get($field)
-      ->first()
-      ->get('entity')
-      ->getTarget()
-      ->getValue();
-    }
+  public function createNodes(array $node_items, string $bundle) {
+    $created_nodes = [];
+    foreach ($node_items as $index => $node_item) {
+      $new_node = Node::create(['type' => $bundle,]);
+      foreach ($node_item as $field_name => $value) {
+        if (empty($value)) {
+          continue;
+        }
 
+        if (!$new_node->hasField($field_name)) {
+          continue;
+        }
+
+        //setTitle if its title.
+        if ($field_name == 'title') {
+          $new_node->setTitle($value);
+        } else {
+          $new_node->set($field_name, $value);
+        }
+      }
+      $new_node->isNew();
+      $new_node->save();
+      $created_nodes[] = $new_node;
+    }
+    return $created_nodes;
+  }
 }
