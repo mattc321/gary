@@ -477,15 +477,12 @@ class GaryFunctions {
       $new_nodes[] = $this->makeTasksFromAutoTasks($auto_tasks->referencedEntities(), $entity);
     }
 
-    //if multiple services merge the array of created nodes
-    if (count($new_nodes) > 1) {
-      $node_merge = [];
-      foreach ($new_nodes as $node) {
-        $node_merge = array_merge($node_merge, $node);
-      }
-      return $node_merge;
+    //merge nodes down in case multiple services happened
+    $node_merge = [];
+    foreach ($new_nodes as $node) {
+      $node_merge = array_merge($node_merge, $node);
     }
-    return $new_nodes;
+    return $node_merge;
   }
 
   /**
