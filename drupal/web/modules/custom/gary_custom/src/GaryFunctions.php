@@ -74,26 +74,38 @@ class GaryFunctions {
   }
 
   /**
-   * Update the new node with a default account manager located from its referenced account
+   * Get the default account manager located from its referenced account
    * @param  EntityInterface $entity The entity being updated
    * @return mixed                  The account manager empty if needed or an empty array if not
    */
   public function getDefaultAccountManagerIfNeeded(EntityInterface $entity) {
-    if ($entity->hasField('field_orig_account')) {
-      if (!empty($entity->get('field_orig_account')->referencedEntities())) {
-        $account = $entity->get('field_orig_account')->referencedEntities()[0];
-        if ($account->hasField('field_account_manager')) {
-          if (!empty($account->get('field_account_manager')->referencedEntities())) {
-            $account_mgr = $account->get('field_account_manager')->referencedEntities()[0];
-            if ($entity->hasField('field_account_manager')) {
-              if ($entity->get('field_account_manager')->isEmpty()) {
-                return $account_mgr;
-              }
-            }
-          }
-        }
-      }
+
+    if (!$entity->hasField('field_orig_account')) {
+      return;
     }
+
+    if (empty($entity->get('field_orig_account')->referencedEntities())) {
+      return;
+    }
+
+    $account = $entity->get('field_orig_account')->referencedEntities()[0];
+    if (!$account->hasField('field_account_manager')) {
+      return;
+    }
+
+    if (empty($account->get('field_account_manager')->referencedEntities())) {
+      return;
+    }
+
+    $account_mgr = $account->get('field_account_manager')->referencedEntities()[0];
+    if (!$entity->hasField('field_account_manager')) {
+      return;
+    }
+
+    if ($entity->get('field_account_manager')->isEmpty()) {
+      return $account_mgr;
+    }
+
     return [];
   }
 
@@ -119,19 +131,25 @@ class GaryFunctions {
    * @return boolean         Return true of the parent field was found and set
    */
   public function updateTotalAmount(EntityInterface $entity) {
-    //calculate the total amount of services on the parent node
-    if ($entity->getParentEntity()->hasField('field_opportunity_services_ref')) {
-      $total_price = 0;
-      foreach($entity->getParentEntity()->get('field_opportunity_services_ref')->referencedEntities() as $key => $pg_item) {
-        if ($pg_item->hasField('field_line_total')) {
-          $total_price = $total_price + $pg_item->get('field_line_total')->value;
-        }
-      }
-      $entity->getParentEntity()->set('field_amount', $total_price);
-      $entity->getParentEntity()->save();
-      return true;
+
+    if (!$entity->getParentEntity()->hasField('field_opportunity_services_ref')) {
+      return;
     }
-    return false;
+
+    if ($entity->getParentEntity()->get('field_opportunity_services_ref')->isEmpty()) {
+      return;
+    }
+
+    //calculate the total amount of services on the parent node
+    $total_price = 0;
+    foreach($entity->getParentEntity()->get('field_opportunity_services_ref')->referencedEntities() as $key => $pg_item) {
+      if ($pg_item->hasField('field_line_total')) {
+        $total_price = $total_price + $pg_item->get('field_line_total')->value;
+      }
+    }
+    $entity->getParentEntity()->set('field_amount', $total_price);
+    $entity->getParentEntity()->save();
+    return TRUE;
   }
 
   /**
@@ -427,7 +445,11 @@ class GaryFunctions {
     return FALSE;
   }
 
-
+  /**
+   * Create auto tasks for a project and return them
+   * @param  EntityInterface $entity The entity being created
+   * @return array                  An array of created task nodes
+   */
   public function createReturnAutoTasks(EntityInterface $entity) {
 
     //only procede if these fields are present and opp is not empty
@@ -583,5 +605,74 @@ class GaryFunctions {
       $created_nodes[] = $new_node;
     }
     return $created_nodes;
+  }
+
+  /**
+   * Create tasks for a new opportunity
+   * @param  EntityInterface $entity The opportunity entity being created
+   * @return array                  An array of new tasks created
+   */
+  public function createOpportunityAutoTasks(EntityInterface $entity) {
+
+    $auto_tasks = $this->getOpportunityAutoTasks();
+
+    if (empty($auto_tasks)) {
+      return;
+    }
+
+    //prepared new task values
+    $node_items = [];
+
+    //hold order by task weight
+    $order = [];
+    foreach ($auto_tasks as $auto_task_id => $auto_task) {
+
+      //if the autotask disabled field is true skip it
+      if($auto_task->hasField('field_disable_auto_task')) {
+        if ($auto_task->field_disable_auto_task->value) {
+          continue;
+        }
+      }
+
+      //calculate a due date from now + offset value
+      $date_offset = !empty($auto_task->field_date_offset->value) ? $auto_task->field_date_offset->value : 0;
+      $op = $date_offset > -1 ? '+' : '-' ;
+      $date_string = $op . $date_offset . ' day';
+      $date = date('Y-m-d');
+      $date = date('Y-m-d', strtotime($date . $date_string));
+
+      $order[$auto_task_id] = ['field_task_weight' => $auto_task->field_task_weight->value];
+
+      $node_items[] = [
+      'title' => $auto_task->title->value,
+      'field_task_assigned_to' => $auto_task->field_task_assigned_to->target_id,
+      'field_task_due_date' => $date,
+      'field_task_list' => $auto_task->field_task_list->target_id,
+      'field_task_status' => 2,
+      'field_task_weight' => $auto_task->field_task_weight->value
+      ];
+    }
+    //sort by field_task_weight and create them in that order
+    array_multisort($node_items, SORT_ASC, SORT_NUMERIC, $order);
+
+    return $this->createNodes($node_items, 'tasks');
+  }
+
+  /**
+  * Query and load opportunity auto tasks
+   * @return array An array of loaded opportunity auto tasks
+   */
+  private function getOpportunityAutoTasks() {
+    $storage = \Drupal::entityTypeManager()->getStorage('node');
+    $query_result = $storage->getQuery()
+      ->condition('status', 1)
+      ->condition('type', 'opportunity_auto_tasks')
+      ->execute();
+
+    if (empty($query_result)) {
+      return;
+    }
+    return $storage
+      ->loadMultiple(array_values($query_result));
   }
 }

@@ -124,7 +124,8 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
   $helper = new GaryFunctions;
 
   switch ($entity->bundle()){
-    case 'service_tasks':
+    case 'opportunity_services':
+    // ksm($entity->getParentEntity());
     // ksm($entity->field_disable_auto_task->value);
     // ksm($helper->loadEntityRef($entity, 'field_account_reference'));
     // if ($_GET['p'] ==1 ) {
@@ -145,13 +146,30 @@ function gary_custom_entity_delete(EntityInterface $entity) {
   switch ($entity->bundle()) {
     case 'opportunity_services':
 
-      //update total amount on parent
-      $helper->updateTotalAmount($entity);
+      //if the parent entity origin is empty it is probably deleted in which
+      //case dont recalculate
+      if (!empty($entity->getParentEntity()->original)) {
+        //update total amount on parent
+        $helper->updateTotalAmount($entity);
+      }
+
     break;
 
     case 'sub_contractors':
       //update the average grade for a sub contractor
       $helper->updateSubGrade($entity);
+    break;
+
+    case 'opportunities':
+      //delete all tasks associated with a project if it is deleted
+      if ($entity->hasField('field_tasks')) {
+        if(!$entity->get('field_tasks')->isEmpty()) {
+          $tasks = $entity->get('field_tasks')->referencedEntities();
+          foreach ($tasks as $task) {
+            $task->delete();
+          }
+        }
+      }
     break;
 
     case 'projects':
@@ -253,7 +271,7 @@ function gary_custom_entity_presave(EntityInterface $entity) {
 
     case 'opportunities':
       //bring over account manager from the builder account
-      if (!$entity->isNew()) {
+      if ($entity->isNew()) {
         $account_mgr = $helper->getDefaultAccountManagerIfNeeded($entity);
         if (!empty($account_mgr)) {
           $entity->set('field_account_manager', $account_mgr);
@@ -268,6 +286,14 @@ function gary_custom_entity_presave(EntityInterface $entity) {
           if ($tid == 60 || $tid == 61) {
             $helper->closeAllTasks($entity);
           }
+        }
+      }
+
+      //create opportunity auto tasks if new
+      if ($entity->isNew()) {
+        $new_tasks = $helper->createOpportunityAutoTasks($entity);
+        if (!empty($new_tasks)) {
+          $entity->set('field_tasks', $new_tasks);
         }
       }
 
