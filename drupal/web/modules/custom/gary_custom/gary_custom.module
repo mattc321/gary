@@ -380,15 +380,16 @@ function gary_custom_form_node_projects_form_alter(&$form, FormStateInterface $f
       $form['field_opportunity']['widget'][0]['target_id']['#default_value']= $opportunity;
     }
   }
+
+  //alert the user that contacts will be brought over automatically
+  $prefix = '<p>Contacts will be brought over autoimatically after saving the project</p>'.
+    $form['field_project_contacts']['widget'][0]['#prefix'];
+  $form['field_project_contacts']['widget'][0]['#prefix'] = $prefix;
+
 }
 
 function gary_custom_form_node_tasks_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // $form['notifyassignee'] = [
-  //   '#type' => 'checkbox',
-  //   '#title' => t('Notify assignee upon save'),
-  //   '#default_value' => 0,
-  //   '#weight' => 5
-  // ];
+
 }
 
 function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
