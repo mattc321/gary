@@ -15,6 +15,7 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\user\Entity\User;
 use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\views\ViewExecutable;
+use Drupal\Core\Render\Markup;
 
 /**
  * Implements hook_help().
@@ -119,28 +120,61 @@ function gary_custom_menu_local_tasks_alter(&$data, $route_name, RefinableCachea
   }
 }
 
+function gary_custom_entity_view_display_alter(EntityViewDisplayInterface $display, array $context) {
+  //
+  // if ($context['entity_type'] != 'node') {
+  //   return;
+  // }
+  //
+  // switch ($context['bundle']) {
+  //   case 'opportunities':
+  //     ksm($context);
+  //   break;
+  //
+  //   case '':
+  //   break;
+
+  // }
+
+  // Leave field labels out of the search index.
+  // if ($context['entity_type'] == 'node' && $context['bundle'] == 'search_index') {
+  //   foreach ($display
+  //     ->getComponents() as $name => $options) {
+  //     if (isset($options['label'])) {
+  //       $options['label'] = 'hidden';
+  //       $display
+  //         ->setComponent($name, $options);
+  //     }
+  //   }
+  // }
+}
 
 function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $helper = new GaryFunctions;
 
   switch ($entity->bundle()){
     case 'projects':
-    // $contacts = $helper->getContacts($entity);
-    // if (!empty($contacts)) {
-    //
-    // }
-    // ksm($entity->getParentEntity());
-    // ksm($entity->field_disable_auto_task->value);
-    // ksm($helper->loadEntityRef($entity, 'field_account_reference'));
-    // if ($_GET['p'] ==1 ) {
-      // ksm($helper->createReturnAutoTasks($entity));
-      // $entity->set('field_task_weight', "2");
-      // $entity->save();
-    // }
-    // ksm($entity->field_task_weight->value);
-
-
+      //display address field as link to google maps
+      $ad = $entity->field_address->value;
+      $city = $entity->field_address->value;
+      $st = $entity->field_address->value;
+      $zip = $entity->field_address->value;
+      $address_search = '<a href="https://www.google.com/maps?q='.
+        $ad.','.$city.','.$st.','.$zip.'," target="_blank">'.$ad.'</a>';
+      $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
     break;
+    
+    case 'opportunities':
+      //display address field as link to google maps
+      $ad = $entity->field_address->value;
+      $city = $entity->field_address->value;
+      $st = $entity->field_address->value;
+      $zip = $entity->field_address->value;
+      $address_search = '<a href="https://www.google.com/maps?q='.
+        $ad.','.$city.','.$st.','.$zip.'," target="_blank">'.$ad.'</a>';
+      $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
+    break;
+
   }
 }
 
@@ -501,33 +535,3 @@ function gary_custom_mail($key, &$message, $params) {
 function gary_custom_page_attachments(array &$page) {
     $page['#attached']['library'][] = 'gary_custom/custom';
 }
-
-// function gary_custom_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
-//   if ($view->id() == 'manage_service_tasks' && $display_id === 'block_2') {
-//     $switch = [
-//       '#markup' => '
-//       <a class="use-ajax"
-//         href="/toggle-hidden/block-views-blockmanage-service-tasks-block-2/block-views-blockmanage-service-tasks-block-1">
-//         Switch ViewExecutable
-//       </a>',
-//     ];
-//
-//     $item = [
-//       'id' => 'area',
-//       'table' => 'views',
-//       'field' => 'area',
-//       'relationship' => 'none',
-//       'group_type' => 'none',
-//       'admin_label' => '',
-//       'empty' => NULL,
-//       'tokenize' => NULL,
-//       'content' => [
-//         'value' => render($switch),
-//         'format' => "full_html",
-//       ],
-//       'plugin_id' => 'text',
-//     ];
-//
-//     $view->setHandler('block_2', 'header', 'area', $item);
-//   }
-// }
