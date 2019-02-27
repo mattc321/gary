@@ -154,36 +154,39 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
 
   switch ($entity->bundle()){
     case 'projects':
+      //Messing with quick edit functionality
       //display address field as link to google maps
-      $ad = $entity->field_address->value;
-      $city = $entity->field_address->value;
-      $st = $entity->field_address->value;
-      $zip = $entity->field_address->value;
-      $address_search = '<a href="https://www.google.com/maps?q='.
-        $ad.','.$city.','.$st.','.$zip.'," target="_blank">'.$ad.'</a>';
-      $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
+      // $ad = $entity->field_address->value;
+      // $city = $entity->field_address->value;
+      // $st = $entity->field_address->value;
+      // $zip = $entity->field_address->value;
+      // $address_search = '<a href="https://www.google.com/maps?q='.
+      //   $ad.','.$city.','.$st.','.$zip.'," target="_blank">'.$ad.'</a>';
+      // $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
     break;
 
     case 'opportunities':
+      //Messing with quick edit functionality
       //display address field as link to google maps
-      $ad = $entity->field_address->value;
-      $city = $entity->field_address->value;
-      $st = $entity->field_address->value;
-      $zip = $entity->field_address->value;
-      $address_search = '<a href="https://www.google.com/maps?q='.
-        $ad.','.$city.','.$st.','.$zip.'," target="_blank">'.$ad.'</a>';
-      $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
+      // $ad = $entity->field_address->value;
+      // $city = $entity->field_address->value;
+      // $st = $entity->field_address->value;
+      // $zip = $entity->field_address->value;
+      // $address_search = '<a href="https://www.google.com/maps?q='.
+      //   $ad.','.$city.','.$st.','.$zip.'," target="_blank">'.$ad.'</a>';
+      // $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
     break;
 
     case 'contacts':
+      //Messing with quick edit functionality
       //display contact phone and email with action output
-      $contact = $entity->field_contact_email->value;
-      $email = '<a href="mailto:'.$contact.'" target="_blank">'.$contact.'</a>';
-      $build['field_contact_email'][0]['#context']['value'] = Markup::create($email);
-
-      $phone = $entity->field_contact_phone->value;
-      $phone_link = '<a href="tel:'.$phone.'" target="_blank">'.$phone.'</a>';
-      $build['field_contact_phone'][0]['#context']['value'] = Markup::create($phone_link);
+      // $contact = $entity->field_contact_email->value;
+      // $email = '<a href="mailto:'.$contact.'" target="_blank">'.$contact.'</a>';
+      // $build['field_contact_email'][0]['#context']['value'] = Markup::create($email);
+      //
+      // $phone = $entity->field_contact_phone->value;
+      // $phone_link = '<a href="tel:'.$phone.'" target="_blank">'.$phone.'</a>';
+      // $build['field_contact_phone'][0]['#context']['value'] = Markup::create($phone_link);
     break;
 
   }
