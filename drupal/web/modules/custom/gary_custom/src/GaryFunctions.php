@@ -675,4 +675,45 @@ class GaryFunctions {
     return $storage
       ->loadMultiple(array_values($query_result));
   }
+
+  /**
+   * Create new contacts based on the contacts assigned to
+   * the referenced opportunity
+   * @param  EntityInterface $entity The project entity
+   * @return array                  an array newly created paragraph items
+   */
+  public function createContacts(EntityInterface $entity) {
+    if (!$entity->hasField('field_project_contacts')) {
+      return;
+    }
+
+    if (!$entity->hasField('field_opportunity')) {
+      return;
+    }
+    //load the op
+    $opportunity = $this->loadEntityRef($entity, 'field_opportunity');
+
+    if (!$opportunity->hasField('field_project_contacts')) {
+      return;
+    }
+
+    //iterate through contacts and make new ones for the project
+    $new_pg_ids = [];
+    foreach ($opportunity->get('field_project_contacts') as $contact_pg) {
+      $contact_pg_id = $contact_pg->getValue();
+      $contact_paragraph = Paragraph::load(array_shift($contact_pg_id));
+
+      $pg_item = Paragraph::create(['type' => 'project_contacts',]);
+      $pg_item->set('field_contact_reference',$contact_paragraph->field_contact_reference->target_id);
+      $pg_item->set('field_description',$contact_paragraph->field_description->value);
+      $pg_item->set('field_role',$contact_paragraph->field_role->target_id);
+      $pg_item->isNew();
+      $pg_item->save();
+      $new_pg_ids[] = [
+        'target_id' => $pg_item->id(),
+        'target_revision_id' => $pg_item->getRevisionId(),
+      ];
+    }
+    return $new_pg_ids;
+  }
 }

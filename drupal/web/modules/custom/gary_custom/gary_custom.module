@@ -124,7 +124,11 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
   $helper = new GaryFunctions;
 
   switch ($entity->bundle()){
-    case 'opportunity_services':
+    case 'projects':
+    // $contacts = $helper->getContacts($entity);
+    // if (!empty($contacts)) {
+    //
+    // }
     // ksm($entity->getParentEntity());
     // ksm($entity->field_disable_auto_task->value);
     // ksm($helper->loadEntityRef($entity, 'field_account_reference'));
@@ -289,8 +293,8 @@ function gary_custom_entity_presave(EntityInterface $entity) {
         }
       }
 
-      //create opportunity auto tasks if new
       if ($entity->isNew()) {
+        //create opportunity auto tasks if new
         $new_tasks = $helper->createOpportunityAutoTasks($entity);
         if (!empty($new_tasks)) {
           $entity->set('field_tasks', $new_tasks);
@@ -300,14 +304,20 @@ function gary_custom_entity_presave(EntityInterface $entity) {
     break;
     case 'projects':
 
-      //if project is new, load its opportunity then its service
-      //then load auto tasks associated with that service, create new
-      //tasks and attach them to the project
       if ($entity->isNew()) {
+        //if project is new, load its opportunity then its service
+        //then load auto tasks associated with that service, create new
+        //tasks and attach them to the project
         $new_nodes = $helper->createReturnAutoTasks($entity);
         if (!empty($new_nodes)) {
           //tasks were created
           $entity->set('field_tasks', $new_nodes);
+        }
+
+        //bring over opportunity contacts
+        $contacts = $helper->createContacts($entity);
+        if (!empty($contacts)) {
+          $entity->set('field_project_contacts', $contacts);
         }
       }
 
