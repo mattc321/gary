@@ -4,6 +4,32 @@
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
 
+      //update close date after intake date chosen
+      //gives user a projected End Date
+      $('#edit-field-intake-date-0-value-date', context).once('#edit-field-intake-date-0-value-date').bind('focusout', function() {
+        var tt = $('#edit-field-intake-date-0-value-date').val();
+        if(tt == '') {
+          tt = Date();
+        }
+        var date = new Date(tt);
+        var newdate = new Date(date);
+
+        newdate.setDate(newdate.getDate() + 450);
+        var dd = newdate.getDate();
+        if (dd < 10) {
+          dd = '0'+dd;
+        }
+        var mm = newdate.getMonth() + 1;
+        if (mm < 10) {
+          mm = '0'+mm;
+        }
+        var y = newdate.getFullYear();
+
+        var someFormattedDate = y + '-' + mm + '-' + dd;
+        $('#edit-field-date-closed-0-value-date').val(someFormattedDate);
+      });
+
+
       //Alert user of improper address formatting
       $('#edit-field-address-0-value', context).once('#edit-field-address-0-value').bind('focusout', function() {
         var msg = 'Remember to abbrieviate street suffixes and direction';
