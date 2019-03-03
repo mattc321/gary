@@ -56,6 +56,13 @@ function gary_preprocess_node(&$variables) {
 }
 
 function gary_preprocess_page(&$variables) {
+
+  //send node_type over helps with form page classes
+  if ($node_type = \Drupal::routeMatch()->getParameter('node_type')) {
+    $variables['node_type'] = $node_type->id();
+  }
+
+  //prepare specific bundle lables in the header
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
     $bundle_label = \Drupal::entityTypeManager()
       ->getStorage('node_type')

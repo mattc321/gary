@@ -42,7 +42,13 @@
  * @see html.html.twig
  */
 #}
-<div class="layout-container">
+{%
+  set page_classes = [
+    'layout-container',
+    node_type ? 'page-node-type-' ~ node_type,
+  ]
+%}
+<div{{ attributes.addClass(page_classes) }}>
 
   <header role="banner">
     <div id="top-wrap" {{ page.top_attributes }}>
