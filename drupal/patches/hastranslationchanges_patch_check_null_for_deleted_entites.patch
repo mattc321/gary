@@ -1,0 +1,14 @@
+diff --git a/core/lib/Drupal/Core/Entity/ContentEntityBase.php b/core/lib/Drupal/Core/Entity/ContentEntityBase.php
+index deb86af..26bf230 100644
+--- a/ContentEntityBase.php
++++ b/ContentEntityBase.php
+@@ -1422,6 +1422,9 @@ abstract class ContentEntityBase extends Entity implements \IteratorAggregate, C
+     // computed fields as comparing them with their original values might not be
+     // possible or be meaningless.
+     /** @var \Drupal\Core\Entity\ContentEntityBase $translation */
++    if (empty($this->activeLangcode) {
++      return FALSE;
++    }
+     $translation = $original->getTranslation($this->activeLangcode);
+     $langcode = $this->language()->getId();
+ 
