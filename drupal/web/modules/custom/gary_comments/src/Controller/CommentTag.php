@@ -13,7 +13,25 @@ class CommentTag extends ControllerBase {
 
   protected $error_string = NULL;
 
-
+  public function checkMessages() {
+    $user = \Drupal::currentUser();
+    $query = \Drupal::database()->select('node__field_tag_user_to', 't');
+    $query->addField('t', 'entity_id');
+    $query->leftJoin('node__field_message_read', 'r', 'r.entity_id=t.entity_id');
+    $query->condition('t.bundle', 'messages');
+    $query->condition('t.field_tag_user_to_target_id', $user->id());
+    $query->condition('t.deleted', 0);
+    $results = $query->execute()->fetchAll();
+    ksm($results);
+    return [
+      '#markup' => 'fuck'
+    ];
+//       SELECT * FROM gary.node__field_tag_user_to t
+// left join node__field_message_read r on r.entity_id = t.entity_id
+// where r.field_message_read_value is null
+// or r.field_message_read_value = 0
+// and t.field_tag_user_to_target_id = 9;
+  }
 
   /**
    * Check to see if the comment body has a tagged user

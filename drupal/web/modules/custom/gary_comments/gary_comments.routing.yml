@@ -1,0 +1,6 @@
+gary_comments.check_messages:
+  path: '/check-messages'
+  defaults:
+    _controller: '\Drupal\gary_comments\Controller\CommentTag::checkMessages'
+  requirements:
+    _permission: 'access content'
