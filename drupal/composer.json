@@ -25,6 +25,7 @@
         "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/admin_toolbar": "^1.24",
         "drupal/ajax_comments": "^1.0",
+        "drupal/betterlogin": "^1.2",
         "drupal/block_field": "^1.0",
         "drupal/console": "^1.8",
         "drupal/core": "~8.6.1",

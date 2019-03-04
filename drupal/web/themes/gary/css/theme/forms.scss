@@ -39,7 +39,22 @@ input[type=submit]:hover {
     background-color: $dark-green;
 }
 
+//user login form
+.user-login-container{
+  opacity:0; //gsap fade in forms.js
+}
+.user-login-center {
+    margin: 10vh auto;
+    height: 45vh;
+    border: 1px solid $light-grey;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px $light-grey;
+}
 
+.user-login-logo {
+  margin-top: 50px;
+}
 
 //inline forms
 .inline-pg-form {
@@ -93,7 +108,7 @@ input[type=submit].add-pg-item {
   .tabledrag-toggle-weight-wrapper {
     display: none;
   }
-  
+
   input#edit-actions-submit,
   input#edit-save-order {
     position: fixed;

@@ -4,6 +4,14 @@
   Drupal.behaviors.garyFront = {
     attach: function (context, settings) {
 
+      //dashboard fade in
+      var delayInterval = 0;
+      $(context).find('.homebox-column').once('.homebox-column').each(function (index,value) {
+        setTimeout(function(){ $(value).bounceIn(); }, delayInterval);
+        delayInterval += 100;
+      })
+
+
       //user menu handler
       var expanded = 0;
       $('#block-gary-account-menu .user-info').click( function(){

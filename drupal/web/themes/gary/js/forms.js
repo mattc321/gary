@@ -4,6 +4,9 @@
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
 
+      //login screen
+      $(".user-login-container").garyFadeIn();
+
       //update close date after intake date chosen
       //gives user a projected End Date
       $('#edit-field-intake-date-0-value-date', context).once('#edit-field-intake-date-0-value-date').bind('focusout', function() {

@@ -7,7 +7,19 @@
     }
   };
 
-//set or remove a message
+  $.fn.bounceIn = function() {
+    TweenMax.fromTo(this, .5, {scale: .9, opacity: 0}, {scale: 1, opacity: 1});
+  }
+
+  //gsap fade functions
+  $.fn.garyFadeOut = function() {
+    TweenMax.fromTo(this, 2, {opacity: 1, x: -50}, {opacity: 0, x: 0});
+  }
+  $.fn.garyFadeIn = function() {
+    TweenMax.fromTo(this, 2, {opacity: 0, x: 50}, {opacity: 1, x: 0});
+  }
+
+  //set or remove a message
   $.fn.setMessage = function(message) {
       console.log('++'+message.length);
       if (message.length == 0) {
