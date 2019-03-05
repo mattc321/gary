@@ -1,0 +1,7 @@
+gary_comments:
+  version: 1.x
+  js:
+    js/comments.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax

@@ -168,6 +168,23 @@
         border-radius: 50%;
       }
 
+      //comment messages notifications style
+      .notifications {
+        display: none;
+        font-size: 15px;
+        line-height: 15px;
+        font-weight: bold;
+        background: $red;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        text-align: center;
+        padding: 5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
     }
 
   > ul {

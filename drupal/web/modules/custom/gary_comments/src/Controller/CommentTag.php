@@ -6,6 +6,10 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\node\Entity\Node;
 use Drupal\gary_custom\GaryFunctions;
+use Drupal\Core\Ajax;
+use Drupal\Core\Ajax\InvokeCommand;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class CommentTag extends ControllerBase {
 
@@ -17,20 +21,16 @@ class CommentTag extends ControllerBase {
     $user = \Drupal::currentUser();
     $query = \Drupal::database()->select('node__field_tag_user_to', 't');
     $query->addField('t', 'entity_id');
-    $query->leftJoin('node__field_message_read', 'r', 'r.entity_id=t.entity_id');
+    $query->addJoin('left','node__field_message_read','r','t.entity_id=r.entity_id');
     $query->condition('t.bundle', 'messages');
     $query->condition('t.field_tag_user_to_target_id', $user->id());
-    $query->condition('t.deleted', 0);
+    $group = $query->orConditionGroup();
+    $group->condition('r.field_message_read_value', 'IS NULL');
+    $group->condition('r.field_message_read_value', 0);
+    $query->condition($group);
+    $query->countQuery;
     $results = $query->execute()->fetchAll();
-    ksm($results);
-    return [
-      '#markup' => 'fuck'
-    ];
-//       SELECT * FROM gary.node__field_tag_user_to t
-// left join node__field_message_read r on r.entity_id = t.entity_id
-// where r.field_message_read_value is null
-// or r.field_message_read_value = 0
-// and t.field_tag_user_to_target_id = 9;
+    return new Response(count($results));
   }
 
   /**

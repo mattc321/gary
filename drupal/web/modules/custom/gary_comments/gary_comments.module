@@ -159,3 +159,7 @@ function gary_comments_mail($key, &$message, $params) {
        break;
  }
 }
+
+function gary_comments_page_attachments(array &$page) {
+    $page['#attached']['library'][] = 'gary_comments/gary_comments';
+}
