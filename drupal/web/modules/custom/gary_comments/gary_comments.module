@@ -161,5 +161,7 @@ function gary_comments_mail($key, &$message, $params) {
 }
 
 function gary_comments_page_attachments(array &$page) {
+  if (\Drupal::currentUser()->isAuthenticated()) {
     $page['#attached']['library'][] = 'gary_comments/gary_comments';
+  }
 }

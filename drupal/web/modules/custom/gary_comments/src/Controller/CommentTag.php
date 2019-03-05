@@ -28,8 +28,8 @@ class CommentTag extends ControllerBase {
     $group->condition('r.field_message_read_value', 'IS NULL');
     $group->condition('r.field_message_read_value', 0);
     $query->condition($group);
-    $query->countQuery;
     $results = $query->execute()->fetchAll();
+
     return new Response(count($results));
   }
 

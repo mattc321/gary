@@ -126,6 +126,9 @@
           },
           "drupal/draggableviews": {
             "Fix draggable views grouping": "https://www.drupal.org/files/issues/2018-09-07/not_working_with_group_by-draggableviews-2867348-26.patch"
+          },
+          "drupal/homebox": {
+            "Redirect Access Denied to User Login Page": "patches/homebox_redirect_access_denied_response.patch"
           }
         }
     }
