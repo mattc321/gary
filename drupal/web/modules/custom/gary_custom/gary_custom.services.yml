@@ -1,0 +1,5 @@
+services:
+  gary_custom.custom_event_subscriber:
+    class: Drupal\gary_custom\EventSubscriber\CustomEventSubscriber
+    tags:
+      - { name: event_subscriber }
