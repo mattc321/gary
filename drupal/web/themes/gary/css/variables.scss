@@ -17,6 +17,12 @@ $break-xl: 1400px;
   }
 }
 
+@mixin userPic() {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
 @mixin highlight($color) {
   background: $color;
   padding: 10px;

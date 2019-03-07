@@ -11,7 +11,14 @@ function gary_custom_views_views_data_alter(array &$data) {
       'id' => 'field_unit_types_count',
     ],
   ];
-
+  $data['node']['field_url_path_alias'] = [
+    'title' => t('URL Path Alias'),
+    'field' => [
+      'title' => t('URL Path Alias'),
+      'help' => t('Display Path Alias'),
+      'id' => 'field_url_path_alias',
+    ],
+  ];
   $data['node']['field_next_sv'] = [
     'title' => t('Next SV'),
     'help' => t('Next open Site Visit Task title.'),
