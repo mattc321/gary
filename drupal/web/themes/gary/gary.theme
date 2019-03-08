@@ -56,6 +56,8 @@ function gary_preprocess_node(&$variables) {
 }
 
 function gary_preprocess_page(&$variables) {
+
+  //site name and logo vars
   $variables['site_name'] = \Drupal::config('system.site')->get('name');
   $variables['logo'] = theme_get_setting('logo.url');
 

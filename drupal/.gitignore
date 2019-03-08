@@ -5,6 +5,8 @@
 /web/modules/contrib/
 /web/themes/contrib/
 /web/profiles/contrib/
+/web/libraries/
+/web/themes/gary/dist/
 
 # Ignore sensitive information
 /web/sites/*/settings.php

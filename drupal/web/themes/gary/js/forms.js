@@ -4,6 +4,23 @@
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
 
+
+      //attach event listener to field - attached in form_alter
+      $('.jelly-button', context).once('.jelly-button').click(function () {
+        if ($(this).hasClass("load")) {
+          setTimeout(function() {
+            $('.jelly-child-input input').trigger("click");
+            $(".jelly-button").removeClass("load done");
+          }, 200);
+        } else {
+          $(this).addClass("load");
+          setTimeout(function() {
+            $(".jelly-button").addClass("done");
+            $('.jelly-child-input input').trigger("click");
+          }, 200);
+        }
+      });
+
       //login screen
       $(".user-login-container").garyFadeIn();
 
