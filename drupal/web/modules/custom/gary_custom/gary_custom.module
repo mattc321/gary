@@ -442,11 +442,7 @@ function gary_custom_form_node_tasks_edit_form_alter(&$form, FormStateInterface 
 function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   if ($form_id == 'homebox_page') {
-    // $form['add_block_button']['#prefix'] = '<div class="test jelly-button">';
-    // $form['add_block_button']['#suffix'] = '</div>';
-    $form['add_block_button']['#attributes']['jelly'] = 'jelly';
-    // ksm($form);
-    // $form['#attached']['library'][] = 'gary/gary_homebox';
+    $form['add_block_button']['#attributes']['jelly'] = 'arrow';
   }
 
   //use select2 type on these multiselect elements

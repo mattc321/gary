@@ -13,10 +13,10 @@
             $(".jelly-button").removeClass("load done");
           }, 200);
         } else {
+          $('.jelly-child-input input').trigger("click");
           $(this).addClass("load");
           setTimeout(function() {
             $(".jelly-button").addClass("done");
-            $('.jelly-child-input input').trigger("click");
           }, 200);
         }
       });
