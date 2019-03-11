@@ -12,11 +12,11 @@
   }
 
   //gsap fade functions
-  $.fn.garyFadeOut = function() {
-    TweenMax.fromTo(this, 2, {opacity: 1, x: -50}, {opacity: 0, x: 0});
+  $.fn.garyFadeOut = function(sec = 2) {
+    TweenMax.fromTo(this, sec, {opacity: 1, x: -50}, {opacity: 0, x: 0});
   }
-  $.fn.garyFadeIn = function() {
-    TweenMax.fromTo(this, 2, {opacity: 0, x: 50}, {opacity: 1, x: 0});
+  $.fn.garyFadeIn = function(sec = 2) {
+    TweenMax.fromTo(this, sec, {opacity: 0, x: 50}, {opacity: 1, x: 0});
   }
 
   //set or remove a message

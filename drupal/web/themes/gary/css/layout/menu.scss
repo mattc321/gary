@@ -42,8 +42,6 @@
         color: $blue;
       }
     }
-
-
   }
 
   img {
@@ -124,12 +122,56 @@
       left: 15%;
     }
   }
+  .place {
+      @extend %menu-right;
+      // background: black;
+      // cursor: pointer;
+      // padding: 10px;
+      // border-radius: 50%;
+      // width: 40px;
+      // height: 41px;
+      // color: $light;
+  }
+  .user-info {
+    @extend %menu-right;
 
-  nav#block-gary-account-menu {
+    &:hover {
+      cursor: pointer;
+      span.notifications {
+        background: $dark-red;
+      }
+    }
+
+    img {
+      @include userPic();
+    }
+
+    //comment messages notifications style
+    span.notifications {
+      display: none;
+      font-size: 15px;
+      line-height: 15px;
+      font-weight: bold;
+      background: $red;
+      transition: .2s;
+      color: $light;
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      text-align: center;
+      padding: 5px;
+      position: absolute;
+      top: 0;
+      left: 5px;
+    }
+
+  }
+  nav#block-gary-account-menu,
+  nav#block-addcontent {
     position: absolute;
-    top: 0;
-    right: 10px;
-    height: 65px;
+    top: 70px;
+    right: 0;
+    height: 0px;
     max-height: 600px;
     overflow: hidden;
     transition: height .3s ease-in;
@@ -141,48 +183,6 @@
 
     &:hover {
       cursor: pointer;
-    }
-
-    .user-info {
-      display: block;
-      padding: 4px;
-      border-radius: 4px;
-      transition: .2s;
-      border: 1px solid $dark;
-
-      &:hover {
-        color: $blue;
-        background: rgba(0, 0, 0, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-      }
-
-      span {
-        position: relative;
-        top: -15px;
-        left: 10px;
-      }
-
-      img {
-        @include userPic();
-      }
-
-      //comment messages notifications style
-      .notifications {
-        display: none;
-        font-size: 15px;
-        line-height: 15px;
-        font-weight: bold;
-        background: $red;
-        border-radius: 50%;
-        width: 15px;
-        height: 15px;
-        text-align: center;
-        padding: 5px;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-
     }
 
   > ul {

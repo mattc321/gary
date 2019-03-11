@@ -18,8 +18,8 @@ $break-xl: 1400px;
 }
 
 @mixin userPic() {
-  height: 50px;
-  width: 50px;
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
 }
 
@@ -69,6 +69,7 @@ $light-green: #8bc1b2;
 
 $red: #e27676;
 $light-red: #f7d9d9;
+$dark-red: #d64d4d;
 $brown: #bdb69c;
 
 $purple: #c9a8cb;
@@ -149,6 +150,20 @@ $font-secondary: "verveine", sans-serif;
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+}
+
+%menu-right {
+  display: inline;
+  position: absolute;
+  top: 0;
+  padding: 4px;
+  transition: .2s;
+  &.m-1 {
+    right: 80px;
+  }
+  &.m-2 {
+    right: 10px;
   }
 }
 

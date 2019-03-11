@@ -14,18 +14,20 @@
 
       //user menu handler
       var expanded = 0;
-      $('#block-gary-account-menu .user-info').click( function(){
+      $('.right-menu').click( function(){
+        let nav = '#'+$(this).attr('nav-id');
         if (expanded == 0) {
-          $('#block-gary-account-menu').toggleClass('user-nav-expanded');
+          $(nav).toggleClass('user-nav-expanded').garyFadeIn(.3);
           expanded = 1;
         } else {
-          $('#block-gary-account-menu').toggleClass('user-nav-expanded');
+          $(nav).toggleClass('user-nav-expanded');
           expanded = 0;
         }
       });
-      $('#block-gary-account-menu').mouseleave(function(){
+      let nav = '#block-gary-account-menu, #block-addcontent';
+      $(nav).mouseleave(function(){
         if (expanded == 1) {
-          $('#block-gary-account-menu').toggleClass('user-nav-expanded');
+          $(this).toggleClass('user-nav-expanded');
           expanded = 0;
         }
       });
