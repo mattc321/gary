@@ -16,6 +16,7 @@
       var expanded = 0;
       $('.right-menu').click( function(){
         let nav = '#'+$(this).attr('nav-id');
+        $('.user-nav-expanded').toggleClass('user-nav-expanded');
         if (expanded == 0) {
           $(nav).toggleClass('user-nav-expanded').garyFadeIn(.3);
           expanded = 1;

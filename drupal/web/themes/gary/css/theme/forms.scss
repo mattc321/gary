@@ -122,9 +122,9 @@ input[type=submit].add-pg-item {
     }
   }
 }
-$color: $blue;
+
 //jelly button
-.jelly-button {
+.jelly {
 
   position: relative;
   height: 48px;
@@ -198,42 +198,45 @@ $color: $blue;
   }
 
   &:hover {
-    background: rgba($color,.2);
+    background: rgba($blue,.2);
     #arrow
       path,
       polyline, {
-        stroke: $color;
+        stroke: $blue;
       }
     #plus {
-      fill: $color;
+      fill: $blue;
     }
   }
 
   &.load {
-    background: rgba($color,.2);
+    background: rgba($blue,.2);
     #arrow
       path,
       polyline {
-        stroke: $color;
+        stroke: $blue;
       }
     #plus {
-      fill: $color;
+      fill: $blue;
     }
     #check {
-      fill: $light;
+      // fill: $light;
+      polyline {
+        stroke: $light;
+      }
     }
     #close {
       fill: $light;
     }
     #border {
-      stroke: $color;
+      stroke: $blue;
       stroke-dasharray: 144;
       stroke-dashoffset: 0;
     }
   }
 
   &.done {
-    background: $color;
+    background: $blue;
     animation: rubberBand .8s;
 
     &:after {
