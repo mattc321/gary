@@ -43,7 +43,7 @@
 {% set heading_id = attributes.id ~ '-menu'|clean_id %}
 
 <div class="round-menu right-menu right1" nav-id="{{ attributes.id }}">
-  {% include ('@gary/../symbols/plus.svg') %}
+  {% include ('@gary/../symbols/add-content.svg') %}
 </div>
 <nav role="navigation" aria-labelledby="{{ heading_id }}"{{ attributes.addClass(classes)|without('role', 'aria-labelledby') }}>
   {# Label. If not displayed, we still provide it for screen readers. #}

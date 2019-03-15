@@ -124,30 +124,29 @@
   }
 
   .round-menu {
-    content: "";
-    height: 46px;
-    width: 46px;
+    // content: "";
+    // height: 46px;
+    // width: 46px;
     margin: 5px 0px 3px 3px;
-    border-radius: 50%;
-    background: rgba($blue,.2);
-    transition: .3s;
+    // border-radius: 50%;
+    // background: rgba($blue,.2);
 
     svg {
-      &#plus {
+      transition: .3s;
+
         g {
           path {
-            fill: $blue;
+            fill: rgba($blue,.4);
           }
         }
-      }
-    }
 
-    &:hover {
-      cursor: pointer;
-      background: $grey;
-      svg g path {
-        fill: $green;
-      }
+        &:hover {
+          cursor: pointer;
+          g path {
+            transition: fill .5s ease;
+            fill: rgba($green,.6);
+          }
+        }
     }
 
   }

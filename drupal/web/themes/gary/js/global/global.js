@@ -52,16 +52,21 @@
     });
 
     //init qtip implementation
-    // Grab all elements with the class "hasTooltip"
-    $('.tooltip').each(function() { // Notice the .each() loop, discussed below
+    $('.tooltip').each(function() {
+      let content = $(this).children('.tooltip-content');
+      let title = $(this).children('.tooltip-title');
         $(this).qtip({
             content: {
-                text: $(this).children('.tooltip-content').html()
+                text: $(content).html(),
+                title: $(title).html()
+            },
+            style: {
+                classes: 'qtip-bootstrap qtip-shadow'
             },
             position: {
-                target: 'mouse', // Position it where the click was...
-                adjust: { mouse: false } // ...but don't follow the mouse
-            } // Use the "div" element next to this for the content
+                target: 'mouse',
+                adjust: { mouse: false }
+            }
         });
     });
 
