@@ -440,7 +440,10 @@ function gary_custom_form_node_tasks_edit_form_alter(&$form, FormStateInterface 
 }
 
 function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
+  if ($form_id == 'views_exposed_form') {
+    // ksm($form);
+    // ksm($form['#submit']);
+  }
   if ($form_id == 'homebox_page') {
     $form['add_block_button']['#attributes']['jelly'] = 'arrow';
   }

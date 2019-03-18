@@ -18,3 +18,10 @@ gary_custom.toggle_hidden:
     _controller: '\Drupal\gary_custom\Controller\CallbackController::toggleHidden'
   requirements:
     _permission: 'access content'
+
+gary_custom.buildpage:
+  path: '/buildpage'
+  defaults:
+    _form: '\Drupal\gary_custom\Form\TestForm'
+  requirements:
+    _permission: 'access content'

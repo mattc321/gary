@@ -17,6 +17,12 @@ use Drupal\Core\Url;
 
 class CallbackController extends ControllerBase {
 
+  public function buildPage() {
+    $block_instance = \Drupal::service('plugin.manager.block')->createInstance("views_block:dashboard_tasks_by_assignee-block_1");
+    $build['test']['poop'] = $block_instance->build();
+    return $build;
+  }
+
   /**
    * Get the price of a service
    * @param  string $sid The ID of the service entity
