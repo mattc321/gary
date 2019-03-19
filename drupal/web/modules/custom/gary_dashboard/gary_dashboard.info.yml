@@ -1,0 +1,9 @@
+name: 'Gary Dashboard'
+type: module
+description: 'Dashboard handler and display'
+core: 8.x
+package: 'Custom'
+dependencies:
+  - gary_custom
+  - drupal:serialization
+  - drupal:layout_discovery

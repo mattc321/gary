@@ -19,7 +19,8 @@ class CallbackController extends ControllerBase {
 
   public function buildPage() {
     $block_instance = \Drupal::service('plugin.manager.block')->createInstance("views_block:dashboard_tasks_by_assignee-block_1");
-    $build['test']['poop'] = $block_instance->build();
+    $build['#test']= $block_instance->build();
+    $build['#theme'] = 'front_dashboard';
     return $build;
   }
 

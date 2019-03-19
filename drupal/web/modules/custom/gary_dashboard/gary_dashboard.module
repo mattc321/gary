@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains gary_dashboard.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function gary_dashboard_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gary_dashboard module.
+    case 'help.page.gary_dashboard':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Dashboard handler and display') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function gary_dashboard_theme() {
+  return [
+    'gary_dashboard' => [
+      'render element' => 'children',
+    ],
+  ];
+}

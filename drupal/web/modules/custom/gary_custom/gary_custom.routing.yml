@@ -22,6 +22,6 @@ gary_custom.toggle_hidden:
 gary_custom.buildpage:
   path: '/buildpage'
   defaults:
-    _form: '\Drupal\gary_custom\Form\TestForm'
+    _controller: '\Drupal\gary_custom\Controller\CallbackController::buildPage'
   requirements:
     _permission: 'access content'

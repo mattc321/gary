@@ -42,6 +42,12 @@ function gary_custom_theme() {
     'gary_custom' => [
       'render element' => 'children',
     ],
+    'front_dashboard' => [
+      'variables' => [
+        'test' => NULL
+      ],
+      'render element' => 'children',
+    ],
   ];
 }
 
@@ -85,7 +91,13 @@ function gary_custom_entity_display_build_alter(&$build, $context) {
     }
   }
 }
-
+function gary_custom_preprocess_front_dashboard(array &$variables) {
+  // Helpful $content variable for templates.
+  // dpm(12);
+  // foreach (\Drupal\Core\Render\Element::children($variables['elements']) as $key) {
+  //   $variables['content'][$key] = $variables['elements'][$key];
+  // }
+}
 /**
  * Implements hook_menu_local_tasks_alter().
  */
