@@ -7,3 +7,4 @@ dependencies:
   - gary_custom
   - drupal:serialization
   - drupal:layout_discovery
+  - select2

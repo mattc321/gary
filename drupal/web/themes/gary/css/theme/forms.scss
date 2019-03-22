@@ -123,6 +123,33 @@ input[type=submit].add-pg-item {
   }
 }
 
+//popup-exposed-form
+.popup-exposed-form {
+  // position: absolute;
+  // top: -5px;
+  // left: 5px;
+  // background: linear-gradient(to right, $blue, $purple);
+  // width: 80%;
+  // padding: 5px;
+  // border-radius: 3px;
+  // z-index: 5;
+  // box-shadow: 2px 2px 2px #000;
+}
+
+.popup-filter-icon {
+  cursor: pointer;
+  float: right;
+
+  svg {
+    fill: $purple;
+    transition: all .5s ease;
+
+    &:hover {
+      fill: $blue;
+    }
+  }
+}
+
 //jelly button
 .jelly {
 

@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+
 
 /**
  * Implements hook_help().
@@ -29,7 +31,25 @@ function gary_dashboard_help($route_name, RouteMatchInterface $route_match) {
 function gary_dashboard_theme() {
   return [
     'gary_dashboard' => [
+      'variables' => [
+        'region' => NULL
+      ],
+      'render element' => 'children',
+    ],
+    'dashboard_admin_form' => [
+      'variables' => [
+        'layout' => NULL
+      ],
       'render element' => 'children',
     ],
   ];
+}
+
+function gary_dashboard_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  //add popup form filters when we want to
+  if ($route_name == 'gary_dashboard.dashboard') {
+    // $form['#attributes']['class'][] = 'hidden';
+    $form['#attributes']['class'][] = 'popup-exposed-form';
+  }
 }

@@ -25,7 +25,7 @@ global:
       dist/theme/pages.css: {}
       dist/theme/projects.css: {}
       dist/theme/search.css: {}
-      dist/theme/gary_homebox.css: {}
+      dist/theme/dashboard.css: {}
       dist/theme/print.css: { media: print }
   js:
     /libraries/polyfill.min.js: { minified: true }

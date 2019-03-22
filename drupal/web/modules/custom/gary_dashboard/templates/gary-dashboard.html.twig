@@ -1,1 +1,67 @@
-<!-- Add you custom twig html here -->
+
+
+
+
+{% set popup_class = "popup-filter-icon" %}
+
+{% set popup_filter_icon %}
+  {% include ('@gary/../symbols/filter.svg') %}
+{% endset %}
+
+<section class="dashboard layout layout--twocol">
+  <article class="layout__region layout__region--top">
+    {% for tops in region.top %}
+      <div class="dashboard-block">
+        <div class="dashboard-block-title">
+          {{ tops['#block_title'] }}
+          {% if tops['#form_selector'] %}
+            <span class="{{popup_class}}" popup-selector="{{ tops['#form_selector'] }}">{{ popup_filter_icon }}</span>
+          {% endif %}
+        </div>
+        {{ tops }}
+      </div>
+    {% endfor %}
+  </article>
+  <article class="layout__region layout__region--first">
+    {% for first in region.first %}
+      <div class="dashboard-block">
+        <div class="dashboard-block-title">
+          {{ first['#block_title'] }}
+          {% if first['#form_selector'] %}
+            <span class="{{popup_class}}" popup-selector="{{ first['#form_selector'] }}">{{ popup_filter_icon }}</span>
+
+          {% endif %}
+
+        </div>
+        {{ first }}
+      </div>
+    {% endfor %}
+  </article>
+  <article class="layout__region layout__region--second">
+    {% for second in region.second %}
+      <div class="dashboard-block">
+        <div class="dashboard-block-title">
+          {{ second['#block_title'] }}
+          {% if second['#form_selector'] %}
+            <span class="{{popup_class}}" popup-selector="{{ second['#form_selector'] }}">{{ popup_filter_icon }}</span>
+          {% endif %}
+        </div>
+        {{ second }}
+      </div>
+    {% endfor %}
+  </article>
+  <article class="layout__region layout__region--bottom">
+    {% for bottom in region.bottom %}
+      <div class="dashboard-block">
+        <div class="dashboard-block-title">
+          {{ bottom['#block_title'] }}
+          {% if bottom['#form_selector'] %}
+            <span class="{{popup_class}}" popup-selector="{{ bottom['#form_selector']}}">{{ popup_filter_icon }}</span>
+
+          {% endif %}
+        </div>
+        {{ bottom }}
+      </div>
+    {% endfor %}
+  </article>
+</section>

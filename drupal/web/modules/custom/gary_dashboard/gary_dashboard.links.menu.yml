@@ -1,0 +1,6 @@
+gary_dashboard.admin_settings_form:
+  title: 'Dashboard Blocks Settings'
+  route_name: gary_dashboard.admin_settings_form
+  description: 'Dashboard Block Settings'
+  parent: system.admin_config_system
+  weight: 99

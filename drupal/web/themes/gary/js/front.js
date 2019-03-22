@@ -6,7 +6,7 @@
 
       //dashboard fade in
       var delayInterval = 0;
-      $(context).find('.homebox-column').once('.homebox-column').each(function (index,value) {
+      $(context).find('.dashboard-block').once('.dashboard-block').each(function (index,value) {
         setTimeout(function(){ $(value).bounceIn(); }, delayInterval);
         delayInterval += 100;
       })

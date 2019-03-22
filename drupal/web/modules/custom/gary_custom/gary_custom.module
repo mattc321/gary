@@ -41,13 +41,7 @@ function gary_custom_theme() {
   return [
     'gary_custom' => [
       'render element' => 'children',
-    ],
-    'front_dashboard' => [
-      'variables' => [
-        'test' => NULL
-      ],
-      'render element' => 'children',
-    ],
+    ]
   ];
 }
 
@@ -91,13 +85,7 @@ function gary_custom_entity_display_build_alter(&$build, $context) {
     }
   }
 }
-function gary_custom_preprocess_front_dashboard(array &$variables) {
-  // Helpful $content variable for templates.
-  // dpm(12);
-  // foreach (\Drupal\Core\Render\Element::children($variables['elements']) as $key) {
-  //   $variables['content'][$key] = $variables['elements'][$key];
-  // }
-}
+
 /**
  * Implements hook_menu_local_tasks_alter().
  */
@@ -163,6 +151,7 @@ function gary_custom_entity_view_display_alter(EntityViewDisplayInterface $displ
 
 function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $helper = new GaryFunctions;
+
   switch ($entity->bundle()){
     case 'projects':
       //Messing with quick edit functionality
@@ -451,14 +440,8 @@ function gary_custom_form_node_tasks_edit_form_alter(&$form, FormStateInterface 
 
 }
 
+
 function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  if ($form_id == 'views_exposed_form') {
-    // ksm($form);
-    // ksm($form['#submit']);
-  }
-  if ($form_id == 'homebox_page') {
-    $form['add_block_button']['#attributes']['jelly'] = 'arrow';
-  }
 
   //use select2 type on these multiselect elements
   $multiselects = [

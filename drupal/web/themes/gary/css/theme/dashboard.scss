@@ -1,0 +1,21 @@
+@import "../variables.scss";
+
+
+.dashboard {
+    article {
+
+        div.dashboard-block {
+          box-shadow: 0px 0px 4px $light-blue;
+          margin: 15px;
+          border-radius: 0px;
+          padding: 5px;
+
+          .dashboard-block-title {
+              background: $light-blue;
+              padding: 5px;
+          }
+
+
+      }
+    }
+}

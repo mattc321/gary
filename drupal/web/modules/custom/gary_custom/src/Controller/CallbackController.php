@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\gary_field_formatter\Controller\CallbackController.
+ * Contains \Drupal\gary_custom\Controller\CallbackController.
  * Holds callbacks for items in gary_custom
  */
 namespace Drupal\gary_custom\Controller;
@@ -16,13 +16,6 @@ use Drupal\views\Views;
 use Drupal\Core\Url;
 
 class CallbackController extends ControllerBase {
-
-  public function buildPage() {
-    $block_instance = \Drupal::service('plugin.manager.block')->createInstance("views_block:dashboard_tasks_by_assignee-block_1");
-    $build['#test']= $block_instance->build();
-    $build['#theme'] = 'front_dashboard';
-    return $build;
-  }
 
   /**
    * Get the price of a service
