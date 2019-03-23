@@ -52,6 +52,7 @@
         "drupal/views_entity_form_field": "^1.0",
         "drupal/views_field_formatter": "^1.8",
         "drush/drush": "~9.1dev",
+        "npm-asset/gsap": "^2.1",
         "npm-asset/qtip2": "^3.0",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
@@ -65,7 +66,7 @@
         "drupal/twig_xdebug": "^1.0",
         "jcalderonzumba/gastonjs": "~1.0.2",
         "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
-        "mikey179/vfsStream": "~1.2",
+        "mikey179/vfsstream": "~1.2",
         "phpunit/phpunit": "~4.8",
         "symfony/css-selector": "~2.8"
     },
