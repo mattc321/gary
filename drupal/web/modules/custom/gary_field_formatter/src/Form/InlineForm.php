@@ -222,11 +222,12 @@ class InlineForm extends FormBase {
     $form['container']['submit'] = [
       '#type' => 'submit',
       '#weight' => count($form) +1,
-      '#value' => t('+'),
+      '#value' => t('Save item'),
       '#attributes' => [
         'class' => [
           'use-ajax'
         ],
+        'jelly' => 'check'
       ],
       '#ajax' => [
         'callback' => '::ajaxFormRebuild',

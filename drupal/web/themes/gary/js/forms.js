@@ -4,18 +4,6 @@
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
 
-      // $('.draggable').on('touchmove', function (event) {
-      //   console.log('touchmove');
-      // });
-      // $('.draggable').on('touchend', function (event) {
-      //   console.log('touchend');
-      //
-      // });
-      // $('.draggable').on('mousemove pointermove', function (event) {
-      //   console.log('mousemove');
-      //
-      // });
-
       //Only display save order after a row has been dropped
       $('.draggable', context).once('.draggable').on('mouseup pointerup', function (event) {
         let form = $(this).closest('form').attr('id');
@@ -23,20 +11,28 @@
         $('#'+form).find('.jelly-form-edit-save-order').fadeIn();
       });
 
-      //attach event listener to field - attached in form_alter
-      $('.jelly-button', context).once('.jelly-button').click(function () {
-        if ($(this).hasClass("load")) {
-          setTimeout(function() {
-            $('.jelly-child-input input').trigger("click");
-            $(".jelly-button").removeClass("load done");
-          }, 200);
+
+      //attach event listener to field - attribute "jelly" attached to any form input
+      $('.jelly-button', context).once('.jelly-button').click(function (e) {
+
+        //grab the actual input were going to submit
+        let childinput = ($(this).next().children('input'));
+        let myself = $(this);
+
+        if (childinput.hasClass('use-ajax')) {
+          childinput.trigger("mousedown");
         } else {
-          $('.jelly-child-input input').trigger("click");
-          $(this).addClass("load");
-          setTimeout(function() {
-            $(".jelly-button").addClass("done");
-          }, 200);
+          childinput.trigger("click");
         }
+        myself.addClass("load");
+
+        setTimeout(function() {
+          myself.addClass("done");
+        }, 200);
+
+        setTimeout(function() {
+          myself.removeClass("load done");
+        }, 1000);
       });
 
       //login screen
