@@ -106,12 +106,20 @@ class InlineForm extends FormBase {
       $pg_item = Paragraph::create(['type' => $pg_name,]);
     }
 
-
     $displays = EntityFormDisplay::collectRenderDisplay($pg_item, 'default');
 
     foreach ($displays->getComponents() as $name => $options) {
-      $fields_by_weight[$options['weight']] = $name;
+      //for some reason langcode gets the same weight as legit fields
+      //check for duplicate weights and assign a new key to avoid
+      //overwriting a field key
+      if (isset($fields_by_weight[$options['weight']])) {
+        $getmax = max(array_keys($fields_by_weight)) + 1;
+        $fields_by_weight[$getmax] = $name;
+      } else {
+        $fields_by_weight[$options['weight']] = $name;
+      }
     }
+
     ksort($fields_by_weight);
     $this->fieldDefs = $fields_by_weight;
   }
@@ -166,16 +174,6 @@ class InlineForm extends FormBase {
         ],
         'onclick' => 'return false;'
       ],
-      //no longer using a callback here, using a listener with selector
-      //as data-id to unhide. Incase form is called outside the formatter
-      // '#ajax' => [
-      //   'callback' => '::addItemToggle',
-      //   'event' => 'click',
-      //   'wrapper' => $wrapper,
-      //   'progress' => [
-      //     'type' => 'throbber'
-      //   ],
-      // ],
     ];
 
     //container attach form and add button
@@ -188,6 +186,7 @@ class InlineForm extends FormBase {
 
     //loading the form widget will fail without this
     $form['#parents'] = [];
+
     foreach ($field_defs as $el_key => $field) {
         //load each widget from the field defs
         if ($widget = $entity_form_display->getRenderer($field)) { //Returns the widget class
@@ -240,14 +239,6 @@ class InlineForm extends FormBase {
     return $form;
   }
 
-  // public function addItemToggle(array &$form, FormStateInterface $form_state) {
-  //   $wrapper = 'inline_pg_form_'.$this->getHostFieldName();
-  //
-  //   $response = new \Drupal\Core\Ajax\AjaxResponse();
-  //   $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$wrapper, 'hidden']));
-  //   // $response->addCommand(new AlertCommand('test'));
-  //   return $response;
-  // }
   /**
    * {@inheritdoc}
    */
