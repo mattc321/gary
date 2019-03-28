@@ -30,6 +30,7 @@
         "drupal/console": "^1.8",
         "drupal/core": "~8.6.1",
         "drupal/ctools": "^3.0",
+        "drupal/date_popup": "^1.0",
         "drupal/devel": "^2.0",
         "drupal/draggableviews": "^1.2",
         "drupal/easy_breadcrumb": "^1.8",

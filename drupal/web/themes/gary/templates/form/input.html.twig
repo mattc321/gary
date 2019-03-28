@@ -1,9 +1,13 @@
 {% if attributes.getIterator.jelly %}
   {% set jelly = attributes.getIterator.jelly.__toString %}
-  <div class="jelly jelly-button">
+  <div class="jelly jelly-button jelly-form-{{attributes.id}}">
   {% if jelly == 'add' %}
     {% include ('@gary/../symbols/plus.svg') %}
     {% include ('@gary/../symbols/close.svg') %}
+    {% include ('@gary/../symbols/border.svg') %}
+  {% elseif jelly == 'check' %}
+    {% include ('@gary/../symbols/save.svg') %}
+    {% include ('@gary/../symbols/check.svg') %}
     {% include ('@gary/../symbols/border.svg') %}
   {% else %}
     {% include ('@gary/../symbols/arrow.svg') %}

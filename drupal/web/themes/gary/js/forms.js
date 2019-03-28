@@ -4,27 +4,24 @@
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
 
-      if ($('.popup-filter-icon').length > 0) {
-        $(context).find('.popup-filter-icon').once('.popup-filter-icon').click(function () {
-          var selector = '#'+($(this).attr('popup-selector'));
-          let form = $(selector);
-          if (form.length > 0) {
-            form.toggle('hidden');
-          }
-        })
-      }
+      // $('.draggable').on('touchmove', function (event) {
+      //   console.log('touchmove');
+      // });
+      // $('.draggable').on('touchend', function (event) {
+      //   console.log('touchend');
+      //
+      // });
+      // $('.draggable').on('mousemove pointermove', function (event) {
+      //   console.log('mousemove');
+      //
+      // });
 
-      // if ($('.popup-exposed-form').length > 0) {
-      //   $(context).find('.popup-exposed-form').once('.popup-exposed-form').each(function (index,element) {
-      //     var form_id = $(element).attr('id');
-      //
-      //     //attach event listener to field - attached in form_alter
-      //     $('.popup-filter-icon', context).once('.popup-filter-icon').click(function () {
-      //       console.log($(this).attr('popup-selector'));
-      //     });
-      //
-      //   })
-      // }
+      //Only display save order after a row has been dropped
+      $('.draggable', context).once('.draggable').on('mouseup pointerup', function (event) {
+        let form = $(this).closest('form').attr('id');
+        // $('#'+form).children('div[data-drupal-selector="edit-actions"]').fadeIn();
+        $('#'+form).find('.jelly-form-edit-save-order').fadeIn();
+      });
 
       //attach event listener to field - attached in form_alter
       $('.jelly-button', context).once('.jelly-button').click(function () {

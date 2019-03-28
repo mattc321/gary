@@ -442,7 +442,10 @@ function gary_custom_form_node_tasks_edit_form_alter(&$form, FormStateInterface 
 
 
 function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
+if (isset($form['actions']['save_order'])) {
+  $form['actions']['save_order']['#attributes']['jelly'] = 'check';
+  // $form['actions']['save_order']['#attributes']['class'][] = 'jelly';
+}
   //use select2 type on these multiselect elements
   $multiselects = [
     'field_task_assigned_to_target_id',

@@ -49,7 +49,8 @@ function gary_dashboard_form_views_exposed_form_alter(&$form, FormStateInterface
   $route_name = \Drupal::routeMatch()->getRouteName();
   //add popup form filters when we want to
   if ($route_name == 'gary_dashboard.dashboard') {
-    // $form['#attributes']['class'][] = 'hidden';
+    // $form['actions']['submit']['#attributes']['jelly'] = 'check';
+    $form['#attributes']['class'][] = 'hidden';
     $form['#attributes']['class'][] = 'popup-exposed-form';
   }
 }

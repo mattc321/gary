@@ -67,6 +67,7 @@ class DashboardController extends ControllerBase {
       }
     }
     $build['#attached']['library'][] = 'gary_dashboard/twocol';
+    $build['#attached']['library'][] = 'gary_dashboard/dashboard';
     $build['#theme'] = 'gary_dashboard';
     return $build;
   }

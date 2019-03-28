@@ -101,13 +101,15 @@ input[type=submit].add-pg-item {
     padding: 5px 15px;
 }
 
+//draggable show row weights
+//save order button
+.tabledrag-toggle-weight-wrapper,
+.jelly-form-edit-save-order {
+  display: none;
+}
 
 //management and views forms styles
 .view-manage-service-tasks {
-
-  .tabledrag-toggle-weight-wrapper {
-    display: none;
-  }
 
   input#edit-actions-submit,
   input#edit-save-order {
@@ -119,33 +121,6 @@ input[type=submit].add-pg-item {
 
     &:hover {
       left: -5px;
-    }
-  }
-}
-
-//popup-exposed-form
-.popup-exposed-form {
-  // position: absolute;
-  // top: -5px;
-  // left: 5px;
-  // background: linear-gradient(to right, $blue, $purple);
-  // width: 80%;
-  // padding: 5px;
-  // border-radius: 3px;
-  // z-index: 5;
-  // box-shadow: 2px 2px 2px #000;
-}
-
-.popup-filter-icon {
-  cursor: pointer;
-  float: right;
-
-  svg {
-    fill: $purple;
-    transition: all .5s ease;
-
-    &:hover {
-      fill: $blue;
     }
   }
 }
