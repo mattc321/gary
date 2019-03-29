@@ -3,14 +3,11 @@
 
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
-
       //Only display save order after a row has been dropped
-      $('.draggable', context).once('.draggable').on('mouseup pointerup', function (event) {
+      $('.draggable', context).once('draggable').on('mouseup pointerup', function (event) {
         let form = $(this).closest('form').attr('id');
-        // $('#'+form).children('div[data-drupal-selector="edit-actions"]').fadeIn();
-        $('#'+form).find('.jelly-form-edit-save-order').fadeIn();
+        $('#'+form).find('div[class*="jelly-form-edit-save-order"]').fadeIn();
       });
-
 
       //attach event listener to field - attribute "jelly" attached to any form input
       $('.jelly-button', context).once('.jelly-button').click(function (e) {

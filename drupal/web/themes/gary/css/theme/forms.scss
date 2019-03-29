@@ -112,9 +112,9 @@ input[type=submit].add-pg-item {
 }
 
 //draggable show row weights
-//save order button
+//save order button which gets a new build_id on refresh
 .tabledrag-toggle-weight-wrapper,
-.jelly-form-edit-save-order {
+div[class*="jelly-form-edit-save-order"] {
   display: none;
 }
 
