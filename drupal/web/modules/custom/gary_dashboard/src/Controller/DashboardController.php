@@ -10,6 +10,8 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Ajax;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\views\Views;
+use Drupal\views\Plugin\Block\ViewsBlock;
+use Drupal\core\Url;
 
 class DashboardController extends ControllerBase {
 
@@ -66,10 +68,26 @@ class DashboardController extends ControllerBase {
         $build['#region'][$region][] = $build_block;
       }
     }
+
+    $build['#adminsettings'] = [
+      '#type' => 'link',
+      '#access' => $this->getAccess(),
+      '#title' => t('Settings'),
+      '#url' => Url::fromRoute('gary_dashboard.admin_settings_form')
+    ];
+
     $build['#attached']['library'][] = 'gary_dashboard/twocol';
     $build['#attached']['library'][] = 'gary_dashboard/dashboard';
     $build['#theme'] = 'gary_dashboard';
     return $build;
   }
 
+  private function getAccess() {
+    $user = \Drupal::currentUser();
+    $roles = $user->getRoles();
+    if (in_array('administrator', $roles) || in_array('ec_admin', $roles)) {
+      return TRUE;
+    }
+    return FALSE;
+  }
 }

@@ -13,11 +13,10 @@
             $(this).toggle('hidden');
           }
         })
-        
+
         //click listener
         $(context).find('.popup-filter-icon').once('.popup-filter-icon').click(function () {
           var selector = '#'+($(this).attr('popup-selector'));
-          console.log(1);
           let form = $(selector);
           if (form.length > 0) {
             form.toggle('hidden');
