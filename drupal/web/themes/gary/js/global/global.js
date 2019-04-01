@@ -7,8 +7,21 @@
     }
   };
 
-  $.fn.bounceIn = function() {
-    TweenMax.fromTo(this, .5, {scale: .9, opacity: 0}, {scale: 1, opacity: 1});
+  var delayInterval = 0;
+  $.fn.staggerBounceIn = function(selector) {
+    $(this).once(selector).each(function (index,value) {
+      setTimeout(function(){ $(value).bounceIn(2); }, delayInterval);
+      delayInterval += 100;
+    })
+  }
+
+  $.fn.stagger = function(i = 100) {
+    setTimeout(function(){ $(this).bounceIn(5); }, delayInterval);
+    delayInterval += i;
+  }
+
+  $.fn.bounceIn = function(sec = .5) {
+    TweenMax.fromTo(this, sec, {scale: .9, opacity: 0}, {scale: 1, opacity: 1});
   }
 
   //gsap fade functions
@@ -21,7 +34,6 @@
 
   //set or remove a message
   $.fn.setMessage = function(message) {
-      console.log('++'+message.length);
       if (message.length == 0) {
         $('#alert-msg').remove();
         return;

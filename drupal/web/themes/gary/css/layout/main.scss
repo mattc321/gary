@@ -157,11 +157,6 @@ main {
   }
 }
 
-//compact user images
-.image-style-user-pic {
-  @include userPic();
-}
-
 .switch-link-container {
   position: absolute;
   right: 10px;

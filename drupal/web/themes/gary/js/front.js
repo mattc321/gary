@@ -1,16 +1,17 @@
 
 (function ($, Drupal) {
-
   Drupal.behaviors.garyFront = {
     attach: function (context, settings) {
 
       //dashboard fade in
-      var delayInterval = 0;
-      $(context).find('.dashboard-block').once('.dashboard-block').each(function (index,value) {
-        setTimeout(function(){ $(value).bounceIn(); }, delayInterval);
-        delayInterval += 100;
-      })
+      $('.dashboard-block').staggerBounceIn('.dashboard-block');
+      // $(context).staggerBounceIn('.user-block');
 
+      // $(context).find('.dashboard-block').once('.dashboard-block').each(function (index,value) {
+      //   $(value).stagger();
+      //   // setTimeout(function(){ $(value).bounceIn(); }, delayInterval);
+      //   // delayInterval += 100;
+      // })
 
       //user menu handler
       var expanded = 0;

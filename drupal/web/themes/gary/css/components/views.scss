@@ -5,3 +5,36 @@
       border-radius: 50%;
   }
 }
+
+//compact user images
+.view-manage-users {
+
+  .image-style-user-pic {
+    @include userPic(125px);
+  }
+
+  .user-block {
+    box-shadow: 2px 2px 2px #ccc;
+    height: 275px;
+    width: 200px;
+    display: inline-block;
+    border-radius: 5px;
+    margin: 10px;
+    transition: .3s;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    div {
+      text-align: center;
+    }
+    .views-field-access,
+    .views-field-created {
+      font-size: .9em;
+      color: $grey;
+      font-style: italic;
+      margin: 5px 0px;
+    }
+  }
+}

@@ -17,9 +17,9 @@ $break-xl: 1400px;
   }
 }
 
-@mixin userPic() {
-  height: 55px;
-  width: 55px;
+@mixin userPic($d) {
+  height: $d;
+  width: $d;
   border-radius: 50%;
 }
 

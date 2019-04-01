@@ -165,7 +165,7 @@
     }
 
     img {
-      @include userPic();
+      @include userPic(55px);
     }
 
     //comment messages notifications style
