@@ -258,7 +258,6 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public function ajaxFormSubmitHandler(array &$form, FormStateInterface $form_state) {
-    \Drupal::logger('poop')->error('ajaxFormSubmitHandler');
     $form_values = $form_state->getValues();
     $pg = $form['#host'];
     $pg_name = $form['#field_name'];
@@ -288,7 +287,6 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public function ajaxFormRebuild(array &$form, FormStateInterface $form_state) {
-    \Drupal::logger('poop')->error('ajaxFormRebuild');
     $pg = $form['#host'];
     if ($form_state->hasAnyErrors()) {
       $wrapper = 'inline_pg_form_'.$this->getHostFieldName();
@@ -326,7 +324,6 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    \Drupal::logger('poop')->error('subtitform');
     $form_state->clearErrors();
     $form_state->setRebuild();
     return $form;
