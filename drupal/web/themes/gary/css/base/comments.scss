@@ -13,20 +13,13 @@ article.comment {
 
       &.comment__meta {
         .field--name-user-picture img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+          @include userPic(50px);
         }
     }
   }
 
   .content {
-    margin: 5px 10px;
-    background: #f0f6ff;
-    padding: 5px 30px;
-    border: 1px dashed #c3dbff;
-    border-radius: 0px 5px 0px 20px;
-    width: 80%;
+    @extend %comment-bg;
   }
 
   ul.links li:first-child {
@@ -34,12 +27,10 @@ article.comment {
   }
 
   p.comment__submitted {
-    font-size: .85em;
-    color: $grey;
+    @extend %submitted;
   }
 
 }
-
 
 .ajax-comments-form-reply {
     width: 70%;

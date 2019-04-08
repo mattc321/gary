@@ -48,6 +48,14 @@
           $('.notifications').checkMessages();
         }, 5000);
 
+        //message div clickable
+        $(".message-item-clickable").once(".message-item-clickable").click(function() {
+          let link = $(this).find(".message-follow > a");
+          let link_follow = link.attr("href") + "#node-projects-field-comments";
+          window.location = link_follow;
+          return false;
+        });
+
         //get the message count
          $.fn.checkMessages = function() {
            $el = $(this);

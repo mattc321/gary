@@ -4,6 +4,56 @@
     text-align: right;
 }
 
+//profile page
+.path-user {
+
+  #block-views-block-my-messages-block-1 {
+    > h3 {
+      @extend %comments-icon;
+    }
+  }
+
+  .view-my-messages {
+
+    .views-row {
+      @extend %comment-bg;
+      clear: both;
+      min-height: 100px;
+      // padding: 10px;
+      &:hover {
+        cursor: pointer;
+        transition: background-color .5s ease;
+        background-color: $light-blue;
+        // box-shadow: 0 0 5px $light-grey;
+      }
+
+    }
+    .views-field-field-tag-user-by {
+      float: left;
+      margin-right: 15px;
+      margin-top: auto;
+    }
+    .views-field-created span {
+      @extend %submitted;
+    }
+  }
+  article.profile {
+    // width: 75%;
+    // margin: 0 auto;
+    .field--name-user-picture {
+      @include userPicCircled();
+    }
+    .field:not(.field--name-user-picture), .form-item {
+      margin: 15px;
+    }
+  }
+}
+
+.image-style-user-pic-small {
+  @extend %user-pic;
+}
+
+//bundle label
 .bundle-label {
   padding: 10px 25px;
   border-radius: 4px;

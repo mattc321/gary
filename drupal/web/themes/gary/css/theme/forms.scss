@@ -56,6 +56,30 @@ input[type=submit]:hover {
   margin-top: 50px;
 }
 
+//user profile form
+.user-form {
+
+  .field--name-user-picture {
+    .description,
+    .form-item:first-child label {
+      display: none;
+    }
+  }
+
+  .form-item-mail .description {
+    display: none;
+  }
+
+  .image-preview {
+    @include userPicCircled();
+  }
+
+  details#edit-contact,
+  details#edit-timezone {
+    display: none;
+  }
+}
+
 //inline forms
 .inline-pg-form {
     display: flex;
@@ -94,7 +118,7 @@ input[type=submit]:hover {
 }
 
 //stupid date label output is garbage
-h4.label {
+form h4.label {
     font-weight: normal;
     position: relative;
     top: -13px;
