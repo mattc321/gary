@@ -2,14 +2,17 @@
 
 namespace Drupal\gary_comments\Controller;
 
+use Drupal\image\Entity\ImageStyle;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\node\Entity\Node;
 use Drupal\gary_custom\GaryFunctions;
 use Drupal\Core\Ajax;
+use Drupal\views\Views;
 use Drupal\Core\Ajax\InvokeCommand;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Drupal\user\Entity\User;
 
 class CommentTag extends ControllerBase {
 
@@ -17,20 +20,71 @@ class CommentTag extends ControllerBase {
 
   protected $error_string = NULL;
 
+  public function buildMessages() {
+    $user = \Drupal::currentUser();
+    $data = [];
+    $viewId = 'my_messages';
+    $displayId = 'rest_export_1';
+    $arguments = [$user->id()];
+
+    // Get the view
+    $result = $this->getView($viewId, $displayId, $arguments);
+    if(is_object($result)) {
+      $json = $result->jsonSerialize();
+      $data = json_decode($json);
+    }
+    //get the user from picture and the node title
+    foreach ($data as $key => $d) {
+      $from = User::load($d->field_tag_user_by[0]->target_id);
+      $file_uri = $from->get('user_picture')->entity->getFileUri();
+      $styled_image_url = ImageStyle::load("user_pic_small")->buildUrl($file_uri);
+      $picture = $styled_image_url;
+      $data[$key]->field_tag_user_by[0]->image_url = $picture;
+
+      $node = Node::load($d->field_tag_content_reference[0]->target_id);
+      $data[$key]->field_tag_content_reference[0]->title = $node->getTitle();
+    }
+    // return $data;
+    return new JsonResponse($data);
+  }
+
+  function markRead($id) {
+    $node = Node::load($id);
+    $node->set('field_message_read', TRUE);
+    $node->save();
+    return new Response(0);
+  }
+
+  function getView($viewId, $displayId, array $arguments) {
+      $result = false;
+      $view = Views::getView($viewId);
+
+      if (is_object($view)) {
+          $view->setDisplay($displayId);
+          $view->setArguments($arguments);
+          $view->execute();
+
+          // Render the view
+          $result = \Drupal::service('renderer')->render($view->render());
+      }
+
+      return $result;
+  }
   public function checkMessages() {
     $user = \Drupal::currentUser();
-    $query = \Drupal::database()->select('node__field_tag_user_to', 't');
-    $query->addField('t', 'entity_id');
-    $query->addJoin('left','node__field_message_read','r','t.entity_id=r.entity_id');
-    $query->condition('t.bundle', 'messages');
-    $query->condition('t.field_tag_user_to_target_id', $user->id());
-    $group = $query->orConditionGroup();
-    $group->condition('r.field_message_read_value', 'IS NULL');
-    $group->condition('r.field_message_read_value', 0);
-    $query->condition($group);
-    $results = $query->execute()->fetchAll();
+    $data = [];
+    $viewId = 'my_messages';
+    $displayId = 'rest_export_1';
+    $arguments = [$user->id()];
 
-    return new Response(count($results));
+    // Get the view
+    $result = $this->getView($viewId, $displayId, $arguments);
+    // return new JsonResponse($data);
+    if(is_object($result)) {
+        $json = $result->jsonSerialize();
+        $data = json_decode($json);
+    }
+    return new Response(count($data));
   }
 
   /**

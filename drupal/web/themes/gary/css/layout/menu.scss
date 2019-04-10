@@ -458,3 +458,39 @@ a.ui-button:active,
     font-weight: unset;
     color: unset;
   }
+  //messages contification styles
+  .messages-popup {
+    background: rgba($dark, .9);
+    color: $light-grey;
+    border-radius: 3px;
+  }
+  .message {
+    transition: background-color .3s ease;
+    padding: 10px;
+    min-height: 70px;
+    margin: 0 auto;
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: $blue;
+    }
+    .message-from {
+      float: left;
+      margin: 15px 10px 10px 0px;
+    }
+    .message-content {
+      font-style: italic;
+      margin: 5px 0 5px 50px;
+    }
+    .message-body {
+      margin: 5px 0 5px 50px;
+
+    }
+    .message-created {
+      font-style:italic;
+      margin: 5px 0;
+    }
+    img {
+      @include userPic(40px);
+    }
+  }

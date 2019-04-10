@@ -4,3 +4,17 @@ gary_comments.check_messages:
     _controller: '\Drupal\gary_comments\Controller\CommentTag::checkMessages'
   requirements:
     _permission: 'access content'
+
+gary_comments.build_messages:
+  path: '/build-messages'
+  defaults:
+    _controller: '\Drupal\gary_comments\Controller\CommentTag::buildMessages'
+  requirements:
+    _permission: 'access content'
+
+gary_comments.mark_read:
+  path: '/mark-read/{id}'
+  defaults:
+    _controller: '\Drupal\gary_comments\Controller\CommentTag::markRead'
+  requirements:
+    _permission: 'access content'

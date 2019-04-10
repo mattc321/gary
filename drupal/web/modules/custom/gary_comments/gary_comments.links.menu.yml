@@ -1,0 +1,7 @@
+gary_comments.get_messages:
+  title: 'My Messages'
+  parent: account
+  menu_name: account
+  weight: 2
+  description: 'My Messages'
+  route_name: gary_comments.build_messages

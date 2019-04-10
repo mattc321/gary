@@ -5,46 +5,28 @@
 
       //dashboard fade in
       $('.dashboard-block').staggerBounceIn('.dashboard-block');
-      // $(context).staggerBounceIn('.user-block');
-
-      // $(context).find('.dashboard-block').once('.dashboard-block').each(function (index,value) {
-      //   $(value).stagger();
-      //   // setTimeout(function(){ $(value).bounceIn(); }, delayInterval);
-      //   // delayInterval += 100;
-      // })
 
       //user menu handler
-      var expanded = 0;
-      $('.right-menu').click( function(){
+      $('.right-menu').once('.right-menu').click( function(){
         let nav = '#'+$(this).attr('nav-id');
-        $('.user-nav-expanded').toggleClass('user-nav-expanded');
-        if (expanded == 0) {
-          $(nav).toggleClass('user-nav-expanded').garyFadeIn(.3);
-          expanded = 1;
+        if ($(nav).hasClass('user-nav-expanded')) {
+          $(nav).removeClass('user-nav-expanded');
         } else {
-          $(nav).toggleClass('user-nav-expanded');
-          expanded = 0;
+          $(nav).toggleClass('user-nav-expanded').garyFadeIn(.3);
         }
+
       });
+
       let nav = '#block-gary-account-menu, #block-addcontent';
-      $(nav).mouseleave(function(){
-        if (expanded == 1) {
+      $('#block-gary-account-menu, #block-addcontent').on('mouseout, mouseleave', function() {
+        if ($('.message:hover').length > 0) {
+          return;
+        }
+        if ($(this).hasClass('user-nav-expanded')) {
+          $('.messages-popup').remove();
           $(this).toggleClass('user-nav-expanded');
-          expanded = 0;
         }
       });
-
-      //mobile main menu handler
-
-      // $('#mobile-toggle').click( function(){
-      //   $('#menu-wrap').toggleClass('expanded');
-      //   $('#block-gary-main-menu').show();
-      //   TweenLite.to('#block-gary-main-menu', .5, {top: 0, ease: Power4.easeOut, onComplete: () => {
-      //     console.log(1);
-      //   }});
-      //   // TweenMax.to("#block-gary-main-menu", .5, {transform:'translateY(100vh)'});
-      // });
-
 
       TweenMax.to("#menu-wrap", .5, {y:0});
       $('.field--type-block-field').fadeIn();
