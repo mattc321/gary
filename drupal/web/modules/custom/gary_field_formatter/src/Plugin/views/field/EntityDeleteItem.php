@@ -10,7 +10,8 @@ namespace Drupal\gary_field_formatter\Plugin\views\field;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
-
+use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 /**
  * Field handler for deleting entity item.
  *
@@ -76,21 +77,40 @@ class EntityDeleteItem extends FieldPluginBase {
     $dom_string = str_replace("_","-",$this->view->id()) . "-" . $display_id;
     $final_dom_id = 'js-view-dom-id-'.$dom_string;
 
+    $user = User::load(\Drupal::currentUser()->id());
+    $access = $this->checkUserAccess($user);
+
     $link = [
       '#title' => t('&times;'),
       '#type' => 'link',
+      '#access' => $access,
       '#attributes' => [
         'class' => [
           'use-ajax',
           'delete-entity-item'
         ],
       ],
-      '#url' => \Drupal\Core\Url::fromRoute('gary_field_formatter.delete_entity', [
+      '#url' => Url::fromRoute('gary_field_formatter.delete_entity', [
                       'pid' => $id,
                       'vid' => $final_dom_id,
                       'host_id' => $host_id,
                       'host_field' => $relationship_id], []),
     ];
     return $link;
+  }
+
+  /**
+   * check if user has ec roles
+   * @param  Object $user The user
+   * @return bool       True if they have it
+   */
+  protected function checkUserAccess($user) {
+    if ($user->hasRole('ec_admin')) {
+      return TRUE;
+    }
+    if ($user->hasPermission('administrator')) {
+      return TRUE;
+    }
+    return FALSE;
   }
 }
