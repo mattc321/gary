@@ -473,7 +473,8 @@ if (isset($form['actions']['save_order'])) {
   //use select2 type on these multiselect elements
   $multiselects = [
     'field_task_assigned_to_target_id',
-    'field_project_status_target_id'
+    'field_project_status_target_id',
+    'field_opportunity_type_target_id'
   ];
 
   foreach ($multiselects as $element) {

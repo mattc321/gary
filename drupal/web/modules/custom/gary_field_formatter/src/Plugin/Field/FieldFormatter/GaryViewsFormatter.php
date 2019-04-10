@@ -61,9 +61,6 @@ class GaryViewsFormatter extends FormatterBase {
     return $this->dom_id;
   }
 
-  // public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition) {
-  //   ksm($plugin_id);
-  // }
 
   /**
    * {@inheritdoc}
@@ -78,7 +75,6 @@ class GaryViewsFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-
     $elements = [];
 
     if (empty($this->getSetting('view_machine_name'))) {
@@ -103,7 +99,7 @@ class GaryViewsFormatter extends FormatterBase {
     $host_node_id = $items->getEntity()->id();
     //load up the view
     $args = [$host_node_id];
-    $view =  \Drupal\views\Views::getView($this->getSetting('view_machine_name'));
+    $view = \Drupal\views\Views::getView($this->getSetting('view_machine_name'));
     $view->setArguments($args);
 
     //load the display if one is set
@@ -125,6 +121,7 @@ class GaryViewsFormatter extends FormatterBase {
     $final_dom_id = 'js-view-dom-id-'.$this->getDomId();
 
     $view->execute();
+
     $elements['#view'] = $view->buildRenderable();
 
 
@@ -210,7 +207,23 @@ class GaryViewsFormatter extends FormatterBase {
 
     return $elements;
   }
+  /**
+   * {@inheritdoc}
+   */
+  public function prepareView(array $entities_items) {
+    // Entity revision loading currently has no static/persistent cache and no
+    // multiload. As entity reference checks _loaded, while we don't want to
+    // indicate a loaded entity, when there is none, as it could cause errors,
+    // we actually load the entity and set the flag.
+    foreach ($entities_items as $items) {
+      foreach ($items as $item) {
 
+        if ($item->entity) {
+          $item->_loaded = TRUE;
+        }
+      }
+    }
+  }
 
   /**
    * {@inheritdoc}
