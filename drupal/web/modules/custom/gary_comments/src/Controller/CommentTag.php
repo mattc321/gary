@@ -42,7 +42,8 @@ class CommentTag extends ControllerBase {
       $data[$key]->field_tag_user_by[0]->image_url = $picture;
 
       $node = Node::load($d->field_tag_content_reference[0]->target_id);
-      $data[$key]->field_tag_content_reference[0]->title = $node->getTitle();
+      $title = is_object($node) ? $node->getTitle() : '';
+      $data[$key]->field_tag_content_reference[0]->title = $title;
     }
     // return $data;
     return new JsonResponse($data);
@@ -63,9 +64,10 @@ class CommentTag extends ControllerBase {
           $view->setDisplay($displayId);
           $view->setArguments($arguments);
           $view->execute();
-
+          $view_render = $view->render();
           // Render the view
-          $result = \Drupal::service('renderer')->render($view->render());
+          $renderer = \Drupal::service('renderer');
+          $result = $renderer->render($view_render);
       }
 
       return $result;
@@ -74,7 +76,7 @@ class CommentTag extends ControllerBase {
     $user = \Drupal::currentUser();
     $data = [];
     $viewId = 'my_messages';
-    $displayId = 'rest_export_1';
+    $displayId = 'rest_export_2';
     $arguments = [$user->id()];
 
     // Get the view

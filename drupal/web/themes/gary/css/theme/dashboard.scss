@@ -71,3 +71,10 @@
     }
 
 }
+
+.layout--twocol > .layout__region--first,
+.layout--twocol > .layout__region--second {
+  @include max-width($break-large){
+    flex: 0 1 100% !important;
+  }
+}
