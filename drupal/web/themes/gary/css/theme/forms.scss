@@ -79,6 +79,9 @@ input[type=submit]:hover {
     display: none;
   }
 }
+.js-form-type-vertical-tabs {
+  display: none;
+}
 
 //inline forms
 .inline-pg-form {
@@ -121,7 +124,7 @@ input[type=submit]:hover {
 form h4.label {
     font-weight: normal;
     position: relative;
-    top: -13px;
+    // top: -13px;
 }
 div#edit-field-task-due-date-wrapper {
     margin-top: 23px;

@@ -1,8 +1,13 @@
 @import "../variables";
 
-body, a {
+body {
+  font-family: $font-primary;
+  background: $light-grey;
+}
+a {
   font-family: $font-primary;
 }
+
 
 a {
   color:$dark-blue;

@@ -491,8 +491,8 @@ if (isset($form['actions']['save_order'])) {
 
   //Opportunity Services Calculation
   if ($form_id == 'inline_pg_form_field_opportunity_services_ref') {
+    $form['#cache'] = ['max-age' => 0];
     $form['#attached']['library'][] = 'gary_custom/service_price';
-
     //js listeners in js/service-price
     $form['container']['field_opportunity_service']['widget']['#attributes']['class'][] = "calculate-price";
     $form['container']['field_quantity']['widget'][0]['value']['#attributes']['class'][] = "update-price";
