@@ -139,7 +139,9 @@ class GaryFunctions {
     if ($entity->getParentEntity()->get('field_opportunity_services_ref')->isEmpty()) {
       return;
     }
-
+    if (!$entity->getParentEntity()->hasField('field_amount')) {
+      return;
+    }
     //calculate the total amount of services on the parent node
     $total_price = 0;
     foreach($entity->getParentEntity()->get('field_opportunity_services_ref')->referencedEntities() as $key => $pg_item) {

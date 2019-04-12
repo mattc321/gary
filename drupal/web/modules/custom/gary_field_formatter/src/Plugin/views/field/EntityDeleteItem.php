@@ -105,10 +105,10 @@ class EntityDeleteItem extends FieldPluginBase {
    * @return bool       True if they have it
    */
   protected function checkUserAccess($user) {
-    if ($user->hasRole('ec_admin')) {
+    if ($user->hasPermission('use delete entity')) {
       return TRUE;
     }
-    if ($user->hasPermission('administrator')) {
+    if ($user->hasRole('administrator')) {
       return TRUE;
     }
     return FALSE;

@@ -48,10 +48,7 @@ class DashboardController extends ControllerBase {
     foreach ($blocks as $region => $region_blocks) {
       foreach ($region_blocks as $index => $block_id) {
         $load_block = $block_instance->createInstance($block_id);
-
-        $title = $load_block->label();
         $build_block = $load_block->build();
-        $build_block['#block_title'] = $title;
 
         //check the plugin type
         $definition = $load_block->getPluginDefinition();
@@ -61,8 +58,12 @@ class DashboardController extends ControllerBase {
           $parts = explode("-", $load_block->getDerivativeId());
           $view_id = str_replace('_','-',$parts[0]);
           $display_id = str_replace('_','-',$parts[1]);
+          $view = Views::getView($parts[0]);
+          $view->setDisplay($parts[1]);
           $form_selector = 'views-exposed-form-'.$view_id.'-'.$display_id;
           $build_block['#form_selector'] = $form_selector;
+          $build_block['#block_title'] = $view->getTitle();
+
         }
 
         $build['#region'][$region][] = $build_block;
@@ -85,7 +86,7 @@ class DashboardController extends ControllerBase {
   private function getAccess() {
     $user = \Drupal::currentUser();
     $roles = $user->getRoles();
-    if (in_array('administrator', $roles) || in_array('ec_admin', $roles)) {
+    if (in_array('administrator', $roles) || in_array('limited_admin', $roles)) {
       return TRUE;
     }
     return FALSE;
