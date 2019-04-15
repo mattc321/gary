@@ -93,7 +93,6 @@
   left: 0;
   width: 100%;
   height: 65px;
-  background: $dark;
   display: flex;
   justify-content: flex-end;
 
@@ -124,13 +123,7 @@
   }
 
   .round-menu {
-    // content: "";
-    // height: 46px;
-    // width: 46px;
     margin: 5px 0px 3px 3px;
-    // border-radius: 50%;
-    // background: rgba($blue,.2);
-
     svg {
       transition: .3s;
 
@@ -215,8 +208,8 @@
       padding: 0;
 
     > li {
-        background: $dark;
-        transition: .2s;
+        // background: $dark;
+        // transition: .2s;
         padding: 0;
       > a {
           height: 100%;
@@ -234,15 +227,10 @@
       color: $light;
       text-decoration: none;
 
-      &.is-active,
-      &:focus {
-        color: $blue;
-      }
-
-      &:hover,
-      &:active {
-        color: $blue;
-      }
+      // &.is-active,
+      // &:focus {
+      //   color: $blue;
+      // }
     }
   }
   // Main level
@@ -268,9 +256,6 @@
         line-height: 1;
         padding: 24px 20px;
 
-        &:hover {
-          background: rgba(0, 0, 0, 0.7);
-        }
       }
 
       &:hover ul.menu {
@@ -465,14 +450,14 @@ a.ui-button:active,
     border-radius: 3px;
   }
   .message {
-    transition: background-color .3s ease;
+    transition: background-color .2s ease;
     padding: 10px;
     min-height: 70px;
     margin: 0 auto;
     &:hover {
       cursor: pointer;
       background-color: rgba(0, 0, 0, 0.9);
-      color: $blue;
+      // color: $blue;
     }
     .message-from {
       float: left;

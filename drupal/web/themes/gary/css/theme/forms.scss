@@ -60,10 +60,12 @@ input[type=submit]:hover {
 .user-login-center {
     margin: 10vh auto;
     height: 45vh;
+    min-height: 320px;
     border: 1px solid $light-grey;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 2px 2px 2px $light-grey;
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, .15);
+    background: $light;
 }
 
 .user-login-logo {

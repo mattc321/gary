@@ -30,29 +30,16 @@ function gary_preprocess_block(&$variables) {
 
 }
 
-function gary_preprocess_datetime_form(&$variables) {
-  // $element = $variables['element'];
-  // ksm($variables);
-  // ksm($variables['element']);
-  // dpm(1);
-  // ksm($variables['#parents']['']);
-}
-
-function gary_preprocess_form_element_label(&$variables) {
-  // $element = $variables['element'];
-  // $id = $variables['element']['#id'];
-  // if (strpos($id, 'date') !== false) {
-  //   ksm($variables);
-  //   $variables['title']=NULL;
-  // }
-  // ksm($variables['element']['#id']);
-}
-
-function gary_preprocess_field(&$variables, $hook) {
-}
-
-function gary_preprocess_node(&$variables) {
-
+function gary_preprocess_html(&$variables) {
+  //send the color schema over to the body class
+  if ($user = User::load(\Drupal::currentUser()->id())) {
+    if (!$user->hasField('field_color')) {
+      $color = 'sexy';
+    } else {
+      $color = !empty($user->field_color->value) ? $user->field_color->value : 'sexy';
+    }
+  }
+  $variables['color'] = $color;
 }
 
 function gary_preprocess_page(&$variables) {

@@ -3,12 +3,14 @@
 
 main,
 #before-content {
-    width: 80%;
-    margin-left: 10vw;
+  width: 80%;
+  margin-left: 10vw;
+}
+#before-content {
+  padding: 5px;
 }
 main {
   min-height: 80vh;
-  background: $light;
   padding: 5px;
   box-shadow: 2px 2px 5px $dark;
   border-radius: 5px;

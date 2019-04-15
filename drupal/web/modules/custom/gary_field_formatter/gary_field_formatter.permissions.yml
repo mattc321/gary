@@ -1,0 +1,7 @@
+'use delete entity':
+  title: 'Use Delete Entity Field'
+  description: 'Allows user to use the delete entity field.'
+
+'use delete paragraph':
+  title: 'Use Delete Paragraph Field'
+  description: 'Allows user to use the delete paragraph field.'

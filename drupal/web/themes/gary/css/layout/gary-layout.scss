@@ -3,13 +3,55 @@
 body {
   font-family: $font-primary;
   background: $light-grey;
+
+  &.palette-sexy {
+    .layout-container {
+      @extend %sexy;
+    }
+    #menu-wrap {
+      background: $dark;
+    }
+    @extend %sexy-nav;
+  }
+  &.palette-light {
+    .layout-container {
+      background: $light;
+    }
+    #menu-wrap {
+      @extend %light-head;
+    }
+    @extend %light-nav;
+  }
+  &.palette-dark {
+    .layout-container {
+      background: $dark;
+
+      .page-title {
+        color: $light;
+      }
+    }
+    #menu-wrap {
+      @extend %dark-head;
+    }
+    @extend %dark-nav;
+    .layout-content {
+      background: #111;
+    }
+  }
+
+  &.palette-hot {
+    .layout-container {
+      @extend %hot;
+    }
+    #menu-wrap {
+      @extend %hot-head;
+    }
+    @extend %hot-nav;
+  }
 }
+
 a {
   font-family: $font-primary;
-}
-
-
-a {
   color:$dark-blue;
   text-decoration: none;
   &:hover {
@@ -18,7 +60,4 @@ a {
   &.delete-pg-item {
     font-size: 20px;
   }
-}
-.layout-container {
-  background: $light-grey;
 }

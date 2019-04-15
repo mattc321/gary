@@ -86,7 +86,7 @@ class DashboardController extends ControllerBase {
   private function getAccess() {
     $user = \Drupal::currentUser();
     $roles = $user->getRoles();
-    if (in_array('administrator', $roles) || in_array('limited_admin', $roles)) {
+    if (in_array('administrator', $roles) || in_array('ec_admin', $roles)) {
       return TRUE;
     }
     return FALSE;

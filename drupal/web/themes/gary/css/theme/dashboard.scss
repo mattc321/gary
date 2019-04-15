@@ -6,22 +6,28 @@
 
         div.dashboard-block {
           opacity: 0;
-          box-shadow: 0px 0px 4px $light-blue;
           margin: 15px;
-          border-radius: 0px;
-          padding: 5px;
+          overflow: hidden;
+          border-radius: 10px;
+          box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
 
           .dashboard-block-title {
               background: $light-blue;
               padding: 5px;
           }
 
+          .view-dashboard-comment-messages {
+            .views-field-field-tag-user-to-1 .field--name-user-picture {
+              @include userPicCircled();
+              img {
+                height: 50px;
+                width: 50px;
+              }
+            }
+          }
 
       }
     }
-}
-//popup-exposed-form
-.popup-exposed-form {
 }
 
 .popup-filter-icon {

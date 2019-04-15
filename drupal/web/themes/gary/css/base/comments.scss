@@ -12,8 +12,9 @@ article.comment {
       width: 5%;
 
       &.comment__meta {
-        .field--name-user-picture img {
-          @include userPic(50px);
+        .field--name-user-picture {
+          @include userPicCircled();
+          background-color: #fff;
         }
     }
   }

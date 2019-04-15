@@ -19,25 +19,49 @@ table {
     text-align: left;
   }
 
-  tr {
-    &.disabled-yes,
-    &.disabled-Yes {
-      @include disabled();
+  tbody {
+    tr {
+
+      &.disabled-yes,
+      &.disabled-Yes {
+        @include disabled();
+      }
+
+      &:hover {
+        td.is-active {
+          transition: unset;
+          background-color: unset;
+        }
+        background-color: #dedddd !important;
+
+      }
+      td {
+        &.views-field-created {
+          min-width: 100px;
+        }
+      }
     }
   }
 
+  td.is-active {
+    background-color: $light;
+  }
+
 }
+
 /* Zebra striping */
-tr:nth-of-type(odd) {
-  background: $lighter-grey;
+tbody {
+  tr:nth-of-type(odd) {
+    background: $lighter-grey;
+  }
+  tr:nth-of-type(even) {
+    background: $light;
+  }
 }
+
 th {
+  padding: 8px 5px;
   background: $light;
-  color: $dark;
-  font-weight: bold;
-}
-th {
-  padding: 6px;
   border-bottom: 4px solid $light-grey;
   text-align: left;
 }

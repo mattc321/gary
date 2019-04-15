@@ -44,7 +44,6 @@ $break-xl: 1400px;
   &:hover {
     background: $hover-blue;
   }
-
 }
 
 @mixin disabled() {
@@ -58,7 +57,7 @@ $break-xl: 1400px;
 $max-width: 1200px;
 $max-width-alt: 700px;
 
-$light: #fff;
+$light: #f3f3f3;
 $dark: #242424;
 
 $light-grey: #ddd;
@@ -85,6 +84,7 @@ $dark-red: #d64d4d;
 $brown: #bdb69c;
 
 $purple: #c9a8cb;
+
 
 $orange: #f88e58;
 $light-orange: #ecc7bf;
@@ -170,7 +170,78 @@ $font-secondary: "verveine", sans-serif;
   font-size: .85em;
   color: $grey;
 }
-
+%sexy {
+  background: linear-gradient(to right, rgb(189, 195, 199), rgb(44, 62, 80));
+}
+%sexy-head {
+  background: $dark;
+}
+%sexy-nav {
+nav > ul.menu {
+    > li {
+      > a {
+        &:hover {
+          background: rgba(0,0,0,.7);
+        }
+      }
+    }
+  }
+}
+%light-head {
+  background: $dark;
+}
+%light-nav {
+nav > ul.menu {
+    > li {
+      > a {
+        &:hover {
+          background: rgba(0,0,0,.7);
+        }
+      }
+    }
+  }
+}
+%dark-head {
+  background-color: #000;
+}
+%dark-nav {
+  nav {
+    &#block-gary-account-menu > ul > li,
+    &#block-addcontent > ul > li {
+      background-color: #000 !important;
+      transition: .2s background-color ease;
+    }
+    > ul.menu {
+      > li {
+        > a {
+          transition: .2s background-color ease;
+          &:hover,
+          &:active {
+            color: $dark !important;
+            background-color: rgb(215,218,220);
+          }
+        }
+      }
+    }
+  }
+}
+%hot {
+  background: linear-gradient(to right, rgb(233, 100, 67), rgb(144, 78, 149));
+}
+%hot-head {
+  background: linear-gradient(to right, rgb(47, 30, 30), rgb(109, 61, 113));
+}
+%hot-nav {
+ nav > ul.menu {
+    > li {
+      > a {
+        &:hover {
+          background: rgb(111, 67, 69);
+        }
+      }
+    }
+  }
+}
 %comment-bg {
   margin: 5px 10px;
   background: #f0f6ff;
