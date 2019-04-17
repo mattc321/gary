@@ -170,32 +170,26 @@ $font-secondary: "verveine", sans-serif;
   font-size: .85em;
   color: $grey;
 }
-%sexy {
-  background: linear-gradient(to right, rgb(189, 195, 199), rgb(44, 62, 80));
-}
-%sexy-head {
-  background: $dark;
-}
-%sexy-nav {
-nav > ul.menu {
-    > li {
-      > a {
-        &:hover {
-          background: rgba(0,0,0,.7);
-        }
-      }
-    }
-  }
-}
+
 %light-head {
   background: $dark;
 }
 %light-nav {
-nav > ul.menu {
-    > li {
-      > a {
-        &:hover {
-          background: rgba(0,0,0,.7);
+  nav {
+    &#block-gary-account-menu ul li,
+    &#block-addcontent ul li {
+      background-color: $dark !important;
+      transition: .2s background-color ease;
+    }
+    > ul.menu {
+      > li {
+        > a {
+          transition: .2s background-color ease;
+          &:hover,
+          &:active {
+            color: $blue !important;
+            background-color: $dark;
+          }
         }
       }
     }
@@ -225,23 +219,7 @@ nav > ul.menu {
     }
   }
 }
-%hot {
-  background: linear-gradient(to right, rgb(233, 100, 67), rgb(144, 78, 149));
-}
-%hot-head {
-  background: linear-gradient(to right, rgb(47, 30, 30), rgb(109, 61, 113));
-}
-%hot-nav {
- nav > ul.menu {
-    > li {
-      > a {
-        &:hover {
-          background: rgb(111, 67, 69);
-        }
-      }
-    }
-  }
-}
+
 %comment-bg {
   margin: 5px 10px;
   background: #f0f6ff;

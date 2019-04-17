@@ -4,15 +4,6 @@ body {
   font-family: $font-primary;
   background: $light-grey;
 
-  &.palette-sexy {
-    .layout-container {
-      @extend %sexy;
-    }
-    #menu-wrap {
-      background: $dark;
-    }
-    @extend %sexy-nav;
-  }
   &.palette-light {
     .layout-container {
       background: $light;
@@ -21,7 +12,13 @@ body {
       @extend %light-head;
     }
     @extend %light-nav;
+
+    main {
+      background: #fff;
+    }
+
   }
+
   &.palette-dark {
     .layout-container {
       background: $dark;
@@ -39,15 +36,6 @@ body {
     }
   }
 
-  &.palette-hot {
-    .layout-container {
-      @extend %hot;
-    }
-    #menu-wrap {
-      @extend %hot-head;
-    }
-    @extend %hot-nav;
-  }
 }
 
 a {
