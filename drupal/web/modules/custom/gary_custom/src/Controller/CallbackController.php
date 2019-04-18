@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Drupal\gary_custom\GaryFunctions;
 use Drupal\views\Views;
 use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 
 class CallbackController extends ControllerBase {
 
@@ -36,6 +37,26 @@ class CallbackController extends ControllerBase {
     }
 
     return new Response($price);
+  }
+
+  public function changePalette($mode = 'light') {
+    $user = User::load(\Drupal::currentUser()->id());
+
+    if (!$user->hasField('field_color')) {
+      return new Response(0);
+    }
+
+    if ($user->field_color->value == 'light') {
+      $user->set('field_color', 'dark');
+      $user->save();
+      return new Response(1);
+    } else {
+      $user->set('field_color', 'light');
+      $user->save();
+      return new Response(1);
+    }
+
+    return new Response(0);
   }
 
   /**

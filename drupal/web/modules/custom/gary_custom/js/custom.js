@@ -15,6 +15,40 @@
            $selector_to.toggle('hidden');
 
          };
+
+
+
+         //palette selector dark palette night mode
+         $(document).ready(function() {
+
+           let color = $('a[palette-selector="change-palette"]').attr('current-palette');
+
+           let checked = color == 'light' ? '' : 'checked';
+
+           //light = unchecked / dark = checked
+           let slider_html = '<label class="switch">';
+             slider_html += '<input type="checkbox"'+checked+'>';
+             slider_html += '<span class="slider round"></span>';
+             slider_html += '</label>';
+
+           $('a[palette-selector="change-palette"]').once('a').append(slider_html);
+         });
+
+         $('a[palette-selector="change-palette"]').once('a[palette-selector="change-palette"]').click(function(e){
+           setTimeout(function() {
+             var ajaxObject = Drupal.ajax({
+               type: 'GET',
+               url: '/change-palette',
+               success: function(response) {
+                 location.reload();
+               }
+             });
+             ajaxObject.execute();
+           }, 300);
+         });
+
+
+
      }
    };
  })(jQuery, Drupal, drupalSettings);

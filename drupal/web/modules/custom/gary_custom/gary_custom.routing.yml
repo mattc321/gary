@@ -18,3 +18,10 @@ gary_custom.toggle_hidden:
     _controller: '\Drupal\gary_custom\Controller\CallbackController::toggleHidden'
   requirements:
     _permission: 'access content'
+
+gary_custom.change_palette:
+  path: '/change-palette'
+  defaults:
+    _controller: '\Drupal\gary_custom\Controller\CallbackController::changePalette'
+  requirements:
+    _permission: 'access content'

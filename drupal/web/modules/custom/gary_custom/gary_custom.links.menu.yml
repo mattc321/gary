@@ -1,0 +1,7 @@
+gary_comments.palette_changer:
+  title: 'Night Mode'
+  parent: account
+  menu_name: account
+  weight: 2
+  description: 'Better for your eyes'
+  route_name: gary_custom.change_palette
