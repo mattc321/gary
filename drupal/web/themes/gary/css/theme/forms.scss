@@ -24,7 +24,11 @@ label {
     padding: 12px 12px 12px 0;
     display: block;
 }
-
+.palette-dark {
+  label {
+    color: $light;
+  }
+}
 input[type=submit] {
     background-color: $green;
     color: white;
@@ -163,7 +167,12 @@ div[class*="jelly-form-edit-save-order"] {
 
 //views exposed forms
 .views-exposed-form {
-  margin: 0 0 10px 10px;
+  padding: 0 0 10px 10px;
+}
+.palette-dark {
+  .view-filters {
+    background: $dark-grey;
+  }
 }
 
 //management and views forms styles

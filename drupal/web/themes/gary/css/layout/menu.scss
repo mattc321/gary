@@ -309,12 +309,39 @@
 nav.tabs {
     margin-top: 5px;
 
-    > ul > li > a {
-      padding: 15px;
-      color: $dark;
-      border-radius: 4px;
+    > ul {
+      > li > a {
+        padding: 15px;
+        color: $dark;
+        border-radius: 4px;
+      }
     }
 }
+
+.palette-dark {
+  nav.tabs {
+      > ul.primary {
+        > li {
+          background-color: $light-grey;
+          a {
+            &:hover {
+              color: $dark !important;
+            }
+          }
+        }
+
+      }
+  }
+
+}
+
+// nav.pager > ul > li > a {
+//   color: #fff;
+//   &:hover,
+//   &:active {
+//     color: $blue;
+//   }
+// }
 
 @include max-width($break-large) {
   #block-gary-branding {

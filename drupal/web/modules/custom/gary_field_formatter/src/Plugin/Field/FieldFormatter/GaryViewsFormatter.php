@@ -217,7 +217,6 @@ class GaryViewsFormatter extends FormatterBase {
     // we actually load the entity and set the flag.
     foreach ($entities_items as $items) {
       foreach ($items as $item) {
-
         if ($item->entity) {
           $item->_loaded = TRUE;
         }

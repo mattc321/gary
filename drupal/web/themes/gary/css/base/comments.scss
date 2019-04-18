@@ -33,6 +33,21 @@ article.comment {
 
 }
 
+.palette-dark {
+  article.comment {
+
+    color: #000;
+
+    footer {
+      &.comment__meta {
+        .field--name-user-picture {
+          background-color: $dark-grey;
+        }
+      }
+    }
+  }
+}
+
 .ajax-comments-form-reply {
     width: 70%;
     /* height: 200px; */

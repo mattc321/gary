@@ -1,10 +1,28 @@
 @import "../variables";
 
+
 body {
   font-family: $font-primary;
   background: $light-grey;
 
+  a {
+    font-family: $font-primary;
+    text-decoration: none;
+
+    &.delete-pg-item {
+      font-size: 20px;
+    }
+  }
+
   &.palette-light {
+
+    a {
+      color:$dark-blue;
+      &:hover {
+        color: $blue !important;
+      }
+    }
+
     .layout-container {
       background: $light;
     }
@@ -20,6 +38,14 @@ body {
   }
 
   &.palette-dark {
+
+    a {
+      color:$blue;
+      &:hover {
+        color: $light !important;
+      }
+    }
+
     .layout-container {
       background: $dark;
 
@@ -36,16 +62,4 @@ body {
     }
   }
 
-}
-
-a {
-  font-family: $font-primary;
-  color:$dark-blue;
-  text-decoration: none;
-  &:hover {
-    color: $blue;
-  }
-  &.delete-pg-item {
-    font-size: 20px;
-  }
 }

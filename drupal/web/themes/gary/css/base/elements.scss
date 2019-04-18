@@ -27,14 +27,14 @@ table {
         @include disabled();
       }
 
-      &:hover {
-        td.is-active {
-          transition: unset;
-          background-color: unset;
-        }
-        background-color: #dedddd !important;
-
-      }
+      // &:hover {
+      //   td.is-active {
+      //     transition: unset;
+      //     background-color: unset;
+      //   }
+      //   background-color: #dedddd !important;
+      //
+      // }
       td {
         &.views-field-created {
           min-width: 100px;
@@ -44,31 +44,54 @@ table {
   }
 
   td.is-active {
-    background-color: $light;
+    // background-color: $light;
+    background-color: unset;
   }
 
 }
 
 /* Zebra striping */
-tbody {
-  tr:nth-of-type(odd) {
-    background: $lighter-grey;
-  }
-  tr:nth-of-type(even) {
+.palette-light {
+  th {
     background: $light;
+    border-bottom: 4px solid $light-grey;
+
+  }
+  tbody {
+    tr:nth-of-type(odd) {
+      background: $lighter-grey;
+    }
+    tr:nth-of-type(even) {
+      background: $light;
+    }
+  }
+}
+
+.palette-dark {
+  table {
+    color: $light;
+  }
+  th {
+    background: $dark-grey;
+  }
+  tbody {
+    tr:nth-of-type(odd) {
+      background: #666;
+    }
+    tr:nth-of-type(even) {
+      background: #444;
+    }
   }
 }
 
 th {
   padding: 8px 5px;
-  background: $light;
-  border-bottom: 4px solid $light-grey;
   text-align: left;
 }
 td {
   padding: 6px;
-  border-top: 1px solid $light-grey;
-  border-bottom: 1px solid $light-grey;
+  // border-top: 1px solid $light-grey;
+  // border-bottom: 1px solid $light-grey;
   text-align: left;
 
   input[type=text],
