@@ -489,6 +489,20 @@ if (isset($form['actions']['save_order'])) {
     $form['field_account_reference_target_id']['#size'] = 30;
   }
 
+  //load service options manually. We need to have the price available in the
+  //option string. Cant use Entity Reference Views because they are loaded on all
+  //other views recursively where they are present
+  if($form_id == 'inline_pg_form_field_opportunity_services_ref') {
+    if (isset($form['container']['field_opportunity_service']['widget'])) {
+      $services = GaryFunctions::getServiceOptions();
+      $options['_none'] = "- None -";
+      foreach ($services as $service) {
+        $options[$service->nid] = $service->title.'-'.$service->field_unit_price_value;
+      }
+      $form['container']['field_opportunity_service']['widget']['#options'] = $options;
+    }
+  }
+
   //Opportunity Services Calculation
   if ($form_id == 'inline_pg_form_field_opportunity_services_ref') {
     $form['#cache'] = ['max-age' => 0];

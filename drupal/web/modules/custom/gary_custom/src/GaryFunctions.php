@@ -33,6 +33,25 @@ class GaryFunctions {
       ->getValue();
   }
 
+  /**
+   * Get a list of available services and prices by id
+   * @return array An Associative array containing service info
+   */
+  public static function getServiceOptions() {
+    //query services available to use
+    $query = \Drupal::database()->select('node_field_data', 'n');
+    $query->addField('n', 'nid');
+    $query->addField('n', 'title');
+    $query->addField('p', 'field_unit_price_value');
+    $query->addJoin('inner','node__field_disabled','d','n.nid=d.entity_id');
+    $query->addJoin('inner','node__field_unit_price','p','n.nid=p.entity_id');
+    $query->condition('n.type', 'services');
+    $query->condition('d.field_disabled_value', 1, '<>');
+    $query->condition('d.deleted', 0);
+    $query->condition('p.deleted', 0);
+    $results = $query->execute()->fetchAll();
+    return $results;
+  }
 
   /**
    * Handler for calculating fields in gary
