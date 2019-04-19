@@ -187,7 +187,8 @@ $font-secondary: "verveine", sans-serif;
         > a {
           transition: .2s background-color ease;
           &:hover,
-          &:active {
+          &:active,
+          &.is-active {
             color: $blue !important;
             background-color: $dark;
           }
@@ -211,7 +212,8 @@ $font-secondary: "verveine", sans-serif;
         > a {
           transition: .2s background-color ease;
           &:hover,
-          &:active {
+          &:active,
+          &.is-active {
             color: $dark !important;
             background-color: rgb(215,218,220);
           }

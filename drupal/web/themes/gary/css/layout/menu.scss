@@ -439,23 +439,49 @@ nav.tabs {
 }
 
 // AUTOCOMPLETE STYLES
-#ui-id-1 {
-  > li {
-    transition: .3s;
-    border-bottom: 1px solid $light-grey;
-    &:hover,
-    &:active,
-    &:focus {
-      color: $light;
-      background: $grey;
-    }
+.palette-light {
+  ul.ui.menu.ui-autocomplete {
+    > li {
+      transition: .3s;
+      border-bottom: 1px solid $light-grey;
+      &:hover,
+      &:active,
+      &:focus {
+        color: $light;
+        background: $grey;
+      }
 
-    .ui-autocomplete-field-title {
-      font-weight: bold;
-    }
+      .ui-autocomplete-field-title {
+        font-weight: bold;
+      }
 
+    }
   }
 }
+.palette-dark {
+  ul.ui-menu.ui-autocomplete {
+    > li {
+      transition: .3s;
+      border-bottom: 1px solid $light-grey;
+      &:hover,
+      &:active,
+      &:focus {
+        color: $light;
+        background: $grey;
+      }
+
+      a {
+        color: $dark;
+      }
+
+      .ui-autocomplete-field-title {
+        font-weight: bold;
+      }
+
+    }
+  }
+}
+
 
 
 // usnet stupid jquery.ui theme crap

@@ -6,6 +6,14 @@
   }
 }
 
+.palette-dark {
+  .view-header {
+    color: $light;
+  }
+}
+.view-header {
+  padding: 5px;
+}
 //compact user images
 .view-manage-users {
 

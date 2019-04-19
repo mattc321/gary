@@ -25,11 +25,21 @@ label {
     display: block;
 }
 .palette-dark {
+  input[type=text],
+  input[type=password],
+  input[type=number],
+  input[type=date],
+  input[type=email],
+  textarea,
+  select {
+    color: $dark-grey;
+  }
   label {
     color: $light;
   }
 }
-input[type=submit] {
+input[type=submit]
+ {
     background-color: $green;
     color: white;
     padding: 7px 15px;
@@ -75,6 +85,12 @@ input[type=submit]:hover {
 .user-login-logo {
   margin-top: 50px;
 }
+
+//node edit paragraphs subforms
+table.field-multiple-table tr td .paragraphs-subform > div {
+    display: inline-block;
+}
+
 
 //user profile form
 .user-form {
@@ -148,6 +164,12 @@ form h4.label {
 }
 div#edit-field-task-due-date-wrapper {
     margin-top: 23px;
+}
+.field--type-datetime {
+  input.form-date {
+    position: relative;
+    top: 12px;
+  }
 }
 
 
@@ -332,4 +354,11 @@ div[class*="jelly-form-edit-save-order"] {
     }
   }
 
+}
+
+//node form specific changes
+.node-projects-edit-form {
+  .field--name-field-tasks {
+    display: none;
+  }
 }
