@@ -6,6 +6,9 @@
       //dashboard fade in
       $('.dashboard-block').staggerBounceIn('.dashboard-block');
 
+      //logo
+      // $('.site-logo').bounceIn();
+
       //user menu handler
       $('.right-menu').once('.right-menu').click( function(){
         let nav = '#'+$(this).attr('nav-id');

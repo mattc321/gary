@@ -3,3 +3,17 @@ services:
     class: Drupal\gary_custom\EventSubscriber\CustomEventSubscriber
     tags:
       - { name: event_subscriber }
+
+  # Name of this service.
+  my_config_events_subscriber:
+    # Event subscriber class that will listen for the events.
+    class: '\Drupal\gary_custom\EventSubscriber\ConfigEventsSubscriber'
+    # Tagged as an event_subscriber to register this subscriber with the event_dispatch service.
+    tags:
+      - { name: 'event_subscriber' }
+
+  # Subscriber to the event we dispatch in hook_user_login.
+  custom_events_user_login:
+    class: '\Drupal\gary_custom\EventSubscriber\UserLoginSubscriber'
+    tags:
+      - { name: 'event_subscriber' }

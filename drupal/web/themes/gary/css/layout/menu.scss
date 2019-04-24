@@ -17,6 +17,37 @@
   transition: top .25s ease-out;
   z-index: 20;
 
+  .site-logo:not(a) {
+      height: 80px;
+      width: 80px;
+      background: $dark-grey;
+      padding: 2px;
+      border-radius: 50%;
+      display: inline-block;
+      svg#logo {
+        animation: logo-inner-rotate 1.5s forwards;
+
+        circle.logo-border {
+          stroke: transparent;
+        }
+        circle.logo-border-draw {
+          stroke: $light;
+          animation: border-logo-fill 1.7s forwards;
+        }
+        g.logo-inner {
+          // animation: logo-inner-rotate 1.5s forwards;
+        }
+      }
+  }
+
+  @keyframes border-logo-fill {
+    to {
+      stroke-dasharray: 306 300;
+    }
+  }
+  @keyframes logo-inner-rotate {
+    to {transform: rotate(1080deg)};
+  }
   .site-name {
     @include min-width($break-xl) {
       visibility: visible;

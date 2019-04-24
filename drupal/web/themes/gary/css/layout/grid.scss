@@ -42,6 +42,9 @@
 
 .flex-start {
   justify-content: flex-start;
+  @include max-width($break-small) {
+    width: 95vw;
+  }
 }
 .flex-center {
   justify-content: center;

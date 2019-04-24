@@ -17,6 +17,7 @@ use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\views\ViewExecutable;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+use Drupal\gary_custom\Event\UserLoginEvent;
 /**
  * Implements hook_help().
  */
@@ -91,6 +92,21 @@ function gary_custom_entity_display_build_alter(&$build, $context) {
  */
 function gary_custom_form_user_login_form_alter(&$form, FormStateInterface $form_state) {
   $form['#submit'][] = 'gary_custom_user_login_submit';
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function gary_custom_user_login($account) {
+  // Instantiate our event.
+  $event = new UserLoginEvent($account);
+  //
+  // // Get the event_dispatcher server and dispatch the event.
+  $event_dispatcher = \Drupal::service('event_dispatcher');
+  $event_dispatcher->dispatch(UserLoginEvent::EVENT_NAME, $event);
+  // $response = new \Drupal\Core\Ajax\AjaxResponse();
+  // $response->addCommand(new \Drupal\Core\Ajax\AlertCommand('shiiittttt'));
+  // return $response;
 }
 
 /**
