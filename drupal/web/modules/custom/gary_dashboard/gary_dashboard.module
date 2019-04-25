@@ -37,6 +37,12 @@ function gary_dashboard_theme() {
       ],
       'render element' => 'children',
     ],
+    'gary_dashboard_mobile' => [
+      'variables' => [
+        'region' => NULL
+      ],
+      'render element' => 'children',
+    ],
     'dashboard_admin_form' => [
       'variables' => [
         'layout' => NULL
@@ -45,6 +51,7 @@ function gary_dashboard_theme() {
     ],
   ];
 }
+
 
 function gary_dashboard_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 

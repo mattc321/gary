@@ -74,6 +74,17 @@ class DashboardAdmin extends ConfigFormBase {
       '#default_value' => $config->get('dashboard_layout_bottom'),
     ];
 
+    $form['mobile_title'] = [
+      '#markup'=> '<br/><h3>Select Blocks to Load for Mobile Display</h3>'
+    ];
+    $form['mobile_dashboard_layout'] = [
+      '#type' => 'select2',
+      '#multiple' => TRUE,
+      '#title' => $this->t('Blocks to load for mobile'),
+      '#default_value' => $config->get('mobile_dashboard_layout'),
+      '#options' => $options,
+    ];
+
     return $form;
   }
 
@@ -88,6 +99,7 @@ class DashboardAdmin extends ConfigFormBase {
     $config->set('dashboard_layout_first', $form_state->getValue('dashboard_layout_first'));
     $config->set('dashboard_layout_second', $form_state->getValue('dashboard_layout_second'));
     $config->set('dashboard_layout_bottom', $form_state->getValue('dashboard_layout_bottom'));
+    $config->set('mobile_dashboard_layout', $form_state->getValue('mobile_dashboard_layout'));
     $config->save();
   }
 

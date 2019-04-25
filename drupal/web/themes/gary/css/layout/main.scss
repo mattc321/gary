@@ -1,20 +1,31 @@
 
 @import "../variables";
 
+.layout-container {
+  @include max-width($break-small) {
+    margin: unset;
+  }
+}
+
 main,
 #before-content {
   width: 80%;
   margin-left: 10vw;
+  @include max-width($break-small) {
+    width: 100%;
+    margin: unset;
+  }
 }
 #before-content {
   padding: 5px;
 }
 main {
-  min-height: 80vh;
-  padding: 5px;
-  box-shadow: 2px 2px 5px $dark;
-  border-radius: 5px;
-
+  @include min-width($break-small) {
+    min-height: 80vh;
+    padding: 5px;
+    box-shadow: 2px 2px 5px $dark;
+    border-radius: 5px;
+  }
   .layout-content {
     padding:10px;
   }

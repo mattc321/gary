@@ -4,6 +4,7 @@ namespace Drupal\gary_custom\EventSubscriber;
 
 use Drupal\gary_custom\Event\UserLoginEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Drupal\Core\Render\Markup;
 
 /**
  * Class UserLoginSubscriber.
@@ -46,7 +47,6 @@ class UserLoginSubscriber implements EventSubscriberInterface {
     // $response = new \Drupal\Core\Ajax\AjaxResponse();
     // $response->addCommand(new \Drupal\Core\Ajax\AlertCommand('POPIT'));
     // return $response;
-    drupal_set_message(t('Testy testy'));
   }
 
 }

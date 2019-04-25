@@ -1,8 +1,13 @@
 
-(function ($, Drupal) {
+(function ($, Drupal, drupalSettings) {
 
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
+
+
+      if(drupalSettings.path.isFront) {
+        $('svg#logo').once('svg#logo').toggleClass('animate-logo');
+      }
 
       if ($('.popup-filter-icon').length > 0) {
         //hide any filters if the form isnt there
@@ -28,4 +33,4 @@
     }
   };
 
-})(jQuery, Drupal);
+})(jQuery, Drupal, drupalSettings);

@@ -1,0 +1,22 @@
+
+{% set popup_class = "popup-filter-icon" %}
+
+{% set popup_filter_icon %}
+  {% include ('@gary/../symbols/filter.svg') %}
+{% endset %}
+
+<section class="dashboard layout layout--onecol">
+  <article class="layout__region layout__region--top">
+    {% for tops in region.mobile %}
+      <div class="dashboard-block">
+        <div class="dashboard-block-title">
+          {{ tops['#block_title'] }}
+          {% if tops['#form_selector'] %}
+            <span class="{{popup_class}}" popup-selector="{{ tops['#form_selector'] }}">{{ popup_filter_icon }}</span>
+          {% endif %}
+        </div>
+        {{ tops }}
+      </div>
+    {% endfor %}
+  </article>
+</section>

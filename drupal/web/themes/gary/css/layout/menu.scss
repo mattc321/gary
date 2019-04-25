@@ -25,17 +25,22 @@
       border-radius: 50%;
       display: inline-block;
       svg#logo {
-        animation: logo-inner-rotate 1.5s forwards;
 
         circle.logo-border {
-          stroke: transparent;
-        }
-        circle.logo-border-draw {
           stroke: $light;
-          animation: border-logo-fill 1.7s forwards;
         }
-        g.logo-inner {
-          // animation: logo-inner-rotate 1.5s forwards;
+
+        &.animate-logo {
+          animation: logo-inner-rotate 1.5s forwards;
+
+          circle.logo-border {
+            stroke: transparent;
+          }
+          circle.logo-border-draw {
+            stroke: $light;
+            animation: border-logo-fill 1.7s forwards;
+          }
+
         }
       }
   }

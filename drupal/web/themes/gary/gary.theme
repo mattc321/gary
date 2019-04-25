@@ -34,9 +34,9 @@ function gary_preprocess_html(&$variables) {
   //send the color schema over to the body class
   if ($user = User::load(\Drupal::currentUser()->id())) {
     if (!$user->hasField('field_color')) {
-      $color = 'sexy';
+      $color = 'light';
     } else {
-      $color = !empty($user->field_color->value) ? $user->field_color->value : 'sexy';
+      $color = !empty($user->field_color->value) ? $user->field_color->value : 'light';
     }
   }
   $variables['color'] = $color;

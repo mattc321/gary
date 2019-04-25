@@ -5,6 +5,10 @@ body {
   font-family: $font-primary;
   background: $light-grey;
 
+  @include max-width($break-small) {
+    width: 100vw;
+  }
+
   a {
     font-family: $font-primary;
     text-decoration: none;

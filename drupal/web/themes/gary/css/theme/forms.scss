@@ -11,8 +11,9 @@ textarea {
   border: 1px solid $light-grey;
   border-radius: 4px;
   resize: vertical;
-  // width: 100%;
-  // max-width: 300px;
+  @include max-width($break-medium) {
+    width: 90%;
+  }
 }
 input[type=search] {
   padding: 12px;
