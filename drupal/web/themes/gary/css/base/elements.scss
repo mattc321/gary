@@ -26,15 +26,6 @@ table {
       &.disabled-Yes {
         @include disabled();
       }
-
-      // &:hover {
-      //   td.is-active {
-      //     transition: unset;
-      //     background-color: unset;
-      //   }
-      //   background-color: #dedddd !important;
-      //
-      // }
       td {
         &.views-field-created {
           min-width: 100px;

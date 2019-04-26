@@ -54,6 +54,14 @@
     });
   }
 
+  //make clickable containers for mobile
+  $(".item-clickable").once(".item-clickable").click(function() {
+    let link = $(this).find(".item-follow > a").attr('href');
+    window.location = link;
+    return false;
+  });
+
+
   $(document).ready(function() {
     Drupal.gary.appState = new Drupal.gary.AppStateModel({
       scrollTop: $(window).scrollTop(),

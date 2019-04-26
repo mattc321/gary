@@ -378,8 +378,20 @@ div[class*="jelly-form-edit-save-order"] {
 }
 
 //node form specific changes
+.node-form {
+  @include max-width($break-small) {
+    div#edit-actions {
+      position: fixed;
+      top: 47px;
+      left: -3px;
+    }
+  }
+}
+
 .node-projects-edit-form {
-  .field--name-field-tasks {
+  .field--name-field-tasks,
+  .form-item-field-project-image-0-alt,
+  .form-item-field-project-image-0-title {
     display: none;
   }
 }

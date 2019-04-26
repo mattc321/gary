@@ -14,10 +14,18 @@ main,
   @include max-width($break-small) {
     width: 100%;
     margin: unset;
+    .block-page-title-block {
+      margin-left: 5px;
+    }
+    .page-title {
+      font-size: 1.5em;
+    }
   }
 }
 #before-content {
-  padding: 5px;
+  @include min-width($break-small) {
+    padding: 5px;
+  }
 }
 main {
   @include min-width($break-small) {

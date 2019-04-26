@@ -15,9 +15,24 @@ article.comment {
         .field--name-user-picture {
           @include userPicCircled();
           background-color: #fff;
+          @include max-width($break-small) {
+            img {
+              width: 45px;
+              height: 45px;
+            }
+          }
         }
+
+        article.profile {
+          @include max-width($break-small) {
+            position: relative;
+            left: -20px;
+            top: 40px;
+          }
+        }
+
+      }
     }
-  }
 
   .content {
     @extend %comment-bg;
@@ -35,9 +50,6 @@ article.comment {
 
 .palette-dark {
   article.comment {
-
-    color: #000;
-
     footer {
       &.comment__meta {
         .field--name-user-picture {
@@ -78,12 +90,17 @@ h2.comment-form__title {
 }
 
 .comment-comment-form {
-    margin-left: 75px;
-    max-width: 85%;
+    @include min-width($break-small) {
+      margin-left: 75px;
+      max-width: 85%;
+    }
 }
 
 .comment-desc {
     display: inline-block;
     float: right;
     color: $grey;
+    @include max-width($break-small) {
+      display: none;
+    }
 }

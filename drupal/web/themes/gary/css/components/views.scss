@@ -6,11 +6,96 @@
   }
 }
 
+.views-row {
+  padding: 5px;
+  transition: background .3s ease;
+
+
+  @include max-width($break-small) {
+    clear: both;
+    span.views-label {
+      float: left;
+      margin-right: 5px;
+    }
+  }
+
+
+}
+
 .palette-dark {
+
+  //views pager
+  nav.pager {
+
+    @include max-width($break-small) {
+      padding: 5px;
+
+      ul.pager__items {
+        padding: unset;
+
+        > li {
+
+          > a {
+            padding: 8px;
+          }
+
+          &.is-active,
+          &:hover,
+          &:active {
+            background: #666;
+            box-shadow: inset 0px 0px 8px #000;
+          }
+
+        }
+
+        .pager__item--ellipsis,
+        .pager__item--first,
+        .pager__item--previous,
+        .pager__item--next,
+        .pager__item--last {
+          @include max-width($break-small) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
   .view-header {
     color: $light;
   }
+
+  //zerba striping
+  .views-row {
+    &:nth-of-type(odd) {
+      background: #666;
+    }
+    &:nth-of-type(even) {
+      background: #444;
+    }
+    &:active,
+    &:hover {
+      background: $dark;
+    }
+  }
 }
+
+
+.palette-light {
+  .views-row {
+    &:nth-of-type(odd) {
+      background: $lighter-grey;
+    }
+    &:nth-of-type(even) {
+      background: $light;
+    }
+    &:active,
+    &:hover {
+      // background: $dark;
+    }
+  }
+}
+
 .view-header {
   padding: 5px;
 }

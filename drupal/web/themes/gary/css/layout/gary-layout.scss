@@ -42,7 +42,9 @@ body {
   }
 
   &.palette-dark {
-
+    p {
+      color: $dark;
+    }
     a {
       color:$blue;
       &:hover {

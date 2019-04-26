@@ -57,7 +57,6 @@ class DashboardController extends ControllerBase {
 
 
   public function buildDashboard(Request $request) {
-    ksm($this->isMobile);
     // $block_instance = new DashboardBlockManager;
     $block_instance = \Drupal::service('plugin.manager.block');
     $blocks = ($this->isMobile) ? $this->getMobileBlocks() : $this->getBlocks();

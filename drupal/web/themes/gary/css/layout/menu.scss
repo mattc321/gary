@@ -27,7 +27,7 @@
       svg#logo {
 
         circle.logo-border {
-          stroke: $light;
+          stroke: #666;
         }
 
         &.animate-logo {
@@ -37,7 +37,7 @@
             stroke: transparent;
           }
           circle.logo-border-draw {
-            stroke: $light;
+            stroke: #666;
             animation: border-logo-fill 1.7s forwards;
           }
 
@@ -182,7 +182,12 @@
 
   .right-menu {
     @extend %menu-right;
+  }
 
+  .right1 {
+    @include max-width($break-small) {
+      display: none;
+    }
   }
 
   .user-info {
@@ -358,8 +363,17 @@ nav.tabs {
   nav.tabs {
       > ul.primary {
         > li {
-          background-color: $light-grey;
+          @include min-width($break-small){
+            background-color: $light-grey;
+          }
           a {
+            @include max-width($break-small){
+              color: $light-grey;
+              &.is-active {
+                background: unset;
+                font-weight: bold;
+              }
+            }
             &:hover {
               color: $dark !important;
             }
