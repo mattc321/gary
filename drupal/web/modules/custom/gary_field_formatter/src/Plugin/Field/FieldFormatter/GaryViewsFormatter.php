@@ -37,7 +37,7 @@ class GaryViewsFormatter extends FormatterBase {
 
   public static $form_field_name;
 
-
+  protected $is_mobile;
 
   /**
    * Set the new table id
@@ -80,6 +80,10 @@ class GaryViewsFormatter extends FormatterBase {
     if (empty($this->getSetting('view_machine_name'))) {
       return $elements;
     }
+
+    //get session and check for mobile
+    $tempstore = \Drupal::service('user.private_tempstore')->get('gary_custom');
+    $this->is_mobile = $tempstore->get('is_mobile');
 
     //get entity type and fieldname
     $type = $items->getFieldDefinition()->getSettings()['target_type'];
@@ -278,6 +282,16 @@ class GaryViewsFormatter extends FormatterBase {
       '#type' => 'textfield',
       '#default_value' => $this->getSetting('switch_view_link_text'),
     ];
+    $element['mobile_view'] = [
+      '#title' => $this->t('Mobile view to load'),
+      '#type' => 'textfield',
+      '#default_value' => $this->getSetting('mobile_view'),
+    ];
+    $element['mobile_view_display'] = [
+      '#title' => $this->t('The display of the mobile view'),
+      '#type' => 'textfield',
+      '#default_value' => $this->getSetting('mobile_view_display'),
+    ];
     return $element;
   }
 
@@ -296,6 +310,8 @@ class GaryViewsFormatter extends FormatterBase {
       'switch_view' => "",
       'switch_view_display' => "",
       'switch_view_link_text' => "",
+      'mobile_view' => "",
+      'mobile_view_display' => "",
     ] + parent::defaultSettings();
   }
 }
