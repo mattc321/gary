@@ -82,6 +82,42 @@
 
 
 .palette-light {
+  //views pager
+  nav.pager {
+
+    @include max-width($break-small) {
+      padding: 5px;
+
+      ul.pager__items {
+        padding: unset;
+
+        > li {
+
+          > a {
+            padding: 8px;
+          }
+
+          &.is-active,
+          &:hover,
+          &:active {
+            background: $light-grey;
+            box-shadow: inset 0px 0px 8px #ccc;
+          }
+
+        }
+
+        .pager__item--ellipsis,
+        .pager__item--first,
+        .pager__item--previous,
+        .pager__item--next,
+        .pager__item--last {
+          @include max-width($break-small) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
   .views-row {
     &:nth-of-type(odd) {
       background: $lighter-grey;
