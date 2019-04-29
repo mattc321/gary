@@ -12,7 +12,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
-
+use Drupal\views\Views;
 /**
  * Plugin implementation of the 'paragraph_views_formatter' formatter.
  *
@@ -103,13 +103,22 @@ class GaryViewsFormatter extends FormatterBase {
     $host_node_id = $items->getEntity()->id();
     //load up the view
     $args = [$host_node_id];
-    $view = \Drupal\views\Views::getView($this->getSetting('view_machine_name'));
-    $view->setArguments($args);
 
-    //load the display if one is set
-    if (!empty($this->getSetting('view_display_name'))) {
-      $view->setDisplay($this->getSetting('view_display_name'));
+    if ($this->is_mobile && !empty($this->getSetting('mobile_view'))) {
+      $view = Views::getView($this->getSetting('mobile_view'));
+      //load the display if one is set
+      if (!empty($this->getSetting('mobile_view_display'))) {
+        $view->setDisplay($this->getSetting('mobile_view_display'));
+      }
+    } else {
+      $view = Views::getView($this->getSetting('view_machine_name'));
+      //load the display if one is set
+      if (!empty($this->getSetting('view_display_name'))) {
+        $view->setDisplay($this->getSetting('view_display_name'));
+      }
     }
+
+    $view->setArguments($args);
 
     //create a unique dom id and set it
     $display_id = (!empty($view->current_display) ? $view->current_display : $view->getDisplay()->getPluginId());
@@ -132,9 +141,9 @@ class GaryViewsFormatter extends FormatterBase {
     //init $switch_dom_id
     $switch_dom_id = "";
     //check if a switch view is there
-    if (!empty($this->getSetting('switch_view'))) {
+    if (!empty($this->getSetting('switch_view')) && !$this->is_mobile) {
 
-      $switch_view =  \Drupal\views\Views::getView($this->getSetting('switch_view'));
+      $switch_view =  Views::getView($this->getSetting('switch_view'));
       $switch_view->setArguments($args);
 
       if (!empty($this->getSetting('switch_view_display'))) {
