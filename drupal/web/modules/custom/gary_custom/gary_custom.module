@@ -178,10 +178,18 @@ function gary_custom_entity_view_display_alter(EntityViewDisplayInterface $displ
 function gary_custom_link_alter(&$variables) {
 
   $url = $variables['url'];
+  //return early if possible
   if ($url->isExternal()) {
     return;
   }
-  // Add a warning to the end of route links to the admin section.
+  //incase theres unroute, return
+  try {
+    $route_name = $url->getRouteName();
+  }
+  catch (exception $e) {
+    return;
+  }
+
   if($url->getRouteName()=='gary_custom.change_palette') {
     $user = User::load(\Drupal::currentUser()->id());
     if (!$user->hasField('field_color')) {
@@ -192,6 +200,7 @@ function gary_custom_link_alter(&$variables) {
     $variables['options']['attributes']['palette-selector'] = 'change-palette';
     $variables['options']['attributes']['current-palette'] = $color;
   }
+
 }
 
 function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {

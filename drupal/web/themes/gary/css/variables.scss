@@ -7,13 +7,13 @@ $break-xl: 1400px;
 
 @mixin max-width($width) {
   @media screen and (max-width: $width) {
-    @content
+    @content;
   }
 }
 
 @mixin min-width($width) {
   @media screen and (min-width: $width) {
-    @content
+    @content;
   }
 }
 
@@ -21,6 +21,18 @@ $break-xl: 1400px;
   @extend %user-pic;
   height: $d;
   width: $d;
+}
+
+@mixin palettedark {
+  .palette-dark {
+    @content;
+  }
+}
+
+@mixin palettelight {
+  .palette-light {
+    @content;
+  }
 }
 
 // user mixin on user picture container
@@ -223,6 +235,17 @@ $font-secondary: "verveine", sans-serif;
   }
 }
 
+%icon {
+  display: inline-block;
+  mask-repeat: no-repeat;
+  mask-size: 25px 25px;
+  width: 25px;
+  height: 25px;
+  content: "";
+  position: relative;
+  top: 6px;
+}
+
 %comment-bg {
   margin: 5px 10px;
   background: #f0f6ff;
@@ -234,16 +257,8 @@ $font-secondary: "verveine", sans-serif;
 
 %comments-icon {
   &:before {
-    // background-image: url(https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/128x128/plain/houses.png);
-    background-image:url(https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-004_comment_chat-512.png);
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    content: "";
-    position: relative;
-    top: 8px;
+    @extend %icon;
+    mask-image: url(../../symbols/contacts.svg);
   }
 }
 

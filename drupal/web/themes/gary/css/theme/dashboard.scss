@@ -7,9 +7,6 @@
         div.dashboard-block {
           opacity: 0;
 
-          > div {
-          }
-
           @include max-width($break-small) {
             margin: 0 0 10px 0;
           }

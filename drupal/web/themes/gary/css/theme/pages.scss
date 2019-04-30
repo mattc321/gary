@@ -19,12 +19,10 @@
       @extend %comment-bg;
       clear: both;
       min-height: 100px;
-      // padding: 10px;
       &:hover {
         cursor: pointer;
         transition: background-color .5s ease;
         background-color: $light-blue;
-        // box-shadow: 0 0 5px $light-grey;
       }
 
     }
@@ -168,6 +166,35 @@
   }
 }
 
+
+@include palettedark {
+  .ec-legend {
+    &.contacts:before,
+    &.projects:before,
+    &.subcontractors:before,
+    &.units:before,
+    &.tasks:before,
+    &.services:before,
+    &.comments:before {
+      background-color: $grey;
+    }
+  }
+}
+
+@include palettelight {
+  .ec-legend {
+    &.contacts:before,
+    &.projects:before,
+    &.subcontractors:before,
+    &.units:before,
+    &.tasks:before,
+    &.services:before,
+    &.comments:before {
+      background-color:$dark-grey;
+    }
+  }
+}
+
 .ec-legend {
 
   h3 {
@@ -179,91 +206,51 @@
 
   &.contacts {
     &:before {
-      background-image: url(https://cdn0.iconfinder.com/data/icons/typicons-2/24/contacts-512.png);
-      background-size: 30px 30px;
-      background-repeat: no-repeat;
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      content: "";
-      position: relative;
-      top: 8px;
+      @extend %icon;
+      mask-image: url(../../symbols/contacts.svg);
     }
   }
 
   &.projects {
     &:before {
-      background-image: url(http://cdn.onlinewebfonts.com/svg/download_211764.png);
-      background-size: 25px 25px;
-      background-repeat: no-repeat;
-      display: inline-block;
-      width: 25px;
-      height: 25px;
-      content: "";
-      position: relative;
-      top: 8px;
+      @extend %icon;
+      mask-image: url(../../symbols/projects.svg);
     }
   }
 
   &.subcontractors {
     &:before {
-      background-image: url(https://png.pngtree.com/svg/20161121/subcontractor_41761.png);
-      background-size: 25px 25px;
-      background-repeat: no-repeat;
-      display: inline-block;
-      width: 25px;
-      height: 25px;
-      content: "";
-      position: relative;
-      top: 8px;
+      @extend %icon;
+      mask-image: url(../../symbols/subcontractors.svg);
     }
   }
 
   &.units {
     &:before {
-      background-image: url(https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/128x128/plain/houses.png);
-      background-image: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDEwMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PHBhdGggZD0iTTI4LjksNjYuM0gxNC45VjQ1LjVsMTYuMy0xMS44bDUuNyw0LjFsNS42LTQuMWwtMTAuOS03LjljLTAuMi0wLjItMC41LTAuMi0wLjgsMEw1LjMsNDQuNEM1LDQ0LjYsNC45LDQ1LDUuMSw0NS4zICAgbDMuMSw0LjNjMC4xLDAuMSwwLjMsMC4yLDAuNCwwLjNjMC4yLDAsMC4zLDAsMC41LTAuMWwyLjgtMnYyMC4yYzAsMC44LDAuNywxLjUsMS41LDEuNWgxNS40VjY2LjN6Ij48L3BhdGg+PHBhdGggZD0iTTk0LjcsNDQuNEw2OS4yLDI1LjljLTAuMi0wLjItMC41LTAuMi0wLjgsMEw1Ny4xLDM0bDUuNiw0LjFsNi00LjRsMTYuNSwxMS45djIwLjdINzAuN3YzaDE2LjFjMC44LDAsMS41LTAuNywxLjUtMS41di0yMCAgIGwyLjYsMS45YzAuMSwwLjEsMC4yLDAuMSwwLjQsMC4xYzAsMCwwLjEsMCwwLjEsMGMwLjIsMCwwLjMtMC4xLDAuNC0wLjNsMy4xLTQuM0M5NS4xLDQ1LDk1LDQ0LjYsOTQuNyw0NC40eiI+PC9wYXRoPjxwYXRoIGQ9Ik03Mi4yLDU0LjdjMCwwLDAuMSwwLDAuMSwwYzAuMiwwLDAuMy0wLjEsMC40LTAuM2wzLjEtNC4zYzAuMi0wLjMsMC4xLTAuNy0wLjEtMC45TDUwLjEsMzAuOGMtMC4xLTAuMS0wLjMtMC4xLTAuNC0wLjEgICBzLTAuMywwLTAuNCwwLjFMMjMuNyw0OS4zYy0wLjMsMC4yLTAuNCwwLjYtMC4xLDAuOWwzLjEsNC4zYzAuMSwwLjEsMC4zLDAuMiwwLjQsMC4zYzAsMCwwLjEsMCwwLjEsMGMwLjEsMCwwLjMsMCwwLjQtMC4xbDIuOC0yICAgdjIwLjJjMCwwLjgsMC43LDEuNSwxLjUsMS41aDEzLjloOC4zaDEzLjZjMC44LDAsMS41LTAuNywxLjUtMS41di0yMGwyLjYsMS45QzcxLjksNTQuNyw3Miw1NC43LDcyLjIsNTQuN3ogTTUyLjYsNzEuMmgtNS4zVjU4LjIgICBoNS4zVjcxLjJ6IE02Ni4yLDcxLjJINTUuNlY1Ni43YzAtMC44LTAuNy0xLjUtMS41LTEuNWgtOC4zYy0wLjgsMC0xLjUsMC43LTEuNSwxLjV2MTQuNkgzMy40VjUwLjRsMTYuMy0xMS44bDE2LjUsMTEuOVY3MS4yeiI+PC9wYXRoPjwvZz48L3N2Zz4=");
-      background-size: 30px 30px;
-      background-repeat: no-repeat;
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      content: "";
-      position: relative;
-      top: 8px;
+      @extend %icon;
+      mask-image: url(../../symbols/units.svg);
     }
   }
 
   &.tasks {
     &:before {
-      background-image: url(http://cdn.onlinewebfonts.com/svg/img_55800.png);
-      background-size: 20px 26px;
-      background-repeat: no-repeat;
-      display: inline-block;
-      width: 20px;
-      height: 29px;
-      content: "";
-      position: relative;
-      top: 8px;
+      @extend %icon;
+      mask-image: url(../../symbols/tasks.svg);
     }
   }
 
   &.services {
     &:before {
-      background-image: url(https://img.icons8.com/metro/1600/services.png);
-      background-size: 25px 25px;
-      background-repeat: no-repeat;
-      display: inline-block;
-      width: 25px;
-      height: 25px;
-      content: "";
-      position: relative;
-      top: 8px;
+      @extend %icon;
+      mask-image: url(../../symbols/services.svg);
     }
   }
 
   &.comments {
-    @extend %comments-icon;
+    &:before {
+      @extend %icon;
+      mask-image: url(../../symbols/comments.svg);
+    }
   }
 }
 

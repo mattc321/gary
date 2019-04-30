@@ -73,6 +73,13 @@
     &:nth-of-type(even) {
       background: #444;
     }
+    &:after {
+      //clearfix
+      content: "";
+      display: table;
+      clear: both;
+    }
+
     &:active,
     &:hover {
       background: $dark;
@@ -125,6 +132,13 @@
     &:nth-of-type(even) {
       background: $light;
     }
+    &:after {
+      //clearfix
+      content: "";
+      display: table;
+      clear: both;
+    }
+
     &:active,
     &:hover {
       // background: $dark;
@@ -166,4 +180,13 @@
       margin: 5px 0px;
     }
   }
+}
+
+//float delete on mobile view
+.view-project-contacts {
+    &.view-display-id-block_3 {
+      .views-field-paragraph-delete-item {
+        float: right;
+      }
+    }
 }
