@@ -7,8 +7,8 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
- * Subscribe to KernelEvents::REQUEST events and redirect if site is currently
- * in maintenance mode.
+ * Subscribe to KernelEvents::REQUEST events and redirect if user is not
+ * authenticated. Also set mobile property in user storage
  */
 class CustomEventSubscriber implements EventSubscriberInterface {
 

@@ -190,7 +190,10 @@ function gary_custom_link_alter(&$variables) {
     return;
   }
 
-  if($url->getRouteName()=='gary_custom.change_palette') {
+  $route = $url->getRouteName();
+
+  //Night Mode Palette Changer setup
+  if($route=='gary_custom.change_palette') {
     $user = User::load(\Drupal::currentUser()->id());
     if (!$user->hasField('field_color')) {
       $color = 'light';
@@ -199,6 +202,36 @@ function gary_custom_link_alter(&$variables) {
     }
     $variables['options']['attributes']['palette-selector'] = 'change-palette';
     $variables['options']['attributes']['current-palette'] = $color;
+  }
+
+  //Mobile Reroute of some views
+  //[route_match] => 'reroute'
+  $mobile_route_matches = [
+    'view.opportunity.page_1' => 'view.opportunity.mobile_page',
+    'view.projects.page_1' => 'view.projects.mobile_page',
+    'view.contacts.page_1' => 'view.contacts.mobile_page',
+    'view.accounts.page_1' => 'view.accounts.mobile_page',
+    'view.tasks.page_1' => 'view.tasks.mobile_page',
+    'view.final_submittals.page_1' => 'view.final_submittals.mobile_page',
+  ];
+  //get user temp storage
+  $tempstore = \Drupal::service('user.private_tempstore')->get('gary_custom');
+  //check if were mobile return if not
+  if (!$tempstore->get('is_mobile')) {
+    return;
+  }
+  //if we have a route match rewrite to its mobile route. The view contains this block
+  if(isset($mobile_route_matches[$route])) {
+    $route_provider = \Drupal::service('router.route_provider');
+    //check the mobile route. If it doesnt exist then bounce
+    try {
+      $new_route = $route_provider->getRouteByName($mobile_route_matches[$route]);
+    }
+    catch (exception $e){
+      return;
+    }
+    $new_url = Url::fromRoute($new_route);
+    $variables['url'] = $new_url;
   }
 
 }
