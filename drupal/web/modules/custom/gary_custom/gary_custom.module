@@ -250,6 +250,19 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
       // $address_search = '<a href="https://www.google.com/maps?q='.
       //   $ad.','.$city.','.$st.','.$zip.'," target="_blank">'.$ad.'</a>';
       // $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
+
+      $terms = \Drupal\taxonomy\Entity\Term::load($entity->field_permit_city->target_id);
+      if (!empty($terms)) {
+        $cityName = $terms->getName();
+        $cityUrl = $terms->field_permit_url->value;
+        foreach ($build['field_permit_number']['#items']->getIterator() as $key => $permit) {
+          $permitNum = $permit->value;
+          $permitInsert = str_replace("[permit]", $permitNum, $cityUrl);
+          $cityInsert = str_replace("[city]", $cityName, $permitInsert);
+          $build['field_permit_number'][$key]['#context']['value'] = Markup::create('<a href="'.$cityInsert.'" target="_blank">'.$permitNum.'</a>');
+        }  
+      }
+
     break;
 
     case 'opportunities':
