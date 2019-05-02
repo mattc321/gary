@@ -10,16 +10,17 @@
   padding: 5px;
   transition: background .3s ease;
 
-
   @include max-width($break-small) {
+    &:not(.fancy-date) > div {
+      clear: both;
+    }
+
     clear: both;
     span.views-label {
       float: left;
       margin-right: 5px;
     }
   }
-
-
 }
 
 .palette-dark {
@@ -183,10 +184,9 @@
 }
 
 //float delete on mobile view
-.view-project-contacts {
-    &.view-display-id-block_3 {
-      .views-field-paragraph-delete-item {
-        float: right;
-      }
-    }
+.views-field-paragraph-delete-item {
+  @extend %float-right;
+  a {
+    line-height: 12px;
+  }
 }

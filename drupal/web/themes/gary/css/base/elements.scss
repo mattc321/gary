@@ -62,7 +62,7 @@ table {
   table {
     color: $light;
   }
-  th {
+  thead, th {
     background: $dark-grey;
   }
   tbody {
@@ -72,6 +72,9 @@ table {
     tr:nth-of-type(even) {
       background: #444;
     }
+  }
+  span.selection {
+    color: $dark;
   }
 }
 

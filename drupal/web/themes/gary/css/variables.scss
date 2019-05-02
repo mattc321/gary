@@ -291,6 +291,13 @@ $font-secondary: "verveine", sans-serif;
   }
 }
 
+%float-right {
+  float: right;
+  + div {
+    clear: none !important;
+  }
+}
+
 //keyframes
 @keyframes rubberBand {
   from {
