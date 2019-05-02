@@ -7,7 +7,8 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
-
+use Symfony\Component\HttpFoundation\Request;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_help().
@@ -56,13 +57,21 @@ function gary_dashboard_theme() {
 function gary_dashboard_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   $route_name = \Drupal::routeMatch();
-  $front = \Drupal::service('path.matcher')->isFrontPage();
   //add popup form filters when we want to
   if ($route_name->getRouteName() == 'gary_dashboard.dashboard') {
     $form['#attributes']['class'][] = 'hidden';
     $form['#attributes']['class'][] = 'popup-exposed-form';
   }
-  if ($route_name->getRouteName() == 'views.ajax' && $front) {
+
+
+  //when a ajax route hits on the front page we need to hide again
+  $referer = \Drupal::request()->headers->get('referer');
+  $base_url = Request::createFromGlobals()->getSchemeAndHttpHost();
+  $alias = substr($referer, strlen($base_url));
+  $url_object = \Drupal::service('path.validator')->getUrlIfValid($alias);
+  $route = $url_object->getRouteName();
+  if ($route_name->getRouteName() == 'views.ajax' && $route == 'gary_dashboard.dashboard') {
+    // Get route name from path.
     $form['#attributes']['class'][] = 'hidden';
     $form['#attributes']['class'][] = 'popup-exposed-form';
   }

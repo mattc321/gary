@@ -146,35 +146,6 @@ function gary_custom_menu_local_tasks_alter(&$data, $route_name, RefinableCachea
   }
 }
 
-function gary_custom_entity_view_display_alter(EntityViewDisplayInterface $display, array $context) {
-  //
-  // if ($context['entity_type'] != 'node') {
-  //   return;
-  // }
-  //
-  // switch ($context['bundle']) {
-  //   case 'opportunities':
-  //     ksm($context);
-  //   break;
-  //
-  //   case '':
-  //   break;
-
-  // }
-
-  // Leave field labels out of the search index.
-  // if ($context['entity_type'] == 'node' && $context['bundle'] == 'search_index') {
-  //   foreach ($display
-  //     ->getComponents() as $name => $options) {
-  //     if (isset($options['label'])) {
-  //       $options['label'] = 'hidden';
-  //       $display
-  //         ->setComponent($name, $options);
-  //     }
-  //   }
-  // }
-}
-
 function gary_custom_link_alter(&$variables) {
 
   $url = $variables['url'];
@@ -260,7 +231,7 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
           $permitInsert = str_replace("[permit]", $permitNum, $cityUrl);
           $cityInsert = str_replace("[city]", $cityName, $permitInsert);
           $build['field_permit_number'][$key]['#context']['value'] = Markup::create('<a href="'.$cityInsert.'" target="_blank">'.$permitNum.'</a>');
-        }  
+        }
       }
 
     break;
