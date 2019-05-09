@@ -101,6 +101,8 @@ class CommentTag extends ControllerBase {
     //is there atleast one tag
     if (stripos($body, '@') !==FALSE) {
       //if users are tagged create messages for them
+      \Drupal::logger('commentstag')->debug($entity->id());
+
       if (!empty($this->GetTaggedUsers($body))) {
         foreach ($this->tagged_users as $key => $user) {
           $this->AddMessage($entity, $user);
@@ -138,13 +140,16 @@ class CommentTag extends ControllerBase {
        'type' => 'messages',
        'title' => $title,
        'body' => $body,
+       'created' => $entity->getCreatedTime(),
+       'changed' => $entity->getCreatedTime(),
        'field_tag_comment_id'=> $comment_id,
        'field_tag_content_reference'=> $content_id,
        'field_tag_user_by'=>$by,
        'field_tag_user_to'=>$to,
+       'field_message_read'=>TRUE,
      ]);
      $message->save();
-     $this->SendNotification($entity, $to, $by);
+     // $this->SendNotification($entity, $to, $by);
      return;
   }
 
@@ -276,6 +281,7 @@ class CommentTag extends ControllerBase {
           $users[] = $tuser;
         } else {
           //set an error string if the tagged user returns empty
+          \Drupal::logger('commentstag')->debug('error here');
           $this->error_string = t("You tagged @user but I can't find that person!", ['@user' => $uname]);
         }
       }

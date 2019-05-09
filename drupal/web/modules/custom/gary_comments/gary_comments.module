@@ -73,6 +73,7 @@ function gary_comments_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
     //check if a user was tagged. Add message and send notification if true
     $tag_controller = new CommentTag();
     $tag_controller->CheckForTag($entity);
+
   }
 }
 
