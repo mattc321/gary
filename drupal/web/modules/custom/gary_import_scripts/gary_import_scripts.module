@@ -64,7 +64,7 @@ function attachServiceTasksToServices() {
 function gary_import_scripts_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   // ksm(count(autoTaskIds()));
   if (isset($_GET['process']) == 1 && $entity->id()=='6551') {
-
+    dpm('running');
     $csv = array_map('str_getcsv', file('comments-export-ready-wednesday.csv'));
     // $node_storage = \Drupal::entityTypeManager()->getStorage('node');
     unset($csv[0]);
