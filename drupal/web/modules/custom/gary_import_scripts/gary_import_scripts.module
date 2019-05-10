@@ -64,18 +64,15 @@ function attachServiceTasksToServices() {
 function gary_import_scripts_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   // ksm(count(autoTaskIds()));
   if (isset($_GET['process']) == 1 && $entity->id()=='6551') {
-    dpm('running2');
-    $csv = array_map('str_getcsv', file('comments-export-ready-wednesday.csv'));
+    $csv = array_map('str_getcsv', file('comments-children-export-ready-thurs.csv'));
     // $node_storage = \Drupal::entityTypeManager()->getStorage('node');
     unset($csv[0]);
-    // ksm($csv);
     // return;
-    // $user_object = \Drupal::entityTypeManager()->getStorage('user');
-
     foreach ($csv as $key => $value) {
-      if ($key >= 1000) {
         // $user = $user_object->loadByProperties(['name' => $value[1]]);
         // $x = reset($user);
+        \Drupal::logger('commentstag')->debug($key);
+
         $comment_values = [
           'entity_type' => 'node',            // required.
           'entity_id'   => $value[2],                // required.
@@ -87,14 +84,11 @@ function gary_import_scripts_entity_view(array &$build, EntityInterface $entity,
           'status' => 1,                      // optional. Defaults to 0.
           'created' => strtotime($value[7]),
           'changed' => strtotime($value[7]),
-          'field_comment_audit_id' => $value[4]                      // optional. Defaults to 0.
+          'field_comment_audit_id' => $value[4],                      // optional. Defaults to 0.
+          'pid' => $value[5],
         ];
         $comment = Comment::create($comment_values);
         $comment->save();
-
-      } else {
-        return;
-      }
     }
   }
 }
