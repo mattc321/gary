@@ -329,9 +329,9 @@ function gary_custom_entity_insert(EntityInterface $entity) {
 }
 
 function gary_custom_entity_update(EntityInterface $entity) {
-  // $helper = new GaryFunctions;
+  $helper = new GaryFunctions;
   // //remove any old revisions on paragraphs
-  // $helper->cleanParagraphs($entity);
+  $helper->cleanParagraphs($entity);
   //
   // switch ($entity->bundle()){
   //   case 'opportunity_services':

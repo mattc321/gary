@@ -97,6 +97,7 @@ function importOppServices() {
 
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
   foreach ($new_array as $parent_id => $paragraphs) {
+    \Drupal::logger('import')->debug($parent_id);
     $node = $node_storage->load($parent_id);
     $current = $node->get('field_project_contacts')->getValue();
     foreach ($paragraphs as $index => $paragraph_values) {
