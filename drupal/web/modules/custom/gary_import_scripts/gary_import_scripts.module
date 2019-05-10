@@ -64,35 +64,72 @@ function attachServiceTasksToServices() {
 function gary_import_scripts_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   // ksm(count(autoTaskIds()));
   if (isset($_GET['process']) == 1 && $entity->id()=='6551') {
-    $csv = array_map('str_getcsv', file('comments-children-export-ready-thurs.csv'));
-    // $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-    unset($csv[0]);
-    // return;
-    foreach ($csv as $key => $value) {
-        // $user = $user_object->loadByProperties(['name' => $value[1]]);
-        // $x = reset($user);
-        \Drupal::logger('commentstag')->debug($key);
-
-        $comment_values = [
-          'entity_type' => 'node',            // required.
-          'entity_id'   => $value[2],                // required.
-          'field_name'  => 'field_comments',         // required.
-          'uid' => $value[1],                         // required.
-          'comment_type' => 'comment',        // required.
-          'subject' => $value[0],  // required.
-          'comment_body' => $value[6],            // optional.
-          'status' => 1,                      // optional. Defaults to 0.
-          'created' => strtotime($value[7]),
-          'changed' => strtotime($value[7]),
-          'field_comment_audit_id' => $value[4],                      // optional. Defaults to 0.
-          'pid' => $value[5],
-        ];
-        $comment = Comment::create($comment_values);
-        $comment->save();
-    }
+    // $csv = array_map('str_getcsv', file('services_export_ready_friday_test.csv'));
+    // // $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    // dpm($csv[0]);
+    // unset($csv[0]);
+    // // return;
+    // ksm($csv);
+    $p = importOppServices();
   }
 }
 
+function importOppServices() {
+  $csv = array_map('str_getcsv', file('services_export_new_ready.csv'));
+
+  $new_array = [];
+  $csv2 = $csv;
+  unset($csv[0]);
+  // ksm($csv2);
+  foreach ($csv as $key => $value_array) {
+    foreach ($value_array as $value_key => $value) {
+      if ($value_key == 0) {
+        if (isset($new_array[$value])) {
+          $new_array[$value][] = [$csv2[$key]];
+        } else {
+          $new_array[$value] = [$csv2[$key]];
+        }
+        continue;
+      }
+    }
+
+  }
+
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  foreach ($new_array as $parent_id => $paragraphs) {
+    $node = $node_storage->load($parent_id);
+    // $current = $node->get('field_opportunity_services_ref')->getValue();
+    $current = [];
+    foreach ($paragraphs as $index => $paragraph_values) {
+      $pg_item = Paragraph::create(['type' => 'opportunity_services',]);
+      if(is_array($paragraph_values[0])) {
+        $paragraph_values = $paragraph_values[0];
+      }
+      if(trim($paragraph_values[1]) != "") {
+        $pg_item->set('field_opportunity_service', $paragraph_values[1]);
+      }
+      if(trim($paragraph_values[2]) != "") {
+        $pg_item->set('field_service_amount', $paragraph_values[2]);
+      }
+      if(trim($paragraph_values[3]) != "") {
+        $pg_item->set('field_quantity', $paragraph_values[3]);
+      }
+      if(trim($paragraph_values[4]) != "") {
+        $pg_item->set('field_line_total', $paragraph_values[4]);
+      }
+      $pg_item->isNew();
+      $pg_item->save();
+      $current[] = array(
+          'target_id' => $pg_item->id(),
+          'target_revision_id' => $pg_item->getRevisionId(),
+        );
+    }
+
+
+    $node->set('field_opportunity_services_ref', $current);
+    $node->save();
+  }
+}
 
 function deleteAllContentOfType() {
   // $result = \Drupal::entityQuery('node')
@@ -102,4 +139,29 @@ function deleteAllContentOfType() {
   // $resultt = \Drupal::entityQuery('comment')
   //   ->execute();
   // entity_delete_multiple('comment', $resultt);
+}
+
+function importCsv() {
+  foreach ($csv as $key => $value) {
+      // $user = $user_object->loadByProperties(['name' => $value[1]]);
+      // $x = reset($user);
+      \Drupal::logger('commentstag')->debug($key);
+
+      $comment_values = [
+        'entity_type' => 'node',            // required.
+        'entity_id'   => $value[2],                // required.
+        'field_name'  => 'field_comments',         // required.
+        'uid' => $value[1],                         // required.
+        'comment_type' => 'comment',        // required.
+        'subject' => $value[0],  // required.
+        'comment_body' => $value[6],            // optional.
+        'status' => 1,                      // optional. Defaults to 0.
+        'created' => strtotime($value[7]),
+        'changed' => strtotime($value[7]),
+        'field_comment_audit_id' => $value[4],                      // optional. Defaults to 0.
+        'pid' => $value[5],
+      ];
+      $comment = Comment::create($comment_values);
+      $comment->save();
+  }
 }
