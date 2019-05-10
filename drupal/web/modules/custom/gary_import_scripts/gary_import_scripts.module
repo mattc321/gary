@@ -75,7 +75,7 @@ function gary_import_scripts_entity_view(array &$build, EntityInterface $entity,
 }
 
 function importOppServices() {
-  $csv = array_map('str_getcsv', file('services_export_new_ready.csv'));
+  $csv = array_map('str_getcsv', file('opp-contacts-ready-friday.csv'));
 
   $new_array = [];
   $csv2 = $csv;
@@ -98,24 +98,23 @@ function importOppServices() {
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
   foreach ($new_array as $parent_id => $paragraphs) {
     $node = $node_storage->load($parent_id);
-    // $current = $node->get('field_opportunity_services_ref')->getValue();
-    $current = [];
+    $current = $node->get('field_project_contacts')->getValue();
     foreach ($paragraphs as $index => $paragraph_values) {
-      $pg_item = Paragraph::create(['type' => 'opportunity_services',]);
+      $pg_item = Paragraph::create(['type' => 'project_contacts',]);
       if(is_array($paragraph_values[0])) {
         $paragraph_values = $paragraph_values[0];
       }
       if(trim($paragraph_values[1]) != "") {
-        $pg_item->set('field_opportunity_service', $paragraph_values[1]);
+        $pg_item->set('field_primary', $paragraph_values[1]);
       }
       if(trim($paragraph_values[2]) != "") {
-        $pg_item->set('field_service_amount', $paragraph_values[2]);
+        $pg_item->set('field_role', $paragraph_values[2]);
       }
       if(trim($paragraph_values[3]) != "") {
-        $pg_item->set('field_quantity', $paragraph_values[3]);
+        $pg_item->set('field_contact_reference', $paragraph_values[3]);
       }
       if(trim($paragraph_values[4]) != "") {
-        $pg_item->set('field_line_total', $paragraph_values[4]);
+        $pg_item->set('field_description', $paragraph_values[4]);
       }
       $pg_item->isNew();
       $pg_item->save();
@@ -126,7 +125,7 @@ function importOppServices() {
     }
 
 
-    $node->set('field_opportunity_services_ref', $current);
+    $node->set('field_project_contacts', $current);
     $node->save();
   }
 }
