@@ -149,7 +149,7 @@ class CommentTag extends ControllerBase {
        'field_message_read'=>TRUE,
      ]);
      $message->save();
-     // $this->SendNotification($entity, $to, $by);
+     $this->SendNotification($entity, $to, $by);
      return;
   }
 

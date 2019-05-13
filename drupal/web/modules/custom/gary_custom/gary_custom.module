@@ -267,65 +267,65 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
 }
 
 function gary_custom_entity_delete(EntityInterface $entity) {
-  // $helper = new GaryFunctions;
-  //
-  // switch ($entity->bundle()) {
-  //   case 'opportunity_services':
-  //
-  //     //if the parent entity origin is empty it is probably deleted in which
-  //     //case dont recalculate
-  //     if (!empty($entity->getParentEntity()->original)) {
-  //       //update total amount on parent
-  //       $helper->updateTotalAmount($entity);
-  //     }
-  //
-  //   break;
-  //
-  //   case 'sub_contractors':
-  //     //update the average grade for a sub contractor
-  //     $helper->updateSubGrade($entity);
-  //   break;
-  //
-  //   case 'opportunities':
-  //     //delete all tasks associated with a project if it is deleted
-  //     if ($entity->hasField('field_tasks')) {
-  //       if(!$entity->get('field_tasks')->isEmpty()) {
-  //         $tasks = $entity->get('field_tasks')->referencedEntities();
-  //         foreach ($tasks as $task) {
-  //           $task->delete();
-  //         }
-  //       }
-  //     }
-  //   break;
-  //
-  //   case 'projects':
-  //
-  //     //delete all tasks associated with a project if it is deleted
-  //     if ($entity->hasField('field_tasks')) {
-  //       if(!$entity->get('field_tasks')->isEmpty()) {
-  //         $tasks = $entity->get('field_tasks')->referencedEntities();
-  //         foreach ($tasks as $task) {
-  //           $task->delete();
-  //         }
-  //       }
-  //     }
-  //   break;
-  // }
+  $helper = new GaryFunctions;
+
+  switch ($entity->bundle()) {
+    case 'opportunity_services':
+
+      //if the parent entity origin is empty it is probably deleted in which
+      //case dont recalculate
+      if (!empty($entity->getParentEntity()->original)) {
+        //update total amount on parent
+        $helper->updateTotalAmount($entity);
+      }
+
+    break;
+
+    case 'sub_contractors':
+      //update the average grade for a sub contractor
+      $helper->updateSubGrade($entity);
+    break;
+
+    case 'opportunities':
+      //delete all tasks associated with a project if it is deleted
+      if ($entity->hasField('field_tasks')) {
+        if(!$entity->get('field_tasks')->isEmpty()) {
+          $tasks = $entity->get('field_tasks')->referencedEntities();
+          foreach ($tasks as $task) {
+            $task->delete();
+          }
+        }
+      }
+    break;
+
+    case 'projects':
+
+      //delete all tasks associated with a project if it is deleted
+      if ($entity->hasField('field_tasks')) {
+        if(!$entity->get('field_tasks')->isEmpty()) {
+          $tasks = $entity->get('field_tasks')->referencedEntities();
+          foreach ($tasks as $task) {
+            $task->delete();
+          }
+        }
+      }
+    break;
+  }
 
 }
 
 function gary_custom_entity_insert(EntityInterface $entity) {
-  // $helper = new GaryFunctions;
-  //
-  // switch ($entity->bundle()){
-  //   case 'tasks':
-  //     //the notify assignee upon new task event is handled in gary_field_formatter unfortunately.
-  //     //check InlineForm.php in the ajax rebuild
-  //   break;
-  //
-  //   default:
-  //   break;
-  // }
+  $helper = new GaryFunctions;
+
+  switch ($entity->bundle()){
+    case 'tasks':
+      //the notify assignee upon new task event is handled in gary_field_formatter unfortunately.
+      //check InlineForm.php in the ajax rebuild
+    break;
+
+    default:
+    break;
+  }
 }
 
 function gary_custom_entity_update(EntityInterface $entity) {
@@ -333,130 +333,130 @@ function gary_custom_entity_update(EntityInterface $entity) {
   // //remove any old revisions on paragraphs
   $helper->cleanParagraphs($entity);
   //
-  // switch ($entity->bundle()){
-  //   case 'opportunity_services':
-  //     //update total amount on parent
-  //     $helper->updateTotalAmount($entity);
-  //   break;
-  //
-  //   case 'sub_contractors':
-  //     //update the average grade on a sub contractor
-  //     $helper->updateSubGrade($entity);
-  //
-  //   break;
-  // }
+  switch ($entity->bundle()){
+    case 'opportunity_services':
+      //update total amount on parent
+      $helper->updateTotalAmount($entity);
+    break;
+
+    case 'sub_contractors':
+      //update the average grade on a sub contractor
+      $helper->updateSubGrade($entity);
+
+    break;
+  }
 }
 
 function gary_custom_entity_presave(EntityInterface $entity) {
-  // $helper = new GaryFunctions;
-  //
-  // //calculate fields on project_units
-  // switch ($entity->bundle()){
-  //   case 'project_units':
-  //     //calculate ach50 field if its there
-  //     if ($entity->hasField('field_ach50')) {
-  //       $new_value = $helper->calculateField($entity, 'field_ach50');
-  //       $entity->set('field_ach50', $new_value);
-  //     }
-  //
-  //     //calculate ach50 field if its there
-  //     if ($entity->hasField('field_volume')) {
-  //       $new_value = $helper->calculateField($entity, 'field_volume');
-  //       $entity->set('field_volume', $new_value);
-  //     }
-  //
-  //     //update last updated field if pg item has changed
-  //     if ($helper->entityHasChanged($entity)) {
-  //       if ($entity->hasField('field_last_updated')) {
-  //         $dt = new DateTime;
-  //         $date = $dt->format("Y-m-d");
-  //         $entity->set('field_last_updated', $date);
-  //       }
-  //     }
-  //
-  //   break;
-  //
-  //   case 'comment':
-  //     //update the comment parent info when comment is saved
-  //     $dt = time();
-  //     $entity->getCommentedEntity()->setChangedTime($dt);
-  //     $entity->getCommentedEntity()->setRevisionAuthorId(\Drupal::currentUser()->id());
-  //     $entity->getCommentedEntity()->save();
-  //
-  //   break;
-  //
-  //   case 'tasks':
-  //     //If the assigned_to field has changed, alert the person whom the task is being assigned to
-  //     if ($helper->fieldHasChanged($entity, 'field_task_assigned_to')) {
-  //       // $helper->notifyAssignee($entity);
-  //       \Drupal::logger('gary_custom')->error('would have notified assignee');
-  //
-  //     }
-  //
-  //   break;
-  //
-  //   case 'opportunities':
-  //     //bring over account manager from the builder account
-  //     if ($entity->isNew()) {
-  //       $account_mgr = $helper->getDefaultAccountManagerIfNeeded($entity);
-  //       if (!empty($account_mgr)) {
-  //         $entity->set('field_account_manager', $account_mgr);
-  //       }
-  //     }
-  //
-  //     //if cancelling or closing the opp, close all of its tasks
-  //     if ($helper->fieldHasChanged($entity, 'field_opportunity_type')) {
-  //       //cancelled tid 60 closed 61
-  //       if (!$entity->get('field_opportunity_type')->isEmpty()) {
-  //         $tid = $entity->get('field_opportunity_type')->getValue()[0]['target_id'];
-  //         if ($tid == 60 || $tid == 61) {
-  //           $helper->closeAllTasks($entity);
-  //         }
-  //       }
-  //     }
-  //
-  //     if ($entity->isNew()) {
-  //       //create opportunity auto tasks if new
-  //       $new_tasks = $helper->createOpportunityAutoTasks($entity);
-  //       if (!empty($new_tasks)) {
-  //         $entity->set('field_tasks', $new_tasks);
-  //       }
-  //     }
-  //
-  //   break;
-  //   case 'projects':
-  //
-  //     if ($entity->isNew()) {
-  //       //if project is new, load its opportunity then its service
-  //       //then load auto tasks associated with that service, create new
-  //       //tasks and attach them to the project
-  //       $new_nodes = $helper->createReturnAutoTasks($entity);
-  //       if (!empty($new_nodes)) {
-  //         //tasks were created
-  //         $entity->set('field_tasks', $new_nodes);
-  //       }
-  //
-  //       //bring over opportunity contacts
-  //       $contacts = $helper->createContacts($entity);
-  //       if (!empty($contacts)) {
-  //         $entity->set('field_project_contacts', $contacts);
-  //       }
-  //     }
-  //
-  //     //if cancelling or completing the project, close all of its tasks
-  //     if ($helper->fieldHasChanged($entity, 'field_project_status')) {
-  //       //cancelled tid 70 completed 72
-  //       if (!$entity->get('field_project_status')->isEmpty()) {
-  //         $tid = $entity->get('field_project_status')->getValue()[0]['target_id'];
-  //         if ($tid == 70 || $tid == 72) {
-  //           $helper->closeAllTasks($entity);
-  //         }
-  //       }
-  //     }
-  //   break;
-  //   default:
-  //   break;
-  // }
+  $helper = new GaryFunctions;
+
+  //calculate fields on project_units
+  switch ($entity->bundle()){
+    case 'project_units':
+      //calculate ach50 field if its there
+      if ($entity->hasField('field_ach50')) {
+        $new_value = $helper->calculateField($entity, 'field_ach50');
+        $entity->set('field_ach50', $new_value);
+      }
+
+      //calculate ach50 field if its there
+      if ($entity->hasField('field_volume')) {
+        $new_value = $helper->calculateField($entity, 'field_volume');
+        $entity->set('field_volume', $new_value);
+      }
+
+      //update last updated field if pg item has changed
+      if ($helper->entityHasChanged($entity)) {
+        if ($entity->hasField('field_last_updated')) {
+          $dt = new DateTime;
+          $date = $dt->format("Y-m-d");
+          $entity->set('field_last_updated', $date);
+        }
+      }
+
+    break;
+
+    case 'comment':
+      //update the comment parent info when comment is saved
+      $dt = time();
+      $entity->getCommentedEntity()->setChangedTime($dt);
+      $entity->getCommentedEntity()->setRevisionAuthorId(\Drupal::currentUser()->id());
+      $entity->getCommentedEntity()->save();
+
+    break;
+
+    case 'tasks':
+      //If the assigned_to field has changed, alert the person whom the task is being assigned to
+      if ($helper->fieldHasChanged($entity, 'field_task_assigned_to')) {
+        // $helper->notifyAssignee($entity);
+        \Drupal::logger('gary_custom')->error('would have notified assignee');
+
+      }
+
+    break;
+
+    case 'opportunities':
+      //bring over account manager from the builder account
+      if ($entity->isNew()) {
+        $account_mgr = $helper->getDefaultAccountManagerIfNeeded($entity);
+        if (!empty($account_mgr)) {
+          $entity->set('field_account_manager', $account_mgr);
+        }
+      }
+
+      //if cancelling or closing the opp, close all of its tasks
+      if ($helper->fieldHasChanged($entity, 'field_opportunity_type')) {
+        //cancelled tid 60 closed 61
+        if (!$entity->get('field_opportunity_type')->isEmpty()) {
+          $tid = $entity->get('field_opportunity_type')->getValue()[0]['target_id'];
+          if ($tid == 60 || $tid == 61) {
+            $helper->closeAllTasks($entity);
+          }
+        }
+      }
+
+      if ($entity->isNew()) {
+        //create opportunity auto tasks if new
+        $new_tasks = $helper->createOpportunityAutoTasks($entity);
+        if (!empty($new_tasks)) {
+          $entity->set('field_tasks', $new_tasks);
+        }
+      }
+
+    break;
+    case 'projects':
+
+      if ($entity->isNew()) {
+        //if project is new, load its opportunity then its service
+        //then load auto tasks associated with that service, create new
+        //tasks and attach them to the project
+        $new_nodes = $helper->createReturnAutoTasks($entity);
+        if (!empty($new_nodes)) {
+          //tasks were created
+          $entity->set('field_tasks', $new_nodes);
+        }
+
+        //bring over opportunity contacts
+        $contacts = $helper->createContacts($entity);
+        if (!empty($contacts)) {
+          $entity->set('field_project_contacts', $contacts);
+        }
+      }
+
+      //if cancelling or completing the project, close all of its tasks
+      if ($helper->fieldHasChanged($entity, 'field_project_status')) {
+        //cancelled tid 70 completed 72
+        if (!$entity->get('field_project_status')->isEmpty()) {
+          $tid = $entity->get('field_project_status')->getValue()[0]['target_id'];
+          if ($tid == 70 || $tid == 72) {
+            $helper->closeAllTasks($entity);
+          }
+        }
+      }
+    break;
+    default:
+    break;
+  }
 
 }
 
