@@ -5,31 +5,29 @@ use Drupal\user\Entity\User;
 /**
  * Implements template_preprocess_block().
  */
-function gary_preprocess_block(&$variables) {
+ function gary_preprocess_block__gary_account_menu(&$vars) {
+   if ($user = User::load(\Drupal::currentUser()->id())) {
+     //pass username
+     $username = ucfirst($user->getAccountName());
+     $vars['username'] = ($username == '') ? 'Admin' : $username;
+     //pass user img
+     if (!$user->user_picture->isEmpty()) {
+       $file_uri = $user->get('user_picture')->entity->getFileUri();
+       $styled_image_url = ImageStyle::load("user_pic")->buildUrl($file_uri);
+       $picture = $styled_image_url;
+     } else {
+       $field = \Drupal\field\Entity\FieldConfig::loadByName('user', 'user', 'user_picture');
+       $default_image = $field->getSetting('default_image');
+       $file = \Drupal::entityManager()->loadEntityByUuid('file', $default_image['uuid']);
+       $file_uri = $file->getFileUri();
+       $styled_image_url = ImageStyle::load("user_pic")->buildUrl($file_uri);
+       $picture = $styled_image_url;
+     }
+     $vars['user_pic'] = $picture;
+     $vars['#cache']['contexts'][] = 'user';
 
-  if ($user = User::load(\Drupal::currentUser()->id())) {
-    //pass username
-    $username = ucfirst($user->getAccountName());
-    $variables['username'] = ($username == '') ? 'Admin' : $username;
-    //pass user img
-    if (!$user->user_picture->isEmpty()) {
-      $file_uri = $user->get('user_picture')->entity->getFileUri();
-      $styled_image_url = ImageStyle::load("user_pic")->buildUrl($file_uri);
-      $picture = $styled_image_url;
-    } else {
-      $field = \Drupal\field\Entity\FieldConfig::loadByName('user', 'user', 'user_picture');
-      $default_image = $field->getSetting('default_image');
-      $file = \Drupal::entityManager()->loadEntityByUuid('file', $default_image['uuid']);
-      $file_uri = $file->getFileUri();
-      $styled_image_url = ImageStyle::load("user_pic")->buildUrl($file_uri);
-      $picture = $styled_image_url;
-    }
-    $variables['user_pic'] = $picture;
-    // $variables['#cache']['contexts'][] = 'user';
-  }
-
-
-}
+   }
+ }
 
 function gary_preprocess_html(&$variables) {
   //send the color schema over to the body class
