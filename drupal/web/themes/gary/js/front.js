@@ -28,7 +28,7 @@
         }
       });
 
-      TweenMax.to("#menu-wrap", .5, {y:0});
+      // TweenMax.to("#menu-wrap", .5, {y:0});
       $('.field--type-block-field').fadeIn();
 
 
@@ -36,12 +36,12 @@
         transform: 'translate(0, -60px)'
       });
 
-      var hideController = new ScrollMagic.Controller();
-      var hideScene = new ScrollMagic.Scene(
-        {offset: 500})
-            .setTween(hide_tween)
-            // .setClassToggle("#menu-wrap", "ani")
-            .addTo(hideController);
+      // var hideController = new ScrollMagic.Controller();
+      // var hideScene = new ScrollMagic.Scene(
+      //   {offset: 500})
+      //       .setTween(hide_tween)
+      //       // .setClassToggle("#menu-wrap", "ani")
+      //       .addTo(hideController);
 
 
       var controller = new ScrollMagic.Controller();
