@@ -43,11 +43,11 @@
 
         //attach event listener to field - attached in form_alter
         $(document, context).once(document.id).ready(function () {
-          $('.notifications').checkMessages();
+          // $('.notifications').checkMessages();
         });
 
         window.setInterval(function(){
-          $('.notifications').checkMessages();
+          // $('.notifications').checkMessages();
         }, 5000);
 
         //message div clickable
