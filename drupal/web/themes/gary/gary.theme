@@ -25,6 +25,7 @@ function gary_preprocess_block(&$variables) {
       $picture = $styled_image_url;
     }
     $variables['user_pic'] = $picture;
+    $variables['#cache']['contexts'][] = 'user';
   }
 
 
