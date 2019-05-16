@@ -18,8 +18,16 @@ class CustomEventSubscriber implements EventSubscriberInterface {
 
   public function __construct() {
     $this->account = \Drupal::currentUser();
+
+    if (in_array('drupal_ajax',$_REQUEST)) {
+      return;
+    }
+
     $this->tempstore = \Drupal::service('user.private_tempstore')->get('gary_custom');
     $this->is_mobile = $this->_isMobile();
+    // if (empty($this->tempstore->get('is_mobile'))) {
+    //   $this->tempstore->delete('is_mobile');
+    // }
     $this->tempstore->set('is_mobile', $this->is_mobile);
   }
 

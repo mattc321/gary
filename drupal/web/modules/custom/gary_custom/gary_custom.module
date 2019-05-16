@@ -209,7 +209,6 @@ function gary_custom_link_alter(&$variables) {
 
 function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $helper = new GaryFunctions;
-
   switch ($entity->bundle()){
     case 'projects':
       //Messing with quick edit functionality
