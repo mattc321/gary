@@ -37,6 +37,7 @@
         "drupal/entity_reference_revisions": "^1.5",
         "drupal/feeds": "^3.0@alpha",
         "drupal/field_group": "^3.0",
+        "drupal/geolocation": "^3.0",
         "drupal/homebox": "1.x-dev",
         "drupal/multiple_fields_remove_button": "^1.0",
         "drupal/paragraphs": "^1.3",

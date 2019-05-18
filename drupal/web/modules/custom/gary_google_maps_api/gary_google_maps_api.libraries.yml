@@ -1,0 +1,9 @@
+project_map:
+  version: 1.x
+  js:
+    js/project-map.js: {}
+  css:
+    theme:
+      css/project-map.css: {}
+  dependencies:
+    - core/jquery

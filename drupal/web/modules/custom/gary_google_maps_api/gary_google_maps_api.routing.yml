@@ -1,0 +1,6 @@
+gary_google_maps_api.build_map:
+  path: '/project-map'
+  defaults:
+    _controller: '\Drupal\gary_google_maps_api\Controller\ProjectsMap::buildMap'
+  requirements:
+    _permission: 'access content'

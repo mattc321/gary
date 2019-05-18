@@ -1,0 +1,119 @@
+<?php
+
+/**
+ * @file
+ * Contains gary_google_maps_api.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+/**
+ * Implements hook_help().
+ */
+function gary_google_maps_api_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gary_google_maps_api module.
+    case 'help.page.gary_google_maps_api':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Return projects to a map using google maps api') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function gary_google_maps_api_theme() {
+  return [
+    'gary_google_maps_api' => [
+      'variables' => [
+        'content' => NULL
+      ],
+      'render element' => 'children'
+    ],
+  ];
+}
+
+function allContentOfType() {
+  $result = \Drupal::entityQuery('node')
+    ->condition('type', 'projects')
+    ->execute();
+  return($result);
+}
+
+function gary_google_maps_api_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  // ksm(count(autoTaskIds()));
+  if (isset($_GET['process']) == 1 && $entity->id()=='6551') {
+    // $csv = array_map('str_getcsv', file('services_export_ready_friday_test.csv'));
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $node = $node_storage->load(26793);
+
+
+    $address = $node->field_address->value;
+    $city = $node->field_city->value;
+    $state = $node->field_state->value;
+    $zip = $node->field_zip->value;
+    $p = ec_app_return_geo($address, $city, $state, $zip);
+
+    if ($p['status'] == 'OK') {
+      $new_value = [
+        'lat' => $p['lat'],
+        'lng' => $p['long'],
+      ];
+      $node->set('field_geolocation', $new_value);
+      $node->save();
+      ksm($node->get('field_geolocation')->getValue());
+    }
+
+  }
+}
+
+/**
+ * Custom function to return an Array containing latitude and longitude
+ *   of an address using googles geocode api.
+ *   This corresponds with Geolocation Field module to hold lat/lng data
+ *   but is not required.
+ *
+ * @param string $address, string $city, string $st, string $zip
+ *
+ */
+function ec_app_return_geo($address, $city, $st, $zip) {
+
+	$key = 'AIzaSyBsXFXU7R_8p6U6pD_o74EhdCKUoTk-AJk';
+	$json_addy = str_replace(' ','+',$address).',+'.str_replace(' ','+',$city).',+'.str_replace(' ','+',$st).',+'.$zip;
+	$url = 'https://maps.googleapis.com/maps/api/geocode/json?address='.$json_addy.'&key='.$key;
+	$jsonData   = file_get_contents($url);
+
+	$json = json_decode($jsonData);
+	//OK
+	//ZERO_RESULTS
+	//ERROR
+
+	if ($json->status == 'OK') {
+
+		$lat = $json->results[0]->geometry->location->lat;
+		$long = $json->results[0]->geometry->location->lng;
+		$latsin = sin(deg2rad($lat));
+		$latcos = cos(deg2rad($lat));
+		$lngrad = deg2rad($long);
+
+		$response = array('status' => 'OK', 'lat' => $lat, 'long' => $long,'lat_sin' => $latsin, 'lat_cos' => $latcos, 'lng_rad' => $lngrad);
+		return $response;
+	} elseif ($json->status == 'ZERO_RESULTS'){
+		drupal_set_message(t("Oh no :( Google could not find this address to geocode."), 'warning');
+
+		return array('status' => 'ZERO_RESULTS');
+	} else {
+		drupal_set_message(t("Sorry :( Google's geocode response returned an error! Check log for entire response!"), 'warning');
+		watchdog('ec_app', 'Function ec_app_return_geo encountered an unhandled response from it\'s geocode request to Google.
+		The $json request likely returned Null. </br>Info: </br> api_key: %apikey</br>address_string: %addstr</br>url_submitted: %urlsub',
+         array('%apikey' => $key, '%addstr' => $json_addy,'%urlsub' => $url, WATCHDOG_ERROR));
+		 return array('status' => 'ERROR');
+	}
+
+
+}
