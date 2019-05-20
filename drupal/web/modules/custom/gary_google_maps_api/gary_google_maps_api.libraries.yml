@@ -7,3 +7,4 @@ project_map:
       css/project-map.css: {}
   dependencies:
     - core/jquery
+    - core/drupalSettings

@@ -4,3 +4,10 @@ gary_google_maps_api.build_map:
     _controller: '\Drupal\gary_google_maps_api\Controller\ProjectsMap::buildMap'
   requirements:
     _permission: 'access content'
+
+gary_google_maps_api.project_xml_list:
+  path: '/project-xml-list.xml'
+  defaults:
+    _controller: '\Drupal\gary_google_maps_api\Controller\ProjectsMap::getXmlOutput'
+  requirements:
+    _permission: 'access content'

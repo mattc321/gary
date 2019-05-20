@@ -50,24 +50,32 @@ function gary_google_maps_api_entity_view(array &$build, EntityInterface $entity
   if (isset($_GET['process']) == 1 && $entity->id()=='6551') {
     // $csv = array_map('str_getcsv', file('services_export_ready_friday_test.csv'));
     $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-    $node = $node_storage->load(26793);
 
+    $node_ids = allContentOfType();
+    $node_ids = array_keys($node_ids);
+    foreach ($node_ids as $key => $node_id) {
 
-    $address = $node->field_address->value;
-    $city = $node->field_city->value;
-    $state = $node->field_state->value;
-    $zip = $node->field_zip->value;
-    $p = ec_app_return_geo($address, $city, $state, $zip);
+      $node = $node_storage->load($node_id);
 
-    if ($p['status'] == 'OK') {
-      $new_value = [
-        'lat' => $p['lat'],
-        'lng' => $p['long'],
-      ];
-      $node->set('field_geolocation', $new_value);
-      $node->save();
-      ksm($node->get('field_geolocation')->getValue());
+      $address = $node->field_address->value;
+      $city = $node->field_city->value;
+      $state = $node->field_state->value;
+      $zip = $node->field_zip->value;
+      $p = ec_app_return_geo($address, $city, $state, $zip);
+      ksm($p->address_components);
+      ksm($p);
+      return;
+      if ($p['status'] == 'OK') {
+        $new_value = [
+          'lat' => $p['lat'],
+          'lng' => $p['long'],
+        ];
+        $node->set('field_geolocation', $new_value);
+        $node->save();
+      }
+
     }
+
 
   }
 }
@@ -92,7 +100,7 @@ function ec_app_return_geo($address, $city, $st, $zip) {
 	//OK
 	//ZERO_RESULTS
 	//ERROR
-
+return $json->results[0];
 	if ($json->status == 'OK') {
 
 		$lat = $json->results[0]->geometry->location->lat;
@@ -109,9 +117,9 @@ function ec_app_return_geo($address, $city, $st, $zip) {
 		return array('status' => 'ZERO_RESULTS');
 	} else {
 		drupal_set_message(t("Sorry :( Google's geocode response returned an error! Check log for entire response!"), 'warning');
-		watchdog('ec_app', 'Function ec_app_return_geo encountered an unhandled response from it\'s geocode request to Google.
-		The $json request likely returned Null. </br>Info: </br> api_key: %apikey</br>address_string: %addstr</br>url_submitted: %urlsub',
-         array('%apikey' => $key, '%addstr' => $json_addy,'%urlsub' => $url, WATCHDOG_ERROR));
+		// watchdog('ec_app', 'Function ec_app_return_geo encountered an unhandled response from it\'s geocode request to Google.
+		// The $json request likely returned Null. </br>Info: </br> api_key: %apikey</br>address_string: %addstr</br>url_submitted: %urlsub',
+    //      array('%apikey' => $key, '%addstr' => $json_addy,'%urlsub' => $url, WATCHDOG_ERROR));
 		 return array('status' => 'ERROR');
 	}
 
