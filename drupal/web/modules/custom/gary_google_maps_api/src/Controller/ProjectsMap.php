@@ -24,6 +24,8 @@ class ProjectsMap extends ControllerBase {
 
   public function buildMap() {
 
+    $config = $this->config('gary_google_maps_api.adminsettings');
+
     $build = [
       '#content' => '',
       '#theme' => 'gary_google_maps_api',
@@ -34,17 +36,9 @@ class ProjectsMap extends ControllerBase {
       ]
     ];
 
-    // $build = [
-    //   '#type' => 'inline_template',
-    //   '#theme' => 'gary_google_maps_api',
-    //   '#attached' => [
-    //     'library' => [
-    //       'gary_google_maps_api/project_map'
-    //     ]
-    //   ]
-    // ];
     $build['#attached']['drupalSettings']['gary_google_maps_api']['project_xml_list'] = $this->getXmlOutput();
-    // ksm($this->getXmlOutput());
+    $build['#attached']['drupalSettings']['gary_google_maps_api']['key'] = $config->get('map_api_key');
+
     return $build;
 
   }
@@ -59,7 +53,6 @@ class ProjectsMap extends ControllerBase {
     $doc->encoding = 'utf-8';
     $doc->xmlVersion = '1.0';
     $doc->formatOutput = TRUE;
-    $xml_file_name = 'project-list.xml';
     $node = $doc->createElement('markers');
     $paranode = $doc->appendChild($node);
     $geocodes = $this->queryGeocodes();
@@ -77,7 +70,6 @@ class ProjectsMap extends ControllerBase {
     }
 
     return $doc->saveXML();
-    // return new Response(0);
   }
 
   private function queryGeocodes() {

@@ -2,9 +2,7 @@
  * @file
  * Get fieldnames and append to select
  */
- (function($, Drupal, drupalSettings) {
 
-       xmlstuff = drupalSettings.gary_google_maps_api.project_xml_list;
        var customLabel = {
          restaurant: {
            label: 'R'
@@ -14,24 +12,26 @@
          }
        };
 
-       $(document).ready(function() {
-         console.log(1);
-         var script = document.createElement('script');
-         script.type = 'text/javascript';
-         script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDmjGKO04i7Kxm_3W1MU-70oc2W5F_Bi24&callback=initMap';
-         document.body.appendChild(script);
-       });
+       var xmlstuff = drupalSettings.gary_google_maps_api.project_xml_list;
+       var key = drupalSettings.gary_google_maps_api.key;
+
+       var script = document.createElement('script');
+       script.type = 'text/javascript';
+       script.src = 'https://maps.googleapis.com/maps/api/js?key='+key+'&callback=initMap';
+       document.body.appendChild(script);
+
 
          function initMap() {
-         var map = new google.maps.Map(document.getElementById('map'), {
-           center: new google.maps.LatLng(-33.863276, 151.207977),
-           zoom: 12
-         });
-         var infoWindow = new google.maps.InfoWindow;
+           var map = new google.maps.Map(document.getElementById('map'), {
+             center: new google.maps.LatLng(-122.3834811, 47.5438196),
+             zoom: 12
+           });
 
-           // Change this depending on the name of your PHP or XML file
-           downloadUrl('https://storage.googleapis.com/mapsdevsite/json/mapmarkers2.xml', function(data) {
-             var xml = data.responseXML;
+           var infoWindow = new google.maps.InfoWindow;
+
+            var parser = new DOMParser();
+            var xml = parser.parseFromString(xmlstuff,"text/xml");
+
              var markers = xml.documentElement.getElementsByTagName('marker');
              Array.prototype.forEach.call(markers, function(markerElem) {
                var id = markerElem.getAttribute('id');
@@ -62,7 +62,7 @@
                  infoWindow.open(map, marker);
                });
              });
-           });
+           // });
          }
 
 
@@ -84,5 +84,3 @@
        }
 
        function doNothing() {}
-
- })(jQuery, Drupal, drupalSettings);

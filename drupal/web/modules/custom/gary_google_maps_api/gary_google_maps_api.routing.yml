@@ -5,9 +5,12 @@ gary_google_maps_api.build_map:
   requirements:
     _permission: 'access content'
 
-gary_google_maps_api.project_xml_list:
-  path: '/project-xml-list.xml'
+gary_google_maps_api.map_admin_form:
+  path: '/admin/config/gary_google_maps_api/adminsettings'
   defaults:
-    _controller: '\Drupal\gary_google_maps_api\Controller\ProjectsMap::getXmlOutput'
+    _form: '\Drupal\gary_google_maps_api\Form\MapAdminForm'
+    _title: 'Gary Google Maps Settings'
   requirements:
-    _permission: 'access content'
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
