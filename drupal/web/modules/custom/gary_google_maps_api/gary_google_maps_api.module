@@ -62,9 +62,6 @@ function gary_google_maps_api_entity_view(array &$build, EntityInterface $entity
       $state = $node->field_state->value;
       $zip = $node->field_zip->value;
       $p = ec_app_return_geo($address, $city, $state, $zip);
-      ksm($p->address_components);
-      ksm($p);
-      return;
       if ($p['status'] == 'OK') {
         $new_value = [
           'lat' => $p['lat'],
