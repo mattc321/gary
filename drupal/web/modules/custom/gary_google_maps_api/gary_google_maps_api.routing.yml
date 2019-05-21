@@ -1,7 +1,10 @@
 gary_google_maps_api.build_map:
-  path: '/project-map'
+  path: '/project-map/{lat}/{lng}/{zoom}'
   defaults:
     _controller: '\Drupal\gary_google_maps_api\Controller\ProjectsMap::buildMap'
+    lat: '47.6569373'
+    lng: '-122.3194635'
+    zoom: 12
   requirements:
     _permission: 'access content'
 

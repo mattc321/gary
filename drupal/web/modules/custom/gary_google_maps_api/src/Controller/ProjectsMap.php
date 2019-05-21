@@ -22,7 +22,7 @@ class ProjectsMap extends ControllerBase {
 
   private $geocodes;
 
-  public function buildMap() {
+  public function buildMap($lat, $lng, $zoom) {
 
     $config = $this->config('gary_google_maps_api.adminsettings');
 
@@ -38,6 +38,9 @@ class ProjectsMap extends ControllerBase {
 
     $build['#attached']['drupalSettings']['gary_google_maps_api']['project_xml_list'] = $this->getXmlOutput();
     $build['#attached']['drupalSettings']['gary_google_maps_api']['key'] = $config->get('map_api_key');
+    $build['#attached']['drupalSettings']['gary_google_maps_api']['center']['lat'] = $lat;
+    $build['#attached']['drupalSettings']['gary_google_maps_api']['center']['lng'] = $lng;
+    $build['#attached']['drupalSettings']['gary_google_maps_api']['center']['zoom'] = $zoom;
 
     return $build;
 
@@ -101,7 +104,6 @@ class ProjectsMap extends ControllerBase {
     $query->condition('project_node.status', 1);
     $query->condition('g.bundle', 'projects');
     $results = $query->execute()->fetchAll();
-    ksm($results);
     return $results;
   }
 

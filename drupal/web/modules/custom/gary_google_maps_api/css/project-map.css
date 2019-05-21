@@ -8,3 +8,8 @@
   position: unset !important;
   overflow: unset !important;
 }
+.project-map-info-popup strong,
+.project-map-info-popup text {
+  line-height: 1.5em;
+  padding: 0 5px;
+}

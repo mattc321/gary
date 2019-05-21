@@ -14,6 +14,7 @@
 
        var xmlstuff = drupalSettings.gary_google_maps_api.project_xml_list;
        var key = drupalSettings.gary_google_maps_api.key;
+       var center = drupalSettings.gary_google_maps_api.center;
 
        var script = document.createElement('script');
        script.type = 'text/javascript';
@@ -23,8 +24,8 @@
 
          function initMap() {
            var map = new google.maps.Map(document.getElementById('map'), {
-             center: new google.maps.LatLng(47.5438196, -122.3834811),
-             zoom: 12
+             center: new google.maps.LatLng(center.lat, center.lng),
+             zoom: Number(center.zoom)
            });
 
            var infoWindow = new google.maps.InfoWindow;
@@ -44,13 +45,14 @@
                    parseFloat(markerElem.getAttribute('lng')));
 
                var infowincontent = document.createElement('div');
+               infowincontent.className = 'project-map-info-popup';
                var strong = document.createElement('strong');
-               strong.textContent = name
+               strong.textContent = address
                infowincontent.appendChild(strong);
                infowincontent.appendChild(document.createElement('br'));
 
                var text = document.createElement('text');
-               text.textContent = address
+               text.textContent = name
                infowincontent.appendChild(text);
                infowincontent.appendChild(document.createElement('br'));
 

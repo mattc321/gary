@@ -213,13 +213,15 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
     case 'projects':
       //Messing with quick edit functionality
       //display address field as link to google maps
-      // $ad = $entity->field_address->value;
-      // $city = $entity->field_address->value;
-      // $st = $entity->field_address->value;
-      // $zip = $entity->field_address->value;
-      // $address_search = '<a href="https://www.google.com/maps?q='.
-      //   $ad.','.$city.','.$st.','.$zip.'," target="_blank">'.$ad.'</a>';
-      // $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
+      $ad = $entity->field_address->value;
+      $city = $entity->field_address->value;
+      $st = $entity->field_address->value;
+      $zip = $entity->field_address->value;
+      $lat = $entity->field_geolocation->lat;
+      $lng = $entity->field_geolocation->lng;
+      $address_search = '<a href="/project-map/'.$lat.'/'.$lng.'/17">'.$ad.'</a>';
+      $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
+
       $term_id = $entity->field_permit_city->target_id;
       if (!empty($term_id)) {
         $terms = \Drupal\taxonomy\Entity\Term::load($term_id);
