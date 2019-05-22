@@ -97,7 +97,6 @@ function ec_app_return_geo($address, $city, $st, $zip) {
 	//OK
 	//ZERO_RESULTS
 	//ERROR
-return $json->results[0];
 	if ($json->status == 'OK') {
 
 		$lat = $json->results[0]->geometry->location->lat;
@@ -109,15 +108,9 @@ return $json->results[0];
 		$response = array('status' => 'OK', 'lat' => $lat, 'long' => $long,'lat_sin' => $latsin, 'lat_cos' => $latcos, 'lng_rad' => $lngrad);
 		return $response;
 	} elseif ($json->status == 'ZERO_RESULTS'){
-		drupal_set_message(t("Oh no :( Google could not find this address to geocode."), 'warning');
-
 		return array('status' => 'ZERO_RESULTS');
 	} else {
-		drupal_set_message(t("Sorry :( Google's geocode response returned an error! Check log for entire response!"), 'warning');
-		// watchdog('ec_app', 'Function ec_app_return_geo encountered an unhandled response from it\'s geocode request to Google.
-		// The $json request likely returned Null. </br>Info: </br> api_key: %apikey</br>address_string: %addstr</br>url_submitted: %urlsub',
-    //      array('%apikey' => $key, '%addstr' => $json_addy,'%urlsub' => $url, WATCHDOG_ERROR));
-		 return array('status' => 'ERROR');
+		return array('status' => 'ERROR');
 	}
 
 

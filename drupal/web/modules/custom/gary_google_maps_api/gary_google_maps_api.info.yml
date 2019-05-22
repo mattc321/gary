@@ -3,3 +3,5 @@ type: module
 description: 'Return projects to a map using google maps api'
 core: 8.x
 package: 'Custom'
+dependencies:
+  - geolocation
