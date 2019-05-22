@@ -12,6 +12,9 @@
 /web/sites/*/settings.php
 /web/sites/*/settings.local.php
 
+# Ignore services file
+/web/sites/default/services.yml
+
 # Ignore Drupal's file directory
 /web/sites/*/files/
 
