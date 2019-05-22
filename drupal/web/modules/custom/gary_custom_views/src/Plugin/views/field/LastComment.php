@@ -57,8 +57,9 @@ class LastComment extends FieldPluginBase {
     $params = [];
 
     if (!empty($this->view->relationship)) {
-      $table = $this->view->relationship['field_tasks']->table;
-      $field = $this->view->relationship['field_tasks']->field;
+      $relationship = reset($this->view->relationship);
+      $table = $relationship->table;
+      $field = $relationship->field;
       $node_id = $table.'.'.$field;
     } else {
       $node_id = 'node_field_data.nid';
