@@ -54,35 +54,21 @@ class LastComment extends FieldPluginBase {
    */
   public function query() {
 
-    //select the last comment and user info
-    // $fields_to_add = [
-    //     'field_last_comment_cid' => 'fd.cid',
-    //     'field_last_comment_subject' => 'fd.subject',
-    //     'field_last_comment_body_value' => 'cb.comment_body_value',
-    //     'field_last_comment_uid' => 'fd.uid',
-    //     'field_last_comment_created' => 'fd.created',
-    //     'field_last_comment_name' => 'ud.name',
-    //
-    // ];
     $params = [];
-    // foreach ($fields_to_add as $fieldname => $column) {
-    //   // $this0->items[]
-    //   $sql = "SELECT ".$column."
-    //             FROM gary.comment_field_data fd
-    //             join comment__comment_body cb on cb.entity_id = fd.cid
-    //             join users_field_data ud on fd.uid = ud.uid
-    //             where fd.entity_id = node_field_data.nid
-    //             and cb.deleted = 0
-    //             order by fd.created desc
-    //             limit 0,1";
-    //   $this->aliases[] = $this->query->addField(NULL, "(".$sql.")", $fieldname, $params);
-    // }
 
+    if (!empty($this->view->relationship)) {
+      $table = $this->view->relationship['field_tasks']->table;
+      $field = $this->view->relationship['field_tasks']->field;
+      $node_id = $table.'.'.$field;
+    } else {
+      $node_id = 'node_field_data.nid';
+    }
     $sql = "SELECT cb.comment_body_value
               FROM gary.comment_field_data fd
               join comment__comment_body cb on cb.entity_id = fd.cid
               join users_field_data ud on fd.uid = ud.uid
-              where fd.entity_id = node_field_data.nid
+              where fd.entity_id =
+              $node_id
               and cb.deleted = 0
               order by fd.created desc
               limit 0,1";
@@ -97,28 +83,7 @@ class LastComment extends FieldPluginBase {
    * @{inheritdoc}
    */
   public function render(ResultRow $values) {
-    // $last_field = end($this->view->field);
-    // $fake_item = [
-    //   'alter_text' => TRUE,
-    //   'text' => 'testy',
-    // ];
-    // if (isset($last_field->last_tokens)) {
-    //   $tokens = $last_field->last_tokens;
-    // }
-    // else {
-    //   $tokens = $last_field
-    //     ->getRenderTokens($fake_item);
-    // }
-    //
-    // // $tokens = $this->getRenderTokens($item);
-    // foreach($this->aliases as $fieldname) {
-    //   $item = [
-    //     'field_name' => $fieldname,
-    //     'value' => $values->$fieldname,
-    //   ];
-    //   $this->addSelfTokens($tokens, $item);
-    // }
-    //
+
     $alias = $this->field_alias;
     return (empty($values->$alias) ? '' : $values->$alias);
   }
