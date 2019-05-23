@@ -35,12 +35,14 @@ class EntityReverseFormatter extends FormatterBase {
     $field_name = $items->getName();
     $field_type = $items->getFieldDefinition()->getType();
     $field_label = $items->getFieldDefinition()->label();
+    // ksm($items->getFieldDefinition()->getDefaultValueLiteral());
+    $parent_bundle_shared = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_bundle_shared'];
     $parent_bundle = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_bundle'];
     $parent_field_table = 'node__'.$items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'];
     $parent_field_column = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'].'_target_id';
     $label_display = $this->label;
 
-    $results = $this->getReverseResults($parent_field_table, $parent_bundle, $parent_field_column, $id);
+    $results = $this->getReverseResults($parent_field_table, $parent_bundle, $parent_field_column, $id, $parent_bundle_shared);
     $entities_relating = [];
     if (count($results) > 0) {
       foreach ($results as $key => $result) {
@@ -95,13 +97,16 @@ class EntityReverseFormatter extends FormatterBase {
    * @param  string $parent_bundle       The default bundle to look for results
    * @param  string $parent_field_column The colomn containing target ids
    * @param  string $id                  The ID of the entity to look for
+   * @param  string $parent_bundle_shared   Is the bundle shared
    * @return array                      Results of the query
    */
-  public static function getReverseResults(string $parent_field_table, string $parent_bundle, string $parent_field_column, string $id) {
+  public static function getReverseResults(string $parent_field_table, string $parent_bundle, string $parent_field_column, string $id, $parent_bundle_shared = NULL) {
     //query nodes for references to this node
     $query = \Drupal::database()->select($parent_field_table, 'n');
     $query->addField('n', 'entity_id');
-    $query->condition('n.bundle', $parent_bundle);
+    if ($parent_bundle_shared <> 1) {
+      $query->condition('n.bundle', $parent_bundle);
+    }
     $query->condition('n.'.$parent_field_column, $id);
     $query->condition('n.deleted', 0);
     $results = $query->execute()->fetchAll();

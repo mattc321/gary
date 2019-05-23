@@ -63,6 +63,9 @@ function gary_fields_entity_display_build_alter(&$build, $context) {
         $type = $node->$field_name->getFieldDefinition()->getType();
 
          if ($type=='entity_reverse_lookup' && $node->$field_name->isEmpty()) {
+           $parent_bundle_shared = $node->$field_name
+             ->getFieldDefinition()
+             ->getDefaultValueLiteral()[0]['parent_bundle_shared'];
             $parent_bundle = $node->$field_name
               ->getFieldDefinition()
               ->getDefaultValueLiteral()[0]['parent_bundle'];
@@ -73,7 +76,7 @@ function gary_fields_entity_display_build_alter(&$build, $context) {
               ->getFieldDefinition()
               ->getDefaultValueLiteral()[0]['parent_field_name'].'_target_id';
 
-            $results = EntityReverseFormatter::getReverseResults($parent_field_table, $parent_bundle, $parent_field_column, $node->id());
+            $results = EntityReverseFormatter::getReverseResults($parent_field_table, $parent_bundle, $parent_field_column, $node->id(), $parent_bundle_shared);
             $label = $node->$field_name->getFieldDefinition()->label();
             $label_display = $field_instance['label'];
             $weight = $field_instance['weight'];

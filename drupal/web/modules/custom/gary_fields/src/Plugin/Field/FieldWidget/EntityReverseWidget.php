@@ -42,14 +42,22 @@ use Drupal\field\Entity\FieldStorageConfig;
     $default_bundle = 'article';
     $default_parent_field_name = '';
     $default_parent_field_name = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_field_name'];
+    $default_bundle_shared = $items->getFieldDefinition()->getDefaultValueLiteral()[0]['parent_bundle_shared'];
     $parent_bundle = !empty($item->parent_bundle) ? $item->parent_bundle : $default_bundle;
     $parent_field_name = !empty($item->parent_field_name) ? $item->parent_field_name : $default_parent_field_name;
+    $parent_bundle_shared = !empty($item->parent_bundle_shared) ? $item->parent_bundle_shared : $default_bundle_shared;
     $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('node');
     $options = [];
     foreach ($bundles as $machine_name => $bundle) {
       $options[$machine_name] = $bundle['label'];
     }
     $element['#attached']['library'][] = 'gary_fields/garyfields';
+    $element['parent_bundle_shared'] = [
+      '#title' => $this->t('Is there multiple parent bundles?'),
+      '#type' => $form_type == 'field_config_form' ? 'checkbox' : 'hidden',
+      '#default_value' => $parent_bundle_shared,
+      '#description' => $this->t('If this field is shared between bundles check this box to return the value regardless of its bundle selected below')
+    ];
     $element['parent_bundle'] = [
       '#title' => $this->t('Parent Bundle'),
       '#type' => $form_type == 'field_config_form' ? 'select' : 'hidden',

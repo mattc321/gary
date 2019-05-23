@@ -2,6 +2,9 @@ gary_fields.field.entity_reverse_lookup:
   type: mapping
   label: 'Entity Reverse Lookup Settings'
   mapping:
+    parent_bundle_shared:
+      type: integer
+      label: 'Parent Bundle Shared'
     parent_bundle:
       type: string
       label: 'Parent Bundle'
