@@ -230,6 +230,9 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
         }
         $cityName = $terms->getName();
         $cityUrl = $terms->field_permit_url->value;
+        if (count($build['field_permit_number']['#items']) == 0) {
+          return;
+        }
         foreach ($build['field_permit_number']['#items']->getIterator() as $key => $permit) {
           $permitNum = $permit->value;
           $permitInsert = str_replace("[permit]", $permitNum, $cityUrl);
@@ -541,6 +544,23 @@ if (isset($form['actions']['save_order'])) {
     $form['field_account_reference_target_id']['#size'] = 30;
   }
 
+  if (isset($form['field_task_assigned_to'])) {
+    $assignees = GaryFunctions::loadUsersByRole('assignees');
+    $options['_none'] = '- None -';
+    foreach ($assignees as $uid => $assignee) {
+      $options[$uid] = $assignee->getDisplayName();
+    }
+    $form['field_task_assigned_to']['widget']['#options'] = $options;
+  }
+  if (isset($form['container']['field_task_assigned_to'])) {
+    $assignees = GaryFunctions::loadUsersByRole('assignees');
+    $options['_none'] = '- None -';
+    foreach ($assignees as $uid => $assignee) {
+      $options[$uid] = $assignee->getDisplayName();
+    }
+    $form['container']['field_task_assigned_to']['widget']['#options'] = $options;
+  }
+
   //load service options manually. We need to have the price available in the
   //option string. Cant use Entity Reference Views because they are loaded on all
   //other views recursively where they are present
@@ -562,6 +582,14 @@ if (isset($form['actions']['save_order'])) {
     //js listeners in js/service-price
     $form['container']['field_opportunity_service']['widget']['#attributes']['class'][] = "calculate-price";
     $form['container']['field_quantity']['widget'][0]['value']['#attributes']['class'][] = "update-price";
+  }
+}
+
+function gary_custom_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  $field_definition = $context['items']
+    ->getFieldDefinition();
+  if(method_exists($field_definition, 'bundle')) {
+    // ksm($field_definition->bundle());
   }
 }
 
@@ -608,8 +636,8 @@ function gary_custom_mail($key, &$message, $params) {
 
    //prepare email for comment tags in tasks
    case 'comment_task_tag':
-
-     $message['from'] = \Drupal::config('system.site')->get('mail');
+     // $message['from'] = \Drupal::config('system.site')->get('mail');
+     $message['from'] = $params['poster'];
 
      //Comment Tag: Account - Task Title (Project Title)
      $message['subject'] = t('Comment Tag: @account - @task_title (@parent_title)', array(
@@ -632,10 +660,9 @@ function gary_custom_mail($key, &$message, $params) {
      $message['headers'] = [
       'content-type' => 'text/html',
       'MIME-Version' => '1.0',
-      'reply-to' => $message['from'],
-      'from' => 'Admin <'.$message['from'].'>'
+      'reply-to' => $params['poster'],
+      'from' => $params['poster_name'].' <'.$params['poster'].'>'
      ];
-
      $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
      $host = \Drupal::request()->getSchemeAndHttpHost();
      $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
