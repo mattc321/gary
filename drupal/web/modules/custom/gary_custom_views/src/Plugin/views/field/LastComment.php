@@ -55,8 +55,7 @@ class LastComment extends FieldPluginBase {
   public function query() {
 
     $params = [];
-
-    if (!empty($this->view->relationship)) {
+    if (!empty($this->view->relationship) && !empty($this->view->field['field_last_comment']->relationship)) {
       $relationship = reset($this->view->relationship);
       $table = $relationship->table;
       $field = $relationship->field;
