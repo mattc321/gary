@@ -3,8 +3,25 @@
  * Custom Scripts
  */
  (function($, Drupal, drupalSettings) {
+
+   var initialized;
+
+   function addSwitchUnitMobileView() {
+     if (!initialized) {
+       initialized = true;
+       $('.js-view-dom-id-project-units-block_3')
+        .before(
+          '<div class="switch-unit-view">'+
+            '<span>Edit Mode</span>'+
+          '</div>');
+     }
+   }
+
+
    Drupal.behaviors.garyCustom = {
      attach: function (context, settings) {
+
+       addSwitchUnitMobileView();
 
         //switch the desired selectors
          $.fn.toggleHidden = function(selector_from, selector_to) {
@@ -16,6 +33,12 @@
 
          };
 
+         //switch mobile view
+         $('.switch-unit-view').once('.switch-unit-view').click(function(e){
+           $('.js-view-dom-id-project-units-block_3').toggle('hidden');
+           $('#inline-pg-form-field-project-units').toggle('hidden');
+           $('.units-mobile-edit-view').toggle('hidden');
+         });
 
 
          //palette selector dark palette night mode
@@ -32,6 +55,7 @@
              slider_html += '</label>';
 
            $('a[palette-selector="change-palette"]').once('a').append(slider_html);
+
          });
 
          $('a[palette-selector="change-palette"]').once('a[palette-selector="change-palette"]').click(function(e){
@@ -46,8 +70,6 @@
              ajaxObject.execute();
            }, 200);
          });
-
-
 
      }
    };

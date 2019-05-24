@@ -110,6 +110,14 @@ class GaryViewsFormatter extends FormatterBase {
       if (!empty($this->getSetting('mobile_view_display'))) {
         $view->setDisplay($this->getSetting('mobile_view_display'));
       }
+      if ($this->getSetting('mobile_view') == 'project_units') {
+        $view_two_mobile = Views::getView($this->getSetting('mobile_view'));
+        $view_two_mobile->setDisplay('block_4');
+        $view_two_mobile->setArguments($args);
+        $view_two_mobile->execute();
+        $elements['#mobile_units_view'] = $view_two_mobile->buildRenderable();
+        
+      }
     } else {
       $view = Views::getView($this->getSetting('view_machine_name'));
       //load the display if one is set

@@ -14,5 +14,8 @@ custom:
     component:
       css/slider.css: {}
   dependencies:
+    - core/drupal
     - core/jquery
+    - core/jquery.once
     - core/drupal.ajax
+    - core/views.ajax
