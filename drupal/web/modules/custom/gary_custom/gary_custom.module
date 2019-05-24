@@ -582,7 +582,8 @@ if (isset($form['actions']['save_order'])) {
 function gary_custom_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
   //change available options to assignees role only
   if (isset($element['#field_parents'])) {
-    if (in_array('form_field_field_task_assigned_to',$element['#field_parents'])) {
+    $first = reset($element['#field_parents']);
+    if ($first == 'form_field_field_task_assigned_to') {
       $assignees = GaryFunctions::loadUsersByRole('assignees');
       $options['_none'] = '- None -';
       foreach ($assignees as $uid => $assignee) {
