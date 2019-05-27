@@ -11,6 +11,14 @@ function gary_custom_views_views_data_alter(array &$data) {
       'id' => 'field_unit_types_count',
     ],
   ];
+  $data['node']['field_total_unit_count'] = [
+    'title' => t('Total Unit Count'),
+    'field' => [
+      'title' => t('Total Unit Count'),
+      'help' => t('Count totla units with sum of mf qty'),
+      'id' => 'field_total_unit_count',
+    ],
+  ];
   $data['node']['field_url_path_alias'] = [
     'title' => t('URL Path Alias'),
     'field' => [

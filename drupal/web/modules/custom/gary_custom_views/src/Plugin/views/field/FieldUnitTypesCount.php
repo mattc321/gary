@@ -101,7 +101,60 @@ class FieldUnitTypesCount extends FieldPluginBase {
       $params = ['aggregate' => TRUE];
       $this->field_alias = $this->query->addField(NULL, "(".$sql.")", 'field_unit_types_count', $params);
       $this->addAdditionalFields();
+
     } else {
+
+      //count all of the units per account
+      if ($this->view->filter['field_project_status_target_id']->operator == 'not') {
+        $op = 'not in ';
+      } else {
+        $op = $this->view->filter['field_project_status_target_id']->operator;
+      }
+      $filter = $this->view->filter['field_project_status_target_id']->value;
+      $tids = '';
+      $i = 0;
+      foreach($filter as $key => $filter_value) {
+        $i++;
+        if (count($filter) == $i) {
+          $tids .= $filter_value;
+        } else {
+          $tids .= $filter_value.',';
+        }
+      }
+
+      $filter_by = $op.'('.$tids.')';
+
+      //96 = MF then sum the mf qty field
+      if ($tid == 96) {
+        $sql = "SELECT sum(field_mf_qty_value)
+        from node_field_data as project_node
+        join node__field_account_reference account_ref on project_node.nid = account_ref.entity_id
+        join node__field_project_units proj_units on project_node.nid = proj_units.entity_id
+        JOIN paragraph__field_mf_qty pq ON pq.entity_id = proj_units.field_project_units_target_id
+        join paragraph__field_unit_types ut ON ut.entity_id = proj_units.field_project_units_target_id
+        join node__field_project_status proj_status on project_node.nid = proj_status.entity_id
+        where field_account_reference_target_id = node_field_data_node__field_account_reference_nid
+        and project_node.type = 'projects'
+        and ut.field_unit_types_target_id = " . $tid .
+        " and proj_status.field_project_status_target_id ". $filter_by;
+
+      } else {
+        $sql = "SELECT COUNT(proj_units.entity_id)
+        from node_field_data as project_node
+        join node__field_account_reference account_ref on project_node.nid = account_ref.entity_id
+        join node__field_project_units proj_units on project_node.nid = proj_units.entity_id
+        join paragraph__field_unit_types ut ON ut.entity_id = proj_units.field_project_units_target_id
+        join node__field_project_status proj_status on project_node.nid = proj_status.entity_id
+        where field_account_reference_target_id = node_field_data_node__field_account_reference_nid
+        and project_node.type = 'projects'
+        and ut.field_unit_types_target_id = " . $tid .
+        " and proj_status.field_project_status_target_id ". $filter_by;
+      }
+
+
+      $params = ['aggregate' => TRUE];
+      $this->field_alias = $this->query->addField(NULL, "(".$sql.")", 'field_unit_types_count', $params);
+      $this->addAdditionalFields();
 
     }
   }
