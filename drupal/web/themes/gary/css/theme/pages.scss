@@ -260,6 +260,22 @@
   }
 }
 
+.proximity-map {
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  margin-left: 10px;
+}
+.palette-dark {
+  .proximity-map svg {
+    fill: $light;
+  }
+}
+.palette-light {
+  .proximity-map svg {
+    fill: $dark;
+  }
+}
 @include min-width($break-large) {
   .node__content {
     .field {

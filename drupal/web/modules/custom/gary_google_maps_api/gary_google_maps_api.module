@@ -45,35 +45,21 @@ function allContentOfType() {
   return($result);
 }
 
-function gary_google_maps_api_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  // ksm(count(autoTaskIds()));
-  if (isset($_GET['process']) == 1 && $entity->id()=='6551') {
-    // $csv = array_map('str_getcsv', file('services_export_ready_friday_test.csv'));
-    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+function gary_google_maps_api_entity_presave(EntityInterface $entity) {
+  if ($entity->bundle() == 'projects') {
 
-    $node_ids = allContentOfType();
-    $node_ids = array_keys($node_ids);
-    foreach ($node_ids as $key => $node_id) {
-
-      $node = $node_storage->load($node_id);
-
-      $address = $node->field_address->value;
-      $city = $node->field_city->value;
-      $state = $node->field_state->value;
-      $zip = $node->field_zip->value;
-      $p = ec_app_return_geo($address, $city, $state, $zip);
-      if ($p['status'] == 'OK') {
-        $new_value = [
-          'lat' => $p['lat'],
-          'lng' => $p['long'],
-        ];
-        $node->set('field_geolocation', $new_value);
-        $node->save();
-      }
-
+    $address = $entity->field_address->value;
+    $city = $entity->field_city->value;
+    $state = $entity->field_state->value;
+    $zip = $entity->field_zip->value;
+    $p = ec_app_return_geo($address, $city, $state, $zip);
+    if ($p['status'] == 'OK') {
+      $new_value = [
+        'lat' => $p['lat'],
+        'lng' => $p['long'],
+      ];
+      $entity->set('field_geolocation', $new_value);
     }
-
-
   }
 }
 

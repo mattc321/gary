@@ -1,6 +1,7 @@
 <?php
 Use Drupal\image\Entity\ImageStyle;
 use Drupal\user\Entity\User;
+use Drupal\Core\Render\Markup;
 
 /**
  * Implements template_preprocess_block().
@@ -28,6 +29,28 @@ use Drupal\user\Entity\User;
 
    }
  }
+
+function gary_preprocess_field(&$variables, $hook) {
+  $element = $variables['element'];
+  if ($element['#field_name'] == 'field_address' && $element['#view_mode'] == 'full') {
+    if (isset($element['#object'])) {
+      $entity = $element['#object'];
+      if ($entity->bundle() == 'projects') {
+        //display address field as link to google maps
+        $ad = $entity->field_address->value;
+        $city = $entity->field_city->value;
+        $st = $entity->field_state->value;
+        $zip = $entity->field_zip->value;
+        $lat = $entity->field_geolocation->lat;
+        $lng = $entity->field_geolocation->lng;
+        $google_search = '<a title="Open In Google Maps" href="https://www.google.com/maps/place/'.$ad.','.$city.','.$st.','.$zip.'">'.$ad.'</a>';
+        $proximity_search_url = '/project-map/'.$lat.'/'.$lng.'/17';
+        $variables['google_search'] = Markup::create($google_search);
+        $variables['proximity_search_url'] = $proximity_search_url;
+      }
+    }
+  }
+}
 
 function gary_preprocess_html(&$variables) {
   //send the color schema over to the body class

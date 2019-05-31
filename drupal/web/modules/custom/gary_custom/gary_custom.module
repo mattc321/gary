@@ -211,17 +211,6 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
   $helper = new GaryFunctions;
   switch ($entity->bundle()){
     case 'projects':
-      //Messing with quick edit functionality
-      //display address field as link to google maps
-      $ad = $entity->field_address->value;
-      $city = $entity->field_address->value;
-      $st = $entity->field_address->value;
-      $zip = $entity->field_address->value;
-      $lat = $entity->field_geolocation->lat;
-      $lng = $entity->field_geolocation->lng;
-      $address_search = '<a href="/project-map/'.$lat.'/'.$lng.'/17">'.$ad.'</a>';
-      $build['field_address'][0]['#context']['value'] = Markup::create($address_search);
-
       $term_id = $entity->field_permit_city->target_id;
       if (!empty($term_id)) {
         $terms = \Drupal\taxonomy\Entity\Term::load($term_id);
@@ -514,10 +503,23 @@ function gary_custom_form_node_projects_form_alter(&$form, FormStateInterface $f
 
 }
 
-function gary_custom_form_node_tasks_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function gary_custom_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
+  //projects exposed filter form edits
+  $view_ids = ['projects'];
+  $view = $form_state->getStorage('view');
+  if ($form_id == 'views_exposed_form' && in_array($view['view']->id(), $view_ids)) {
+    //change operator to radios and unset those we dont want to use
+    $form['field_project_status_target_id_op']['#type'] = 'radios';
+    unset($form['field_project_status_target_id_op']['#options']['and']);
+    unset($form['field_project_status_target_id_op']['#options']['empty']);
+    unset($form['field_project_status_target_id_op']['#options']['not empty']);
+
+    $form['field_project_status_target_id_op']['#options']['or'] = 'Equal to';
+    $form['field_project_status_target_id_op']['#options']['not'] = 'Not equal to';
+    $form['field_project_status_target_id_op']['#title'] = t('Project Status');
+  }
 }
-
 
 function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
