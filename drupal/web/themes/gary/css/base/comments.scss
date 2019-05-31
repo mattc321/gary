@@ -58,6 +58,19 @@ article.comment {
       }
     }
   }
+  .comment-desc {
+    color: $light-grey;
+  }
+  .field--name-comment-body {
+    p {
+      color: $dark;
+    }
+  }
+}
+.palette-light {
+  .comment-desc {
+    color: $grey;
+  }
 }
 
 .ajax-comments-form-reply {
@@ -99,7 +112,6 @@ h2.comment-form__title {
 .comment-desc {
     display: inline-block;
     float: right;
-    color: $grey;
     @include max-width($break-small) {
       display: none;
     }

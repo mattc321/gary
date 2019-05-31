@@ -391,7 +391,9 @@ div[class*="jelly-form-edit-save-order"] {
 .node-projects-edit-form {
   .field--name-field-tasks,
   .form-item-field-project-image-0-alt,
-  .form-item-field-project-image-0-title {
+  .form-item-field-project-image-0-title,
+  #edit-field-project-units-wrapper,
+  #edit-field-sub-contractor-wrapper {
     display: none;
   }
 }

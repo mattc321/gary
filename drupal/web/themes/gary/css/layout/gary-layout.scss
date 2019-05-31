@@ -43,7 +43,8 @@ body {
 
   &.palette-dark {
     p {
-      color: $dark;
+      // color: $dark;
+      color: $light;
     }
     a {
       color:$blue;
