@@ -209,8 +209,12 @@ function gary_custom_link_alter(&$variables) {
 
 function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   $helper = new GaryFunctions;
+
+
+
   switch ($entity->bundle()){
     case 'projects':
+
       $term_id = $entity->field_permit_city->target_id;
       if (!empty($term_id)) {
         $terms = \Drupal\taxonomy\Entity\Term::load($term_id);

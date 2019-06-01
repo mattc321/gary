@@ -310,12 +310,12 @@ class InlineForm extends FormBase {
     //if tasks then send a notification
     //had to do this here because the task gets created before its appended to a parent node
     //and sending the mail directly in the ajax response breaks the process for some reason
-    if($pg->bundle() == 'tasks') {
-      if (!empty($this->newNode)) {
-        $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
-        $response->addCommand(new InvokeCommand(NULL, 'notifyAssignee', [$this->newNode->id(), $node->id()]));
-      }
-    }
+    // if($pg->bundle() == 'tasks') {
+    //   if (!empty($this->newNode)) {
+    //     $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+    //     $response->addCommand(new InvokeCommand(NULL, 'notifyAssignee', [$this->newNode->id(), $node->id()]));
+    //   }
+    // }
 
     return $response;
   }
