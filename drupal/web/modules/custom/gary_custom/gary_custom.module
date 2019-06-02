@@ -211,10 +211,30 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
   $helper = new GaryFunctions;
 
 
-
   switch ($entity->bundle()){
     case 'projects':
-
+    // if (isset($_GET['ss'])) {
+    //   $node = \Drupal::entityTypeManager()->getStorage('node')->load(26793);
+    //   $current = $node->get('field_project_units')->getValue();
+    //
+    //   $pg_items = [];
+    //   for ($i = 1; $i<=5; $i++) {
+    //     $pg_item = Paragraph::create(['type' => 'project_units',]);
+    //     $pg_item->isNew();
+    //     $pg_item->save();
+    //
+    //     $pg_items[] = array(
+    //         'target_id' => $pg_item->id(),
+    //         'target_revision_id' => $pg_item->getRevisionId(),
+    //       );
+    //   }
+    //   ksm($current);
+    //   ksm($pg_items);
+    //   $current = array_merge($current, $pg_items);
+    //   ksm($current);
+    //   $node->set('field_project_units', $current);
+    //   $node->save();
+    // }
       $term_id = $entity->field_permit_city->target_id;
       if (!empty($term_id)) {
         $terms = \Drupal\taxonomy\Entity\Term::load($term_id);

@@ -116,7 +116,7 @@ class GaryViewsFormatter extends FormatterBase {
         $view_two_mobile->setArguments($args);
         $view_two_mobile->execute();
         $elements['#mobile_units_view'] = $view_two_mobile->buildRenderable();
-        
+
       }
     } else {
       $view = Views::getView($this->getSetting('view_machine_name'));
@@ -217,7 +217,7 @@ class GaryViewsFormatter extends FormatterBase {
 
       $form = \Drupal::formBuilder()
         ->getForm('Drupal\gary_field_formatter\Form\InlineForm', $pg_name, $host_field,
-        $host_node_id, $final_dom_id, $form_class, $type, $keep_expanded);
+        $host_node_id, $final_dom_id, $form_class, $type, $keep_expanded, $switch_dom_id);
 
       $elements['#inline_form']['container']['form'] = $form;
 

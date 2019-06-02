@@ -18,6 +18,17 @@
           }
         };
 
+        //reload and jump
+         $.fn.reloadJump = function(vid_from, vid_to) {
+           //no domid is null just reload the page
+           location.reload();
+           //we'd prefer to refresh the view with ajax
+           //but the form isnt being rebuilt correctly. just
+           //have to refresh the whole page for now.
+
+         };
+
+
         //switch the desired view
          $.fn.switchView = function(vid_from, vid_to) {
            var $vid_from = $('.'+vid_from);

@@ -20,11 +20,13 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity;
 use Drupal\Core\Ajax;
 use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\node\Entity\Node;
 use Drupal\gary_custom\GaryFunctions;
+use Drupal\Core\Url;
 
 /**
  * Contribute form.
@@ -128,7 +130,8 @@ class InlineForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $pg_name = NULL,
-        $host_field = NULL, $host_node_id = NULL, $dom_id = NULL, $form_class = NULL, $type = NULL, $keep_expanded = NULL) {
+        $host_field = NULL, $host_node_id = NULL, $dom_id = NULL, $form_class = NULL, $type = NULL, $keep_expanded = NULL,
+      $switch_dom_id = NULL) {
 
     //get and set the list of field defs and vars
     $this->setFieldDefs($pg_name, $type);
@@ -207,6 +210,7 @@ class InlineForm extends FormBase {
     $form['#host'] = $pg;
     $form['#field_name'] = $pg_name;
     $form['#dom_id'] = $dom_id;
+    $form['#switch_dom_id'] = $switch_dom_id;
     $form['#keep_expanded'] = $keep_expanded;
 
     //get custom form classes if there are any
@@ -216,6 +220,19 @@ class InlineForm extends FormBase {
         $form_classes[] = $class;
       }
       $form['container']['#attributes']['class'] = $form_classes;
+    }
+
+    //add multiple functionality for project units type
+    if ($pg_name == 'project_units') {
+      $form['container']['add_multiple'] = [
+        '#type' => 'select',
+        '#title' => 'Add Items',
+        '#options' => [
+          0 => '-',
+          5 => '5',
+          10 => '10'
+        ]
+      ];
     }
 
     $form['container']['submit'] = [
@@ -277,6 +294,15 @@ class InlineForm extends FormBase {
 
     //add the new entity if its paragraph
     if ($this->getTargetType() == 'paragraph') {
+
+      //if add multiple is selected then add blank rows
+      if (isset($form_values['add_multiple'])) {
+        if ($form_values['add_multiple'] > 0) {
+          $qty = $form_values['add_multiple'];
+          $this->addPgBlankItems($pg, $pg_name, $pg_values, $qty);
+          return;
+        }
+      }
       $this->addPgItem($pg, $pg_name, $pg_values);
     }
 
@@ -288,6 +314,7 @@ class InlineForm extends FormBase {
    */
   public function ajaxFormRebuild(array &$form, FormStateInterface $form_state) {
     $pg = $form['#host'];
+    $form_values = $form_state->getValues();
     if ($form_state->hasAnyErrors()) {
       $wrapper = 'inline_pg_form_'.$this->getHostFieldName();
 
@@ -299,8 +326,20 @@ class InlineForm extends FormBase {
     }
 
     $response = new \Drupal\Core\Ajax\AjaxResponse();
-    $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
     $response->addCommand(new InvokeCommand(NULL, 'clearValues', ['#'.$this->getFormId()]));
+
+    if (isset($form_values['add_multiple'])) {
+      if ($form_values['add_multiple'] > 0) {
+        $currentURL = Url::fromRoute('<current>');
+        // $response->addCommand(new RedirectCommand($currentURL->toString()));
+        // $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#switch_dom_id']]));
+        $response->addCommand(new InvokeCommand(NULL, 'reloadJump', [$form['#dom_id'], $form['#switch_dom_id']]));
+        // $response->addCommand(new InvokeCommand(NULL, 'switchView', [$form['#dom_id'], $form['#switch_dom_id']]));
+        return $response;
+      }
+    }
+
+    $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
 
     //if keep_expanded is false hide it
     if (!$form['#keep_expanded']) {
@@ -347,8 +386,10 @@ class InlineForm extends FormBase {
     $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
     $host_field = $this->getHostFieldName(); //the pg field name on the node
 
+    //create a paragraph item
     $pg_item = Paragraph::create(['type' => $pg->bundle(),]);
 
+    //loop through form values and add to pg item
     foreach ($pg_values as $field_name => $value) {
       if (trim($value) != "" || !empty($value)) {
         $pg_item->set($field_name, $value);
@@ -363,6 +404,36 @@ class InlineForm extends FormBase {
         'target_id' => $pg_item->id(),
         'target_revision_id' => $pg_item->getRevisionId(),
       );
+    $node->set($host_field, $current);
+    $node->save();
+    return;
+  }
+
+  /**
+   * Add a new field collection item
+   * @param array $pg      The pg host
+   * @param string $pg_name   The pg name
+   * @param array $pg_values Array containing submitted values
+   * @param integer $qty The qty of blank rows to add
+   */
+  private function addPgBlankItems($pg, $pg_name, &$pg_values, $qty) {
+    //load the parent node
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+    $host_field = $this->getHostFieldName(); //the pg field name on the node
+    $current = $node->get($host_field)->getValue();
+
+    $pg_items = [];
+    for ($i = 1; $i<=$qty; $i++) {
+      $pg_item = Paragraph::create(['type' => $pg->bundle(),]);
+      $pg_item->isNew();
+      $pg_item->save();
+
+      $pg_items[] = array(
+          'target_id' => $pg_item->id(),
+          'target_revision_id' => $pg_item->getRevisionId(),
+        );
+    }
+    $current = array_merge($current, $pg_items);
     $node->set($host_field, $current);
     $node->save();
     return;
