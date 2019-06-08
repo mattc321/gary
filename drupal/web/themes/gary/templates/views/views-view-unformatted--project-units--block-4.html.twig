@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+{% for key,row in rows %}
+
+  {%
+    set row_classes = [
+      default_row_class ? 'views-row',
+    ]
+  %}
+  <div{{ row.attributes.addClass(row_classes) }}>
+    <details class="unit-name">
+      <summary>
+        {% include ('@gary/../symbols/edit.svg') %}
+        <div class="inline-div"><strong>{{ row.unit_name }}</strong></div>
+        <div class="inline-div unit-summary">
+          <span class="span-block">{{ row.description }}</span>
+          <span class="span-block">{{ row.beds }}</span>
+        </div>
+      </summary>
+      {{- row.content -}}
+    </details>
+  </div>
+{% endfor %}

@@ -108,3 +108,45 @@ td {
   }
 
 }
+
+details.unit-name {
+
+  margin-top: unset;
+  margin-bottom: unset;
+  border: none;
+
+  summary {
+
+    padding: 1em;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+      &:focus,
+      &:active,
+      &:hover {
+        border: none;
+        outline: none;
+
+        svg g {
+          fill: $light;
+        }
+
+      }
+
+      svg {
+        width: 17px;
+        position: relative;
+        top: 3px;
+        left: -10px;
+      }
+  }
+}
+
+.inline-div {
+  display: inline-block;
+}
+
+span.span-block {
+  display: block;
+}

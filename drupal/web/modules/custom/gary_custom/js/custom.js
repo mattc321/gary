@@ -23,6 +23,13 @@
 
        addSwitchUnitMobileView();
 
+       // var unit_controller = new ScrollMagic.Controller();
+       // var unit_scene = new ScrollMagic.Scene({triggerElement: "#trigger1", duration: 300})
+       //   .setPin("#pin1")
+       //   .addIndicators({name: "wtf1 (duration: 300)"}) // add indicators (requires plugin)
+       //   .addTo(unit_controller);
+
+
         //switch the desired selectors
          $.fn.toggleHidden = function(selector_from, selector_to) {
            var $selector_from = $('.'+selector_from);

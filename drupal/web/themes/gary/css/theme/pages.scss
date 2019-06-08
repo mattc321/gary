@@ -113,8 +113,9 @@
 }
 
 .node__content {
-    margin: 20px;
-
+    @include min-width($break-medium) {
+      margin: 20px;
+    }
     @include max-width($break-small) {
       .field--name-field-permit-number .field__label {
           margin-right: 20%;

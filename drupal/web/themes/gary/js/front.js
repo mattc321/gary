@@ -54,19 +54,19 @@
       // var scale_tween = TweenMax.to("#block-gary-page-title", .3, {
       //   transform: 'translate(40px, -35px) scale(.75)'
       // });
-
-      var titleController = new ScrollMagic.Controller();
-      var titleScene = new ScrollMagic.Scene({
-        triggerHook: .1,
-        triggerElement: '#block-gary-page-title'
-        })
-            // .setPin('#block-gary-page-title')
-            // .setTween(scale_tween)
-            // .addIndicators(true)
-            // .setTween("#block-gary-page-title", .1, {transform: 'scale(.75)'})
-            // .setTween(hide_tween)
-            // .setClassToggle("#block-gary-page-title", "sticky-header")
-            // .addTo(titleController);
+      //
+      // var titleController = new ScrollMagic.Controller();
+      // var titleScene = new ScrollMagic.Scene({
+      //   triggerHook: .1,
+      //   triggerElement: '.sticky-trigger'
+      //   })
+      //       .setPin('.views-field-field-unit')
+      //       .setTween(scale_tween)
+      //       .addIndicators(true)
+      //       .setTween(".views-field-field-unit", .1, {transform: 'scale(.75)'})
+      //       .setTween(hide_tween)
+      //       .setClassToggle(".views-field-field-unit", "sticky-header")
+      //       .addTo(titleController);
    }
   };
 

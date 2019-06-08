@@ -147,6 +147,31 @@ function gary_preprocess_comment(&$variables) {
 
 }
 
+function gary_preprocess_views_view_unformatted__project_units__block_4(&$variables) {
+  $view = $variables['view'];
+  $rows = $variables['rows'];
+  foreach ($rows as $id => $row) {
+    if (!empty($row['content']['#row']->_entity->field_unit->value)) {
+      $unit_name = $row['content']['#row']->_entity->field_unit->value;
+    } else {
+      $unit_name = 'Unnamed';
+    }
+    if (!empty($row['content']['#row']->_entity->field_description->value)) {
+      $desc = $row['content']['#row']->_entity->field_description->value;
+    } else {
+      $desc = '';
+    }
+    if (!empty($row['content']['#row']->_entity->field_beds->value)) {
+      $beds = $row['content']['#row']->_entity->field_beds->value;
+    } else {
+      $beds = '';
+    }
+    $variables['rows'][$id]['description'] = 'Desc: ' . $desc;
+    $variables['rows'][$id]['beds'] = 'Beds: ' . $beds;
+    $variables['rows'][$id]['unit_name'] = $unit_name;
+  }
+}
+
 function gary_preprocess_form_element(&$variables) {
   // $element = $variables['element'];
   // if ($element['#type'] == 'search') {
