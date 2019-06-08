@@ -34,7 +34,7 @@ function gary_field_formatter_help($route_name, RouteMatchInterface $route_match
        'variables' => [
          'inline_form' => NULL,
          'view' => NULL,
-         'mobile_units_view' => NULL,
+         // 'mobile_units_view' => NULL,
          'switch_view' => NULL,
          'error' => NULL
        ],
