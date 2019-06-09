@@ -2,6 +2,7 @@
 Use Drupal\image\Entity\ImageStyle;
 use Drupal\user\Entity\User;
 use Drupal\Core\Render\Markup;
+use Drupal\gary_custom\GaryFunctions;
 
 /**
  * Implements template_preprocess_block().
@@ -151,23 +152,27 @@ function gary_preprocess_views_view_unformatted__project_units__block_4(&$variab
   $view = $variables['view'];
   $rows = $variables['rows'];
   foreach ($rows as $id => $row) {
-    if (!empty($row['content']['#row']->_entity->field_unit->value)) {
-      $unit_name = $row['content']['#row']->_entity->field_unit->value;
+    $entity = $row['content']['#row']->_entity;
+    $summary_string = '';
+    $desc = '';
+    if ($entity->hasField('field_unit_types') && !$entity->get('field_unit_types')->isEmpty()) {
+      $term_name = GaryFunctions::loadEntityRef($entity, 'field_unit_types')->getName();
+      $summary_string .= $term_name;
+    }
+    if (!empty($entity->field_unit->value)) {
+      $unit_name = $entity->field_unit->value;
     } else {
       $unit_name = 'Unnamed';
     }
-    if (!empty($row['content']['#row']->_entity->field_description->value)) {
-      $desc = $row['content']['#row']->_entity->field_description->value;
-    } else {
-      $desc = '';
+    if (!empty($entity->field_description->value)) {
+      $desc = $entity->field_description->value;
     }
-    if (!empty($row['content']['#row']->_entity->field_beds->value)) {
-      $beds = $row['content']['#row']->_entity->field_beds->value;
-    } else {
-      $beds = '';
+    if (!empty($entity->field_beds->value)) {
+      $beds = $entity->field_beds->value;
+      $summary_string .= ((!empty($summary_string)) ? ', ' : '') . $beds . ' beds';
     }
     $variables['rows'][$id]['description'] = 'Desc: ' . $desc;
-    $variables['rows'][$id]['beds'] = 'Beds: ' . $beds;
+    $variables['rows'][$id]['summary'] = $summary_string;
     $variables['rows'][$id]['unit_name'] = $unit_name;
   }
 }

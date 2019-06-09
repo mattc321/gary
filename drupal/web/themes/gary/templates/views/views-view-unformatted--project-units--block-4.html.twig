@@ -32,8 +32,8 @@
         {% include ('@gary/../symbols/edit.svg') %}
         <div class="inline-div"><strong>{{ row.unit_name }}</strong></div>
         <div class="inline-div unit-summary">
+          <span class="span-block">{{ row.summary }}</span>
           <span class="span-block">{{ row.description }}</span>
-          <span class="span-block">{{ row.beds }}</span>
         </div>
       </summary>
       {{- row.content -}}
