@@ -547,10 +547,18 @@ function gary_custom_form_views_exposed_form_alter(&$form, FormStateInterface $f
 
 function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
-if (isset($form['actions']['save_order'])) {
-  $form['actions']['save_order']['#attributes']['jelly'] = 'check';
-  // $form['actions']['save_order']['#attributes']['class'][] = 'jelly';
-}
+  if ($form_id == 'views_form_project_units_block_2_26793' ||
+$form_id == 'views_form_project_units_block_4_26793') {
+    //fix the units mobile block submit issue #2820347
+    $current_stack = \Drupal::service('path.current')->getPath();
+    $alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_stack);
+    $form['#action'] = $alias;
+  }
+
+  if (isset($form['actions']['save_order'])) {
+    $form['actions']['save_order']['#attributes']['jelly'] = 'check';
+    // $form['actions']['save_order']['#attributes']['class'][] = 'jelly';
+  }
   //use select2 type on these multiselect elements
   $multiselects = [
     'field_task_assigned_to_target_id',
