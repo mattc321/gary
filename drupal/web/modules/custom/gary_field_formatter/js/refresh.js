@@ -18,10 +18,25 @@
           }
         };
 
+        //refresh the desired view
+         $.fn.refreshAndHide = function(dom_id, switch_id) {
+           //no domid is null just reload the page
+           let $view = $('.'+dom_id);
+           let $switch_view = $('.'+switch_id);
+           $view.trigger('RefreshView');
+           $switch_view.trigger('RefreshView');
+           $switch_view.toggle('hidden');
+         };
+
         //reload and jump
          $.fn.reloadJump = function(vid_from, vid_to) {
            //no domid is null just reload the page
            location.reload();
+           // let $view = $('.'+vid_from);
+           // let $viewto = $('.'+vid_to);
+           // $view.trigger('RefreshView');
+           // $viewto.trigger('RefreshView');
+           // $view.toggle('hidden');
            //we'd prefer to refresh the view with ajax
            //but the form isnt being rebuilt correctly. just
            //have to refresh the whole page for now.

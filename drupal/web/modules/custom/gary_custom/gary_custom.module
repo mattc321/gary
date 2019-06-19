@@ -547,12 +547,15 @@ function gary_custom_form_views_exposed_form_alter(&$form, FormStateInterface $f
 
 function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
-  if ($form_id == 'views_form_project_units_block_2_26793' ||
-$form_id == 'views_form_project_units_block_4_26793') {
-    //fix the units mobile block submit issue #2820347
-    $current_stack = \Drupal::service('path.current')->getPath();
-    $alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_stack);
-    $form['#action'] = $alias;
+  //fix the views forms. If form is refreshred by ajax
+  //the action gets overwritten. Change action back to current page issue #2820347
+  if ($form_state->getFormObject() instanceof \Drupal\views\Form\ViewsForm) {
+    //only proceed to overwrite action on ViewsForm hitting views.ajax
+    if (\Drupal::routeMatch()->getRouteName() == 'views.ajax') {
+      $current_stack = \Drupal::service('path.current')->getPath();
+      $alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_stack);
+      $form['#action'] = str_replace('//', '/', $alias); //double slashses returned I have no idea
+    }
   }
 
   if (isset($form['actions']['save_order'])) {

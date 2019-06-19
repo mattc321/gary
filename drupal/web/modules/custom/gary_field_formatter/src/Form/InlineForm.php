@@ -330,16 +330,20 @@ class InlineForm extends FormBase {
 
     if (isset($form_values['add_multiple'])) {
       if ($form_values['add_multiple'] > 0) {
-        $currentURL = Url::fromRoute('<current>');
+        // $currentURL = Url::fromRoute('<current>');
         // $response->addCommand(new RedirectCommand($currentURL->toString()));
         // $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#switch_dom_id']]));
+        // $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
         $response->addCommand(new InvokeCommand(NULL, 'reloadJump', [$form['#dom_id'], $form['#switch_dom_id']]));
         // $response->addCommand(new InvokeCommand(NULL, 'switchView', [$form['#dom_id'], $form['#switch_dom_id']]));
+        // $response->addCommand(new InvokeCommand(NULL, 'toggleElement', [$form['#dom_id'], 'hidden']));
         return $response;
       }
     }
 
+    // $response->addCommand(new InvokeCommand(NULL, 'refreshAndHide', [$form['#dom_id'], $form['#switch_dom_id']]));
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$form['#dom_id']]));
+    // $response->addCommand(new InvokeCommand(NULL, 'switchView', [$form['#switch_dom_id'], $form['#dom_id']]));
 
     //if keep_expanded is false hide it
     if (!$form['#keep_expanded']) {
