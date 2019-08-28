@@ -585,11 +585,22 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
   //this field further overwritten in hooK_field_widget_form_alter
   if (isset($form['container']['field_task_assigned_to'])) {
     $assignees = GaryFunctions::loadUsersByRole('assignees');
+    $options = [];
     $options['_none'] = '- None -';
     foreach ($assignees as $uid => $assignee) {
       $options[$uid] = $assignee->getDisplayName();
     }
     $form['container']['field_task_assigned_to']['widget']['#options'] = $options;
+  }
+
+  if (isset($form['field_account_manager_target_id'])) {
+    $assignees = GaryFunctions::loadUsersByRole('assignees');
+    $options = [];
+    $options['All'] = t('- Any -');
+    foreach ($assignees as $uid => $assignee) {
+      $options[$uid] = $assignee->getDisplayName();
+    }
+    $form['field_account_manager_target_id']['#options'] = $options;
   }
 
   //load service options manually. We need to have the price available in the

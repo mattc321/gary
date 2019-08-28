@@ -44,7 +44,7 @@ function gary_preprocess_field(&$variables, $hook) {
         $zip = $entity->field_zip->value;
         $lat = $entity->field_geolocation->lat;
         $lng = $entity->field_geolocation->lng;
-        $google_search = '<a title="Open In Google Maps" href="https://www.google.com/maps/place/'.$ad.','.$city.','.$st.','.$zip.'">'.$ad.'</a>';
+        $google_search = '<a title="Open In Google Maps" target="_blank" href="https://www.google.com/maps/place/'.$ad.','.$city.','.$st.','.$zip.'">'.$ad.'</a>';
         $proximity_search_url = '/project-map/'.$lat.'/'.$lng.'/17';
         $variables['google_search'] = Markup::create($google_search);
         $variables['proximity_search_url'] = $proximity_search_url;
