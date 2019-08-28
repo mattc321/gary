@@ -592,11 +592,10 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
     }
     $form['container']['field_task_assigned_to']['widget']['#options'] = $options;
   }
-
   if (isset($form['field_account_manager'])) {
     $assignees = GaryFunctions::loadUsersByRole('assignees');
     $options = [];
-    $options['All'] = t('- None -');
+    $options['_none'] = t('- None -');
     foreach ($assignees as $uid => $assignee) {
       $options[$uid] = $assignee->getDisplayName();
     }
