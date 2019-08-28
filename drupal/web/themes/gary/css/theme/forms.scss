@@ -10,10 +10,12 @@ textarea {
   padding: 5px;
   border: 1px solid $light-grey;
   border-radius: 4px;
-  resize: vertical;
   @include max-width($break-medium) {
     width: 90%;
   }
+}
+textarea {
+  resize: vertical;
 }
 input[type=search] {
   padding: 12px;
