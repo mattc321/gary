@@ -224,14 +224,16 @@ class InlineForm extends FormBase {
 
     //add multiple functionality for project units type
     if ($pg_name == 'project_units') {
+
+      $options[0] = '-';
+
+      for ($i = 1; $i <= 10; $i++) {
+        $options[$i] = $i;
+      }
       $form['container']['add_multiple'] = [
         '#type' => 'select',
         '#title' => 'Add Items',
-        '#options' => [
-          0 => '-',
-          5 => '5',
-          10 => '10'
-        ]
+        '#options' => $options
       ];
     }
 
