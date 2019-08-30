@@ -3,6 +3,19 @@
 
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
+
+
+      //submit the form if ctrl S clicked
+      $(window).keypress(function(event) {
+        if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) {
+          return true;
+        }
+        let submit = $('form.node-form input.js-form-submit');
+        event.preventDefault();
+        submit.once('.node-form').trigger('click');
+        return false;
+      });
+
       //Only display save order after a row has been dropped
       $('.draggable', context).once('draggable').on('mouseup pointerup', function (event) {
         let form = $(this).closest('form').attr('id');
