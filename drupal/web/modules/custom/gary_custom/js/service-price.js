@@ -7,21 +7,32 @@
     Drupal.behaviors.garyServicePrices = {
       attach: function (context, settings) {
 
-
         //attach event listener to field - attached in form_alter
         $('.calculate-price', context).once(this.id).change(function () {
-          $(this).servicePrice($(this).val());
+
+          let subform = ($(this).closest('.paragraphs-subform').length > 0)
+            ? $(this).closest('.paragraphs-subform')
+            : $(this).closest('.inline-pg-form');
+
+          if (subform.length >= 0 ) {
+            $(this).getServicePrice($(this).val(), subform);
+          }
         });
 
         //attach event listener to field - attached in form_alter
         $('.update-price', context).once(this.id).change(function () {
-          let price_field = $('#edit-field-service-amount-0-value');
-          setCalc(price_field.val());
+
+          let subform = ($(this).closest('.paragraphs-subform').length > 0)
+            ? $(this).closest('.paragraphs-subform')
+            : $(this).closest('.inline-pg-form');
+
+          let price_field = subform.find('.service-price');
+          setCalc(price_field.val(), subform);
         });
 
 
         //get the service price
-         $.fn.servicePrice = function(value) {
+         $.fn.getServicePrice = function(service_id, subform) {
 
           //exec an ajax response
           //  var endpoint = Drupal.url('modal/get-content');
@@ -31,9 +42,9 @@
            //retrieve a string response
            var ajaxObject = Drupal.ajax({
              type: 'GET',
-             url: '/service_price/' + value,
+             url: '/service_price/' + service_id,
              success: function(responseData) {
-                  setCalc(responseData);
+                  setCalc(responseData, subform);
               }
             });
            ajaxObject.execute();
@@ -43,15 +54,15 @@
          };
 
          //set the calculated values
-         function setCalc(price) {
-           let price_field = $('#edit-field-service-amount-0-value');
-           let qty_field = $('#edit-field-quantity-0-value');
-           let line_total = $('#edit-field-line-total-0-value');
+         function setCalc(price, subform) {
+           let price_field = subform.find('.service-price');
+           let qty_field = subform.find('.service-quantity');
+           let line_total = subform.find('.service-line-total');
 
            //set the price field
            price_field.val(price);
 
-           var qty = parseInt(qty_field.val());
+           let qty = parseInt(qty_field.val());
 
            if (qty > 0) {
              line_total.val(parseInt(price) * qty);

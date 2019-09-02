@@ -54,6 +54,17 @@
     });
   }
 
+  //submit the form if ctrl S clicked
+  $(window).keypress(function(event) {
+    if (!(event.which == 5 && event.ctrlKey)) {
+      return true;
+    }
+    let quickedita = $('li.quickedit a');
+    event.preventDefault();
+    quickedita.once('.quick-edit').trigger('click');
+    return false;
+  });
+
   //make clickable containers for mobile
   $(".item-clickable").once(".item-clickable").click(function() {
     let link = $(this).find(".item-follow > a").attr('href');

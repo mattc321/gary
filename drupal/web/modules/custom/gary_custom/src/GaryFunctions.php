@@ -151,6 +151,9 @@ class GaryFunctions {
    */
   public function updateTotalAmount(EntityInterface $entity) {
 
+//    $client = \Drupal::httpClient();
+//    $client->request('GET', 'http://gary.local/update-field-dom');
+
     if (!$entity->getParentEntity()->hasField('field_opportunity_services_ref')) {
       return;
     }
@@ -171,6 +174,22 @@ class GaryFunctions {
     $entity->getParentEntity()->set('field_amount', $total_price);
     $entity->getParentEntity()->save();
     return TRUE;
+  }
+
+  public function getTotalServiceAmount($entity) {
+
+    if (!$entity->hasField('field_opportunity_services_ref')) {
+      return;
+    }
+
+    $total_price = 0;
+
+    foreach($entity->get('field_opportunity_services_ref')->referencedEntities() as $key => $pg_item) {
+      if ($pg_item->hasField('field_line_total')) {
+        $total_price = $total_price + $pg_item->get('field_line_total')->value;
+      }
+    }
+    return $total_price;
   }
 
   /**

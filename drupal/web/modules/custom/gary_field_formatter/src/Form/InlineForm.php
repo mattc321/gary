@@ -50,6 +50,10 @@ class InlineForm extends FormBase {
 
   protected $targetType;
 
+  protected $host_node;
+
+  protected $host_node_id;
+
   private $helper;
 
   private function getPreBuiltForm(){
@@ -92,6 +96,10 @@ class InlineForm extends FormBase {
 
   protected function __construct() {
     $this->helper = new GaryFunctions();
+  }
+
+  protected function getHostNode() {
+    return $this->host_node;
   }
 
   /**
@@ -137,6 +145,7 @@ class InlineForm extends FormBase {
     $this->setFieldDefs($pg_name, $type);
     $this->hostFieldName = $host_field;
     $this->host_node_id = $host_node_id;
+    $this->host_node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
     $field_defs = $this->getFieldList();
     $this->targetType = $type;
 
@@ -352,6 +361,13 @@ class InlineForm extends FormBase {
       $response->addCommand(new InvokeCommand(NULL, 'toggleElement', ['#'.$this->getFormId(), 'hidden']));
     }
 
+    //we need to refresh the total service amount in the dom
+    if ($this->getFormId() == 'inline_pg_form_field_opportunity_services_ref') {
+      $node = $this->getHostNode();
+      $amount = $node->field_amount->value;
+      $response->addCommand(new InvokeCommand(NULL, 'refreshTotalAmount', [$amount]));
+    }
+
     //if tasks then send a notification
     //had to do this here because the task gets created before its appended to a parent node
     //and sending the mail directly in the ajax response breaks the process for some reason
@@ -389,7 +405,8 @@ class InlineForm extends FormBase {
    */
   private function addPgItem($pg, $pg_name, &$pg_values) {
     //load the parent node
-    $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+//    $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+    $node = $this->getHostNode();
     $host_field = $this->getHostFieldName(); //the pg field name on the node
 
     //create a paragraph item
@@ -424,7 +441,8 @@ class InlineForm extends FormBase {
    */
   private function addPgBlankItems($pg, $pg_name, &$pg_values, $qty) {
     //load the parent node
-    $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+    $node = $this->getHostNode();
+//    $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
     $host_field = $this->getHostFieldName(); //the pg field name on the node
     $current = $node->get($host_field)->getValue();
 
@@ -447,7 +465,8 @@ class InlineForm extends FormBase {
 
   private function addNodeItem($pg, $pg_name, &$pg_values) {
     //load the parent node
-    $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+//    $node = \Drupal::entityTypeManager()->getStorage('node')->load($this->getHostNodeId());
+    $node = $this->getHostNode();
     $host_field = $this->getHostFieldName(); //the pg field name on the node
 
     $pg_item = Node::create(['type' => $pg->bundle(),]);

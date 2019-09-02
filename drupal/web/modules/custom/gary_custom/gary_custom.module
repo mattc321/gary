@@ -440,6 +440,12 @@ function gary_custom_entity_presave(EntityInterface $entity) {
         }
       }
 
+      //update the total service price
+      $total_service_price = $helper->getTotalServiceAmount($entity);
+      if ($entity->hasField('field_amount')) {
+        $entity->set('field_amount', $total_service_price);
+      }
+
     break;
     case 'projects':
 
@@ -620,7 +626,7 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
       $services = GaryFunctions::getServiceOptions();
       $options['_none'] = "- None -";
       foreach ($services as $service) {
-        $options[$service->nid] = $service->title.'-'.$service->field_unit_price_value;
+        $options[$service->nid] = $service->title.' - $'.$service->field_unit_price_value;
       }
       $form['container']['field_opportunity_service']['widget']['#options'] = $options;
     }
@@ -630,10 +636,21 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
   if ($form_id == 'inline_pg_form_field_opportunity_services_ref') {
     $form['#cache'] = ['max-age' => 0];
     $form['#attached']['library'][] = 'gary_custom/service_price';
+
     //js listeners in js/service-price
     $form['container']['field_opportunity_service']['widget']['#attributes']['class'][] = "calculate-price";
     $form['container']['field_quantity']['widget'][0]['value']['#attributes']['class'][] = "update-price";
+    //add target classes
+    $form['container']['field_line_total']['widget'][0]['value']['#attributes']['class'][] = "service-line-total";
+    $form['container']['field_quantity']['widget'][0]['value']['#attributes']['class'][] = "service-quantity";
+    $form['container']['field_service_amount']['widget'][0]['value']['#attributes']['class'][] = "service-price";
   }
+
+  //attach the service price js to edit form
+  if ($form_id == 'node_opportunities_edit_form') {
+    $form['#attached']['library'][] = 'gary_custom/service_price';
+  }
+
 }
 
 function gary_custom_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
@@ -648,6 +665,29 @@ function gary_custom_field_widget_form_alter(&$element, FormStateInterface $form
       }
       $element['#options'] = $options;
     }
+
+  }
+
+  if (isset($element['#paragraph_type'])
+    && $element['#paragraph_type'] == 'opportunity_services') {
+
+    //add listener classes
+    $element["subform"]["field_opportunity_service"]["widget"]["#attributes"]["class"][] = 'calculate-price';
+    $element["subform"]["field_quantity"]["widget"][0]["value"]["#attributes"]["class"][] = 'update-price';
+
+    //add identifier classes
+    $element["subform"]["field_line_total"]["widget"][0]["value"]["#attributes"]["class"][] = 'service-line-total';
+    $element["subform"]["field_service_amount"]["widget"][0]["value"]["#attributes"]["class"][] = 'service-price';
+    $element["subform"]["field_quantity"]["widget"][0]["value"]["#attributes"]["class"][] = 'service-quantity';
+
+    //append price to service select
+    $services = GaryFunctions::getServiceOptions();
+    $options['_none'] = "- None -";
+    foreach ($services as $service) {
+      $options[$service->nid] = $service->title.' - $'.$service->field_unit_price_value;
+    }
+
+    $element["subform"]["field_opportunity_service"]["widget"]["#options"] = $options;
   }
 
 }

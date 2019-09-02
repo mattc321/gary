@@ -18,6 +18,17 @@
           }
         };
 
+       $.fn.refreshTotalAmount = function(amount) {
+         let amount_el = $('.field--name-field-amount .field__item');
+
+         if (amount_el.length > 0) {
+           amount_el.fadeOut('slow');
+           amount_el.attr('content', amount);
+           amount_el.html('$'+amount);
+           amount_el.fadeIn('slow');
+         }
+       };
+
         //refresh the desired view
          $.fn.refreshAndHide = function(dom_id, switch_id) {
            //no domid is null just reload the page

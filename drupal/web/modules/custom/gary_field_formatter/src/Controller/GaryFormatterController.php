@@ -51,6 +51,12 @@ class GaryFormatterController extends ControllerBase {
     $response = new \Drupal\Core\Ajax\AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
 
+    //if we are deleting a service we need to refresh the total amount in the dom
+    if ($paragraph->getType() == 'opportunity_services') {
+      $amount = $node->field_amount->value;
+      $response->addCommand(new InvokeCommand(NULL, 'refreshTotalAmount', [$amount]));
+    }
+
     return $response;
   }
 
