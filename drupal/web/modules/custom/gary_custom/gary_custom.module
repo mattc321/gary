@@ -647,7 +647,7 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
   }
 
   //attach the service price js to edit form
-  if ($form_id == 'node_opportunities_edit_form') {
+  if ($form_id == 'node_opportunities_edit_form' || $form_id == 'node_opportunities_form') {
     $form['#attached']['library'][] = 'gary_custom/service_price';
   }
 
