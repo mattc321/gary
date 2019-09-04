@@ -14,7 +14,7 @@
             location.reload();
           } else {
             let $view = $('.'+dom_id);
-            $view.trigger('RefreshView');
+            $view.once('.'+dom_id).trigger('RefreshView');
           }
         };
 
@@ -34,8 +34,8 @@
            //no domid is null just reload the page
            let $view = $('.'+dom_id);
            let $switch_view = $('.'+switch_id);
-           $view.trigger('RefreshView');
-           $switch_view.trigger('RefreshView');
+           $view.once('.'+dom_id).trigger('RefreshView');
+           $switch_view.once('.'+dom_id).trigger('RefreshView');
            $switch_view.toggle('hidden');
          };
 
