@@ -128,7 +128,8 @@
             "Entity Reference Views 2174633": "https://www.drupal.org/files/issues/2019-08-08/drupal-use_view_output_for_entityreference_options-2174633-323.patch",
             "Firewall stripping ajax header 2580191": "https://www.drupal.org/files/issues/ajax-remove-X-Drupal-Ajax-Token-verification-2580191-33.patch",
             "Views ajax submit exposed": "https://www.drupal.org/files/issues/2018-12-18/views-ajax-filter-causes-page-refresh-1551534-44.patch",
-            "Views ajax fix second ajax path alias 2820347": "https://www.drupal.org/files/issues/2019-02-13/2820347-110.patch"
+            "Views ajax fix second ajax path alias 2820347": "https://www.drupal.org/files/issues/2019-02-13/2820347-110.patch",
+            "Views ajax fix redundant js attach issue": "patches/ajax_views_redundant_attach_patch.patch"
           },
           "drupal/draggableviews": {
             "Fix draggable views grouping 2867348": "https://www.drupal.org/files/issues/2018-09-07/not_working_with_group_by-draggableviews-2867348-26.patch"

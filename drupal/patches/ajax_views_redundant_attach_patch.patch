@@ -1,0 +1,15 @@
+diff --git a/core/modules/views/js/ajax_view.js b/core/modules/views/js/ajax_view.js
+index 01f0f65..c8d3416 100644
+--- a/core/modules/views/js/ajax_view.js
++++ b/core/modules/views/js/ajax_view.js
+@@ -12,7 +12,9 @@
+       var ajaxViews = settings.views.ajaxViews;
+ 
+       Object.keys(ajaxViews || {}).forEach(function (i) {
+-        Drupal.views.instances[i] = new Drupal.views.ajaxView(ajaxViews[i]);
++        if (typeof Drupal.views.instances[i] != 'object') {
++          Drupal.views.instances[i] = new Drupal.views.ajaxView(ajaxViews[i]);
++        }
+       });
+     }
+   };
