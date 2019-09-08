@@ -133,6 +133,9 @@
           },
           "drupal/draggableviews": {
             "Fix draggable views grouping 2867348": "https://www.drupal.org/files/issues/2018-09-07/not_working_with_group_by-draggableviews-2867348-26.patch"
+          },
+          "drupal/paragraphs": {
+            "Mod add multiple to paragraphs": "patches/mod_add_multiple_paragraphs.patch"
           }
         }
     }

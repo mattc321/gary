@@ -1,0 +1,40 @@
+diff --git a/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php b/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
+index ce8d108..965c238 100644
+--- a/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
++++ b/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
+@@ -1040,6 +1040,22 @@ class InlineParagraphsWidget extends WidgetBase {
+     }
+ 
+     foreach ($this->getAccessibleOptions() as $machine_name => $label) {
++
++        //gary mod
++        if ($this->fieldIdPrefix == 'field_project_units') {
++            //build how many options
++            $options = [];
++            for ($i = 1; $i <= 10; $i++) {
++                $options[$i] = $i;
++            }
++
++            $add_more_elements['how_many'] = [
++                '#type' =>'select',
++                '#title' => 'Add multiple',
++                '#options' => $options
++            ];
++        }
++
+       $add_more_elements['add_more_button_' . $machine_name] = [
+         '#type' => 'submit',
+         '#name' => strtr($this->fieldIdPrefix, '-', '_') . '_' . $machine_name . '_add_more',
+@@ -1150,7 +1166,11 @@ class InlineParagraphsWidget extends WidgetBase {
+     $widget_state = static::getWidgetState($parents, $field_name, $form_state);
+ 
+     if ($widget_state['real_item_count'] < $element['#cardinality'] || $element['#cardinality'] == FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED) {
+-      $widget_state['items_count']++;
++      if ($how_many = $form_state->getValue('field_project_units')['add_more']['how_many']) {
++          $widget_state['items_count'] = + $how_many;
++      } else {
++          $widget_state['items_count']++;
++      }
+     }
+ 
+     if (isset($button['#bundle_machine_name'])) {
