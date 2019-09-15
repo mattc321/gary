@@ -640,6 +640,7 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
     //js listeners in js/service-price
     $form['container']['field_opportunity_service']['widget']['#attributes']['class'][] = "calculate-price";
     $form['container']['field_quantity']['widget'][0]['value']['#attributes']['class'][] = "update-price";
+
     //add target classes
     $form['container']['field_line_total']['widget'][0]['value']['#attributes']['class'][] = "service-line-total";
     $form['container']['field_quantity']['widget'][0]['value']['#attributes']['class'][] = "service-quantity";

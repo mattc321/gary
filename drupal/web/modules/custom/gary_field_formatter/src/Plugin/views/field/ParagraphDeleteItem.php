@@ -8,6 +8,7 @@
 namespace Drupal\gary_field_formatter\Plugin\views\field;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
 
@@ -62,10 +63,22 @@ class ParagraphDeleteItem extends FieldPluginBase {
     $final_dom_id = 'js-view-dom-id-'.$dom_string;
 
     //the paragraph id to delete
-    $id = $values->id;
+    $id = isset($values->id) ? $values->id : null;
+    if ($id == null) {
+      $relationship_id = $this->options['relationship'];
+      if ($relationship_id != 'none') {
+        $id = $values->_relationship_entities[$relationship_id]->id();
+        $final_dom_id = 'js-view-dom-id-'.$this->view->dom_id;
+      } else {
+        return ['#markup' => 'Error in relationship'];
+      }
+    } else {
+      $id = $values->id;
+    }
 
     $link = [
       '#title' => t('&times;'),
+      '#description' => t('Remove the item from the opportunity'),
       '#type' => 'link',
       '#attributes' => [
         'class' => [
@@ -73,7 +86,7 @@ class ParagraphDeleteItem extends FieldPluginBase {
           'delete-pg-item'
         ],
       ],
-      '#url' => \Drupal\Core\Url::fromRoute('gary_field_formatter.delete_paragraph', [
+      '#url' => Url::fromRoute('gary_field_formatter.delete_paragraph', [
                       'pid' => $id,
                       'vid' => $final_dom_id], []),
     ];

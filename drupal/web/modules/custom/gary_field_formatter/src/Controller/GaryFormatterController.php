@@ -4,6 +4,7 @@
  * Contains \Drupal\gary_field_formatter\Controller\GaryFormatterController.
  */
 namespace Drupal\gary_field_formatter\Controller;
+use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\gary_field_formatter\Ajax\DeleteParagraph;
 use Drupal\Core\Entity\EntityStorageException;
@@ -19,6 +20,7 @@ class GaryFormatterController extends ControllerBase {
    * Delete a paragraph item by id
    * @param string $pid Paragraph Id
    * @param string $vid The view id to refresh
+   * @return AjaxResponse
    */
   public function DeleteEntityParagraph($pid, $vid) {
     $storage_handler = \Drupal::entityTypeManager()->getStorage('paragraph');
@@ -26,7 +28,7 @@ class GaryFormatterController extends ControllerBase {
 
     //if $paragraph is null item doesnt exist just refresh view
     if (empty($paragraph)) {
-      $response = new \Drupal\Core\Ajax\AjaxResponse();
+      $response = new AjaxResponse();
       $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
 
       return $response;
@@ -48,7 +50,7 @@ class GaryFormatterController extends ControllerBase {
     $node->set($parent_field_name, $items);
     $node->save();
 
-    $response = new \Drupal\Core\Ajax\AjaxResponse();
+    $response = new AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
 
     //if we are deleting a service we need to refresh the total amount in the dom
@@ -73,7 +75,7 @@ class GaryFormatterController extends ControllerBase {
 
     //if $entity is null item doesnt exist just refresh view
     if (empty($entity)) {
-      $response = new \Drupal\Core\Ajax\AjaxResponse();
+      $response = new AjaxResponse();
       $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
 
       return $response;
@@ -98,7 +100,7 @@ class GaryFormatterController extends ControllerBase {
       $parent_node->save();
     }
 
-    $response = new \Drupal\Core\Ajax\AjaxResponse();
+    $response = new AjaxResponse();
     $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
 
     return $response;
@@ -111,7 +113,7 @@ class GaryFormatterController extends ControllerBase {
    * @param string $vid_to   The view id to unhide
    */
   public function SwitchView($vid_from, $vid_to) {
-    $response = new \Drupal\Core\Ajax\AjaxResponse();
+    $response = new AjaxResponse();
 
     // $vid = "view-id-".$vid;
     $response->addCommand(new InvokeCommand(NULL, 'switchView', [$vid_from, $vid_to]));
@@ -127,7 +129,7 @@ class GaryFormatterController extends ControllerBase {
    * @param string $property The property to toggle
    */
   public function ToggleElement($selector, $property) {
-    $response = new \Drupal\Core\Ajax\AjaxResponse();
+    $response = new AjaxResponse();
 
     // $vid = "view-id-".$vid;
     $response->addCommand(new InvokeCommand(NULL, 'toggleElement', [$selector, $property]));

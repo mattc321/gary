@@ -5,6 +5,10 @@
 
   (function($, Drupal, drupalSettings) {
 
+    window.setInterval(function(){
+      $('.notifications').checkMessages();
+    }, 10000);
+
     //initialize the messages container and attach a leave listener
     $('body').once('body').before('<div class="messages-popup-container"></div>');
     //go to the comment on message click
@@ -41,14 +45,11 @@
           window.location = '/user/'+drupalSettings.user.uid+'/#block-views-block-my-messages-block-1';
         });
 
-        //attach event listener to field - attached in form_alter
-        $(document, context).once(document.id).ready(function () {
-          // $('.notifications').checkMessages();
-        });
-
-        window.setInterval(function(){
-          // $('.notifications').checkMessages();
-        }, 5000);
+        // //attach event listener to field - attached in page_attachments
+        // $('.notifications').once('.notifications').ready(function () {
+        //   console.log('once');
+        //   $('.notifications').checkMessages();
+        // });
 
         //message div clickable
         $(".message-item-clickable").once(".message-item-clickable").click(function() {
