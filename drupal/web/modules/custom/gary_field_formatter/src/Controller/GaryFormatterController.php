@@ -29,7 +29,7 @@ class GaryFormatterController extends ControllerBase {
     //if $paragraph is null item doesnt exist just refresh view
     if (empty($paragraph)) {
       $response = new AjaxResponse();
-      $response->addCommand(new InvokeCommand(NULL, 'refreshView', [$vid]));
+      $response->addCommand(new InvokeCommand(NULL, 'refreshView'));
 
       return $response;
     }

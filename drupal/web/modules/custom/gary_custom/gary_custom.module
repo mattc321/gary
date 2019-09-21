@@ -621,7 +621,8 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
   //load service options manually. We need to have the price available in the
   //option string. Cant use Entity Reference Views because they are loaded on all
   //other views recursively where they are present
-  if($form_id == 'inline_pg_form_field_opportunity_services_ref') {
+  if($form_id == 'inline_pg_form_field_opportunity_services_ref' ||
+    $form_id == 'inline_pg_form_new_item_field_opportunity_services_ref') {
     if (isset($form['container']['field_opportunity_service']['widget'])) {
       $services = GaryFunctions::getServiceOptions();
       $options['_none'] = "- None -";
@@ -633,7 +634,8 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
   }
 
   //Opportunity Services Calculation
-  if ($form_id == 'inline_pg_form_field_opportunity_services_ref') {
+  if ($form_id == 'inline_pg_form_field_opportunity_services_ref' ||
+      $form_id == 'inline_pg_form_new_item_field_opportunity_services_ref') {
     $form['#cache'] = ['max-age' => 0];
     $form['#attached']['library'][] = 'gary_custom/service_price';
 
@@ -668,7 +670,7 @@ function gary_custom_field_widget_form_alter(&$element, FormStateInterface $form
     }
 
   }
-
+  //this is for the node edit form of inline_pg_form services
   if (isset($element['#paragraph_type'])
     && $element['#paragraph_type'] == 'opportunity_services') {
 

@@ -10,10 +10,13 @@
        //refresh the desired view
         $.fn.refreshView = function(dom_id) {
           //no domid is null just reload the page
-          if (dom_id.length == 0) {
+          if (! dom_id) {
             location.reload();
           } else {
             let $view = $('.'+dom_id);
+            if ($view.length === 0) {
+              location.reload();
+            }
             $view.once('.'+dom_id).trigger('RefreshView');
           }
         };
