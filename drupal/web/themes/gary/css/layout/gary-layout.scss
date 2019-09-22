@@ -71,3 +71,7 @@ body {
   }
 
 }
+
+.float-right {
+  @extend %float-right;
+}
