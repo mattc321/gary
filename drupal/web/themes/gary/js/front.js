@@ -31,25 +31,23 @@
       // TweenMax.to("#menu-wrap", .5, {y:0});
       $('.field--type-block-field').fadeIn();
 
-
-      var hide_tween = TweenMax.to("#menu-wrap", .5, {
-        transform: 'translate(0, -60px)'
-      });
-
+      //
+      // var hide_tween = TweenMax.to("#menu-wrap", .5, {
+      //   transform: 'translate(0, -60px)'
+      // });
+      // console.log('222');
+      // var controller = new ScrollMagic.Controller();
+      // new ScrollMagic.Scene(
+      //   {triggerHook: "onEnter"})
+      //   .setTween("#menu-wrap", .5, {y:0})
+      //   // .setClassToggle("#menu-wrap", "ani")
+      //   .addTo(controller);
       // var hideController = new ScrollMagic.Controller();
       // var hideScene = new ScrollMagic.Scene(
       //   {offset: 500})
       //       .setTween(hide_tween)
       //       // .setClassToggle("#menu-wrap", "ani")
       //       .addTo(hideController);
-
-
-      var controller = new ScrollMagic.Controller();
-      var scene = new ScrollMagic.Scene(
-        {triggerHook: "onEnter"})
-            .setTween("#menu-wrap", .5, {y:0})
-            // .setClassToggle("#menu-wrap", "ani")
-            .addTo(controller);
 
       // var scale_tween = TweenMax.to("#block-gary-page-title", .3, {
       //   transform: 'translate(40px, -35px) scale(.75)'

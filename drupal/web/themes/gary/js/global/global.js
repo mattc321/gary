@@ -72,8 +72,15 @@
     return false;
   });
 
-
   $(document).ready(function() {
+
+    var controller = new ScrollMagic.Controller();
+    new ScrollMagic.Scene(
+      {triggerHook: "onEnter"})
+      .setTween("#menu-wrap", .5, {y:0})
+      // .setClassToggle("#menu-wrap", "ani")
+      .addTo(controller);
+
     Drupal.gary.appState = new Drupal.gary.AppStateModel({
       scrollTop: $(window).scrollTop(),
     });
