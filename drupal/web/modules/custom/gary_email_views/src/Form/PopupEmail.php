@@ -26,6 +26,7 @@ use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\node\Entity\Node;
 use Drupal\gary_custom\GaryFunctions;
+use Drupal\views\ViewExecutable;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\views\Views;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -42,6 +43,7 @@ class PopupEmail extends FormBase {
 
   protected $user;
 
+  /** @var ViewExecutable */
   protected $view;
 
   /**
@@ -131,6 +133,12 @@ class PopupEmail extends FormBase {
       if (count($request->query->getIterator()) > 1) {
         foreach ($request->query->getIterator() as $field_name => $value) {
           if (isset($filters[$field_name]) && !empty($filters[$field_name])) {
+
+            if ($field_name === 'field_project_status_target_id') {
+              $args[$field_name] = [reset($value)];
+              continue;
+            }
+
             $set_val = is_array($value) ? reset($value) : $value;
             if (isset($set_val['target_id'])) {
               $set_val = $set_val['target_id'];
@@ -149,7 +157,8 @@ class PopupEmail extends FormBase {
       //exec the view
       $view = Views::getView($view_id);
       $view->setDisplay($display_id);
-      $view->setArguments($args);
+      $view->setExposedInput($parent_view->getExposedInput());
+      $view->preExecute();
       $view->execute();
     }
 
@@ -214,13 +223,17 @@ class PopupEmail extends FormBase {
    */
   public function ajaxFormSubmitHandler(array &$form, FormStateInterface $form_state) {
 
+
     $form_values = $form_state->getValues();
+
     $params = [
       'email_to' => $form_values['email_to'],
       'email_from' => $form_values['email_from'],
       'email_subject' => $form_values['email_subject'],
       'body_msg' => $form_values['body_msg'],
-      'rendered_view' => $this->renderer->renderPlain($this->view->buildRenderable())
+      'rendered_view' => $this->renderer->renderPlain(
+        $this->view->buildRenderable()
+      )
     ];
 
     $module = 'gary_email_views';
