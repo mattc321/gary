@@ -26,7 +26,9 @@
         "drupal/betterlogin": "^1.2",
         "drupal/block_field": "^1.0",
         "drupal/console": "^1.8",
-        "drupal/core-recommended": "^8.9",
+        "drupal/core-composer-scaffold": "^9.0.0",
+        "drupal/core-project-message": "^9.0.0",
+        "drupal/core-recommended": "^9.0.0",
         "drupal/ctools": "^3.0",
         "drupal/date_popup": "^1.0",
         "drupal/draggableviews": "^2.0",
@@ -42,6 +44,7 @@
         "drupal/search_autocomplete": "^2.0",
         "drupal/select2": "^1.1",
         "drupal/smtp": "^1.0",
+        "drupal/twig_xdebug": "^1.2",
         "drupal/viewfield": "3.x-dev",
         "drupal/views_autocomplete_filters": "^1.2",
         "drupal/views_bulk_edit": "^2.2",
@@ -54,6 +57,7 @@
         "npm-asset/qtip2": "^3.0",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
+        "symfony/var-dumper": "^5.1.8",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"
@@ -61,11 +65,9 @@
     "require-dev": {
         "behat/mink": "~1.7",
         "behat/mink-goutte-driver": "~1.2",
-        "drupal/twig_xdebug": "^1.0",
         "jcalderonzumba/gastonjs": "~1.0.2",
         "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
-        "mikey179/vfsstream": "~1.2",
-        "symfony/css-selector": "~2.8"
+        "mikey179/vfsstream": "~1.2"
     },
     "conflict": {
         "drupal/drupal": "*"
