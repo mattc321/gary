@@ -186,7 +186,7 @@ function gary_custom_link_alter(&$variables) {
     'view.final_submittals.page_1' => 'view.final_submittals.mobile_page',
   ];
   //get user temp storage
-  $tempstore = \Drupal::service('user.private_tempstore')->get('gary_custom');
+  $tempstore = \Drupal::service('tempstore.private')->get('gary_custom');
   //check if were mobile return if not
   if (!$tempstore->get('is_mobile')) {
     return;
@@ -559,7 +559,7 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
     //only proceed to overwrite action on ViewsForm hitting views.ajax
     if (\Drupal::routeMatch()->getRouteName() == 'views.ajax') {
       $current_stack = \Drupal::service('path.current')->getPath();
-      $alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_stack);
+      $alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_stack);
       $form['#action'] = str_replace('//', '/', $alias); //double slashses returned I have no idea
     }
   }
@@ -731,7 +731,7 @@ function gary_custom_mail($key, &$message, $params) {
       'from' => 'Admin <'.$message['from'].'>'
      ];
 
-     $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['task_id']);
+     $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$params['task_id']);
      $host = \Drupal::request()->getSchemeAndHttpHost();
      $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
    break;
@@ -765,7 +765,7 @@ function gary_custom_mail($key, &$message, $params) {
       'reply-to' => $params['poster'],
       'from' => $params['poster_name'].' <'.$params['poster'].'>'
      ];
-     $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
+     $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$params['node_id']);
      $host = \Drupal::request()->getSchemeAndHttpHost();
      $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
    break;

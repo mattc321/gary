@@ -23,7 +23,7 @@ class CustomEventSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    $this->tempstore = \Drupal::service('user.private_tempstore')->get('gary_custom');
+    $this->tempstore = \Drupal::service('tempstore.private')->get('gary_custom');
     $this->is_mobile = $this->_isMobile();
     // if (empty($this->tempstore->get('is_mobile'))) {
     //   $this->tempstore->delete('is_mobile');

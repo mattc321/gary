@@ -82,7 +82,7 @@ class GaryViewsFormatter extends FormatterBase {
     }
 
     //get session and check for mobile
-    $tempstore = \Drupal::service('user.private_tempstore')->get('gary_custom');
+    $tempstore = \Drupal::service('tempstore.private')->get('gary_custom');
     $this->is_mobile = $tempstore->get('is_mobile');
 
     //get entity type and fieldname

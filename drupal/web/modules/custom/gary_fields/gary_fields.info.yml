@@ -1,7 +1,7 @@
 name: 'Gary Custom Fields'
 type: module
 description: 'Custom fields for Gary'
-core: 8.x
+core_version_requirement: ^8.8.0 || ^9.0
 package: 'Custom'
 dependencies:
   - gary_custom
