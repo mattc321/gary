@@ -29,7 +29,6 @@
         "drupal/core-recommended": "^8.9",
         "drupal/ctools": "^3.0",
         "drupal/date_popup": "^1.0",
-        "drupal/devel": "^2.0",
         "drupal/draggableviews": "^2.0",
         "drupal/easy_breadcrumb": "^1.8",
         "drupal/entity_reference_revisions": "^1.5",
