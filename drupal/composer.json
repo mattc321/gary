@@ -22,7 +22,6 @@
     "require": {
         "composer/installers": "^1.7",
         "cweagans/composer-patches": "^1.6.5",
-        "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/admin_toolbar": "^3",
         "drupal/ajax_comments": "^1.0",
         "drupal/betterlogin": "^1.2",
