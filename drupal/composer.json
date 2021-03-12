@@ -122,8 +122,7 @@
         },
         "patches": {
           "drupal/core": {
-            "Firewall stripping ajax header 2580191": "https://www.drupal.org/files/issues/ajax-remove-X-Drupal-Ajax-Token-verification-2580191-33.patch",
-            "Views ajax submit exposed": "https://www.drupal.org/files/issues/2018-12-18/views-ajax-filter-causes-page-refresh-1551534-44.patch"
+            "Firewall stripping ajax header 2580191": "https://www.drupal.org/files/issues/ajax-remove-X-Drupal-Ajax-Token-verification-2580191-33.patch"
           },
           "drupal/paragraphs": {
             "Mod add multiple to paragraphs": "patches/mod_add_multiple_paragraphs.patch"

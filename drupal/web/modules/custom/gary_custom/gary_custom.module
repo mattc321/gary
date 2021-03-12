@@ -397,7 +397,7 @@ function gary_custom_entity_presave(EntityInterface $entity) {
       //update the comment parent info when comment is saved
       $dt = time();
       $entity->getCommentedEntity()->setChangedTime($dt);
-      $entity->getCommentedEntity()->setRevisionAuthorId(\Drupal::currentUser()->id());
+      $entity->getCommentedEntity()->setRevisionUserId(\Drupal::currentUser()->id());
       $entity->getCommentedEntity()->save();
 
     break;
@@ -487,7 +487,7 @@ function gary_custom_form_node_projects_form_alter(&$form, FormStateInterface $f
   //if oid is set, were making a new project, load the opp node and load some values
   if (isset($_GET['oid'])) {
     $opportunity_id = $_GET['oid'];
-    $node_storage = \Drupal::entityManager()->getStorage('node');
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
     $opportunity = $node_storage->load($opportunity_id);
 
     $fields = [
@@ -540,14 +540,14 @@ function gary_custom_form_views_exposed_form_alter(&$form, FormStateInterface $f
   $view = $form_state->getStorage('view');
   if ($form_id == 'views_exposed_form' && in_array($view['view']->id(), $view_ids)) {
     //change operator to radios and unset those we dont want to use
-    $form['field_project_status_target_id_op']['#type'] = 'radios';
-    unset($form['field_project_status_target_id_op']['#options']['and']);
-    unset($form['field_project_status_target_id_op']['#options']['empty']);
-    unset($form['field_project_status_target_id_op']['#options']['not empty']);
+    $form['field_project_status_target_id_wrapper']['field_project_status_target_id_op']['#type'] = 'radios';
+    unset($form['field_project_status_target_id_wrapper']['field_project_status_target_id_op']['#options']['and']);
+    unset($form['field_project_status_target_id_wrapper']['field_project_status_target_id_op']['#options']['empty']);
+    unset($form['field_project_status_target_id_wrapper']['field_project_status_target_id_op']['#options']['not empty']);
 
-    $form['field_project_status_target_id_op']['#options']['or'] = 'Equal to';
-    $form['field_project_status_target_id_op']['#options']['not'] = 'Not equal to';
-    $form['field_project_status_target_id_op']['#title'] = t('Project Status');
+    $form['field_project_status_target_id_wrapper']['field_project_status_target_id_op']['#options']['or'] = 'Equal to';
+    $form['field_project_status_target_id_wrapper']['field_project_status_target_id_op']['#options']['not'] = 'Not equal to';
+    $form['field_project_status_target_id_wrapper']['field_project_status_target_id_op']['#title'] = t('Project Status');
   }
 }
 
@@ -569,13 +569,28 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
     // $form['actions']['save_order']['#attributes']['class'][] = 'jelly';
   }
   //use select2 type on these multiselect elements
+  $multiselectsNested = [
+    'field_task_assigned_to_target_id',
+    'field_project_status_target_id_wrapper' => 'field_project_status_target_id',
+    'field_opportunity_type_target_id'
+  ];
+
+  foreach ($multiselectsNested as $key => $element) {
+    if (isset($form[$key][$element]) && $form[$key][$element]['#type'] == 'select') {
+      if(isset($form[$key][$element]['#multiple'])) {
+        $form[$key][$element]['#type'] = 'select2';
+      }
+    }
+  }
+
+  //use select2 type on these multiselect elements
   $multiselects = [
     'field_task_assigned_to_target_id',
     'field_project_status_target_id',
     'field_opportunity_type_target_id'
   ];
 
-  foreach ($multiselects as $element) {
+  foreach ($multiselects as $key => $element) {
     if (isset($form[$element]) && $form[$element]['#type'] == 'select') {
       if(isset($form[$element]['#multiple'])) {
         $form[$element]['#type'] = 'select2';
