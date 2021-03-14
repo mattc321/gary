@@ -77,7 +77,7 @@ class PdfGenerate extends ControllerBase
       $path = drupal_get_path(
           'module',
           'gary_pdf_templates'
-        ) . '/css/pdf_template.css';
+        ) . '/css/pdf-template.css';
       $build['#css'] = '/'.$path;
 
       $output = $this->renderer->renderRoot($build);
