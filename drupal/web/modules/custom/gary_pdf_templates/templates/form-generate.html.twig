@@ -1,0 +1,12 @@
+<div class="inline">
+  <div class="field__item">{{ text }}</div>
+  <div class="field__item generate-link-container">
+    <a
+      class="generate-link"
+      title="Generate PDF"
+      data-file-name="{{ file }}"
+      href="/pdf/generate?tid={{ template_entity_id }}&eid={{ entity_id }}&file={{ file }}">
+      <img src="{{ download_image }}" height="15px">
+    </a>
+  </div>
+</div>

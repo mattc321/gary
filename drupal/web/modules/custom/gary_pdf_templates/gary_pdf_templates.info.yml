@@ -1,0 +1,8 @@
+name: 'Gary PDF Templates'
+type: module
+description: 'PDF Tokenized Templates'
+core_version_requirement: ^8.8.0 || ^9.0
+package: 'Custom'
+dependencies:
+  - gary_custom
+  - Mpdf

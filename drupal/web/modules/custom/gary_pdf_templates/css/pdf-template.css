@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap');
+body, title {
+  max-width: 8.5in;
+  margin: 0 auto;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+}
+.container {
+  margin: 20px 40px;
+}
+.header.proposal-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.header.proposal-row > div:nth-child(1) {
+  width: 20%;
+}
+.header.proposal-row > div:nth-child(2) {
+  width: 40%;
+}
+.header.proposal-row > div:nth-child(3) {
+  width: 60%;
+}
+.address p {
+  margin: 0 0 1px 0;
+}
+span.label {
+  font-weight: bold;
+}
+.table {
+  border-spacing: 0;
+  table-layout: fixed;
+  width: 500px;
+}
+.table tr td {
+  border: 1px solid #e0e0e0;
+}
+.table tr td:nth-child(1) {
+  width: 125px;
+}
+.fees-table {
+  width: 100%;
+  table-layout: fixed;
+  text-align: left;
+  border-spacing: 0;
+}
+.fees-table tr td, .fees-table th {
+  border: 1px solid #e0e0e0;
+}

@@ -1,0 +1,5 @@
+services:
+  gary_pdf_templates.twig_extension:
+    class: Twig\Extension\StringLoaderExtension
+    tags:
+      - { name: twig.extension }

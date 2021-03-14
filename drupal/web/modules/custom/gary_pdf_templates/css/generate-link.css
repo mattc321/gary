@@ -1,0 +1,13 @@
+.generating {
+  background: url(../img/throbber.gif);
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  width: 25px;
+  background-position: center, center;
+}
+.palette-dark .generate-link img {
+  filter: invert(1);
+}
+a.generate-link {
+  margin-left: 10px;
+}
