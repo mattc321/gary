@@ -1,29 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap');
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+.title {
+  position: fixed;
+  left: 600px;
+}
 body, title {
   max-width: 8.5in;
   margin: 0 auto;
-  font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   font-size: 12px;
 }
 .container {
-  margin: 20px 40px;
+  margin: 10px 10px;
 }
-.header.proposal-row {
-  display: flex;
-  flex-wrap: wrap;
+.inline-block {
+  display: inline-block !important;
 }
-.header.proposal-row > div:nth-child(1) {
-  width: 20%;
+.address {
+  margin-left: 20px;
+  width: 200px;
 }
-.header.proposal-row > div:nth-child(2) {
-  width: 40%;
-}
-.header.proposal-row > div:nth-child(3) {
-  width: 60%;
+.logo {
+  width: 125px;
 }
 .address p {
-  margin: 0 0 1px 0;
+   margin: 0 0 1px 0;
 }
 span.label {
   font-weight: bold;
@@ -47,4 +50,22 @@ span.label {
 }
 .fees-table tr td, .fees-table th {
   border: 1px solid #e0e0e0;
+  text-align: left;
+}
+.pagebreak {
+  page-break-before: always;
+}
+table.table-100 td.first {
+  width: 40px;
+}
+
+table.table-100 {
+  width: 100%;
+  table-layout: fixed;
+}
+.margin-right-20 {
+  margin-left: 100px;
+}
+.width-50 {
+  width: 50%;
 }

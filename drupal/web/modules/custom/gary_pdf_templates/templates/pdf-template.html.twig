@@ -9,5 +9,13 @@
   <title>Proposals</title>
 </head>
 
-{{ include(template_from_string(template_entity.field_template_html.value)|raw) }}
+{{ include(
+
+  template_from_string(
+    template_entity.field_template_html.value
+  )|raw,
+
+  { 'additional_vars': additional_vars }
+) }}
+
 </html>

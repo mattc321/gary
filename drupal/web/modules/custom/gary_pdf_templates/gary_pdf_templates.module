@@ -35,6 +35,7 @@ function gary_pdf_templates_theme() {
         'template_entity' => NULL,
         'entity' => NULL,
         'css' => NULL,
+        'additional_vars' => NULL,
       ],
       'render element' => 'children',
     ],
