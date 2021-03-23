@@ -1,0 +1,129 @@
+uuid: 02f2b97b-34e2-4ef2-a602-00e985f3b40b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.project_units.feeds_item
+    - field.field.paragraph.project_units.field_ach50
+    - field.field.paragraph.project_units.field_beds
+    - field.field.paragraph.project_units.field_cfa
+    - field.field.paragraph.project_units.field_cfm_50
+    - field.field.paragraph.project_units.field_description
+    - field.field.paragraph.project_units.field_height
+    - field.field.paragraph.project_units.field_last_updated
+    - field.field.paragraph.project_units.field_mf_qty
+    - field.field.paragraph.project_units.field_unit
+    - field.field.paragraph.project_units.field_unit_types
+    - field.field.paragraph.project_units.field_volume
+    - paragraphs.paragraphs_type.project_units
+  module:
+    - datetime
+id: paragraph.project_units.default
+targetEntityType: paragraph
+bundle: project_units
+mode: default
+content:
+  field_ach50:
+    weight: 7
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+  field_beds:
+    weight: 3
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_cfa:
+    weight: 4
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_cfm_50:
+    weight: 5
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_description:
+    weight: 9
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_height:
+    weight: 6
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+  field_last_updated:
+    weight: 10
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_mf_qty:
+    weight: 1
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_unit:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_unit_types:
+    weight: 0
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_volume:
+    weight: 8
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+hidden:
+  feeds_item: true

@@ -1,0 +1,68 @@
+uuid: abd61f69-8fb2-45fb-9039-8a379868024a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.opportunity_auto_tasks.field_date_offset
+    - field.field.node.opportunity_auto_tasks.field_disable_auto_task
+    - field.field.node.opportunity_auto_tasks.field_task_assigned_to
+    - field.field.node.opportunity_auto_tasks.field_task_list
+    - field.field.node.opportunity_auto_tasks.field_task_weight
+    - node.type.opportunity_auto_tasks
+  module:
+    - user
+id: node.opportunity_auto_tasks.default
+targetEntityType: node
+bundle: opportunity_auto_tasks
+mode: default
+content:
+  field_date_offset:
+    weight: 103
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_disable_auto_task:
+    weight: 106
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_task_assigned_to:
+    weight: 105
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_task_list:
+    weight: 102
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_task_weight:
+    weight: 107
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

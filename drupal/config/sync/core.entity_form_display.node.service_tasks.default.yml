@@ -1,0 +1,83 @@
+uuid: 54c0d974-92db-4875-ae02-43fed1d7539f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.service_tasks.feeds_item
+    - field.field.node.service_tasks.field_assign_to_account_manager
+    - field.field.node.service_tasks.field_audit_id
+    - field.field.node.service_tasks.field_date_offset
+    - field.field.node.service_tasks.field_disable_auto_task
+    - field.field.node.service_tasks.field_st_assigned_to
+    - field.field.node.service_tasks.field_task_id
+    - field.field.node.service_tasks.field_task_list
+    - field.field.node.service_tasks.field_task_weight
+    - node.type.service_tasks
+id: node.service_tasks.default
+targetEntityType: node
+bundle: service_tasks
+mode: default
+content:
+  field_assign_to_account_manager:
+    weight: 3
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_date_offset:
+    weight: 5
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_disable_auto_task:
+    weight: 7
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_st_assigned_to:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_task_id:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_task_list:
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  feeds_item: true
+  field_audit_id: true
+  field_task_weight: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

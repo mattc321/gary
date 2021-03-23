@@ -1,0 +1,28 @@
+uuid: 273a0f08-5810-46e1-b689-5c3148a68f66
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_architect
+    - node.type.accounts
+    - node.type.projects
+id: node.projects.field_architect
+field_name: field_architect
+entity_type: node
+bundle: projects
+label: Architect
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      accounts: accounts
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

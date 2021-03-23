@@ -1,0 +1,8 @@
+uuid: 5472a3f0-b1ed-406b-a950-5504d1286a2e
+langcode: en
+status: true
+dependencies: {  }
+name: 'Unit Type'
+vid: unit_type
+description: ''
+weight: 0

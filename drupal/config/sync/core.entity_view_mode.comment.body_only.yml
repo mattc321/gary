@@ -1,0 +1,10 @@
+uuid: 55f42b82-95e6-44d6-a740-b4400e6a3706
+langcode: en
+status: true
+dependencies:
+  module:
+    - comment
+id: comment.body_only
+label: 'Body Only'
+targetEntityType: comment
+cache: true

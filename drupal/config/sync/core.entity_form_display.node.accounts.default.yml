@@ -1,0 +1,177 @@
+uuid: fa8c9643-8d89-476f-8569-417733c7b671
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.accounts.feeds_item
+    - field.field.node.accounts.field__billing_address
+    - field.field.node.accounts.field__billing_city
+    - field.field.node.accounts.field__billing_state
+    - field.field.node.accounts.field_account_manager
+    - field.field.node.accounts.field_account_opportunities
+    - field.field.node.accounts.field_account_projects
+    - field.field.node.accounts.field_account_type
+    - field.field.node.accounts.field_audit_id
+    - field.field.node.accounts.field_billing_email
+    - field.field.node.accounts.field_billing_zip
+    - field.field.node.accounts.field_comments
+    - field.field.node.accounts.field_contacts
+    - field.field.node.accounts.field_parent_account
+    - field.field.node.accounts.field_phone
+    - field.field.node.accounts.field_website
+    - node.type.accounts
+  module:
+    - path
+    - viewfield
+id: node.accounts.default
+targetEntityType: node
+bundle: accounts
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field__billing_address:
+    weight: 11
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field__billing_city:
+    weight: 12
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field__billing_state:
+    weight: 13
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_account_manager:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_account_opportunities:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: viewfield_select
+    region: content
+  field_account_type:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_audit_id:
+    weight: 18
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_billing_email:
+    weight: 16
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_billing_zip:
+    weight: 14
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_parent_account:
+    weight: 17
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_phone:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_website:
+    weight: 15
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  path:
+    type: path
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 3
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 6
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 4
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden:
+  feeds_item: true
+  field_account_projects: true
+  field_comments: true
+  field_contacts: true

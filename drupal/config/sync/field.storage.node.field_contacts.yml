@@ -1,0 +1,21 @@
+uuid: c2c2690f-9e49-46bd-9174-dbc41bf8d1bf
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - viewfield
+    - views
+id: node.field_contacts
+field_name: field_contacts
+entity_type: node
+type: viewfield
+settings:
+  target_type: view
+module: viewfield
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

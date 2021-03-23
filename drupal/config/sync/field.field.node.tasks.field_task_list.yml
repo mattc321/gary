@@ -1,0 +1,28 @@
+uuid: b2dbc53e-8ec1-4491-aaec-97d6796b116f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_task_list
+    - node.type.task_list
+    - node.type.tasks
+id: node.tasks.field_task_list
+field_name: field_task_list
+entity_type: node
+bundle: tasks
+label: 'Task List'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      task_list: task_list
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

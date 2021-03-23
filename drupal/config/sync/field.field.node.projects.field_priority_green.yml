@@ -1,0 +1,23 @@
+uuid: 6b5f4ee8-82c8-44a4-ac07-6acb25247c8d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_priority_green
+    - node.type.projects
+id: node.projects.field_priority_green
+field_name: field_priority_green
+entity_type: node
+bundle: projects
+label: 'Priority Green'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

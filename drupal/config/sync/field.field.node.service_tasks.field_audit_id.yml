@@ -1,0 +1,23 @@
+uuid: 80fa3f25-e878-45fc-a55e-a3ade6a9ac88
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_audit_id
+    - node.type.service_tasks
+id: node.service_tasks.field_audit_id
+field_name: field_audit_id
+entity_type: node
+bundle: service_tasks
+label: 'Audit ID'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

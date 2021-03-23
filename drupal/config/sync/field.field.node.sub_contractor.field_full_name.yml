@@ -1,0 +1,19 @@
+uuid: 849e934a-3bca-42e3-89dc-4ae5eae99279
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_full_name
+    - node.type.sub_contractor
+id: node.sub_contractor.field_full_name
+field_name: field_full_name
+entity_type: node
+bundle: sub_contractor
+label: 'Contact Name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

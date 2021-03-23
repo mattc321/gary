@@ -1,0 +1,28 @@
+uuid: 85369305-f4ea-417d-8e41-7dd6f8db4689
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_task_list
+    - node.type.opportunity_auto_tasks
+    - node.type.task_list
+id: node.opportunity_auto_tasks.field_task_list
+field_name: field_task_list
+entity_type: node
+bundle: opportunity_auto_tasks
+label: 'Task List'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      task_list: task_list
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

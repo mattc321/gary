@@ -1,0 +1,22 @@
+uuid: b99883b6-f416-4eb1-85a3-3c562694368c
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - gary
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: gary_help
+theme: gary
+region: before_content
+weight: -1
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

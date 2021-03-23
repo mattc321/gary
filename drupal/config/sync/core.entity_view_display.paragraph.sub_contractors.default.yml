@@ -1,0 +1,30 @@
+uuid: 8d878207-106e-4862-a92c-06479fc51363
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.sub_contractors.field_grade
+    - field.field.paragraph.sub_contractors.field_sub_contractor
+    - paragraphs.paragraphs_type.sub_contractors
+id: paragraph.sub_contractors.default
+targetEntityType: paragraph
+bundle: sub_contractors
+mode: default
+content:
+  field_grade:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_sub_contractor:
+    weight: 0
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+hidden: {  }

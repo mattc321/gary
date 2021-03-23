@@ -1,0 +1,29 @@
+uuid: 214f0e60-4456-4107-a176-141dd7c8e95a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_permit_city
+    - node.type.projects
+    - taxonomy.vocabulary.permit_city
+id: node.projects.field_permit_city
+field_name: field_permit_city
+entity_type: node
+bundle: projects
+label: 'Permit City'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      permit_city: permit_city
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

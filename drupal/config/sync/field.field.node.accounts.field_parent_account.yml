@@ -1,0 +1,28 @@
+uuid: 48e6dd69-29dc-49da-b4a8-6c5e65d3672a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_parent_account
+    - node.type.accounts
+id: node.accounts.field_parent_account
+field_name: field_parent_account
+entity_type: node
+bundle: accounts
+label: 'Parent Account'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      accounts: accounts
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

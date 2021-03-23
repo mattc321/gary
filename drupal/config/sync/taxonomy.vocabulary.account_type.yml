@@ -1,0 +1,8 @@
+uuid: a91740d5-7563-407f-bfd6-e21a512c2713
+langcode: en
+status: true
+dependencies: {  }
+name: 'Account Type'
+vid: account_type
+description: ''
+weight: 0

@@ -1,0 +1,35 @@
+uuid: 226c7822-ba0e-4358-92c6-952e0472d0e6
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.add-content
+  module:
+    - system
+    - user
+  theme:
+    - gary
+id: addcontent
+theme: gary
+region: menu
+weight: -3
+provider: null
+plugin: 'system_menu_block:add-content'
+settings:
+  id: 'system_menu_block:add-content'
+  label: 'Add Content'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+      administrator: administrator
+      limited_admin: limited_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

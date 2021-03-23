@@ -1,0 +1,23 @@
+uuid: b8eec240-bab9-4b88-8569-2a5c759f82c9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.feeds_item
+    - node.type.opportunities
+  module:
+    - feeds
+id: node.opportunities.feeds_item
+field_name: feeds_item
+entity_type: node
+bundle: opportunities
+label: 'Feeds item'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:feeds_feed'
+  handler_settings: {  }
+field_type: feeds_item

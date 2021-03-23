@@ -1,0 +1,28 @@
+uuid: d86710df-abfd-474d-afdc-ace4f3f065ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.pdf_template.field_page_footer
+    - field.field.node.pdf_template.field_page_header
+    - field.field.node.pdf_template.field_template_html
+    - field.field.node.pdf_template.field_template_type
+    - node.type.pdf_template
+  module:
+    - user
+id: node.pdf_template.teaser
+targetEntityType: node
+bundle: pdf_template
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_page_footer: true
+  field_page_header: true
+  field_template_html: true
+  field_template_type: true

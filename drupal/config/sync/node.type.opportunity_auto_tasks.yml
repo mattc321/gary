@@ -1,0 +1,18 @@
+uuid: f44b9f44-55d1-4d51-8097-0635674ae1c3
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Opportunity Auto Tasks'
+type: opportunity_auto_tasks
+description: 'Tasks to Automatically create when an opportunity is first created'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false

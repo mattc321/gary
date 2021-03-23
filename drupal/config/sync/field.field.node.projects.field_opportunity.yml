@@ -1,0 +1,28 @@
+uuid: 54ac3e61-8e1d-44dd-aea0-9d851fb57d1a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_opportunity
+    - node.type.opportunities
+    - node.type.projects
+id: node.projects.field_opportunity
+field_name: field_opportunity
+entity_type: node
+bundle: projects
+label: Opportunity
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      opportunities: opportunities
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

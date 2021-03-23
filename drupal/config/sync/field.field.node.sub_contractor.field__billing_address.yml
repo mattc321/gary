@@ -1,0 +1,19 @@
+uuid: 329172dc-06b6-4d10-a36c-facd0caa1fc9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field__billing_address
+    - node.type.sub_contractor
+id: node.sub_contractor.field__billing_address
+field_name: field__billing_address
+entity_type: node
+bundle: sub_contractor
+label: 'Billing Address'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

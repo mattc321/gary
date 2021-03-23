@@ -1,0 +1,52 @@
+uuid: 50e1a1f0-1c5b-43ed-b286-ae2455549f03
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.accounts.feeds_item
+    - field.field.node.accounts.field__billing_address
+    - field.field.node.accounts.field__billing_city
+    - field.field.node.accounts.field__billing_state
+    - field.field.node.accounts.field_account_manager
+    - field.field.node.accounts.field_account_opportunities
+    - field.field.node.accounts.field_account_projects
+    - field.field.node.accounts.field_account_type
+    - field.field.node.accounts.field_audit_id
+    - field.field.node.accounts.field_billing_email
+    - field.field.node.accounts.field_billing_zip
+    - field.field.node.accounts.field_comments
+    - field.field.node.accounts.field_contacts
+    - field.field.node.accounts.field_parent_account
+    - field.field.node.accounts.field_phone
+    - field.field.node.accounts.field_website
+    - node.type.accounts
+  module:
+    - user
+id: node.accounts.teaser
+targetEntityType: node
+bundle: accounts
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  feeds_item: true
+  field__billing_address: true
+  field__billing_city: true
+  field__billing_state: true
+  field_account_manager: true
+  field_account_opportunities: true
+  field_account_projects: true
+  field_account_type: true
+  field_audit_id: true
+  field_billing_email: true
+  field_billing_zip: true
+  field_comments: true
+  field_contacts: true
+  field_parent_account: true
+  field_phone: true
+  field_website: true

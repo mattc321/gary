@@ -1,0 +1,22 @@
+uuid: 9e11ba1c-6902-4cc7-94ce-cf1432dce8fd
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - gary
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: gary_messages
+theme: gary
+region: before_content
+weight: -4
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

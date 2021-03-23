@@ -1,0 +1,95 @@
+uuid: a831ae0b-f6a8-4325-86e4-84718eeffc5d
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.base_field_override.node.services.title
+    - field.field.node.services.field_audit_id
+    - field.field.node.services.field_description
+    - field.field.node.services.field_product_code
+    - field.field.node.services.field_service_tasks
+    - field.field.node.services.field_unit_price
+    - node.type.services
+  module:
+    - node
+label: 'Services Import'
+id: services_import
+description: ''
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: true
+  line_limit: 100
+processor: 'entity:node'
+processor_configuration:
+  update_existing: 0
+  update_non_existent: _delete
+  expire: -1
+  owner_feed_author: false
+  owner_id: 1
+  authorize: true
+  skip_hash_check: false
+  values:
+    type: services
+custom_sources:
+  -
+    label: '0'
+    value: '0'
+    machine_name: '0'
+  -
+    label: '1'
+    value: '1'
+    machine_name: '1'
+  -
+    label: '2'
+    value: '2'
+    machine_name: '2'
+  -
+    label: '3'
+    value: '3'
+    machine_name: '3'
+  -
+    label: '4'
+    value: '4'
+    machine_name: '4'
+  -
+    label: '5'
+    value: '5'
+    machine_name: '5'
+mappings:
+  -
+    target: title
+    map:
+      value: '0'
+    unique: {  }
+  -
+    target: field_unit_price
+    map:
+      value: '1'
+  -
+    target: field_service_tasks
+    map:
+      target_id: '2'
+    settings:
+      reference_by: nid
+      feeds_item: guid
+      autocreate: 0
+  -
+    target: field_description
+    map:
+      value: '3'
+    unique: {  }
+  -
+    target: field_product_code
+    map:
+      value: '4'
+    unique: {  }
+  -
+    target: field_audit_id
+    map:
+      value: '5'

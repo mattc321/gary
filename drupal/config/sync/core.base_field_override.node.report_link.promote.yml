@@ -1,0 +1,22 @@
+uuid: c5859ae6-05e0-48af-8da9-03267183bb8f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.report_link
+id: node.report_link.promote
+field_name: promote
+entity_type: node
+bundle: report_link
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

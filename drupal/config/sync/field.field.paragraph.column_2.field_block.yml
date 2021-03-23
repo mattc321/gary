@@ -1,0 +1,30 @@
+uuid: bc336c39-8976-4842-8711-e04f675d917f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_block
+    - paragraphs.paragraphs_type.column_2
+  module:
+    - block_field
+id: paragraph.column_2.field_block
+field_name: field_block
+entity_type: paragraph
+bundle: column_2
+label: Block
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  selection: blocks
+  selection_settings:
+    plugin_ids:
+      'block_content:752586e8-6611-4ecf-807e-26e9fe03cb05': 'block_content:752586e8-6611-4ecf-807e-26e9fe03cb05'
+      'block_content:c4b3ff29-5797-4f93-88ff-d55e000c2c37': 'block_content:c4b3ff29-5797-4f93-88ff-d55e000c2c37'
+      'block_content:e13f0482-2f01-4711-93f0-2b6b116d6a06': 'block_content:e13f0482-2f01-4711-93f0-2b6b116d6a06'
+      'block_content:b9ff7df8-7ca3-41da-93ae-4a77643ca2c5': 'block_content:b9ff7df8-7ca3-41da-93ae-4a77643ca2c5'
+      'block_content:61674401-d191-43fd-a46b-84e29f17a9c8': 'block_content:61674401-d191-43fd-a46b-84e29f17a9c8'
+      'block_content:6e8756f8-07be-4541-b0ac-71663c8b8942': 'block_content:6e8756f8-07be-4541-b0ac-71663c8b8942'
+field_type: block_field

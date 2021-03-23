@@ -1,0 +1,19 @@
+uuid: 45ce2970-3e81-4e38-8e87-3a27c1ae2c77
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_billing_zip
+    - node.type.accounts
+id: node.accounts.field_billing_zip
+field_name: field_billing_zip
+entity_type: node
+bundle: accounts
+label: 'Billing Zip'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
