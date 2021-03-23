@@ -69,3 +69,13 @@ table.table-100 {
 .width-50 {
   width: 50%;
 }
+ol {
+  counter-reset: item
+}
+li {
+  display: block
+}
+li:before {
+  content: counters(item, ".") " ";
+  counter-increment: item
+}
