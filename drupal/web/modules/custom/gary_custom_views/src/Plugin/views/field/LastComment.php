@@ -64,7 +64,7 @@ class LastComment extends FieldPluginBase {
       $node_id = 'node_field_data.nid';
     }
     $sql = "SELECT cb.comment_body_value
-              FROM gary.comment_field_data fd
+              FROM comment_field_data fd
               join comment__comment_body cb on cb.entity_id = fd.cid
               join users_field_data ud on fd.uid = ud.uid
               where fd.entity_id =
