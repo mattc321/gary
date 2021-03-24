@@ -65,7 +65,7 @@ class NextSvTask extends FieldPluginBase {
     //select the open site visit type task by min date
 
     $sql = "SELECT fd.title task_title
-                FROM gary.node__field_tasks ft
+                FROM node__field_tasks ft
                 join node__field_task_list ftl on ft.field_tasks_target_id = ftl.entity_id
                 join node__field_task_status fts on ftl.entity_id = fts.entity_id
                 join node_field_data fd on ftl.entity_id = fd.nid

@@ -63,7 +63,7 @@ class NextSvDate extends FieldPluginBase {
     $tid = key($term);
 
     $sql = "SELECT dd.field_task_due_date_value task_due_date
-                FROM gary.node__field_tasks ft
+                FROM node__field_tasks ft
                 join node__field_task_list ftl on ft.field_tasks_target_id = ftl.entity_id
                 join node__field_task_status fts on ftl.entity_id = fts.entity_id
                 join node_field_data fd on ftl.entity_id = fd.nid
