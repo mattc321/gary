@@ -1,0 +1,24 @@
+diff --git a/DraggableViewsField.php b/DraggableViewsField.php
+index 14d0dab..0a72bef 100755
+--- a/DraggableViewsField.php
++++ b/DraggableViewsField.php
+@@ -116,12 +116,18 @@ class DraggableViewsField extends BulkForm {
+         '#tree' => TRUE,
+       ];
+ 
++        $rowArray = (array)$row;
++        $draggableFieldName = array_values(
++        preg_grep('/draggableviews_structure/',
++            array_keys($rowArray)
++        ))[0] ?? 'draggableviews_structure_weight';
++
+       // Add weight.
+       $form[$this->options['id']][$row_index]['weight'] = [
+         '#type' => 'textfield',
+         '#size' => '5',
+         '#maxlength' => '5',
+-        '#value' => $row->draggableviews_structure_weight,
++        '#value' => $row->{$draggableFieldName},
+         '#attributes' => ['class' => ['draggableviews-weight']],
+       ];
+ 
