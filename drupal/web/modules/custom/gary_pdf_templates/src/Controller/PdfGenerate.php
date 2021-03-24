@@ -9,6 +9,8 @@ use Drupal\Core\Render\Renderer;
 use Drupal\gary_custom\GaryFunctions;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
+use Exception;
+use HttpRequestException;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -51,8 +53,6 @@ class PdfGenerate extends ControllerBase
     if (! $request->query->all()) {
       throw new MissingMandatoryParametersException();
     }
-
-    try {
 
       $params = [
         'tid',
@@ -118,9 +118,6 @@ class PdfGenerate extends ControllerBase
       $mpdf->WriteHTML($output);
       $mpdf->Output($request->query->get('file') . '.pdf', Destination::DOWNLOAD);
       return new Response();
-    } catch (\Exception $e) {
-      throw new \HttpRequestException('Could not complete request');
-    }
 
   }
 
