@@ -127,6 +127,9 @@
           },
           "drupal/paragraphs": {
             "Mod add multiple to paragraphs": "patches/mod_add_multiple_paragraphs.patch"
+          },
+          "drupal/draggableviews": {
+            "Mod fix broken index on weight": "patches/mod-fix-broken-index-on-drag-weight.patch"
           }
         }
     }

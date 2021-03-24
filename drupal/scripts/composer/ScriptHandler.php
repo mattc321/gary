@@ -27,6 +27,8 @@ class ScriptHandler {
       'themes',
     ];
 
+    $event->getIO()->write($drupalRoot);
+
     // Required for unit testing
     foreach ($dirs as $dir) {
       if (!$fs->exists($drupalRoot . '/'. $dir)) {
@@ -51,7 +53,7 @@ class ScriptHandler {
       $event->getIO()->write("Create a {$drupalRoot}/sites/default/settings.php file with chmod 0666");
     }
 
-    // Create the files directory with chmod 0777
+    // Create the files directory with chmod 0775
     if (!$fs->exists($drupalRoot . '/sites/default/files')) {
       $oldmask = umask(0);
       $fs->mkdir($drupalRoot . '/sites/default/files', 0775);

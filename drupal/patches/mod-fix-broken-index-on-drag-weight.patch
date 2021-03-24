@@ -1,11 +1,11 @@
-diff --git a/DraggableViewsField.php b/DraggableViewsField.php
+diff --git a/modules/contrib/draggableviews/src/Plugin/views/field/DraggableViewsField.php b/modules/contrib/draggableviews/src/Plugin/views/field/DraggableViewsField.php
 index 14d0dab..0a72bef 100755
---- a/DraggableViewsField.php
-+++ b/DraggableViewsField.php
+--- a/modules/contrib/draggableviews/src/Plugin/views/field/DraggableViewsField.php
++++ b/modules/contrib/draggableviews/src/Plugin/views/field/DraggableViewsField.php
 @@ -116,12 +116,18 @@ class DraggableViewsField extends BulkForm {
          '#tree' => TRUE,
        ];
- 
+
 +        $rowArray = (array)$row;
 +        $draggableFieldName = array_values(
 +        preg_grep('/draggableviews_structure/',
@@ -21,4 +21,4 @@ index 14d0dab..0a72bef 100755
 +        '#value' => $row->{$draggableFieldName},
          '#attributes' => ['class' => ['draggableviews-weight']],
        ];
- 
+
