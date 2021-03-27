@@ -14,3 +14,11 @@
 .inline > div {
     display: inline-block;
 }
+
+ul.basic-list {
+  list-style-type: none;
+  li {
+    padding: 5px;
+    margin: 5px;
+  }
+}
