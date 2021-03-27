@@ -1,0 +1,38 @@
+uuid: 4ca3e3ec-bddf-42a8-b93e-b1768e636ff2
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.service_tasks.feeds_item
+    - field.field.node.service_tasks.field_assign_to_account_manager
+    - field.field.node.service_tasks.field_audit_id
+    - field.field.node.service_tasks.field_date_offset
+    - field.field.node.service_tasks.field_disable_auto_task
+    - field.field.node.service_tasks.field_st_assigned_to
+    - field.field.node.service_tasks.field_task_id
+    - field.field.node.service_tasks.field_task_list
+    - field.field.node.service_tasks.field_task_weight
+    - node.type.service_tasks
+  module:
+    - user
+id: node.service_tasks.teaser
+targetEntityType: node
+bundle: service_tasks
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  feeds_item: true
+  field_assign_to_account_manager: true
+  field_audit_id: true
+  field_date_offset: true
+  field_disable_auto_task: true
+  field_st_assigned_to: true
+  field_task_id: true
+  field_task_list: true
+  field_task_weight: true

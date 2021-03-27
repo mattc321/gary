@@ -1,0 +1,242 @@
+uuid: 990e2188-29e0-4b0b-be70-ed7f6bf87af6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.opportunities.feeds_item
+    - field.field.node.opportunities.field_account_manager
+    - field.field.node.opportunities.field_account_reference
+    - field.field.node.opportunities.field_address
+    - field.field.node.opportunities.field_amount
+    - field.field.node.opportunities.field_audit_id
+    - field.field.node.opportunities.field_billing_status
+    - field.field.node.opportunities.field_city
+    - field.field.node.opportunities.field_comments
+    - field.field.node.opportunities.field_date_closed
+    - field.field.node.opportunities.field_description
+    - field.field.node.opportunities.field_intake_date
+    - field.field.node.opportunities.field_legacy
+    - field.field.node.opportunities.field_opportunity_services_ref
+    - field.field.node.opportunities.field_opportunity_type
+    - field.field.node.opportunities.field_orig_account
+    - field.field.node.opportunities.field_project_contacts
+    - field.field.node.opportunities.field_project_reference
+    - field.field.node.opportunities.field_proposal_template_ref
+    - field.field.node.opportunities.field_state
+    - field.field.node.opportunities.field_tasks
+    - field.field.node.opportunities.field_zip
+    - node.type.opportunities
+  module:
+    - comment
+    - datetime
+    - gary_fields
+    - paragraphs
+    - path
+id: node.opportunities.default
+targetEntityType: node
+bundle: opportunities
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_account_manager:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_account_reference:
+    weight: 10
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_address:
+    weight: 13
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_amount:
+    weight: 17
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_billing_status:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_city:
+    weight: 14
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_comments:
+    weight: 23
+    settings: {  }
+    third_party_settings: {  }
+    type: comment_default
+    region: content
+  field_date_closed:
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_description:
+    weight: 12
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_intake_date:
+    weight: 18
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_opportunity_services_ref:
+    type: entity_reference_paragraphs
+    weight: 24
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_opportunity_type:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_orig_account:
+    weight: 8
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_project_contacts:
+    weight: 21
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    type: entity_reference_paragraphs
+    region: content
+  field_project_reference:
+    weight: 25
+    settings: {  }
+    third_party_settings: {  }
+    type: entity_reverse_widget
+    region: content
+  field_proposal_template_ref:
+    weight: 19
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_state:
+    weight: 15
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_tasks:
+    weight: 22
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_zip:
+    weight: 16
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  path:
+    type: path
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 3
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 6
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 4
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+hidden:
+  feeds_item: true
+  field_audit_id: true
+  field_legacy: true

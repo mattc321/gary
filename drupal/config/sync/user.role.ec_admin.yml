@@ -1,0 +1,27 @@
+uuid: a806215a-d695-4ece-8fd9-5b4294f15636
+langcode: en
+status: true
+dependencies: {  }
+id: ec_admin
+label: 'EC Admin'
+weight: 5
+is_admin: null
+permissions:
+  - 'access comments'
+  - 'administer comments'
+  - 'administer permissions'
+  - 'administer users'
+  - 'create task_list content'
+  - 'delete any accounts content'
+  - 'delete any article content'
+  - 'delete any messages content'
+  - 'delete any opportunities content'
+  - 'delete any page content'
+  - 'delete any projects content'
+  - 'delete any service_tasks content'
+  - 'edit own comments'
+  - 'post comments'
+  - 'skip comment approval'
+  - 'use delete entity'
+  - 'use delete paragraph'
+  - 'use text format plain_text_main'

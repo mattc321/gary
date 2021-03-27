@@ -1,0 +1,35 @@
+uuid: a4c7d1c4-0864-478e-aeb3-fb9856d95462
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.ultra_compact
+    - field.field.user.user.field_color
+    - field.field.user.user.field_full_name
+    - field.field.user.user.field_user_phone
+    - field.field.user.user.user_picture
+    - image.style.user_pic_small
+  module:
+    - image
+    - user
+_core:
+  default_config_hash: V51QPCKkgNREKtSmB9Iu2wmAMEpktVpnzklWaZV8UYo
+id: user.user.ultra_compact
+targetEntityType: user
+bundle: user
+mode: ultra_compact
+content:
+  user_picture:
+    type: image
+    weight: 0
+    region: content
+    settings:
+      image_style: user_pic_small
+      image_link: ''
+    third_party_settings: {  }
+    label: hidden
+hidden:
+  field_color: true
+  field_full_name: true
+  field_user_phone: true
+  member_for: true

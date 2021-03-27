@@ -1,0 +1,72 @@
+uuid: fd336425-7762-4c53-82ab-648dc151d3f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_project_sub_contractors
+    - node.type.sub_contractor
+    - views.view.sub_contractor_projects
+  module:
+    - viewfield
+id: node.sub_contractor.field_project_sub_contractors
+field_name: field_project_sub_contractors
+entity_type: node
+bundle: sub_contractor
+label: 'Project Sub Contractors'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    token_help: ''
+    display_id: block_1
+    arguments: '[node:nid]'
+    target_uuid: 12edae7f-2ba3-4a7d-86fe-3f7a33e5f3df
+    items_to_display: ''
+default_value_callback: ''
+settings:
+  force_default: true
+  allowed_views:
+    sub_contractor_projects: sub_contractor_projects
+    accounts: '0'
+    comment: '0'
+    contacts: '0'
+    content: '0'
+    block_content: '0'
+    entity_reference_services: '0'
+    feeds_feed: '0'
+    files: '0'
+    final_submittals: '0'
+    frontpage: '0'
+    autocompletion_callbacks_nodes: '0'
+    opportunity: '0'
+    opportunity_services: '0'
+    opportunity_tasks: '0'
+    user_admin_people: '0'
+    project_contacts: '0'
+    project_contacts_by_term: '0'
+    projects: '0'
+    project_services: '0'
+    project_tasks: '0'
+    project_units: '0'
+    comments_recent: '0'
+    content_recent: '0'
+    subcontractors: '0'
+    tasks: '0'
+    tasks_all: '0'
+    taxonomy_term: '0'
+    autocompletion_callbacks_users: '0'
+    watchdog: '0'
+    who_s_new: '0'
+    who_s_online: '0'
+    autocompletion_callbacks_words: '0'
+  allowed_display_types:
+    block: block
+    autocompletion_callback: '0'
+    entity_reference: '0'
+    feed: '0'
+    default: '0'
+    page: '0'
+  handler: 'default:view'
+  handler_settings: {  }
+field_type: viewfield

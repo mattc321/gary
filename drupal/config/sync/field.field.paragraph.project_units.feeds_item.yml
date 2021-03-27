@@ -1,0 +1,23 @@
+uuid: 4b5d3603-ed03-47bb-9077-cfb6fa2daef9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.feeds_item
+    - paragraphs.paragraphs_type.project_units
+  module:
+    - feeds
+id: paragraph.project_units.feeds_item
+field_name: feeds_item
+entity_type: paragraph
+bundle: project_units
+label: 'Feeds item'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:feeds_feed'
+  handler_settings: {  }
+field_type: feeds_item

@@ -53,7 +53,7 @@ class URLPathAlias extends FieldPluginBase {
   public function render(ResultRow $values) {
     if (!empty($this->view->relationship)) {
       if ($id = $values->_relationship_entities['node']) {
-        $alias = \Drupal::service('path.alias_manager')
+        $alias = \Drupal::service('path_alias.manager')
           ->getAliasByPath('/node/'.$id->id());
         return $alias;
       } else {
@@ -62,7 +62,7 @@ class URLPathAlias extends FieldPluginBase {
         return '';
       }
     } else {
-      $alias = \Drupal::service('path.alias_manager')
+      $alias = \Drupal::service('path_alias.manager')
         ->getAliasByPath('/node/'.$values->_entity->id());
       return $alias;
     }

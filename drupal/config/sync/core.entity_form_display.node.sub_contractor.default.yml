@@ -1,0 +1,125 @@
+uuid: 47c4b771-62dd-4b03-96cc-0de25e7d836a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.sub_contractor.field__billing_address
+    - field.field.node.sub_contractor.field__billing_city
+    - field.field.node.sub_contractor.field_avg_grade
+    - field.field.node.sub_contractor.field_billing_zip
+    - field.field.node.sub_contractor.field_contact_email
+    - field.field.node.sub_contractor.field_full_name
+    - field.field.node.sub_contractor.field_phone
+    - field.field.node.sub_contractor.field_project_sub_contractors
+    - field.field.node.sub_contractor.field_state
+    - field.field.node.sub_contractor.field_type
+    - field.field.node.sub_contractor.field_website
+    - node.type.sub_contractor
+  module:
+    - viewfield
+id: node.sub_contractor.default
+targetEntityType: node
+bundle: sub_contractor
+mode: default
+content:
+  field__billing_address:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field__billing_city:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_avg_grade:
+    weight: 26
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_billing_zip:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_contact_email:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_full_name:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_phone:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_project_sub_contractors:
+    weight: 27
+    settings: {  }
+    third_party_settings: {  }
+    type: viewfield_select
+    region: content
+  field_state:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_type:
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_website:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

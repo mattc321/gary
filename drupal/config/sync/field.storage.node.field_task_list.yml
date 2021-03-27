@@ -1,0 +1,19 @@
+uuid: f0f1a591-d329-4147-939b-3c77c3bddaed
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_task_list
+field_name: field_task_list
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

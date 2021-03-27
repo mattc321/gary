@@ -1,0 +1,18 @@
+uuid: 2028387d-fa22-42f5-9608-26f308ca4ada
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.report_link
+id: node.report_link.title
+field_name: title
+entity_type: node
+bundle: report_link
+label: 'Report Title'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

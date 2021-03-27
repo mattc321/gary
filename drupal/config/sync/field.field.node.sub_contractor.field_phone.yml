@@ -1,0 +1,19 @@
+uuid: f00b4e3a-9b7d-4a75-b9d2-106b1fc5f0ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_phone
+    - node.type.sub_contractor
+id: node.sub_contractor.field_phone
+field_name: field_phone
+entity_type: node
+bundle: sub_contractor
+label: Phone
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

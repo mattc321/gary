@@ -1,0 +1,116 @@
+<?php
+
+/**
+ * @file
+ * Contains gary_pdf_templates.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\gary_custom\GaryFunctions;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_help().
+ */
+function gary_pdf_templates_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gary_pdf_templates module.
+    case 'help.page.gary_pdf_templates':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('PDF Tokenized Templates') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function gary_pdf_templates_theme() {
+  return [
+    'pdf_template' => [
+      'variables' => [
+        'template_entity' => NULL,
+        'entity' => NULL,
+        'css' => NULL,
+        'additional_vars' => NULL,
+      ],
+      'render element' => 'children',
+    ],
+    'form_generate' => [
+      'variables' => [
+        'entity_id' => NULL,
+        'template_entity_id' => NULL,
+        'text' => NULL,
+        'file' => NULL,
+        'download_img', NULL
+      ],
+      'render element' => 'children',
+    ]
+  ];
+}
+
+
+function gary_pdf_templates_entity_display_build_alter(&$build, $context) {
+
+  $fieldsToAttachGenerate = [
+    'field_proposal_template_ref'
+  ];
+
+  if ($context['entity']->getEntityTypeId() == 'node' && $context['view_mode'] === 'full') {
+
+    /** @var Node $entity */
+    $entity = $context['entity'];
+
+    $helper = new GaryFunctions();
+
+    foreach ($fieldsToAttachGenerate as $fieldToAttach) {
+      if ($entity->hasField($fieldToAttach) && $entity->{$fieldToAttach}->getValue()) {
+
+        $templateEntity = $helper::loadEntityRef($entity, $fieldToAttach);
+        $build[$fieldToAttach]['#attached']['library'][] = 'gary_pdf_templates/generate';
+
+        $text = $build[$fieldToAttach][0]['#plain_text'];
+        unset($build[$fieldToAttach][0]['#plain_text']);
+
+        $fileName = preg_replace('/[^\da-z]/i', '', $entity->getTitle());
+
+        $build[$fieldToAttach][0]['#markup'] = getMarkupWithLinkGenerate(
+          $text,
+          $entity,
+          $templateEntity,
+          $fileName
+        );
+      }
+    }
+
+  }
+}
+
+function getMarkupWithLinkGenerate(string $text, Node $entity, Node $templateEntity, string $fileName) {
+
+
+  $build = [
+    'entity_id' => $entity->id(),
+    'template_entity_id' => $templateEntity->id(),
+    'text' => $text,
+    'file' => $fileName,
+    'download_image' => '/'.drupal_get_path(
+        'module',
+        'gary_pdf_templates'
+      ) . '/img/download.svg'
+  ];
+
+  $twigService = \Drupal::service('twig');
+
+  $path = drupal_get_path(
+      'module',
+      'gary_pdf_templates'
+    ) . '/templates/form-generate.html.twig';
+
+  return $twigService
+    ->loadTemplate($path)
+    ->render($build);
+}

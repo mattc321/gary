@@ -1,0 +1,18 @@
+uuid: 00c40a73-12bb-44c7-b4a0-a22674634112
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Opportunities
+type: opportunities
+description: 'Opportunities designate an entity before it actually reaches project stage. Opps also hold billing information'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false

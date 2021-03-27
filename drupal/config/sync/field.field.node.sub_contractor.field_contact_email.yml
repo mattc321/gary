@@ -1,0 +1,19 @@
+uuid: f3fac3d8-adf8-44fa-91ae-ad60162a93a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_contact_email
+    - node.type.sub_contractor
+id: node.sub_contractor.field_contact_email
+field_name: field_contact_email
+entity_type: node
+bundle: sub_contractor
+label: 'Contact Email'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

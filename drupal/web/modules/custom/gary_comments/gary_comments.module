@@ -119,7 +119,7 @@ function gary_comments_mail($key, &$message, $params) {
       'from' => $params['poster_name'].' <'.$params['poster'].'>'
      ];
 
-     $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
+     $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$params['node_id']);
      $host = \Drupal::request()->getSchemeAndHttpHost();
      $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
      break;
@@ -154,7 +154,7 @@ function gary_comments_mail($key, &$message, $params) {
         'from' => 'Admin <'.$message['from'].'>'
        ];
 
-       $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$params['node_id']);
+       $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$params['node_id']);
        $host = \Drupal::request()->getSchemeAndHttpHost();
        $message['body'][] = t('Go here to view: @host@alias', array('@alias' => $alias, '@host' => $host));
        break;

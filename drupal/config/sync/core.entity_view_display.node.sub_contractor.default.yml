@@ -1,0 +1,140 @@
+uuid: 49d65908-0437-42fa-9acd-b26ed6449fe7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.sub_contractor.field__billing_address
+    - field.field.node.sub_contractor.field__billing_city
+    - field.field.node.sub_contractor.field_avg_grade
+    - field.field.node.sub_contractor.field_billing_zip
+    - field.field.node.sub_contractor.field_contact_email
+    - field.field.node.sub_contractor.field_full_name
+    - field.field.node.sub_contractor.field_phone
+    - field.field.node.sub_contractor.field_project_sub_contractors
+    - field.field.node.sub_contractor.field_state
+    - field.field.node.sub_contractor.field_type
+    - field.field.node.sub_contractor.field_website
+    - node.type.sub_contractor
+  module:
+    - field_group
+    - user
+    - viewfield
+third_party_settings:
+  field_group:
+    group_sub_contractors:
+      children:
+        - field_project_sub_contractors
+      parent_name: ''
+      weight: 11
+      format_type: html_element
+      format_settings:
+        id: ''
+        classes: 'ec-legend subcontractors'
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Sub Contractors'
+      region: content
+id: node.sub_contractor.default
+targetEntityType: node
+bundle: sub_contractor
+mode: default
+content:
+  field__billing_address:
+    weight: 7
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field__billing_city:
+    weight: 8
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_avg_grade:
+    weight: 1
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_billing_zip:
+    weight: 10
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_contact_email:
+    weight: 5
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_full_name:
+    weight: 3
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_phone:
+    weight: 4
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_project_sub_contractors:
+    weight: 12
+    label: hidden
+    settings:
+      view_title: hidden
+      always_build_output: 0
+      empty_view_title: hidden
+    third_party_settings: {  }
+    type: viewfield_default
+    region: content
+  field_state:
+    weight: 9
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_type:
+    weight: 2
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_website:
+    weight: 6
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

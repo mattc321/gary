@@ -1,0 +1,29 @@
+uuid: 4dbddbcb-dd36-42e2-9f2f-504242a832c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_billing_status
+    - node.type.opportunities
+    - taxonomy.vocabulary.billing_status
+id: node.opportunities.field_billing_status
+field_name: field_billing_status
+entity_type: node
+bundle: opportunities
+label: 'Billing Status'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      billing_status: billing_status
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,23 @@
+uuid: f6486ec2-8dc5-4eac-b10d-a0660f724d73
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_mf_qty
+    - paragraphs.paragraphs_type.project_units
+id: paragraph.project_units.field_mf_qty
+field_name: field_mf_qty
+entity_type: paragraph
+bundle: project_units
+label: 'MF Qty'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

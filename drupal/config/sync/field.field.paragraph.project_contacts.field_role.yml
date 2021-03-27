@@ -1,0 +1,33 @@
+uuid: be0ae1f5-d33e-4392-8d67-a9f844a2963b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_role
+    - paragraphs.paragraphs_type.project_contacts
+    - taxonomy.vocabulary.role
+  content:
+    - 'taxonomy_term:role:d69f62bd-b522-48c3-a7b2-860990016019'
+id: paragraph.project_contacts.field_role
+field_name: field_role
+entity_type: paragraph
+bundle: project_contacts
+label: Role
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: d69f62bd-b522-48c3-a7b2-860990016019
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      role: role
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,14 @@
+template:
+  version: 1.x
+  css:
+    theme:
+      /modules/custom/gary_pdf_templates/css/pdf_template.css: {}
+
+generate:
+  css:
+    theme:
+      /modules/custom/gary_pdf_templates/css/generate-link.css: {}
+  js:
+    js/pdf-generate.js: {}
+  dependencies:
+    - core/jquery

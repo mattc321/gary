@@ -1,0 +1,42 @@
+uuid: c972dadc-a861-41e9-994f-3c015dba7c4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.sub_contractor.field__billing_address
+    - field.field.node.sub_contractor.field__billing_city
+    - field.field.node.sub_contractor.field_avg_grade
+    - field.field.node.sub_contractor.field_billing_zip
+    - field.field.node.sub_contractor.field_contact_email
+    - field.field.node.sub_contractor.field_full_name
+    - field.field.node.sub_contractor.field_phone
+    - field.field.node.sub_contractor.field_project_sub_contractors
+    - field.field.node.sub_contractor.field_state
+    - field.field.node.sub_contractor.field_type
+    - field.field.node.sub_contractor.field_website
+    - node.type.sub_contractor
+  module:
+    - user
+id: node.sub_contractor.teaser
+targetEntityType: node
+bundle: sub_contractor
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field__billing_address: true
+  field__billing_city: true
+  field_avg_grade: true
+  field_billing_zip: true
+  field_contact_email: true
+  field_full_name: true
+  field_phone: true
+  field_project_sub_contractors: true
+  field_state: true
+  field_type: true
+  field_website: true

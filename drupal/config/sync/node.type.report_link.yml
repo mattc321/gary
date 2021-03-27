@@ -1,0 +1,18 @@
+uuid: 06093e83-2ead-41fb-bf1e-50c2c8d9f5ec
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Report Link'
+type: report_link
+description: 'Links to Reports for EC'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false

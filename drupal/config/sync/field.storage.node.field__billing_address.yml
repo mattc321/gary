@@ -1,0 +1,21 @@
+uuid: fc49d8b2-14c3-476d-825a-661bb50a491a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field__billing_address
+field_name: field__billing_address
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

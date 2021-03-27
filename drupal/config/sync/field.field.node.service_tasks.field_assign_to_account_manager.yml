@@ -1,0 +1,23 @@
+uuid: 1cbfeb0f-9634-497b-9245-0a8aa560338a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_assign_to_account_manager
+    - node.type.service_tasks
+id: node.service_tasks.field_assign_to_account_manager
+field_name: field_assign_to_account_manager
+entity_type: node
+bundle: service_tasks
+label: 'Assign to Account Manager'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

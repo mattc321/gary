@@ -1,0 +1,23 @@
+uuid: 97855bbf-9ecf-4df5-b12f-72c4eb7bad66
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_service_amount
+    - paragraphs.paragraphs_type.opportunity_services
+id: paragraph.opportunity_services.field_service_amount
+field_name: field_service_amount
+entity_type: paragraph
+bundle: opportunity_services
+label: Price
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: $
+  suffix: ''
+field_type: decimal

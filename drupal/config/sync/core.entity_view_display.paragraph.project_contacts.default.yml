@@ -1,0 +1,50 @@
+uuid: 5564327f-f4ea-498d-83b1-58a1e262e0b8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.project_contacts.field_contact_reference
+    - field.field.paragraph.project_contacts.field_description
+    - field.field.paragraph.project_contacts.field_primary
+    - field.field.paragraph.project_contacts.field_role
+    - paragraphs.paragraphs_type.project_contacts
+id: paragraph.project_contacts.default
+targetEntityType: paragraph
+bundle: project_contacts
+mode: default
+content:
+  field_contact_reference:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_description:
+    weight: 2
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_primary:
+    weight: 3
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_role:
+    weight: 0
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+hidden: {  }

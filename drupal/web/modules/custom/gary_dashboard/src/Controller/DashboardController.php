@@ -23,7 +23,7 @@ class DashboardController extends ControllerBase {
   protected $config;
 
   public function __construct() {
-    $tempstore = \Drupal::service('user.private_tempstore')->get('gary_custom');
+    $tempstore = \Drupal::service('tempstore.private')->get('gary_custom');
     $this->isMobile = $tempstore->get('is_mobile');
     $this->config = \Drupal::config('gary_dashboard.adminsettings');
   }

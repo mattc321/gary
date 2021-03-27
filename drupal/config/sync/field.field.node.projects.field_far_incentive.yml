@@ -1,0 +1,23 @@
+uuid: b6f9aa53-ff47-4c0c-8008-7fa328aab1af
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_far_incentive
+    - node.type.projects
+id: node.projects.field_far_incentive
+field_name: field_far_incentive
+entity_type: node
+bundle: projects
+label: 'FAR Incentive'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

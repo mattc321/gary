@@ -1,0 +1,43 @@
+uuid: fa8ceb9b-e3f3-4998-8853-61c39792a482
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_project_contacts
+    - node.type.opportunities
+    - paragraphs.paragraphs_type.project_contacts
+  module:
+    - entity_reference_revisions
+id: node.opportunities.field_project_contacts
+field_name: field_project_contacts
+entity_type: node
+bundle: opportunities
+label: 'Project Contacts'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      project_contacts: project_contacts
+    target_bundles_drag_drop:
+      block:
+        weight: 6
+        enabled: false
+      column_2:
+        weight: 7
+        enabled: false
+      column_3:
+        weight: 8
+        enabled: false
+      project_contacts:
+        enabled: true
+        weight: 9
+      project_units:
+        weight: 10
+        enabled: false
+field_type: entity_reference_revisions

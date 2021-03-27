@@ -1,0 +1,22 @@
+uuid: 3d33ee97-1b9f-46c0-b4f7-fa0e69ac2c81
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: accounts_pattern
+label: 'Accounts Pattern'
+type: 'canonical_entities:node'
+pattern: 'content/accounts/[node:title]'
+selection_criteria:
+  ade02dad-d9ae-452f-9e5d-a2d3e537ed5b:
+    id: node_type
+    bundles:
+      accounts: accounts
+    negate: false
+    context_mapping:
+      node: node
+    uuid: ade02dad-d9ae-452f-9e5d-a2d3e537ed5b
+selection_logic: and
+weight: -5
+relationships: {  }

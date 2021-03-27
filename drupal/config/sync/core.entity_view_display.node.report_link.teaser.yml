@@ -1,0 +1,24 @@
+uuid: 14f56faa-4cda-4545-83e1-882d439d48a2
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.report_link.field_description
+    - field.field.node.report_link.field_report_url
+    - node.type.report_link
+  module:
+    - user
+id: node.report_link.teaser
+targetEntityType: node
+bundle: report_link
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_description: true
+  field_report_url: true

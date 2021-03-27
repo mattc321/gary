@@ -1,0 +1,8 @@
+uuid: 9480a58d-56e6-46ce-8716-b2986cfd35b4
+langcode: en
+status: true
+dependencies: {  }
+name: 'Permit City'
+vid: permit_city
+description: ''
+weight: 0

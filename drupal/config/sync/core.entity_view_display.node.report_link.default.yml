@@ -1,0 +1,42 @@
+uuid: a17a1cd8-92eb-4968-855d-4b13920ed720
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.report_link.field_description
+    - field.field.node.report_link.field_report_url
+    - node.type.report_link
+  module:
+    - link
+    - user
+id: node.report_link.default
+targetEntityType: node
+bundle: report_link
+mode: default
+content:
+  field_description:
+    weight: 103
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_report_url:
+    weight: 102
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

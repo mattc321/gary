@@ -1,0 +1,55 @@
+uuid: 33b2b1e7-5fd2-4bcb-845c-9cd951b80c1e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.opportunity_services.field_line_total
+    - field.field.paragraph.opportunity_services.field_opportunity_service
+    - field.field.paragraph.opportunity_services.field_quantity
+    - field.field.paragraph.opportunity_services.field_service_amount
+    - paragraphs.paragraphs_type.opportunity_services
+id: paragraph.opportunity_services.default
+targetEntityType: paragraph
+bundle: opportunity_services
+mode: default
+content:
+  field_line_total:
+    weight: 3
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+  field_opportunity_service:
+    weight: 0
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_quantity:
+    weight: 2
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_service_amount:
+    weight: 1
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_decimal
+    region: content
+hidden: {  }

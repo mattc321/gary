@@ -1,0 +1,22 @@
+uuid: 2918a564-106b-49cf-83ad-9d49ef2c1545
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.opportunity_auto_tasks
+id: node.opportunity_auto_tasks.promote
+field_name: promote
+entity_type: node
+bundle: opportunity_auto_tasks
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

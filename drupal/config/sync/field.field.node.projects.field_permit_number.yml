@@ -1,0 +1,19 @@
+uuid: 0cd38871-8493-4943-9e90-2b73b3c6cec3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_permit_number
+    - node.type.projects
+id: node.projects.field_permit_number
+field_name: field_permit_number
+entity_type: node
+bundle: projects
+label: 'Permit #'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

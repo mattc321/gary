@@ -1,0 +1,8 @@
+gary_pdf_templates.process:
+  path: '/pdf/generate'
+  methods:  ['GET']
+  defaults:
+    _controller: '\Drupal\gary_pdf_templates\Controller\PdfGenerate::renderPdf'
+    _title: 'Generate pdf'
+  requirements:
+    _permission: 'access content'

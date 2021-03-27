@@ -1,0 +1,50 @@
+uuid: e07689b1-8092-436d-897f-4edf9240248c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.project_contacts.field_contact_reference
+    - field.field.paragraph.project_contacts.field_description
+    - field.field.paragraph.project_contacts.field_primary
+    - field.field.paragraph.project_contacts.field_role
+    - paragraphs.paragraphs_type.project_contacts
+id: paragraph.project_contacts.default
+targetEntityType: paragraph
+bundle: project_contacts
+mode: default
+content:
+  field_contact_reference:
+    weight: 0
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_description:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_primary:
+    weight: 3
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_role:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

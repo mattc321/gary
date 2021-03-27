@@ -22,42 +22,43 @@
     "require": {
         "composer/installers": "^1.7",
         "cweagans/composer-patches": "^1.6.5",
-        "drupal-composer/drupal-scaffold": "^2.5",
-        "drupal/admin_toolbar": "^1.24",
-        "drupal/ajax_comments": "^1.0",
+        "drupal/admin_toolbar": "^3",
         "drupal/betterlogin": "^1.2",
         "drupal/block_field": "^1.0",
-        "drupal/console": "^1.8",
-        "drupal/core-recommended": "^8.8",
+        "drupal/console": "^1.9",
+        "drupal/core-composer-scaffold": "^9.0.0",
+        "drupal/core-project-message": "^9.0.0",
+        "drupal/core-recommended": "^9.0.0",
         "drupal/ctools": "^3.0",
         "drupal/date_popup": "^1.0",
-        "drupal/devel": "^2.0",
-        "drupal/draggableviews": "^1.2",
+        "drupal/draggableviews": "^2.0",
         "drupal/easy_breadcrumb": "^1.8",
         "drupal/entity_reference_revisions": "^1.5",
         "drupal/feeds": "^3.0@alpha",
         "drupal/field_group": "^3.0",
         "drupal/geolocation": "^3.0",
-        "drupal/homebox": "1.x-dev",
         "drupal/multiple_fields_remove_button": "^1.0",
         "drupal/paragraphs": "^1.3",
         "drupal/pathauto": "^1.3",
-        "drupal/require_login": "^2.0",
         "drupal/restui": "^1.15",
-        "drupal/search_autocomplete": "^1.1",
+        "drupal/search_autocomplete": "^2.0",
         "drupal/select2": "^1.1",
         "drupal/smtp": "^1.0",
+        "drupal/twig_xdebug": "^1.2",
         "drupal/viewfield": "3.x-dev",
         "drupal/views_autocomplete_filters": "^1.2",
         "drupal/views_bulk_edit": "^2.2",
+        "drupal/views_bulk_operations": "^3.10",
         "drupal/views_data_export": "^1.0",
         "drupal/views_entity_form_field": "^1.0",
         "drupal/views_field_formatter": "^1.8",
-        "drush/drush": "~9.1dev",
+        "drush/drush": "^10",
+        "mpdf/mpdf": "^8.0",
         "npm-asset/gsap": "^2.1",
         "npm-asset/qtip2": "^3.0",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
+        "symfony/var-dumper": "^5.1.8",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3"
@@ -65,12 +66,9 @@
     "require-dev": {
         "behat/mink": "~1.7",
         "behat/mink-goutte-driver": "~1.2",
-        "drupal/twig_xdebug": "^1.0",
         "jcalderonzumba/gastonjs": "~1.0.2",
         "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
-        "mikey179/vfsstream": "~1.2",
-        "phpunit/phpunit": "~4.8",
-        "symfony/css-selector": "~2.8"
+        "mikey179/vfsstream": "~1.2"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -125,14 +123,13 @@
         },
         "patches": {
           "drupal/core": {
-            "Firewall stripping ajax header 2580191": "https://www.drupal.org/files/issues/ajax-remove-X-Drupal-Ajax-Token-verification-2580191-33.patch",
-            "Views ajax submit exposed": "https://www.drupal.org/files/issues/2018-12-18/views-ajax-filter-causes-page-refresh-1551534-44.patch"
-          },
-          "drupal/draggableviews": {
-            "Fix draggable views grouping 2867348": "https://www.drupal.org/files/issues/2018-09-07/not_working_with_group_by-draggableviews-2867348-26.patch"
+            "Firewall stripping ajax header 2580191": "https://www.drupal.org/files/issues/ajax-remove-X-Drupal-Ajax-Token-verification-2580191-33.patch"
           },
           "drupal/paragraphs": {
             "Mod add multiple to paragraphs": "patches/mod_add_multiple_paragraphs.patch"
+          },
+          "drupal/draggableviews": {
+            "Mod fix broken index on weight": "patches/mod-fix-broken-index-on-drag-weight.patch"
           }
         }
     }

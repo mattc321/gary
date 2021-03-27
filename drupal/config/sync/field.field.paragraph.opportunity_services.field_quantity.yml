@@ -1,0 +1,25 @@
+uuid: a008ac1b-89e4-40e4-ac0b-ebb2d801722c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_quantity
+    - paragraphs.paragraphs_type.opportunity_services
+id: paragraph.opportunity_services.field_quantity
+field_name: field_quantity
+entity_type: paragraph
+bundle: opportunity_services
+label: Quantity
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

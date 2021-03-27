@@ -1,0 +1,13 @@
+uuid: 2ad39747-be5e-4608-acf0-f956259b16b2
+langcode: en
+status: true
+dependencies: {  }
+id: assignees
+label: Assignees
+weight: 3
+is_admin: null
+permissions:
+  - 'access comments'
+  - 'post comments'
+  - 'skip comment approval'
+  - 'use text format plain_text_main'

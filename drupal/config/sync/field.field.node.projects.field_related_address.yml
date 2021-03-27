@@ -1,0 +1,27 @@
+uuid: 315c2ec9-52ad-4cb1-b206-e0bd52d27f98
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_related_address
+    - node.type.projects
+id: node.projects.field_related_address
+field_name: field_related_address
+entity_type: node
+bundle: projects
+label: 'Related Address'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      projects: projects
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

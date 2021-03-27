@@ -1,0 +1,15 @@
+uuid: 59e205b6-ec51-4c3f-94f4-baed39291398
+langcode: en
+status: true
+dependencies: {  }
+name: user_pic
+label: 'User Pic'
+effects:
+  1bb9327a-0829-4ef1-8cc6-cdee30d31634:
+    uuid: 1bb9327a-0829-4ef1-8cc6-cdee30d31634
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 225
+      height: 225
+      anchor: center-center

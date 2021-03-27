@@ -1,0 +1,20 @@
+uuid: 5525126f-8266-4638-a835-b7ef84eb2bb6
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+id: node.field_permit_issue
+field_name: field_permit_issue
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

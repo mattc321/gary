@@ -1,0 +1,46 @@
+uuid: 5f7a9505-bfb5-449b-aad7-7a3150b31dae
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.opportunity_services.field_line_total
+    - field.field.paragraph.opportunity_services.field_opportunity_service
+    - field.field.paragraph.opportunity_services.field_quantity
+    - field.field.paragraph.opportunity_services.field_service_amount
+    - paragraphs.paragraphs_type.opportunity_services
+id: paragraph.opportunity_services.default
+targetEntityType: paragraph
+bundle: opportunity_services
+mode: default
+content:
+  field_line_total:
+    weight: 3
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_opportunity_service:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_quantity:
+    weight: 2
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_service_amount:
+    weight: 1
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

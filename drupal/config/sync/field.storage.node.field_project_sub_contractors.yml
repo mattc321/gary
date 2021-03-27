@@ -1,0 +1,21 @@
+uuid: 76f1945b-41fd-4769-95d0-d60fc9eaef14
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - viewfield
+    - views
+id: node.field_project_sub_contractors
+field_name: field_project_sub_contractors
+entity_type: node
+type: viewfield
+settings:
+  target_type: view
+module: viewfield
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
