@@ -1,0 +1,13 @@
+diff --git a/src/Plugin/views/field/EntityFormField.php b/src/Plugin/views/field/EntityFormField.php
+index 70777c7..2ed676e 100644
+--- a/src/Plugin/views/field/EntityFormField.php
++++ b/src/Plugin/views/field/EntityFormField.php
+@@ -529,7 +529,7 @@ class EntityFormField extends FieldPluginBase implements CacheableDependencyInte
+    *   The processed form element.
+    */
+   public function viewsFormProcess(array $element, FormStateInterface $form_state) {
+-    $element['#submit'][] = [$this, 'saveEntities'];
++    $element['actions']['submit']['#submit'][] = [$this, 'saveEntities'];
+     return $element;
+   }
+ 

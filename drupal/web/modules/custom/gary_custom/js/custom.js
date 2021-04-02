@@ -40,7 +40,20 @@
 
          };
 
-         //switch mobile view
+         const modifyTableDrag = function(){
+           $("table[id^='draggable']" ).each( function( index, element ){
+             let id = $(this).attr('id');
+             $(this).parent().find('div.jelly').hide();
+             const tableDrag = Drupal.tableDrag[id];
+             tableDrag.onDrop = function($jelly) {
+               $(this).parent().find('div.jelly').fadeIn();
+             }.bind($(this));
+           });
+         };
+
+        modifyTableDrag();
+
+       //switch mobile view
          // $('.switch-unit-view').once('.switch-unit-view').click(function(e){
          //   $('.js-view-dom-id-project-units-block_3').toggle('hidden');
          //   $('#inline-pg-form-field-project-units').toggle('hidden');
