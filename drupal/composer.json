@@ -129,11 +129,11 @@
             "Mod add multiple to paragraphs": "patches/mod_add_multiple_paragraphs.patch"
           },
           "drupal/draggableviews": {
-            "Mod fix broken index on weight": "patches/mod-fix-broken-index-on-drag-weight.patch",
-            "Mod fix removal of default form submit this breaks view entity form": "patches/fix-removal-of-default-views-form-submit.patch"
+            "Mod fix broken index on weight": "patches/mod-fix-broken-index-on-drag-weight.patch"
           },
           "drupal/views_entity_form_field": {
-            "Fix broken submit handlers when draggableviews installed": "patches/fix-entity-form-submit-handlers.patch"
+            "Fix broken submit handlers when draggableviews installed": "patches/fix-entity-form-submit-handlers.patch",
+            "Move submit to custom button": "patches/move-submit-to-custom-button.patch"
           }
         }
     }

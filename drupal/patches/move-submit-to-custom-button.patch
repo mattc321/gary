@@ -1,0 +1,25 @@
+diff --git a/src/Plugin/views/field/EntityFormField.php b/src/Plugin/views/field/EntityFormField.php
+index 2ed676e..7002809 100644
+--- a/src/Plugin/views/field/EntityFormField.php
++++ b/src/Plugin/views/field/EntityFormField.php
+@@ -474,6 +474,10 @@ class EntityFormField extends FieldPluginBase implements CacheableDependencyInte
+     $form['#process'][] = [$this, 'viewsFormProcess'];
+     $form['#tree'] = TRUE;
+     $form += ['#parents' => []];
++    $form['actions']['save_entities'] = [
++      '#value' => t('Save'),
++      '#type' => 'submit',
++    ];
+ 
+     // Only add the buttons if there are results.
+     if (!empty($this->getView()->result)) {
+@@ -529,7 +533,8 @@ class EntityFormField extends FieldPluginBase implements CacheableDependencyInte
+    *   The processed form element.
+    */
+   public function viewsFormProcess(array $element, FormStateInterface $form_state) {
+-    $element['actions']['submit']['#submit'][] = [$this, 'saveEntities'];
++//    $element['actions']['submit']['#submit'][] = [$this, 'saveEntities'];
++    $element['actions']['save_entities']['#submit'][] = [$this, 'saveEntities'];
+     return $element;
+   }
+ 
