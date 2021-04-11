@@ -1,0 +1,193 @@
+{% set mainAccount = entity.field_account_reference.entity %}
+{% set mainContact = additional_vars.primary_contact %}
+
+<body>
+<div class="container">
+  <div class="header proposal-row">
+    <table>
+      <tr>
+        <td><img src="/themes/gary/logo.png" height="100px" width="100px"></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td style="width: 8cm;">
+          <p>Evergreen Certified LLC</p>
+          <p>502 Rainier Ave S – Suite 206</p>
+          <p>Seattle WA 98144</p>
+          <p>www.evergreencertified.com</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <div class="date proposal-row">
+    <p><span class="label">Date: </span>{{ "now"|date("m/d/Y") }} - Proposal Valid for 30 Days</p>
+  </div>
+  <br>
+  <div class="account-info proposal-row">
+    <h3>Account information</h3>
+    <div class="account-info-table-container">
+      <table class="account-info-table table">
+        <tr><td>Account: </td><td>{{ entity.field_orig_account.entity.title.value  }}</td></tr>
+        <tr><td>Contact Name: </td><td>{{ additional_vars.primary_contact.title.value }}</td></tr>
+        <tr><td>Email: </td><td>{{ additional_vars.primary_contact.field_contact_email.value|default(entity.field_account_reference.entity.field_billing_email.value)  }}</td></tr>
+        <tr><td>Phone: </td><td>{{ additional_vars.primary_contact.field_contact_phone.value|default(entity.field_account_reference.entity.field_phone.value) }}</td></tr>
+        <tr><td>Billing Account: </td><td>{{ entity.field_account_reference.entity.title.value  }}</td></tr>
+        <tr><td>Street Address: </td><td>{{ entity.field_account_reference.entity.field__billing_address.value }}</td></tr>
+        <tr><td>City, St, Zip</td><td>{{ entity.field_account_reference.entity.field__billing_city.value }}, {{ entity.field_account_reference.entity.field__billing_state.value }}, {{ entity.field_account_reference.entity.field_billing_zip.value }}</td></tr>
+      </table>
+    </div>
+  </div>
+  <br>
+  <div class="project-info proposal-row">
+    <h3>Project Information</h3>
+    <div class="project-info-table-container">
+      <table class="project-info-table table">
+        <tr><td>Project Description: </td><td>{{ entity.field_description.value }}</td></tr>
+        <tr><td>Street Address: </td><td>{{ entity.field_address.value }}</td></tr>
+        <tr><td>City, St, Zip</td><td>{{ entity.field_city.value }}, {{ entity.field_state.value|upper }}, {{ entity.field_zip.value }}</td></tr>
+      </table>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="proposed-services proposal-row">
+    <h3>Proposed Services</h3>
+    <ol>
+      <li>Built Green 5-Star Verification – Single Family/Townhouse </li>
+      <ol>
+        <li><strong>Game Planning Meeting: </strong>An initial 1-hour meeting to review project goals, certification requirements, and key project milestones with the builder’s team.</li>
+        <li><strong>Support & Coordination: </strong>Includes ongoing verifier support throughout project to help meet goals, confirmation of Built Green enrollment, and coordination with the builder about site visits and submittals</li>
+        <li><strong>Site Visits: </strong>On site verification of Built Green credits at the following phases of construction: Framing, Insulation, and Project Completion.</li>
+        <li><strong>Blower Door Test: </strong>Testing and reporting of each unit per the Washington State Energy Code requirements for new construction.</li>
+        <li><strong>REMRate Energy Model: </strong>Energy model required for Built Green verification, including preliminary modeling to confirm project specifications and final energy model at project completion.</li>
+        <li><strong>Final Reporting: </strong>Preparation and submittal of final verification package to Built Green. Includes energy modeling results, photo reports, documentation provided by builder, and final Built Green checklist.</li>
+      </ol>
+    </ol>
+  </div>
+  <div class="pagebreak"></div>
+  <div class="fees proposal-row">
+    <h3>Fees</h3>
+    <table class="fees-table">
+      <thead>
+      <tr>
+        <th>Description</th>
+        <th>Rate</th>
+        <th>Qty</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for service in entity.field_opportunity_services_ref.referencedEntities %}
+        <tr>
+          <td>{{ service.field_opportunity_service.entity.title.value }}</td>
+          <td>${{ service.field_service_amount.value|number_format }}</td>
+          <td>{{ service.field_quantity.value }}</td>
+          <td style="width: 2cm">${{ service.field_line_total.value|number_format }}</td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td><strong>Total Fees</strong></td>
+        <td></td>
+        <td></td>
+        <td style="width: 2cm">${{ entity.field_amount.value|number_format }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <br>
+    <table class="fees-table">
+      <tr>
+        <td>20% Initial payment at start of work. Will be credited toward final total.</td>
+        <td style="width: 2cm">${{ (entity.field_amount.value * 0.2)|number_format }}</td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <div class="proposal-row">
+    <h3>Payment Schedule</h3>
+    <ul>
+      <li><strong>20% initial payment required to commence work and remaining balance at final.</strong></li>
+      <li>If additional trip is needed a fee of <strong>$95 per trip </strong>shall apply.</li>
+      <li>If blower door retesting is needed additional fees of <strong>$95 per unit </strong>shall apply.</li>
+      <li>Final invoice will be issued after blower door site visit. Payment must be received prior to our submittal of final verification notices and report to Built Green.</li>
+    </ul>
+  </div>
+  <div class="proposal-row">
+    <h3>Builder Documentation Requirements</h3>
+    <p>Receipts and documentation are REQUIRED for Built Green certification. The Builder and / or Owner must submit required documentation to Evergreen Certified in order to get the project certified by Built Green. Evergreen Certified will provide a list of required documents expected based on the project after the blower door test has been completed.</p>
+  </div>
+  <div class="proposal-row">
+    <h3>Limitations</h3>
+    <ul>
+      <li>Evergreen Certified can only confirm points/credits related to Built Green requirements. Evergreen Certified assumes no liability for failure of a project to qualify for Certification as a result of the Builder’s performance with respect to Built Green requirements and submittal of qualifying documentation. Evergreen Certified will not and does not confirm any compliance with energy code or building permit requirements.</li>
+      <li>The proposed energy modeling is suitable for Built Green verification only. It is not valid for compliance with energy code or building permit requirements.</li>
+      <li>The proposed services and fees do not include membership or project enrollment fees charged by Built Green. Payment must be made directly to Built Green for company enrollment and project enrollment. Amounts vary according to MBA membership status and project type.</li>
+      <li>Evergreen Certified does not warrant the performance of building systems or the construction methods used to meet certification requirements. Evergreen Certified assumes no liability for costs associated with building performance.</li>
+    </ul>
+  </div>
+  <br>
+  <div class="certify proposal-row">
+    <strong>I certify that I have read through the Proposal and Memorandum of Engagement and agree to the same.</strong>
+  </div>
+  <br>
+  <br>
+  <div class="sig-block proposal-row">
+    <table class="table-100">
+      <tr>
+        <td class="width-50"><p>{{ entity.field_orig_account.entity.title.value  }}</p><p>Owner/Authorized Agent</p></td>
+        <td class="width-50"><p>Evergreen Certified, LLC. <br>Owner/Authorized Agent</p></td>
+      </tr>
+    </table>
+    <table class="table-100">
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="first">By:</td>
+        <td><p>_______________________________</p></td>
+        <td class="first">By:</td>
+        <td><p>_______________________________</p></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="first">Date:</td>
+        <td><p>_______________________________</p></td>
+        <td class="first">Date:</td>
+        <td><p>_______________________________</p></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="first">Name:</td>
+        <td><p>_______________________________</p></td>
+        <td class="first">Name:</td>
+        <td><p>_______________________________</p></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="first">Title:</td>
+        <td><p>_______________________________</p></td>
+        <td class="first">Title:</td>
+        <td><p>_______________________________</p></td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>

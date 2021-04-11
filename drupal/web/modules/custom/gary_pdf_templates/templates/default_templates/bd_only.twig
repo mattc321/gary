@@ -1,0 +1,176 @@
+{% set mainAccount = entity.field_account_reference.entity %}
+{% set mainContact = additional_vars.primary_contact %}
+
+<body>
+<div class="container">
+  <div class="header proposal-row">
+    <table>
+      <tr>
+        <td><img src="/themes/gary/logo.png" height="100px" width="100px"></td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td style="width: 8cm;">
+          <p>Evergreen Certified LLC</p>
+          <p>502 Rainier Ave S – Suite 206</p>
+          <p>Seattle WA 98144</p>
+          <p>www.evergreencertified.com</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <div class="date proposal-row">
+    <p><span class="label">Date: </span>{{ "now"|date("m/d/Y") }} - Proposal Valid for 30 Days</p>
+  </div>
+  <br>
+  <div class="account-info proposal-row">
+    <h3>Account information</h3>
+    <div class="account-info-table-container">
+      <table class="account-info-table table">
+        <tr><td>Account: </td><td>{{ entity.field_orig_account.entity.title.value  }}</td></tr>
+        <tr><td>Contact Name: </td><td>{{ additional_vars.primary_contact.title.value }}</td></tr>
+        <tr><td>Email: </td><td>{{ additional_vars.primary_contact.field_contact_email.value|default(entity.field_account_reference.entity.field_billing_email.value)  }}</td></tr>
+        <tr><td>Phone: </td><td>{{ additional_vars.primary_contact.field_contact_phone.value|default(entity.field_account_reference.entity.field_phone.value) }}</td></tr>
+        <tr><td>Billing Account: </td><td>{{ entity.field_account_reference.entity.title.value  }}</td></tr>
+        <tr><td>Street Address: </td><td>{{ entity.field_account_reference.entity.field__billing_address.value }}</td></tr>
+        <tr><td>City, St, Zip</td><td>{{ entity.field_account_reference.entity.field__billing_city.value }}, {{ entity.field_account_reference.entity.field__billing_state.value }}, {{ entity.field_account_reference.entity.field_billing_zip.value }}</td></tr>
+      </table>
+    </div>
+  </div>
+  <br>
+  <div class="project-info proposal-row">
+    <h3>Project Information</h3>
+    <div class="project-info-table-container">
+      <table class="project-info-table table">
+        <tr><td>Project Description: </td><td>{{ entity.field_description.value }}</td></tr>
+        <tr><td>Street Address: </td><td>{{ entity.field_address.value }}</td></tr>
+        <tr><td>City, St, Zip</td><td>{{ entity.field_city.value }}, {{ entity.field_state.value|upper }}, {{ entity.field_zip.value }}</td></tr>
+      </table>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="proposed-services proposal-row">
+    <h3>Proposed Services</h3>
+    <ol>
+      <li>Blower Door Testing – Washington State Energy Code: Residential</li>
+      <ol>
+        <li><strong>Blower Door Test: </strong>Testing and reporting of each unit per the Residential Code of the Washington State Energy Code requirements for new construction.</li>
+        <li><strong>Posting Results: </strong>The WSEC Residential Energy Compliance sticker of passing units (≤ 5.0 ACH) shall be posted on the interior door of the electrical panel.</li>
+      </ol>
+    </ol>
+  </div>
+  <br>
+  <div class="fees proposal-row">
+    <h3>Fees</h3>
+    <table class="fees-table">
+      <thead>
+      <tr>
+        <th>Description</th>
+        <th>Rate</th>
+        <th>Qty</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for service in entity.field_opportunity_services_ref.referencedEntities %}
+        <tr>
+          <td>{{ service.field_opportunity_service.entity.title.value }}</td>
+          <td>${{ service.field_service_amount.value|number_format }}</td>
+          <td>{{ service.field_quantity.value }}</td>
+          <td style="width: 2cm">${{ service.field_line_total.value|number_format }}</td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td><strong>Total Fees</strong></td>
+        <td></td>
+        <td></td>
+        <td style="width: 2cm">${{ entity.field_amount.value|number_format }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <br>
+  </div>
+  <br>
+  <div class="proposal-row">
+    <h3>Payment Schedule</h3>
+    <ul>
+      <li>If blower door retesting is needed the same fee quoted above shall apply for any additional retest. </li>
+      <li>An invoice will be issued once the testing has been completed, regardless of passing or failing score. </li>
+    </ul>
+  </div>
+  <div class="pagebreak"></div>
+  <div class="proposal-row">
+    <h3>Limitations</h3>
+    <ul>
+      <li>Evergreen Certified assumes no liability for test failure and does not confirm any compliance with the Washington State Energy Code other than the air-Leakage testing conducted with a blower door at 50Pa.</li>
+      <li>Evergreen Certified does not warrant the performance of building systems or the construction methods used to meet certification requirements. Evergreen Certified assumes no liability for costs associated with building performance.</li>
+    </ul>
+  </div>
+  <br>
+  <div class="certify proposal-row">
+    <strong>I certify that I have read through the Proposal and Memorandum of Engagement and agree to the same.</strong>
+  </div>
+  <br>
+  <br>
+  <div class="sig-block proposal-row">
+    <table class="table-100">
+      <tr>
+        <td class="width-50"><p>{{ entity.field_orig_account.entity.title.value  }}</p><p>Owner/Authorized Agent</p></td>
+        <td class="width-50"><p>Evergreen Certified, LLC. <br>Owner/Authorized Agent</p></td>
+      </tr>
+    </table>
+    <table class="table-100">
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="first">By:</td>
+        <td><p>_______________________________</p></td>
+        <td class="first">By:</td>
+        <td><p>_______________________________</p></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="first">Date:</td>
+        <td><p>_______________________________</p></td>
+        <td class="first">Date:</td>
+        <td><p>_______________________________</p></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="first">Name:</td>
+        <td><p>_______________________________</p></td>
+        <td class="first">Name:</td>
+        <td><p>_______________________________</p></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="first">Title:</td>
+        <td><p>_______________________________</p></td>
+        <td class="first">Title:</td>
+        <td><p>_______________________________</p></td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>

@@ -77,12 +77,17 @@ function gary_pdf_templates_entity_display_build_alter(&$build, $context) {
 
         $fileName = preg_replace('/[^\da-z]/i', '', $entity->getTitle());
 
-        $build[$fieldToAttach][0]['#markup'] = getMarkupWithLinkGenerate(
-          $text,
-          $entity,
-          $templateEntity,
-          $fileName
-        );
+        if (! $text) {
+          $build[$fieldToAttach][0]['#markup'] = '';
+        } else {
+          $build[$fieldToAttach][0]['#markup'] = getMarkupWithLinkGenerate(
+            $text,
+            $entity,
+            $templateEntity,
+            $fileName
+          );
+        }
+
       }
     }
 

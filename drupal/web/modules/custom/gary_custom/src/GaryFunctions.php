@@ -24,13 +24,17 @@ class GaryFunctions {
    * @return object                  The loaded entity
    */
   public static function loadEntityRef(EntityInterface $entity, $field) {
-    return
-      $entity
-      ->get($field)
-      ->first()
-      ->get('entity')
-      ->getTarget()
-      ->getValue();
+    try {
+      return
+        $entity
+          ->get($field)
+          ->first()
+          ->get('entity')
+          ->getTarget()
+          ->getValue();
+    } catch (\Throwable $t) {
+    }
+    return null;
   }
 
   /**
