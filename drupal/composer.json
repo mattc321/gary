@@ -129,7 +129,8 @@
             "Mod add multiple to paragraphs": "patches/mod_add_multiple_paragraphs.patch"
           },
           "drupal/draggableviews": {
-            "Mod fix broken index on weight": "patches/mod-fix-broken-index-on-drag-weight.patch"
+            "Mod fix broken index on weight": "patches/mod-fix-broken-index-on-drag-weight.patch",
+            "Mod remove multi display support because relations dont support it": "patches/mod-no-multi-view-display-support.patch"
           },
           "drupal/views_entity_form_field": {
             "Fix broken submit handlers when draggableviews installed": "patches/fix-entity-form-submit-handlers.patch",

@@ -1,0 +1,31 @@
+diff --git a/modules/contrib/draggableviews/draggableviews.module b/modules/contrib/draggableviews/draggableviews.module
+index 60efdb9..9c76998 100644
+--- a/modules/contrib/draggableviews/draggableviews.module
++++ b/modules/contrib/draggableviews/draggableviews.module
+@@ -176,10 +176,25 @@ function draggableviews_views_submit(&$form, FormStateInterface $form_state) {
+   $transaction = $connection->startTransaction();
+   try {
+     foreach ($input['draggableviews'] as $item) {
++
++      //gary mod - we need to stop storing these for separate with display ids
++      $existingRecords = $connection->select('draggableviews_structure')
++        ->condition('view_name', $view_name)
++        ->condition('args', $view_args)
++        ->condition('entity_id', $item['id'])
++        ->fields('draggableviews_structure', ['view_display'])
++        ->execute();
++
++      $displayId = null;
++      foreach ($existingRecords as $existingRecord) {
++        $displayId = $existingRecord->view_display;
++      }
++      //end gary mod
++
+       // Remove old data.
+       $connection->delete('draggableviews_structure')
+         ->condition('view_name', $view_name)
+-        ->condition('view_display', $view_display)
++        ->condition('view_display', $displayId ?? $view_display)
+         ->condition('args', $view_args)
+         ->condition('entity_id', $item['id'])
+         ->execute();
