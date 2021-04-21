@@ -134,7 +134,8 @@
           },
           "drupal/views_entity_form_field": {
             "Fix broken submit handlers when draggableviews installed": "patches/fix-entity-form-submit-handlers.patch",
-            "Move submit to custom button": "patches/move-submit-to-custom-button.patch"
+            "Move submit to custom button": "patches/move-submit-to-custom-button.patch",
+            "Mod call draggable views submit directly": "patches/mod-call-draggable-views-submit-directly-if-needed.patch"
           }
         }
     }
