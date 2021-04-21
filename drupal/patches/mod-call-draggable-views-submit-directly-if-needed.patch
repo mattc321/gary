@@ -1,0 +1,18 @@
+diff --git a/src/Plugin/views/field/EntityFormField.php b/src/Plugin/views/field/EntityFormField.php
+index 2ed676e..493d04f 100644
+--- a/src/Plugin/views/field/EntityFormField.php
++++ b/src/Plugin/views/field/EntityFormField.php
+@@ -593,6 +593,13 @@ class EntityFormField extends FieldPluginBase implements CacheableDependencyInte
+    *   The current state of the form.
+    */
+   public function saveEntities(array &$form, FormStateInterface $form_state) {
++
++    //Gary mod - call draggable views submit directly if they are both on the form
++    if (isset($form['actions']['save_order']) && isset($form['actions']['save_entities'])) {
++      draggableviews_views_submit($form, $form_state);
++    }
++    //end mod
++
+     // We only want to save the entity once per relationship.
+     if (is_null($form_state->getTemporaryValue(['saved_relationships', $this->relationship]))) {
+       $storage = $this->getEntityTypeManager()->getStorage($this->getEntityTypeId());
