@@ -34,13 +34,12 @@
         //get the service price
          $.fn.getServicePrice = function(service_id, subform) {
 
-          //exec an ajax response
-          //  var endpoint = Drupal.url('modal/get-content');
-          //  Drupal.ajax({ url: endpoint }).execute();
-
+           if (service_id.length < 1) {
+             return;
+           }
 
            //retrieve a string response
-           var ajaxObject = Drupal.ajax({
+           let ajaxObject = Drupal.ajax({
              type: 'GET',
              url: '/service_price/' + service_id,
              success: function(responseData) {
