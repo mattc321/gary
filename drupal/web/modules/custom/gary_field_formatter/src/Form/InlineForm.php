@@ -7,26 +7,16 @@
 
 namespace Drupal\gary_field_formatter\Form;
 
+use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\UrlHelper;
 use Drupal\gary_field_formatter\Plugin\Field\FieldFormatter\GaryViewsFormatter;
-use Drupal\Core\Field\FieldItemInterface;
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\field_collection\Controller\FieldCollectionItemController;
-use Drupal\Core\Entity\EntityFormBuilder;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity;
-use Drupal\Core\Ajax;
 use Drupal\Core\Ajax\InvokeCommand;
-use Drupal\Core\Ajax\RedirectCommand;
-use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\node\Entity\Node;
 use Drupal\gary_custom\GaryFunctions;
-use Drupal\Core\Url;
 
 /**
  * Contribute form.
@@ -204,12 +194,24 @@ class InlineForm extends FormBase {
         if ($widget = $entity_form_display->getRenderer($field)) { //Returns the widget class
           $items = $pg->get($field); //Returns the FieldItemsList interface
           $items->filterEmptyItems();
+          /** @var OptionsSelectWidget $widget */
           $form['container'][$field] = $widget->form($items, $form, $form_state);
           //unsetting required on entity reference because its firing a false positive for an empty title
           //validation still works
           if ($form['container'][$field]['widget']['#field_name'] == 'title') {
             $form['container'][$field]['widget'][0]['value']['#required'] = FALSE;
           }
+
+          if ($form['container'][$field]['widget']['#field_name'] == 'field_opportunity_service') {
+            $form['container'][$field]['widget']['#type'] = 'select2';
+            $services = GaryFunctions::getServiceOptions();
+            $options['_none'] = "- None -";
+            foreach ($services as $service) {
+              $options[$service->nid] = $service->title.' - $'.$service->field_unit_price_value;
+            }
+            $form['container'][$field]['widget']['#options'] = $options;
+          }
+
         }
     }
 

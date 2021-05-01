@@ -76,11 +76,16 @@
 
           //clear form values
            $.fn.clearValues = function(form_selector) {
-             $(form_selector+" input:not(:hidden)").each(function(index){
+             $(form_selector+" input:not(:hidden)").each(function(){
                 if ($(this).prop('type') != 'submit') {
                   $(this).val('');
                 }
               });
+              //clear out select2 selects
+             $(form_selector).find('.select2-hidden-accessible').each(function(){
+                 $(this).val(null).trigger('change');
+             });
+
            };
 
          //notify an assignee from route in gary_custom
