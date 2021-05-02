@@ -198,8 +198,11 @@ class GaryFunctions {
 
   /**
    * Delete revision entities on parapraph deletion
-   * @param  EntityInterface $entity The paragraph entity
-   * @return boolean                   Return
+   * @param EntityInterface $entity The paragraph entity
+   * @return void Return
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function cleanParagraphs(EntityInterface $entity) {
     // Check to make sure method exists.
@@ -439,6 +442,36 @@ class GaryFunctions {
 
     //the parent nid referencing the task
     return $results[0]->entity_id;
+  }
+
+  /**
+   * When nodes are deleted that are referenced in a paragraph reference field
+   * their paragraph records remain orphaned. Use this to clean them out.
+   * @param EntityInterface $parentEntity
+   * @param EntityInterface $deletedEntity
+   * @param string $parentEntityParagraphFieldName
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function removeDeletedEntityFromParentEntityParagraph(
+    EntityInterface $parentEntity,
+    EntityInterface $deletedEntity,
+    string $parentEntityParagraphFieldName
+  ) {
+
+    if (! $parentEntity->hasField($parentEntityParagraphFieldName)) {
+      return;
+    }
+
+    // Grab any existing references from the node, and unset the one deleted
+    $items = $parentEntity->get($parentEntityParagraphFieldName)->getValue();
+    foreach ($items as $key => $item) {
+      if ($item['target_id'] == $deletedEntity->id()) {
+        unset($items[$key]);
+      }
+    }
+    $parentEntity->set($parentEntityParagraphFieldName, $items);
+    $parentEntity->save();
+
   }
 
   /**

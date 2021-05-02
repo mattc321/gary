@@ -11,6 +11,7 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\gary_custom\GaryFunctions;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\user\Entity\User;
 use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
@@ -304,7 +305,7 @@ function gary_custom_entity_delete(EntityInterface $entity) {
     break;
 
     case 'opportunities':
-      //delete all tasks associated with a project if it is deleted
+      //delete all tasks associated with a opp if it is deleted
       if ($entity->hasField('field_tasks')) {
         if(!$entity->get('field_tasks')->isEmpty()) {
           $tasks = $entity->get('field_tasks')->referencedEntities();
@@ -327,6 +328,18 @@ function gary_custom_entity_delete(EntityInterface $entity) {
         }
       }
     break;
+
+    case 'tasks':
+
+      $parent = Node::load($helper->getParentNid($entity));
+
+      $helper->removeDeletedEntityFromParentEntityParagraph(
+        $parent,
+        $entity,
+        'field_tasks'
+      );
+      break;
+
   }
 
 }
