@@ -182,9 +182,7 @@ class NodeIndexNid extends ManyToOne {
       }
       $nodes = Node::loadMultiple($query->execute());
       foreach ($nodes as $node) {
-        $options[$node->id()] = \Drupal::entityManager()
-          ->getTranslationFromContext($node)
-          ->label();
+        $options[$node->id()] = $node->getTitle();
       }
 
       $default_value = (array) $this->value;
