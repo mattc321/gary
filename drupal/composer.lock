@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66fffeeb99a05b75a076320bc26c4c29",
+    "content-hash": "78eb3a53bce6fa150d854b4c594c9d2c",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -1760,6 +1760,10 @@
                 {
                     "name": "michaellander",
                     "homepage": "https://www.drupal.org/user/636494"
+                },
+                {
+                    "name": "paulocs",
+                    "homepage": "https://www.drupal.org/user/3640109"
                 }
             ],
             "description": "Provides a field that allows a content entity to create and configure custom block instances.",
@@ -2521,7 +2525,7 @@
             "extra": {
                 "drupal": {
                     "version": "8.x-3.4",
-                    "datestamp": "1585763383",
+                    "datestamp": "1620838181",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5760,16 +5764,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.3.0",
+            "version": "v6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "4a08cf4cdd2c38d12ee2b9fa69e5d235f37a6dcb"
+                "reference": "a5b5c43e50b7fba655f793ad27303cd74c57363c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/4a08cf4cdd2c38d12ee2b9fa69e5d235f37a6dcb",
-                "reference": "4a08cf4cdd2c38d12ee2b9fa69e5d235f37a6dcb",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/a5b5c43e50b7fba655f793ad27303cd74c57363c",
+                "reference": "a5b5c43e50b7fba655f793ad27303cd74c57363c",
                 "shasum": ""
             },
             "require": {
@@ -5787,7 +5791,7 @@
                 "yoast/phpunit-polyfills": "^0.2.0"
             },
             "suggest": {
-                "ext-mbstring": "Needed to send email in multibyte encoding charset",
+                "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
                 "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
                 "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
                 "psr/log": "For optional PSR-3 debug logging",
@@ -5828,7 +5832,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-19T15:28:08+00:00"
+            "time": "2021-06-16T14:33:43+00:00"
         },
         {
             "name": "psr/container",
