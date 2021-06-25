@@ -582,6 +582,16 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
     $form['actions']['save_order']['#attributes']['jelly'] = 'check';
   }
 
+  //in the edit form view these controls are nested subforms
+  if (isset($form["field_opportunity_services_ref"]["widget"]) && count($form["field_opportunity_services_ref"]["widget"]) > 0) {
+    foreach ($form["field_opportunity_services_ref"]["widget"] as $index => $widget) {
+      if (isset($widget["subform"]["field_opportunity_service"]["widget"]["#type"])) {
+        $form["field_opportunity_services_ref"]["widget"][$index]["subform"]["field_opportunity_service"]["widget"]["#type"] = 'select2';
+        $form["field_opportunity_services_ref"]["widget"][$index]["#attributes"]['class'][] = 'opportunity-service-select-2';
+      }
+    }
+  }
+
   //if save order and save entities are both set lets consolidate that into one submit
   //hide the save order button. Goes with patch to saveEntities() which calls draggableviews_views_submit
   //directly if needed
