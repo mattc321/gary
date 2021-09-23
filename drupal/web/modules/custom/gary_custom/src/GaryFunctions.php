@@ -7,10 +7,8 @@
 
 namespace Drupal\gary_custom;
 
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\user\Entity\User;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
@@ -511,7 +509,11 @@ class GaryFunctions {
   public function updateSubGrade(EntityInterface $entity) {
     if ($entity->hasField('field_sub_contractor') && $entity->hasField('field_grade')) {
       if (!$entity->get('field_grade')->isEmpty()) {
-        $avg_grade = $this->getAvgGrade($entity->get('field_sub_contractor')->entity->id());
+        $subEntity = $entity->get('field_sub_contractor')->entity;
+        if (! $subEntity) {
+          return false;
+        }
+        $avg_grade = $this->getAvgGrade($subEntity->id());
         if (!empty($avg_grade)) {
           $entity->get('field_sub_contractor')->entity->set('field_avg_grade', $avg_grade);
           $entity->get('field_sub_contractor')->entity->save();
