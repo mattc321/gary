@@ -57,7 +57,7 @@
         "npm-asset/gsap": "^2.1",
         "npm-asset/qtip2": "^3.0",
         "npm-asset/select2": "^4.0",
-        "oomphinc/composer-installers-extender": "^1.1",
+        "oomphinc/composer-installers-extender": "^2.0",
         "symfony/var-dumper": "^5.1.8",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
