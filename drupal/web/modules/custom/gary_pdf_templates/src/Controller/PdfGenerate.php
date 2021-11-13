@@ -106,9 +106,13 @@ class PdfGenerate extends ControllerBase
             'montserrat' => [
               'R' => 'Montserrat-Regular.ttf',
               'I' => 'Montserrat-Medium.ttf',
+            ],
+            'calibri_light' => [
+              'R' => 'calibril.ttf',
+              'I' => 'calibril.ttf'
             ]
           ],
-        'default_font' => 'montserrat',
+        'default_font' => 'calibri_light',
         'tempDir' => 'sites/default/files/pdfs/'
       ];
 
