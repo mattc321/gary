@@ -123,7 +123,8 @@
         },
         "patches": {
           "drupal/core": {
-            "Firewall stripping ajax header 2580191": "https://www.drupal.org/files/issues/ajax-remove-X-Drupal-Ajax-Token-verification-2580191-33.patch"
+            "Firewall stripping ajax header 2580191": "https://www.drupal.org/files/issues/ajax-remove-X-Drupal-Ajax-Token-verification-2580191-33.patch",
+            "Fix summary label being duplicated during quickedit": "https://www.drupal.org/files/issues/2021-06-06/2671202-38.patch"
           },
           "drupal/paragraphs": {
             "Mod add multiple to paragraphs": "patches/mod_add_multiple_paragraphs.patch"
