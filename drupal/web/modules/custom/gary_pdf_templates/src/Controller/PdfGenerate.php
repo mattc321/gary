@@ -6,11 +6,11 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Render\Renderer;
+use Drupal\file\Entity\File;
 use Drupal\gary_custom\GaryFunctions;
+use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
-use Exception;
-use HttpRequestException;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -120,6 +120,28 @@ class PdfGenerate extends ControllerBase
       $mpdf->setHtmlHeader($template_entity->field_page_header->value);
       $mpdf->setHtmlFooter($template_entity->field_page_footer->value);
       $mpdf->WriteHTML($output);
+
+      if (! $mediaEntity = $template_entity->field_append_pdf->entity) {
+        $mpdf->Output($request->query->get('file') . '.pdf', Destination::DOWNLOAD);
+        return new Response();
+      }
+
+      $mpdf->WriteHTML('<pagebreak />');
+
+      $mid = $mediaEntity->id();
+      $media = Media::load($mid);
+      $fid = $media->getSource()->getSourceFieldValue($media);
+      $pdfFileToAppend = File::load($fid);
+
+      $pagesInFile = $mpdf->SetSourceFile($pdfFileToAppend->getFileUri());
+      for ($i = 1; $i <= $pagesInFile; $i++) {
+        $tplId = $mpdf->importPage($i);
+        $mpdf->UseTemplate($tplId);
+        if ($i < $pagesInFile) {
+          $mpdf->WriteHTML('<pagebreak />');
+        }
+      }
+
       $mpdf->Output($request->query->get('file') . '.pdf', Destination::DOWNLOAD);
       return new Response();
 
