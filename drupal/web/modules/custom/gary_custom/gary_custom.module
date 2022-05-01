@@ -236,25 +236,6 @@ function gary_custom_entity_view(array &$build, EntityInterface $entity, EntityV
     //   $node->set('field_project_units', $current);
     //   $node->save();
     // }
-      $term_id = $entity->field_permit_city->target_id;
-      if (!empty($term_id)) {
-        $terms = \Drupal\taxonomy\Entity\Term::load($term_id);
-        if (empty($terms)) {
-          return;
-        }
-        $cityName = $terms->getName();
-        $cityUrl = $terms->field_permit_url->value;
-        if (count($build['field_permit_number']['#items']) == 0) {
-          return;
-        }
-        foreach ($build['field_permit_number']['#items']->getIterator() as $key => $permit) {
-          $permitNum = $permit->value;
-          $permitInsert = str_replace("[permit]", $permitNum, $cityUrl);
-          $cityInsert = str_replace("[city]", $cityName, $permitInsert);
-          $build['field_permit_number'][$key]['#context']['value'] = Markup::create('<a href="'.$cityInsert.'" target="_blank">'.$permitNum.'</a>');
-        }
-      }
-
     break;
 
     case 'opportunities':
@@ -439,8 +420,13 @@ function gary_custom_entity_presave(EntityInterface $entity) {
         //cancelled tid 60 closed 61
         if (!$entity->get('field_opportunity_type')->isEmpty()) {
           $tid = $entity->get('field_opportunity_type')->getValue()[0]['target_id'];
-          if ($tid == 60 || $tid == 61) {
-            $helper->closeAllTasks($entity);
+          //if cancelled then cancel all tasks
+          if ($tid == 60) {
+            $helper->closeAllTasks($entity, 126);
+          }
+          //if closing then close all tasks.
+          if ($tid == 61) {
+            $helper->closeAllTasks($entity, 1);
           }
         }
       }
@@ -484,8 +470,13 @@ function gary_custom_entity_presave(EntityInterface $entity) {
         //cancelled tid 70 completed 72
         if (!$entity->get('field_project_status')->isEmpty()) {
           $tid = $entity->get('field_project_status')->getValue()[0]['target_id'];
-          if ($tid == 70 || $tid == 72) {
-            $helper->closeAllTasks($entity);
+          //if cancelling
+          if ($tid == 70) {
+            $helper->closeAllTasks($entity, 126);
+          }
+          //if completeing
+          if ($tid == 72) {
+            $helper->closeAllTasks($entity, 1);
           }
         }
       }
