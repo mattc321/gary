@@ -344,9 +344,7 @@ class NodeIndexNid extends ManyToOne {
       $this->value = array_filter($this->value);
       $nodes = Node::loadMultiple($this->value);
       foreach ($nodes as $node) {
-        $this->valueOptions[$node->id()] = \Drupal::entityManager()
-          ->getTranslationFromContext($node)
-          ->label();
+        $this->valueOptions[$node->id()] = $node->label();
       }
     }
     return parent::adminSummary();
