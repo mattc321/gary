@@ -1,0 +1,29 @@
+uuid: f9d93317-7653-4deb-9957-b8035519b23c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_task_assigned_to
+    - node.type.to_do
+id: node.to_do.field_task_assigned_to
+field_name: field_task_assigned_to
+entity_type: node
+bundle: to_do
+label: 'Assigned To'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    filter:
+      type: _none
+    include_anonymous: false
+field_type: entity_reference

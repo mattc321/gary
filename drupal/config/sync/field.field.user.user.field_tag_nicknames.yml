@@ -1,0 +1,20 @@
+uuid: 9756139d-fe49-464c-8aac-2a78281d2582
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_tag_nicknames
+  module:
+    - user
+id: user.user.field_tag_nicknames
+field_name: field_tag_nicknames
+entity_type: user
+bundle: user
+label: 'Tag Nicknames'
+description: 'Comma separated list of nicknames you can tag by'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
