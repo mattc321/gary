@@ -284,7 +284,7 @@ class GaryFunctions {
    * @param  EntityInterface $entity The project or opportunity node
    * @return boolean                  True if an update was made False if not
    */
-  public function closeAllTasks(EntityInterface $entity) {
+  public function closeAllTasks(EntityInterface $entity, $tidToSet) {
 
     if (!$entity->hasField('field_tasks')) {
       \Drupal::logger('gary_custom')
@@ -296,9 +296,8 @@ class GaryFunctions {
       return FALSE;
     }
 
-    //set all of the tasks to closed - tid 1
     foreach ($entity->get('field_tasks')->referencedEntities() as $key => $task) {
-      $task->set('field_task_status', 1);
+      $task->set('field_task_status', $tidToSet);
       $task->save();
     }
     return TRUE;
@@ -714,11 +713,15 @@ class GaryFunctions {
       }
 
       //calculate a due date from now + offset value
-      $date_offset = !empty($auto_task->field_date_offset->value) ? $auto_task->field_date_offset->value : 0;
-      $op = $date_offset > -1 ? '+' : '-' ;
-      $date_string = $op . $date_offset . ' day';
-      $date = date('Y-m-d');
-      $date = date('Y-m-d', strtotime($date . $date_string));
+      if (empty($auto_task->field_date_offset->value)) {
+        $date = null;
+      } else {
+        $date_offset = $auto_task->field_date_offset->value;
+        $op = $date_offset > -1 ? '+' : '-' ;
+        $date_string = $op . $date_offset . ' day';
+        $date = date('Y-m-d');
+        $date = date('Y-m-d', strtotime($date . $date_string));
+      }
 
       $order[$auto_task_id] = ['field_task_weight' => $auto_task->field_task_weight->value];
 
