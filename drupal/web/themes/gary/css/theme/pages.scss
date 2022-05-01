@@ -182,6 +182,7 @@
     &.units:before,
     &.tasks:before,
     &.services:before,
+    &.permit-data:before,
     &.comments:before {
       background-color: $grey;
     }
@@ -196,6 +197,7 @@
     &.units:before,
     &.tasks:before,
     &.services:before,
+    &.permit-data:before,
     &.comments:before {
       background-color:$dark-grey;
     }
@@ -243,6 +245,13 @@
     &:before {
       @extend %icon;
       mask-image: url(../../symbols/tasks.svg);
+    }
+  }
+
+  &.permit-data {
+    &:before {
+      @extend %icon;
+      mask-image: url(../../symbols/permitdata.svg);
     }
   }
 
