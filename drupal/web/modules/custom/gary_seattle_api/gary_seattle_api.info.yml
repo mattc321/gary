@@ -1,0 +1,5 @@
+name: 'Gary Seattle Api'
+type: module
+description: 'Seattle API Connector for Gary'
+core_version_requirement: ^8.8.0 || ^9.0
+package: 'Custom'

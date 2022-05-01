@@ -1,0 +1,99 @@
+<?php
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function gary_seattle_api_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gary_fields module.
+    case 'help.page.gary_seattle_api':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Seattle API Connector') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+function gary_seattle_api_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  /** @var \Drupal\node\Entity\Node $entity */
+  if ($entity->bundle() !== 'projects' || ! $entity->hasField('field_permit_city')) {
+    return;
+  }
+
+  $term_id = $entity->field_permit_city->target_id;
+
+  if (! $term_id) {
+    return;
+  }
+
+  $terms = \Drupal\taxonomy\Entity\Term::load($term_id);
+
+  if (empty($terms)) {
+    return;
+  }
+
+  $cityName = $terms->getName();
+  $cityUrl = $terms->field_permit_url->value;
+
+  if (count($build['field_permit_number']['#items']) == 0) {
+    return;
+  }
+
+  $apiHelper = new \Drupal\gary_seattle_api\Api\SeattleApiClient();
+  /** @var \Drupal\gary_seattle_api\PermitDataTableService $dataTableService */
+  $dataTableService = \Drupal::service('gary_seattle_api.permit_table_service');
+  $permitNum = '';
+  $permitNumbers = [];
+  foreach ($build['field_permit_number']['#items']->getIterator() as $key => $permit) {
+    $permitNum = $permit->value;
+
+    if (strtolower($cityName) === 'seattle') {
+      $permitNumbers[] = $permitNum;
+      try {
+        $permitUrl = $apiHelper->getPermitUrl($permitNum);
+      } catch (\GuzzleHttp\Exception\GuzzleException|Exception $e) {
+        $build['field_permit_number'][$key]['#context']['value'] = Markup::create("<p>{$permitNum}</p><p>{$e->getMessage()}</p>");
+        continue;
+      }
+      $build['field_permit_number'][$key]['#context']['value'] = Markup::create('<a href="'.$permitUrl.'" target="_blank">'.$permitNum.'</a>');
+      continue;
+    }
+
+    $permitInsert = str_replace("[permit]", $permitNum, $cityUrl);
+    $permitUrl = str_replace("[city]", $cityName, $permitInsert);
+    $build['field_permit_number'][$key]['#context']['value'] = Markup::create('<a href="'.$permitUrl.'" target="_blank">'.$permitNum.'</a>');
+  }
+
+  if (strtolower($cityName) === 'seattle' && $permitNumbers) {
+
+    $table = $dataTableService->generatePermitDataTableRenderArray($permitNumbers);
+    \Drupal::logger('gary_seattle_api')->notice("Rendering permit data table for {$entity->id()}");
+    $build['field_api_permit_data'] = [
+      '#theme' => 'field',
+      '#attributes' => ['id' => 'field-api-permit-data-wrapper'],
+      '#prefix' => '<div class="ec-legend permit-data"><h3>Permit Data</h3>',
+      '#suffix' => '</div>',
+      '#title' => '',
+      '#view_mode' => 'full',
+      '#label_display' => 'hidden',
+      '#language' => 'en',
+      '#field_type' => 'textfield',
+      '#field_name' => 'field_api_permit_data',
+      '#entity_type' => 'node',
+      '#is_multiple' => false,
+      '#bundle' => $entity->bundle(),
+      '#object' => $entity,
+      '#items' => array(),
+      '#weight' => $build['field_project_services']['#weight'] - 5,
+      '#comment_display_mode' => '',
+      0 => $table
+    ];
+  }
+}

@@ -1,0 +1,6 @@
+services:
+  gary_seattle_api.permit_table_service:
+    class: Drupal\gary_seattle_api\PermitDataTableService
+    arguments: ['@gary_seattle_api.api_client']
+  gary_seattle_api.api_client:
+    class: Drupal\gary_seattle_api\Api\SeattleApiClient
