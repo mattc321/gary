@@ -34,135 +34,135 @@ parser_configuration:
   line_limit: 100
 processor: 'entity:node'
 processor_configuration:
+  values:
+    type: opportunities
   update_existing: 1
   update_non_existent: _delete
+  skip_hash_check: false
+  authorize: true
   expire: -1
   owner_feed_author: false
   owner_id: 1
-  authorize: true
-  skip_hash_check: false
-  values:
-    type: opportunities
 custom_sources:
   0:
-    label: '0'
     value: '0'
+    label: '0'
     machine_name: '0'
   1:
-    label: '1'
     value: '1'
+    label: '1'
     machine_name: '1'
   2:
-    label: '2'
     value: '2'
+    label: '2'
     machine_name: '2'
   3:
-    label: '3'
     value: '3'
+    label: '3'
     machine_name: '3'
   4:
-    label: '4'
     value: '4'
+    label: '4'
     machine_name: '4'
   5:
-    label: '5'
     value: '5'
+    label: '5'
     machine_name: '5'
   6:
-    label: '6'
     value: '6'
+    label: '6'
     machine_name: '6'
   7:
-    label: '7'
     value: '7'
+    label: '7'
     machine_name: '7'
   8:
-    label: '8'
     value: '8'
+    label: '8'
     machine_name: '8'
   9:
-    label: '9'
     value: '9'
+    label: '9'
     machine_name: '9'
   10:
-    label: '10'
     value: '10'
+    label: '10'
     machine_name: '10'
   11:
-    label: '11'
     value: '11'
+    label: '11'
     machine_name: '11'
   12:
-    label: '12'
     value: '12'
+    label: '12'
     machine_name: '12'
   13:
-    label: '13'
     value: '13'
+    label: '13'
     machine_name: '13'
   14:
-    label: '14'
     value: '14'
+    label: '14'
     machine_name: '14'
   title:
-    label: title
     value: title
+    label: title
     machine_name: title
   acct:
-    label: acct
     value: acct
+    label: acct
     machine_name: acct
   acctmgr:
-    label: acctmgr
     value: acctmgr
+    label: acctmgr
     machine_name: acctmgr
   addr:
-    label: addr
     value: addr
+    label: addr
     machine_name: addr
   bacct:
-    label: bacct
     value: bacct
+    label: bacct
     machine_name: bacct
   otype:
-    label: otype
     value: otype
+    label: otype
     machine_name: otype
   city:
-    label: city
     value: city
+    label: city
     machine_name: city
   billstatus:
-    label: billstatus
     value: billstatus
+    label: billstatus
     machine_name: billstatus
   intake:
-    label: intake
     value: intake
+    label: intake
     machine_name: intake
   intakedate:
-    label: intake
     value: intake
+    label: intake
     machine_name: intakedate
   dateclosed:
-    label: dateclosed
     value: dateclosed
+    label: dateclosed
     machine_name: dateclosed
   st:
-    label: st
     value: st
+    label: st
     machine_name: st
   zip:
-    label: zip
     value: zip
+    label: zip
     machine_name: zip
   audit:
-    label: audit
     value: audit
+    label: audit
     machine_name: audit
   amt:
-    label: amt
     value: amt
+    label: amt
     machine_name: amt
 mappings:
   -

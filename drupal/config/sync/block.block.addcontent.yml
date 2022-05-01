@@ -18,18 +18,18 @@ plugin: 'system_menu_block:add-content'
 settings:
   id: 'system_menu_block:add-content'
   label: 'Add Content'
-  provider: system
   label_display: '0'
+  provider: system
   level: 1
   depth: 0
   expand_all_items: false
 visibility:
   user_role:
     id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
     roles:
       authenticated: authenticated
       administrator: administrator
       limited_admin: limited_admin
-    negate: false
-    context_mapping:
-      user: '@user.current_user_context:current_user'

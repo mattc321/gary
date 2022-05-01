@@ -1,7 +1,17 @@
 uuid: fa4fecec-bbb0-42c7-adb2-3e8810fe377d
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.plain_text_main
+  module:
+    - contact
+    - filter
+    - media
+    - search
+    - shortcut
+    - system
 _core:
   default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
 id: authenticated
@@ -16,3 +26,4 @@ permissions:
   - 'search content'
   - 'use text format basic_html'
   - 'use text format plain_text_main'
+  - 'view media'

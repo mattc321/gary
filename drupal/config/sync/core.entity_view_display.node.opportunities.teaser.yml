@@ -35,10 +35,10 @@ bundle: opportunities
 mode: teaser
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   feeds_item: true
   field_account_manager: true

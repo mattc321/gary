@@ -11,7 +11,7 @@ id: node.tasks.field_task_due_date
 field_name: field_task_due_date
 entity_type: node
 bundle: tasks
-label: 'Due Date'
+label: 'Complete Date'
 description: ''
 required: false
 translatable: false

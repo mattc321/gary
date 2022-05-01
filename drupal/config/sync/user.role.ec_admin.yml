@@ -1,7 +1,22 @@
 uuid: a806215a-d695-4ece-8fd9-5b4294f15636
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.plain_text_main
+    - node.type.accounts
+    - node.type.article
+    - node.type.messages
+    - node.type.opportunities
+    - node.type.page
+    - node.type.projects
+    - node.type.service_tasks
+    - node.type.task_list
+  module:
+    - comment
+    - filter
+    - gary_field_formatter
+    - node
 id: ec_admin
 label: 'EC Admin'
 weight: 5

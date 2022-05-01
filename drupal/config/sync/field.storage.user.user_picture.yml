@@ -13,6 +13,9 @@ field_name: user_picture
 entity_type: user
 type: image
 settings:
+  target_type: file
+  display_field: false
+  display_default: false
   uri_scheme: public
   default_image:
     uuid: 0b2895b8-49c6-4f8c-bb98-d96f2e6bec3b
@@ -20,9 +23,6 @@ settings:
     title: ''
     width: 256
     height: 256
-  target_type: file
-  display_field: false
-  display_default: false
 module: image
 locked: false
 cardinality: 1

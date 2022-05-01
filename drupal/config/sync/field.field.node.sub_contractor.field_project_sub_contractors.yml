@@ -18,11 +18,11 @@ required: false
 translatable: false
 default_value:
   -
-    token_help: ''
+    target_uuid: 12edae7f-2ba3-4a7d-86fe-3f7a33e5f3df
     display_id: block_1
     arguments: '[node:nid]'
-    target_uuid: 12edae7f-2ba3-4a7d-86fe-3f7a33e5f3df
     items_to_display: ''
+    token_help: ''
 default_value_callback: ''
 settings:
   force_default: true

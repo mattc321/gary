@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.accounts.field__billing_state
     - field.field.node.accounts.field_account_manager
     - field.field.node.accounts.field_account_opportunities
+    - field.field.node.accounts.field_account_opportunities_bill
     - field.field.node.accounts.field_account_projects
     - field.field.node.accounts.field_account_type
     - field.field.node.accounts.field_audit_id
@@ -17,12 +18,12 @@ dependencies:
     - field.field.node.accounts.field_comments
     - field.field.node.accounts.field_contacts
     - field.field.node.accounts.field_parent_account
+    - field.field.node.accounts.field_payment_issues
     - field.field.node.accounts.field_phone
     - field.field.node.accounts.field_website
     - node.type.accounts
   module:
     - path
-    - viewfield
 id: node.accounts.default
 targetEntityType: node
 bundle: accounts
@@ -35,96 +36,90 @@ content:
     settings: {  }
     third_party_settings: {  }
   field__billing_address:
-    weight: 11
+    type: string_textfield
+    weight: 10
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field__billing_city:
-    weight: 12
+    type: string_textfield
+    weight: 11
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field__billing_state:
-    weight: 13
+    type: string_textfield
+    weight: 12
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_account_manager:
-    weight: 8
-    settings: {  }
-    third_party_settings: {  }
     type: options_select
+    weight: 7
     region: content
-  field_account_opportunities:
-    weight: 26
     settings: {  }
     third_party_settings: {  }
-    type: viewfield_select
-    region: content
   field_account_type:
-    weight: 9
+    type: options_select
+    weight: 8
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_audit_id:
-    weight: 18
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
     type: number
-    region: content
-  field_billing_email:
-    weight: 16
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: email_default
-    region: content
-  field_billing_zip:
-    weight: 14
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_parent_account:
     weight: 17
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_billing_email:
+    type: email_default
+    weight: 15
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+  field_billing_zip:
+    type: string_textfield
+    weight: 13
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_parent_account:
+    type: entity_reference_autocomplete
+    weight: 16
+    region: content
     settings:
       match_operator: CONTAINS
-      size: 60
-      placeholder: ''
       match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_phone:
-    weight: 10
+    type: string_textfield
+    weight: 9
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_website:
-    weight: 15
+    type: string_textfield
+    weight: 14
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   path:
     type: path
     weight: 5
@@ -133,24 +128,24 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 3
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 6
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 4
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -163,15 +158,18 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 1
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
 hidden:
   feeds_item: true
+  field_account_opportunities: true
+  field_account_opportunities_bill: true
   field_account_projects: true
   field_comments: true
   field_contacts: true
+  field_payment_issues: true

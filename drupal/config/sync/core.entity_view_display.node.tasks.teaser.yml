@@ -23,10 +23,10 @@ bundle: tasks
 mode: teaser
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   feeds_item: true
   field_audit_id: true

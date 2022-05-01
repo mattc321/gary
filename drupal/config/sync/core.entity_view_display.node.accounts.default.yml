@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.accounts.field__billing_state
     - field.field.node.accounts.field_account_manager
     - field.field.node.accounts.field_account_opportunities
+    - field.field.node.accounts.field_account_opportunities_bill
     - field.field.node.accounts.field_account_projects
     - field.field.node.accounts.field_account_type
     - field.field.node.accounts.field_audit_id
@@ -18,6 +19,7 @@ dependencies:
     - field.field.node.accounts.field_comments
     - field.field.node.accounts.field_contacts
     - field.field.node.accounts.field_parent_account
+    - field.field.node.accounts.field_payment_issues
     - field.field.node.accounts.field_phone
     - field.field.node.accounts.field_website
     - node.type.accounts
@@ -31,202 +33,220 @@ third_party_settings:
     group_projects:
       children:
         - field_account_projects
-      parent_name: ''
-      weight: 12
-      format_type: html_element
-      format_settings:
-        label: Projects
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: 'ec-legend projects'
       label: Projects
-      region: content
-    group_comments:
-      children:
-        - field_comments
       parent_name: ''
-      weight: 14
-      format_type: html_element
-      format_settings:
-        label: Comments
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: 'ec-legend comments'
-      label: Comments
       region: content
-    group_contacts:
-      children:
-        - field_contacts
-      parent_name: ''
-      weight: 11
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: 'ec-legend contacts'
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: Contacts
-      region: content
-    group_opportunities:
-      children:
-        - field_account_opportunities
-      parent_name: ''
       weight: 13
       format_type: html_element
       format_settings:
-        label: Opportunities
+        classes: 'ec-legend projects'
+        id: ''
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'ec-legend opportunities'
-      label: Opportunities
+    group_comments:
+      children:
+        - field_comments
+      label: Comments
+      parent_name: ''
       region: content
+      weight: 15
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend comments'
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+    group_contacts:
+      children:
+        - field_contacts
+      label: Contacts
+      parent_name: ''
+      region: content
+      weight: 12
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend contacts'
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+    group_opportunities:
+      children:
+        - field_account_opportunities
+        - field_account_opportunities_bill
+      label: Opportunities
+      parent_name: ''
+      region: content
+      weight: 14
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend opportunities'
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.accounts.default
 targetEntityType: node
 bundle: accounts
 mode: default
 content:
   field__billing_address:
-    weight: 5
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 5
     region: content
   field__billing_city:
-    weight: 6
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 6
     region: content
   field__billing_state:
-    weight: 7
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 7
     region: content
   field_account_manager:
-    weight: 1
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 1
     region: content
   field_account_opportunities:
-    weight: 16
+    type: viewfield_default
     label: hidden
     settings:
       view_title: hidden
-      always_build_output: 0
+      always_build_output: false
       empty_view_title: hidden
     third_party_settings: {  }
+    weight: 16
+    region: content
+  field_account_opportunities_bill:
     type: viewfield_default
+    label: hidden
+    settings:
+      view_title: hidden
+      always_build_output: false
+      empty_view_title: hidden
+    third_party_settings: {  }
+    weight: 17
     region: content
   field_account_projects:
-    weight: 13
+    type: viewfield_default
     label: hidden
     settings:
       view_title: hidden
-      always_build_output: 0
+      always_build_output: false
       empty_view_title: hidden
     third_party_settings: {  }
-    type: viewfield_default
+    weight: 13
     region: content
   field_account_type:
-    weight: 2
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 2
     region: content
   field_billing_email:
-    weight: 10
+    type: basic_string
     label: inline
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
+    weight: 10
     region: content
   field_billing_zip:
-    weight: 8
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 8
     region: content
   field_comments:
-    weight: 14
+    type: comment_default
     label: hidden
     settings:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
-    type: comment_default
+    weight: 14
     region: content
   field_contacts:
-    weight: 15
+    type: viewfield_default
     label: hidden
     settings:
       view_title: hidden
-      always_build_output: 0
+      always_build_output: false
       empty_view_title: hidden
     third_party_settings: {  }
-    type: viewfield_default
+    weight: 15
     region: content
   field_parent_account:
-    weight: 3
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 3
+    region: content
+  field_payment_issues:
+    type: viewfield_default
+    label: inline
+    settings:
+      view_title: hidden
+      always_build_output: false
+      empty_view_title: hidden
+    third_party_settings: {  }
+    weight: 11
     region: content
   field_phone:
-    weight: 4
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 4
     region: content
   field_website:
-    weight: 9
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 9
     region: content
   links:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   feeds_item: true
   field_audit_id: true

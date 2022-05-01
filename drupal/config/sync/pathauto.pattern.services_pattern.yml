@@ -11,12 +11,12 @@ pattern: 'content/services/[node:title]'
 selection_criteria:
   e8a59847-17f3-461a-94d0-35d4152c096d:
     id: node_type
-    bundles:
-      services: services
     negate: false
+    uuid: e8a59847-17f3-461a-94d0-35d4152c096d
     context_mapping:
       node: node
-    uuid: e8a59847-17f3-461a-94d0-35d4152c096d
+    bundles:
+      services: services
 selection_logic: and
 weight: -5
 relationships: {  }

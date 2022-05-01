@@ -5,10 +5,12 @@ dependencies:
   config:
     - field.field.node.projects.feeds_item
     - field.field.node.projects.field_account_manager
+    - field.field.node.projects.field_account_payment_issues
     - field.field.node.projects.field_account_reference
     - field.field.node.projects.field_address
     - field.field.node.projects.field_architect
     - field.field.node.projects.field_audit_id
+    - field.field.node.projects.field_billing_status_ref
     - field.field.node.projects.field_city
     - field.field.node.projects.field_client_project_name
     - field.field.node.projects.field_comments
@@ -25,6 +27,7 @@ dependencies:
     - field.field.node.projects.field_permit_number
     - field.field.node.projects.field_priority_green
     - field.field.node.projects.field_project_contacts
+    - field.field.node.projects.field_project_flag
     - field.field.node.projects.field_project_image
     - field.field.node.projects.field_project_services
     - field.field.node.projects.field_project_status
@@ -33,6 +36,7 @@ dependencies:
     - field.field.node.projects.field_state
     - field.field.node.projects.field_sub_contractor
     - field.field.node.projects.field_tasks
+    - field.field.node.projects.field_wsec
     - field.field.node.projects.field_zip
     - image.style.thumbnail
     - node.type.projects
@@ -50,148 +54,155 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 23
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
   field_account_manager:
-    weight: 3
-    settings: {  }
-    third_party_settings: {  }
     type: options_select
-    region: content
-  field_account_reference:
     weight: 4
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-      match_limit: 10
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
     region: content
-  field_address:
+    settings: {  }
+    third_party_settings: {  }
+  field_account_payment_issues:
+    type: viewfield_select
+    weight: 36
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_account_reference:
+    type: entity_reference_autocomplete
     weight: 5
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
     region: content
-  field_architect:
-    weight: 16
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
-  field_city:
+  field_address:
+    type: string_textfield
     weight: 6
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_client_project_name:
-    weight: 9
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_comments:
-    weight: 31
-    settings: {  }
-    third_party_settings: {  }
-    type: comment_default
-    region: content
-  field_date_submitted:
-    weight: 22
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_enrolled_with_bg:
-    weight: 19
-    settings:
-      display_label: true
-    third_party_settings: {  }
-    type: boolean_checkbox
-    region: content
-  field_far_incentive:
+  field_architect:
+    type: entity_reference_autocomplete
     weight: 18
-    settings:
-      display_label: true
-    third_party_settings: {  }
-    type: boolean_checkbox
     region: content
-  field_intake_date:
-    weight: 11
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_key_box_code:
-    weight: 21
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_key_box_location:
-    weight: 20
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_opportunity:
-    weight: 10
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+  field_city:
+    type: string_textfield
+    weight: 7
     region: content
-  field_permit_city:
-    weight: 13
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_permit_issue:
-    weight: 14
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_permit_number:
-    weight: 12
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_client_project_name:
     type: string_textfield
+    weight: 10
     region: content
-  field_priority_green:
-    weight: 17
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_comments:
+    type: comment_default
+    weight: 33
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date_submitted:
+    type: datetime_default
+    weight: 24
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_enrolled_with_bg:
+    type: boolean_checkbox
+    weight: 21
+    region: content
     settings:
       display_label: true
     third_party_settings: {  }
+  field_far_incentive:
     type: boolean_checkbox
+    weight: 20
     region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_intake_date:
+    type: datetime_default
+    weight: 12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_key_box_code:
+    type: string_textfield
+    weight: 23
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_key_box_location:
+    type: string_textfield
+    weight: 22
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_opportunity:
+    type: entity_reference_autocomplete
+    weight: 11
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_permit_city:
+    type: options_select
+    weight: 15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_permit_issue:
+    type: datetime_default
+    weight: 16
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_permit_number:
+    type: string_textfield
+    weight: 14
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_priority_green:
+    type: boolean_checkbox
+    weight: 19
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_project_contacts:
     type: entity_reference_paragraphs
-    weight: 29
+    weight: 31
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -200,30 +211,36 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
+  field_project_flag:
+    type: options_select
+    weight: 3
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_project_image:
+    type: image_image
     weight: 1
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
-    type: image_image
-    region: content
   field_project_services:
-    weight: 33
-    settings: {  }
-    third_party_settings: {  }
     type: viewfield_select
+    weight: 34
     region: content
-  field_project_status:
-    weight: 2
     settings: {  }
     third_party_settings: {  }
+  field_project_status:
     type: options_select
+    weight: 2
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_project_units:
     type: entity_reference_paragraphs
-    weight: 30
+    weight: 32
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -232,28 +249,28 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
   field_related_address:
-    weight: 15
+    type: entity_reference_autocomplete
+    weight: 17
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_state:
-    weight: 7
+    type: string_textfield
+    weight: 8
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_sub_contractor:
     type: entity_reference_paragraphs
-    weight: 34
+    weight: 35
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -262,50 +279,45 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
+  field_wsec:
+    type: options_select
+    weight: 13
     region: content
-  field_tasks:
-    weight: 32
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-      match_limit: 10
+    settings: {  }
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_zip:
-    weight: 8
+    type: number
+    weight: 9
+    region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-    type: number
-    region: content
   path:
     type: path
-    weight: 28
+    weight: 30
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
+    weight: 27
+    region: content
     settings:
       display_label: true
-    weight: 25
-    region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
+    weight: 29
+    region: content
     settings:
       display_label: true
-    weight: 27
-    region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
+    weight: 28
+    region: content
     settings:
       display_label: true
-    weight: 26
-    region: content
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -317,15 +329,17 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 24
+    weight: 26
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
 hidden:
   feeds_item: true
   field_audit_id: true
+  field_billing_status_ref: true
   field_geolocation: true
+  field_tasks: true

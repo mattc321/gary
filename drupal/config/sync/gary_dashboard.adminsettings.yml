@@ -4,13 +4,13 @@ layout_first: top
 layout_second: top
 layout_bottom: top
 dashboard_layout_top:
+  'views_block:dashboard_comment_messages-block_1': 'views_block:dashboard_comment_messages-block_1'
   'views_block:dashboard_upcoming_site_visits_table-block_1': 'views_block:dashboard_upcoming_site_visits_table-block_1'
 dashboard_layout_first:
-  'views_block:dashboard_tasks_by_projects-block_1': 'views_block:dashboard_tasks_by_projects-block_1'
+  'views_block:dashboard_recently_closed_tasks-block_1': 'views_block:dashboard_recently_closed_tasks-block_1'
 dashboard_layout_second:
   'views_block:dashboard_tasks_by_opportunity-block_1': 'views_block:dashboard_tasks_by_opportunity-block_1'
 dashboard_layout_bottom:
-  'views_block:dashboard_comment_messages-block_1': 'views_block:dashboard_comment_messages-block_1'
   'views_block:dashboard_recent_comments-block_1': 'views_block:dashboard_recent_comments-block_1'
   'views_block:dashboard_stalled_projects-block_1': 'views_block:dashboard_stalled_projects-block_1'
 mobile_dashboard_layout:

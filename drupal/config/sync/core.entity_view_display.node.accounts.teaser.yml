@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.accounts.field__billing_state
     - field.field.node.accounts.field_account_manager
     - field.field.node.accounts.field_account_opportunities
+    - field.field.node.accounts.field_account_opportunities_bill
     - field.field.node.accounts.field_account_projects
     - field.field.node.accounts.field_account_type
     - field.field.node.accounts.field_audit_id
@@ -18,6 +19,7 @@ dependencies:
     - field.field.node.accounts.field_comments
     - field.field.node.accounts.field_contacts
     - field.field.node.accounts.field_parent_account
+    - field.field.node.accounts.field_payment_issues
     - field.field.node.accounts.field_phone
     - field.field.node.accounts.field_website
     - node.type.accounts
@@ -29,10 +31,10 @@ bundle: accounts
 mode: teaser
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   feeds_item: true
   field__billing_address: true
@@ -40,6 +42,7 @@ hidden:
   field__billing_state: true
   field_account_manager: true
   field_account_opportunities: true
+  field_account_opportunities_bill: true
   field_account_projects: true
   field_account_type: true
   field_audit_id: true
@@ -48,5 +51,6 @@ hidden:
   field_comments: true
   field_contacts: true
   field_parent_account: true
+  field_payment_issues: true
   field_phone: true
   field_website: true

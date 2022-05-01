@@ -2,7 +2,7 @@ uuid: 3d192684-1859-441e-b018-93550d7d4d7e
 langcode: en
 status: true
 dependencies: {  }
-name: 'Contact Type'
+name: 'Contact Business Type'
 vid: contact_type
 description: ''
 weight: 0

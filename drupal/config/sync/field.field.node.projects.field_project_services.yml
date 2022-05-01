@@ -18,11 +18,11 @@ required: false
 translatable: false
 default_value:
   -
-    token_help: ''
+    target_uuid: d6152a86-c447-4825-b6f0-137c7f0ffa2b
     display_id: block_1
     arguments: ''
-    target_uuid: d6152a86-c447-4825-b6f0-137c7f0ffa2b
     items_to_display: ''
+    token_help: ''
 default_value_callback: ''
 settings:
   force_default: true

@@ -11,12 +11,12 @@ pattern: 'content/service-tasks/[node:title]'
 selection_criteria:
   b03905d1-db6c-4cda-bef9-54c01b174581:
     id: node_type
-    bundles:
-      service_tasks: service_tasks
     negate: false
+    uuid: b03905d1-db6c-4cda-bef9-54c01b174581
     context_mapping:
       node: node
-    uuid: b03905d1-db6c-4cda-bef9-54c01b174581
+    bundles:
+      service_tasks: service_tasks
 selection_logic: and
 weight: -5
 relationships: {  }

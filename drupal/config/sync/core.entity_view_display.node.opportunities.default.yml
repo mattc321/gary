@@ -39,102 +39,120 @@ third_party_settings:
     group_contacts:
       children:
         - field_project_contacts
+      label: Contacts
       parent_name: ''
+      region: content
       weight: 17
       format_type: html_element
       format_settings:
-        id: ''
         classes: 'ec-legend contacts'
+        id: ''
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-      label: Contacts
-      region: content
     group_comments:
       children:
         - field_comments
+      label: Comments
       parent_name: ''
+      region: content
       weight: 18
       format_type: html_element
       format_settings:
-        id: ''
         classes: 'ec-legend comments'
+        id: ''
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-      label: Comments
-      region: content
     group_services:
       children:
         - field_opportunity_services_ref
+      label: Services
       parent_name: ''
+      region: content
       weight: 15
       format_type: html_element
       format_settings:
+        classes: 'ec-legend services'
+        id: services
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-        id: services
-        classes: 'ec-legend services'
-      label: Services
-      region: content
     group_tasks:
       children:
         - field_tasks
+      label: Tasks
       parent_name: ''
+      region: content
       weight: 16
       format_type: html_element
       format_settings:
-        id: ''
         classes: 'ec-legend tasks'
+        id: ''
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-      label: Tasks
-      region: content
+    group_to_do_list:
+      children:
+        - field_to_do_list
+      label: 'To-Do List'
+      parent_name: ''
+      region: hidden
+      weight: 19
+      format_type: html_element
+      format_settings:
+        classes: ''
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.opportunities.default
 targetEntityType: node
 bundle: opportunities
 mode: default
 content:
   field_account_manager:
-    weight: 2
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 2
     region: content
   field_account_reference:
-    weight: 3
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 3
     region: content
   field_address:
-    weight: 8
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 8
     region: content
   field_amount:
-    weight: 12
+    type: number_decimal
     label: inline
     settings:
       thousand_separator: ''
@@ -142,62 +160,61 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    type: number_decimal
+    weight: 12
     region: content
   field_billing_status:
-    weight: 4
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 4
     region: content
   field_city:
-    weight: 9
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 9
     region: content
   field_comments:
-    weight: 16
+    type: comment_default
     label: hidden
     settings:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
-    type: comment_default
+    weight: 16
     region: content
   field_date_closed:
-    weight: 14
+    type: datetime_custom
     label: inline
     settings:
       timezone_override: ''
       date_format: m/d/Y
     third_party_settings: {  }
-    type: datetime_custom
+    weight: 14
     region: content
   field_description:
-    weight: 5
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 5
     region: content
   field_intake_date:
-    weight: 13
+    type: datetime_custom
     label: inline
     settings:
       timezone_override: ''
       date_format: m/d/Y
     third_party_settings: {  }
-    type: datetime_custom
+    weight: 13
     region: content
   field_opportunity_services_ref:
     type: paragraph_views_formatter
-    weight: 17
     label: hidden
     settings:
       ajax_inputs: '1'
@@ -211,25 +228,26 @@ content:
       mobile_view_display: block_2
       keep_form_expanded: 0
     third_party_settings: {  }
+    weight: 17
     region: content
   field_opportunity_type:
-    weight: 0
+    type: entity_reference_label
     label: inline
     settings:
       link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 0
     region: content
   field_orig_account:
-    weight: 1
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 1
     region: content
   field_project_contacts:
-    weight: 14
+    type: paragraph_views_formatter
     label: hidden
     settings:
       ajax_inputs: '1'
@@ -243,33 +261,33 @@ content:
       mobile_view_display: block_3
       keep_form_expanded: 0
     third_party_settings: {  }
-    type: paragraph_views_formatter
+    weight: 14
     region: content
   field_project_reference:
-    weight: 6
+    type: entity_reverse_formatter
     label: inline
     settings: {  }
     third_party_settings: {  }
-    type: entity_reverse_formatter
+    weight: 6
     region: content
   field_proposal_template_ref:
-    weight: 7
+    type: entity_reference_label
     label: inline
     settings:
       link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 7
     region: content
   field_state:
-    weight: 10
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 10
     region: content
   field_tasks:
-    weight: 19
+    type: paragraph_views_formatter
     label: hidden
     settings:
       ajax_inputs: '1'
@@ -283,16 +301,16 @@ content:
       mobile_view: opportunity_tasks
       mobile_view_display: block_3
     third_party_settings: {  }
-    type: paragraph_views_formatter
+    weight: 19
     region: content
   field_zip:
-    weight: 11
+    type: number_integer
     label: inline
     settings:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    type: number_integer
+    weight: 11
     region: content
 hidden:
   feeds_item: true

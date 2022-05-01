@@ -23,99 +23,11 @@ base_table: paragraphs_item_field_data
 base_field: id
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: none
-        options: {  }
-      cache:
-        type: tag
-        options: {  }
-      query:
-        type: views_query
-        options:
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
-          query_comment: ''
-          query_tags: {  }
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: mini
-        options:
-          items_per_page: 10
-          offset: 0
-          id: 0
-          total_pages: null
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          tags:
-            previous: ‹‹
-            next: ››
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            field_sub_contractor: field_sub_contractor
-            field_grade: field_grade
-            paragraph_delete_item: paragraph_delete_item
-          info:
-            field_sub_contractor:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_grade:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            paragraph_delete_item:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
-          empty_table: false
-      row:
-        type: fields
-        options:
-          inline: {  }
-          separator: ''
-          hide_empty: false
-          default_field_elements: true
       fields:
         field_sub_contractor:
           id: field_sub_contractor
@@ -124,6 +36,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Sub Contractor'
           exclude: false
           alter:
@@ -179,7 +92,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_grade:
           id: field_grade
           table: paragraph__field_grade
@@ -187,6 +99,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: Grade
           exclude: false
           alter:
@@ -242,7 +155,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_avg_grade:
           id: field_avg_grade
           table: node__field_avg_grade
@@ -250,6 +162,7 @@ display:
           relationship: field_sub_contractor
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Avg Grade'
           exclude: false
           alter:
@@ -305,7 +218,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         paragraph_delete_item:
           id: paragraph_delete_item
           table: paragraphs_item
@@ -313,6 +225,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: paragraph
+          plugin_id: paragraph_delete_item
           label: Delete
           exclude: false
           alter:
@@ -354,48 +268,42 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: paragraph
-          plugin_id: paragraph_delete_item
-      filters:
-        status:
-          value: '1'
-          table: paragraphs_item_field_data
-          field: status
-          plugin_id: boolean
-          entity_type: paragraph
-          entity_field: status
-          id: status
+      pager:
+        type: mini
+        options:
+          offset: 0
+          items_per_page: 10
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
           expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-          group: 1
-        type:
-          id: type
-          table: paragraphs_item_field_data
-          field: type
-          value:
-            sub_contractors: sub_contractors
-          entity_type: paragraph
-          entity_field: type
-          plugin_id: bundle
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-      sorts: {  }
-      header: {  }
-      footer: {  }
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: none
+        options: {  }
+      cache:
+        type: tag
+        options: {  }
       empty: {  }
-      relationships:
-        field_sub_contractor:
-          id: field_sub_contractor
-          table: paragraph__field_sub_contractor
-          field: field_sub_contractor
-          relationship: none
-          group_type: group
-          admin_label: 'field_sub_contractor: Content'
-          required: false
-          plugin_id: standard
+      sorts: {  }
       arguments:
         parent_id:
           id: parent_id
@@ -404,6 +312,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: paragraph
+          entity_field: parent_id
+          plugin_id: string
           default_action: empty
           exception:
             value: all
@@ -418,8 +329,8 @@ display:
           summary_options:
             base_path: ''
             count: true
-            items_per_page: 25
             override: false
+            items_per_page: 25
           summary:
             sort_order: asc
             number_of_records: 0
@@ -435,11 +346,100 @@ display:
           path_case: none
           transform_dash: false
           break_phrase: false
+      filters:
+        status:
+          id: status
+          table: paragraphs_item_field_data
+          field: status
           entity_type: paragraph
-          entity_field: parent_id
-          plugin_id: string
-      display_extenders: {  }
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+        type:
+          id: type
+          table: paragraphs_item_field_data
+          field: type
+          entity_type: paragraph
+          entity_field: type
+          plugin_id: bundle
+          value:
+            sub_contractors: sub_contractors
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            field_sub_contractor: field_sub_contractor
+            field_grade: field_grade
+            paragraph_delete_item: paragraph_delete_item
+          default: '-1'
+          info:
+            field_sub_contractor:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_grade:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            paragraph_delete_item:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      query:
+        type: views_query
+        options:
+          query_comment: ''
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_tags: {  }
+      relationships:
+        field_sub_contractor:
+          id: field_sub_contractor
+          table: paragraph__field_sub_contractor
+          field: field_sub_contractor
+          relationship: none
+          group_type: group
+          admin_label: 'field_sub_contractor: Content'
+          plugin_id: standard
+          required: false
       use_ajax: true
+      header: {  }
+      footer: {  }
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -452,13 +452,11 @@ display:
         - 'config:field.storage.paragraph.field_grade'
         - 'config:field.storage.paragraph.field_sub_contractor'
   block_1:
-    display_plugin: block
     id: block_1
     display_title: 'Project Sub Contractors'
+    display_plugin: block
     position: 1
     display_options:
-      display_extenders: {  }
-      display_description: ''
       fields:
         field_sub_contractor:
           id: field_sub_contractor
@@ -467,6 +465,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Sub Contractor'
           exclude: false
           alter:
@@ -522,7 +521,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_grade:
           id: field_grade
           table: paragraph__field_grade
@@ -530,6 +528,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: Grade
           exclude: false
           alter:
@@ -585,7 +584,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_avg_grade:
           id: field_avg_grade
           table: node__field_avg_grade
@@ -593,6 +591,7 @@ display:
           relationship: field_sub_contractor
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Avg Grade'
           exclude: false
           alter:
@@ -648,7 +647,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         paragraph_delete_item:
           id: paragraph_delete_item
           table: paragraphs_item
@@ -656,6 +654,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: paragraph
+          plugin_id: paragraph_delete_item
           label: ''
           exclude: false
           alter:
@@ -697,10 +697,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: paragraph
-          plugin_id: paragraph_delete_item
       defaults:
         fields: false
+      display_description: ''
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -713,13 +713,11 @@ display:
         - 'config:field.storage.paragraph.field_grade'
         - 'config:field.storage.paragraph.field_sub_contractor'
   block_2:
-    display_plugin: block
     id: block_2
     display_title: 'Edit Project Subs'
+    display_plugin: block
     position: 2
     display_options:
-      display_extenders: {  }
-      display_description: ''
       fields:
         form_field_field_sub_contractor:
           id: form_field_field_sub_contractor
@@ -728,6 +726,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: paragraph
+          plugin_id: entity_form_field
           label: 'Sub Contractor'
           exclude: false
           alter:
@@ -775,8 +775,6 @@ display:
             type: options_select
             settings: {  }
             third_party_settings: {  }
-          entity_type: paragraph
-          plugin_id: entity_form_field
         form_field_field_grade:
           id: form_field_field_grade
           table: paragraphs_item_field_data
@@ -784,6 +782,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: paragraph
+          plugin_id: entity_form_field
           label: Grade
           exclude: false
           alter:
@@ -831,8 +831,6 @@ display:
             type: options_select
             settings: {  }
             third_party_settings: {  }
-          entity_type: paragraph
-          plugin_id: entity_form_field
         field_avg_grade:
           id: field_avg_grade
           table: node__field_avg_grade
@@ -840,6 +838,7 @@ display:
           relationship: field_sub_contractor
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Avg Grade'
           exclude: false
           alter:
@@ -895,7 +894,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         paragraph_delete_item_1:
           id: paragraph_delete_item_1
           table: paragraphs_item
@@ -903,6 +901,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: paragraph
+          plugin_id: paragraph_delete_item
           label: Delete
           exclude: false
           alter:
@@ -944,10 +944,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: paragraph
-          plugin_id: paragraph_delete_item
       defaults:
         fields: false
+      display_description: ''
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -963,30 +963,11 @@ display:
         - 'config:field.storage.paragraph.field_grade'
         - 'config:field.storage.paragraph.field_sub_contractor'
   block_3:
-    display_plugin: block
     id: block_3
     display_title: 'Mobile Block'
+    display_plugin: block
     position: 1
     display_options:
-      display_extenders: {  }
-      display_description: ''
-      style:
-        type: default
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-      defaults:
-        style: false
-        row: false
-        fields: false
-      row:
-        type: fields
-        options:
-          inline: {  }
-          separator: ''
-          hide_empty: false
-          default_field_elements: true
       fields:
         field_sub_contractor:
           id: field_sub_contractor
@@ -995,6 +976,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Sub Contractor'
           exclude: false
           alter:
@@ -1050,7 +1032,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_grade:
           id: field_grade
           table: paragraph__field_grade
@@ -1058,6 +1039,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: Grade
           exclude: false
           alter:
@@ -1113,7 +1095,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_avg_grade:
           id: field_avg_grade
           table: node__field_avg_grade
@@ -1121,6 +1102,7 @@ display:
           relationship: field_sub_contractor
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Avg Grade'
           exclude: false
           alter:
@@ -1176,7 +1158,25 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+      row:
+        type: fields
+        options:
+          default_field_elements: true
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      defaults:
+        style: false
+        row: false
+        fields: false
+      display_description: ''
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:

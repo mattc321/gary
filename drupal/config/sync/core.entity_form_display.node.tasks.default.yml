@@ -23,35 +23,35 @@ bundle: tasks
 mode: default
 content:
   field_parent_re:
-    weight: 26
-    settings: {  }
-    third_party_settings: {  }
     type: entity_reverse_widget
+    weight: 26
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_task_assigned_to:
+    type: options_select
     weight: 1
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_task_due_date:
-    weight: 2
-    settings: {  }
-    third_party_settings: {  }
     type: datetime_default
+    weight: 2
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_task_list:
+    type: options_select
     weight: 3
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_task_status:
+    type: options_select
     weight: 4
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   title:
     type: string_textfield
     weight: 0

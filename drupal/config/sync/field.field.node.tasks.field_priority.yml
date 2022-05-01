@@ -6,6 +6,8 @@ dependencies:
     - field.storage.node.field_priority
     - node.type.tasks
     - taxonomy.vocabulary.priority
+  content:
+    - 'taxonomy_term:priority:56397d95-1fcb-4a1a-854d-bb594bf5a4d6'
 id: node.tasks.field_priority
 field_name: field_priority
 entity_type: node
@@ -14,7 +16,9 @@ label: Priority
 description: ''
 required: false
 translatable: true
-default_value: {  }
+default_value:
+  -
+    target_uuid: 56397d95-1fcb-4a1a-854d-bb594bf5a4d6
 default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'

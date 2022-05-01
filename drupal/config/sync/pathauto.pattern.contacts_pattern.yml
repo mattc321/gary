@@ -11,12 +11,12 @@ pattern: 'content/contacts/[node:title]'
 selection_criteria:
   bc211e5d-68a6-4b58-a2c7-b38207bedb72:
     id: node_type
-    bundles:
-      contacts: contacts
     negate: false
+    uuid: bc211e5d-68a6-4b58-a2c7-b38207bedb72
     context_mapping:
       node: node
-    uuid: bc211e5d-68a6-4b58-a2c7-b38207bedb72
+    bundles:
+      contacts: contacts
 selection_logic: and
 weight: -5
 relationships: {  }

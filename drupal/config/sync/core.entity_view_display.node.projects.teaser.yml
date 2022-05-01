@@ -6,10 +6,12 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.projects.feeds_item
     - field.field.node.projects.field_account_manager
+    - field.field.node.projects.field_account_payment_issues
     - field.field.node.projects.field_account_reference
     - field.field.node.projects.field_address
     - field.field.node.projects.field_architect
     - field.field.node.projects.field_audit_id
+    - field.field.node.projects.field_billing_status_ref
     - field.field.node.projects.field_city
     - field.field.node.projects.field_client_project_name
     - field.field.node.projects.field_comments
@@ -26,6 +28,7 @@ dependencies:
     - field.field.node.projects.field_permit_number
     - field.field.node.projects.field_priority_green
     - field.field.node.projects.field_project_contacts
+    - field.field.node.projects.field_project_flag
     - field.field.node.projects.field_project_image
     - field.field.node.projects.field_project_services
     - field.field.node.projects.field_project_status
@@ -34,6 +37,7 @@ dependencies:
     - field.field.node.projects.field_state
     - field.field.node.projects.field_sub_contractor
     - field.field.node.projects.field_tasks
+    - field.field.node.projects.field_wsec
     - field.field.node.projects.field_zip
     - node.type.projects
   module:
@@ -44,17 +48,19 @@ bundle: projects
 mode: teaser
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   feeds_item: true
   field_account_manager: true
+  field_account_payment_issues: true
   field_account_reference: true
   field_address: true
   field_architect: true
   field_audit_id: true
+  field_billing_status_ref: true
   field_city: true
   field_client_project_name: true
   field_comments: true
@@ -71,6 +77,7 @@ hidden:
   field_permit_number: true
   field_priority_green: true
   field_project_contacts: true
+  field_project_flag: true
   field_project_image: true
   field_project_services: true
   field_project_status: true
@@ -79,4 +86,5 @@ hidden:
   field_state: true
   field_sub_contractor: true
   field_tasks: true
+  field_wsec: true
   field_zip: true

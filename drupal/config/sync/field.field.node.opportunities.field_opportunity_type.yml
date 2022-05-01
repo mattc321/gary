@@ -10,7 +10,7 @@ id: node.opportunities.field_opportunity_type
 field_name: field_opportunity_type
 entity_type: node
 bundle: opportunities
-label: 'Opportunity Type'
+label: 'Opportunity Status'
 description: ''
 required: false
 translatable: false

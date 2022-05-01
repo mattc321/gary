@@ -2,7 +2,7 @@ uuid: 4307cbe5-a9e4-45c7-a21d-a1b8132f179a
 langcode: en
 status: true
 dependencies: {  }
-name: 'Opportunity Stage'
+name: 'Opportunity Status'
 vid: opportunity_type
 description: ''
 weight: 0

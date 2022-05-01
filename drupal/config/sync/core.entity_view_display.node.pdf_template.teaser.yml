@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.pdf_template.field_append_pdf
     - field.field.node.pdf_template.field_page_footer
     - field.field.node.pdf_template.field_page_header
     - field.field.node.pdf_template.field_template_html
@@ -17,11 +18,12 @@ bundle: pdf_template
 mode: teaser
 content:
   links:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+    weight: 100
     region: content
 hidden:
+  field_append_pdf: true
   field_page_footer: true
   field_page_header: true
   field_template_html: true

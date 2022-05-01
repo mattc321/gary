@@ -1,7 +1,27 @@
 uuid: 037193ba-471a-4c2d-8e05-338dea0c9712
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.plain_text_main
+    - node.type.accounts
+    - node.type.contacts
+    - node.type.messages
+    - node.type.opportunities
+    - node.type.projects
+    - node.type.report_link
+    - node.type.service_tasks
+    - node.type.services
+    - node.type.sub_contractor
+    - node.type.tasks
+  module:
+    - comment
+    - contextual
+    - draggableviews
+    - filter
+    - gary_field_formatter
+    - node
+    - quickedit
 id: limited_admin
 label: 'EC Main User'
 weight: 4
@@ -11,7 +31,6 @@ permissions:
   - 'access contextual links'
   - 'access draggableviews'
   - 'access in-place editing'
-  - 'access kint'
   - 'administer comments'
   - 'create accounts content'
   - 'create contacts content'

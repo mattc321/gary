@@ -21,21 +21,21 @@ default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    negate: 0
     target_bundles:
       block: block
+    negate: 0
     target_bundles_drag_drop:
+      article_type:
+        weight: 8
+        enabled: false
       block:
-        enabled: true
         weight: 2
+        enabled: true
       column_2:
         weight: 5
         enabled: false
       column_3:
         weight: 6
-        enabled: false
-      article_type:
-        weight: 8
         enabled: false
       opportunity_services:
         weight: 12

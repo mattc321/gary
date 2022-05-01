@@ -24,10 +24,10 @@ bundle: sub_contractor
 mode: teaser
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   field__billing_address: true
   field__billing_city: true

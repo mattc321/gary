@@ -10,7 +10,7 @@ id: node.contacts.field_contact_type
 field_name: field_contact_type
 entity_type: node
 bundle: contacts
-label: 'Contact Type'
+label: 'Business Type'
 description: ''
 required: false
 translatable: false

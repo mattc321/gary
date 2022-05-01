@@ -6,10 +6,12 @@ dependencies:
     - core.entity_view_display.comment.comment.default
     - field.field.node.projects.feeds_item
     - field.field.node.projects.field_account_manager
+    - field.field.node.projects.field_account_payment_issues
     - field.field.node.projects.field_account_reference
     - field.field.node.projects.field_address
     - field.field.node.projects.field_architect
     - field.field.node.projects.field_audit_id
+    - field.field.node.projects.field_billing_status_ref
     - field.field.node.projects.field_city
     - field.field.node.projects.field_client_project_name
     - field.field.node.projects.field_comments
@@ -26,6 +28,7 @@ dependencies:
     - field.field.node.projects.field_permit_number
     - field.field.node.projects.field_priority_green
     - field.field.node.projects.field_project_contacts
+    - field.field.node.projects.field_project_flag
     - field.field.node.projects.field_project_image
     - field.field.node.projects.field_project_services
     - field.field.node.projects.field_project_status
@@ -34,6 +37,7 @@ dependencies:
     - field.field.node.projects.field_state
     - field.field.node.projects.field_sub_contractor
     - field.field.node.projects.field_tasks
+    - field.field.node.projects.field_wsec
     - field.field.node.projects.field_zip
     - image.style.large
     - node.type.projects
@@ -43,6 +47,7 @@ dependencies:
     - field_group
     - gary_field_formatter
     - image
+    - options
     - user
     - viewfield
 third_party_settings:
@@ -50,280 +55,277 @@ third_party_settings:
     group_project_contacts:
       children:
         - field_project_contacts
+      label: Contacts
       parent_name: ''
-      weight: 28
+      region: content
+      weight: 30
       format_type: html_element
       format_settings:
-        label: Contacts
+        classes: 'ec-legend contacts'
+        id: ''
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'ec-legend contacts'
-      label: Contacts
-      region: content
     group_project_units:
       children:
         - field_project_units
+      label: Units
       parent_name: ''
-      weight: 29
+      region: content
+      weight: 31
       format_type: html_element
       format_settings:
-        label: Units
+        classes: 'ec-legend units'
+        id: ''
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'ec-legend units'
-      label: Units
-      region: content
     group_comments:
       children:
         - field_comments
+      label: Comments
       parent_name: ''
-      weight: 26
+      region: content
+      weight: 28
       format_type: html_element
       format_settings:
-        label: Comments
+        classes: 'ec-legend comments'
+        id: ''
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'ec-legend comments'
-      label: Comments
-      region: content
     group_tasks:
       children:
         - field_tasks
-      parent_name: ''
-      weight: 25
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: 'ec-legend tasks'
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
       label: Tasks
-      region: content
-    group_services:
-      children:
-        - field_project_services
       parent_name: ''
-      weight: 24
-      format_type: html_element
-      format_settings:
-        id: ''
-        classes: 'ec-legend services'
-        element: div
-        show_label: true
-        label_element: h3
-        attributes: ''
-        effect: none
-        speed: fast
-      label: Services
       region: content
-    group_sub_contractor:
-      children:
-        - field_sub_contractor
-      parent_name: ''
       weight: 27
       format_type: html_element
       format_settings:
-        label: 'Sub Contractor'
+        classes: 'ec-legend tasks'
+        id: ''
         element: div
         show_label: true
         label_element: h3
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'ec-legend subcontractors'
-      label: 'Sub Contractor'
+    group_services:
+      children:
+        - field_project_services
+      label: Services
+      parent_name: ''
       region: content
+      weight: 25
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend services'
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+    group_sub_contractor:
+      children:
+        - field_sub_contractor
+      label: 'Sub Contractor'
+      parent_name: ''
+      region: content
+      weight: 29
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend subcontractors'
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.projects.default
 targetEntityType: node
 bundle: projects
 mode: default
 content:
   field_account_manager:
-    weight: 3
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_account_reference:
     weight: 4
-    label: inline
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
     region: content
-  field_address:
-    weight: 5
-    label: inline
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_architect:
-    weight: 16
-    label: inline
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_audit_id:
-    weight: 23
-    label: inline
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
-    third_party_settings: {  }
-    type: number_integer
-    region: content
-  field_city:
-    weight: 6
-    label: inline
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_client_project_name:
-    weight: 9
-    label: inline
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_comments:
-    weight: 28
+  field_account_payment_issues:
+    type: viewfield_default
     label: hidden
     settings:
-      pager_id: 0
-      view_mode: default
+      view_title: hidden
+      always_build_output: false
+      empty_view_title: hidden
     third_party_settings: {  }
-    type: comment_default
+    weight: 24
     region: content
-  field_date_submitted:
-    weight: 22
-    label: inline
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_enrolled_with_bg:
-    weight: 19
-    label: inline
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    type: boolean
-    region: content
-  field_far_incentive:
-    weight: 18
-    label: inline
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-    type: boolean
-    region: content
-  field_intake_date:
-    weight: 11
-    label: inline
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_key_box_code:
-    weight: 21
-    label: inline
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_key_box_location:
-    weight: 20
-    label: inline
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_opportunity:
-    weight: 10
+  field_account_reference:
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
+    weight: 5
+    region: content
+  field_address:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_architect:
     type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 18
+    region: content
+  field_billing_status_ref:
+    type: viewfield_default
+    label: inline
+    settings:
+      view_title: hidden
+      always_build_output: false
+      empty_view_title: hidden
+    third_party_settings: {  }
+    weight: 26
+    region: content
+  field_city:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_client_project_name:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_comments:
+    type: comment_default
+    label: hidden
+    settings:
+      view_mode: default
+      pager_id: 0
+    third_party_settings: {  }
+    weight: 28
+    region: content
+  field_enrolled_with_bg:
+    type: boolean
+    label: inline
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 21
+    region: content
+  field_far_incentive:
+    type: boolean
+    label: inline
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 20
+    region: content
+  field_intake_date:
+    type: datetime_custom
+    label: inline
+    settings:
+      timezone_override: ''
+      date_format: m/d/Y
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_key_box_code:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 23
+    region: content
+  field_key_box_location:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 22
+    region: content
+  field_opportunity:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 11
     region: content
   field_permit_city:
-    weight: 13
+    type: entity_reference_label
     label: inline
     settings:
       link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 15
     region: content
   field_permit_issue:
-    weight: 14
+    type: datetime_custom
     label: inline
     settings:
-      format_type: medium
       timezone_override: ''
+      date_format: m/d/Y
     third_party_settings: {  }
-    type: datetime_default
+    weight: 16
     region: content
   field_permit_number:
-    weight: 12
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 14
     region: content
   field_priority_green:
-    weight: 17
+    type: boolean
     label: inline
     settings:
       format: default
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    type: boolean
+    weight: 19
     region: content
   field_project_contacts:
     type: paragraph_views_formatter
-    weight: 26
     label: hidden
     settings:
       ajax_inputs: '1'
@@ -337,38 +339,45 @@ content:
       mobile_view_display: block_3
       keep_form_expanded: 0
     third_party_settings: {  }
+    weight: 26
+    region: content
+  field_project_flag:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_project_image:
-    weight: 1
+    type: image
     label: hidden
     settings:
-      image_style: large
       image_link: ''
+      image_style: large
     third_party_settings: {  }
-    type: image
+    weight: 1
     region: content
   field_project_services:
-    weight: 30
+    type: viewfield_default
     label: hidden
     settings:
       view_title: hidden
       always_build_output: false
       empty_view_title: hidden
     third_party_settings: {  }
-    type: viewfield_default
+    weight: 30
     region: content
   field_project_status:
-    weight: 2
+    type: entity_reference_label
     label: inline
     settings:
       link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 2
     region: content
   field_project_units:
     type: paragraph_views_formatter
-    weight: 27
-    region: content
     label: hidden
     settings:
       ajax_inputs: '1'
@@ -382,25 +391,26 @@ content:
       mobile_view: project_units
       mobile_view_display: block_4
     third_party_settings: {  }
+    weight: 27
+    region: content
   field_related_address:
-    weight: 15
+    type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 17
     region: content
   field_state:
     type: string
-    weight: 7
-    region: content
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 8
+    region: content
   field_sub_contractor:
     type: paragraph_views_formatter
-    weight: 30
     label: inline
     settings:
       ajax_inputs: '1'
@@ -414,9 +424,10 @@ content:
       mobile_view_display: block_3
       keep_form_expanded: 0
     third_party_settings: {  }
+    weight: 30
     region: content
   field_tasks:
-    weight: 32
+    type: paragraph_views_formatter
     label: hidden
     settings:
       ajax_inputs: '1'
@@ -430,22 +441,31 @@ content:
       mobile_view_display: block_3
       keep_form_expanded: 0
     third_party_settings: {  }
-    type: paragraph_views_formatter
+    weight: 32
+    region: content
+  field_wsec:
+    type: list_default
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 13
     region: content
   field_zip:
-    weight: 8
+    type: number_integer
     label: inline
     settings:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    type: number_integer
+    weight: 9
     region: content
   links:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   feeds_item: true
+  field_audit_id: true
+  field_date_submitted: true
   field_geolocation: true

@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.contacts.field_contact_email
     - field.field.node.contacts.field_contact_phone
     - field.field.node.contacts.field_contact_type
+    - field.field.node.contacts.field_job_status
     - field.field.node.contacts.field_job_title
     - node.type.contacts
   module:
@@ -21,10 +22,10 @@ bundle: contacts
 mode: teaser
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   feeds_item: true
   field_account_reference: true
@@ -33,4 +34,5 @@ hidden:
   field_contact_email: true
   field_contact_phone: true
   field_contact_type: true
+  field_job_status: true
   field_job_title: true

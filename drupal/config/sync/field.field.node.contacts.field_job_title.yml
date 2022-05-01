@@ -10,7 +10,7 @@ id: node.contacts.field_job_title
 field_name: field_job_title
 entity_type: node
 bundle: contacts
-label: 'Job Title'
+label: 'Job Position'
 description: ''
 required: false
 translatable: false

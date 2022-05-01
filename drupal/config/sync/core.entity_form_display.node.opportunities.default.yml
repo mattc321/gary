@@ -44,79 +44,80 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_account_manager:
+    type: options_select
     weight: 9
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_account_reference:
+    type: entity_reference_autocomplete
     weight: 10
+    region: content
     settings:
       match_operator: CONTAINS
-      size: 60
-      placeholder: ''
       match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_address:
+    type: string_textfield
     weight: 13
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_amount:
-    weight: 17
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
     type: number
+    weight: 17
     region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_billing_status:
-    weight: 11
-    settings: {  }
-    third_party_settings: {  }
     type: options_select
+    weight: 11
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_city:
+    type: string_textfield
     weight: 14
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_comments:
-    weight: 23
-    settings: {  }
-    third_party_settings: {  }
     type: comment_default
+    weight: 23
     region: content
-  field_date_closed:
-    weight: 20
     settings: {  }
     third_party_settings: {  }
+  field_date_closed:
     type: datetime_default
+    weight: 20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_description:
+    type: string_textfield
     weight: 12
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_intake_date:
+    type: datetime_default
     weight: 18
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: datetime_default
-    region: content
   field_opportunity_services_ref:
     type: entity_reference_paragraphs
     weight: 24
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -125,25 +126,26 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
   field_opportunity_type:
+    type: options_select
     weight: 7
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_orig_account:
+    type: entity_reference_autocomplete
     weight: 8
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_project_contacts:
+    type: entity_reference_paragraphs
     weight: 21
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -152,45 +154,43 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    type: entity_reference_paragraphs
-    region: content
   field_project_reference:
-    weight: 25
-    settings: {  }
-    third_party_settings: {  }
     type: entity_reverse_widget
+    weight: 25
     region: content
-  field_proposal_template_ref:
-    weight: 19
     settings: {  }
     third_party_settings: {  }
+  field_proposal_template_ref:
     type: options_select
+    weight: 19
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_state:
+    type: string_textfield
     weight: 15
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_tasks:
+    type: entity_reference_autocomplete
     weight: 22
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
     third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_zip:
+    type: number
     weight: 16
+    region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-    type: number
-    region: content
   path:
     type: path
     weight: 5
@@ -199,24 +199,24 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 3
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 6
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 4
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -229,12 +229,12 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 1
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
 hidden:
   feeds_item: true

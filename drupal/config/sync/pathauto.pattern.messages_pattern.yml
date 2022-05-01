@@ -11,12 +11,12 @@ pattern: 'content/messages/[node:title]'
 selection_criteria:
   3e239b20-cfb5-4d04-919d-845e55aa45c8:
     id: node_type
-    bundles:
-      messages: messages
     negate: false
+    uuid: 3e239b20-cfb5-4d04-919d-845e55aa45c8
     context_mapping:
       node: node
-    uuid: 3e239b20-cfb5-4d04-919d-845e55aa45c8
+    bundles:
+      messages: messages
 selection_logic: and
 weight: -5
 relationships: {  }
