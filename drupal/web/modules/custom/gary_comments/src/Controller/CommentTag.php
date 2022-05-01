@@ -276,7 +276,17 @@ class CommentTag extends ControllerBase {
     foreach($str as $k=>$word){
       if(substr($word,0,1)=="@"){
         $uname = trim(substr($word,1));
+
         $tuser = user_load_by_name($uname);
+
+        if (! $tuser) {
+          $usersByNickName = $this->loadUserByTagNickname($uname);
+
+          if ($usersByNickName && property_exists($usersByNickName[0], 'entity_id')) {
+            $tuser = User::load($usersByNickName[0]->entity_id);
+          }
+        }
+
         if(!empty($tuser)) {
           $users[] = $tuser;
         } else {
@@ -290,5 +300,15 @@ class CommentTag extends ControllerBase {
     //set this for later use
     $this->tagged_users = $users;
     return $users;
+  }
+
+  public function loadUserByTagNickname(string $uname)
+  {
+    $query = \Drupal::database()->select('user__field_tag_nicknames', 'tn');
+    $query->addField('tn', 'field_tag_nicknames_value');
+    $query->addField('tn', 'entity_id');
+    $query->condition('tn.deleted', 0);
+    $query->condition('tn.field_tag_nicknames_value', '%'.$uname.'%', 'LIKE');
+    return $query->execute()->fetchAll();
   }
 }

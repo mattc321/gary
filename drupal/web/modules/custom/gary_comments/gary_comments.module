@@ -46,8 +46,14 @@ function gary_comments_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $
     //load taggable users by role assignees
     $users = GaryFunctions::loadUsersByRole('assignees');
     $user_string = "";
-    foreach ($users as $key => $user) {
+    /** @var \Drupal\user\Entity\User $user */
+    foreach ($users as $user) {
       $user_string .= ucfirst($user->getAccountName()) . ' ';
+
+      if ($user->hasField('field_tag_nicknames') && $user->get('field_tag_nicknames')->getValue()) {
+        $user_string .= "({$user->field_tag_nicknames->value}) ";
+      }
+
     }
     $msg = '<div class="comment-desc">To trigger a notification email to a team member, use @username anywhere in your comment with a space before and after.</br>';
     $msg.= 'Example: "Hi @cybil read this comment."  <span class="userlist"> Users: '.$user_string;
