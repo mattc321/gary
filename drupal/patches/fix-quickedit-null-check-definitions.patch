@@ -1,0 +1,13 @@
+diff --git a/core/modules/quickedit/quickedit.module b/core/modules/quickedit/quickedit.module
+index 1a86f97..eb71ffb 100644
+--- a/core/modules/quickedit/quickedit.module
++++ b/core/modules/quickedit/quickedit.module
+@@ -152,7 +152,7 @@ function quickedit_preprocess_field(&$variables) {
+
+   // Fields that are computed fields are not editable.
+   $definition = $entity->getFieldDefinition($element['#field_name']);
+-  if (!$definition->isComputed()) {
++  if ($definition && !$definition->isComputed()) {
+     $variables['attributes']['data-quickedit-field-id'] = $entity->getEntityTypeId() . '/' . $entity->id() . '/' . $element['#field_name'] . '/' . $element['#language'] . '/' . $element['#view_mode'];
+   }
+ }
