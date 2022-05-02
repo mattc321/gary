@@ -1,0 +1,45 @@
+uuid: 767ae62d-b924-4c53-8772-9eb6f9334066
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.grade.field_grade_value
+    - taxonomy.vocabulary.grade
+  module:
+    - path
+    - text
+id: taxonomy_term.grade.default
+targetEntityType: taxonomy_term
+bundle: grade
+mode: default
+content:
+  description:
+    type: text_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_grade_value:
+    type: number
+    weight: 31
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

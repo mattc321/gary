@@ -1,0 +1,31 @@
+uuid: 759202b5-7285-4ce1-a715-d3d6d9082275
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.my_messages
+  module:
+    - system
+    - views
+  theme:
+    - gary
+id: views_block__my_messages_block_1
+theme: gary
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:my_messages-block_1'
+settings:
+  id: 'views_block:my_messages-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    context_mapping: {  }
+    pages: '/user/*'

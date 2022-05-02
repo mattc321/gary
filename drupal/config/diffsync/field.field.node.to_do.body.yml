@@ -1,0 +1,23 @@
+uuid: e9a04675-69d6-4086-945d-e4acf84dec2d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.to_do
+  module:
+    - text
+id: node.to_do.body
+field_name: body
+entity_type: node
+bundle: to_do
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

@@ -1,0 +1,139 @@
+uuid: 64e33770-42dc-4fc8-8088-5acc00b57ee3
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.base_field_override.node.accounts.title
+    - field.field.node.accounts.field__billing_address
+    - field.field.node.accounts.field__billing_city
+    - field.field.node.accounts.field__billing_state
+    - field.field.node.accounts.field_account_manager
+    - field.field.node.accounts.field_account_type
+    - field.field.node.accounts.field_audit_id
+    - field.field.node.accounts.field_billing_email
+    - field.field.node.accounts.field_billing_zip
+    - field.field.node.accounts.field_phone
+    - node.type.accounts
+  module:
+    - node
+label: 'Accounts Import'
+id: accounts_import
+description: ''
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: true
+  line_limit: 100
+processor: 'entity:node'
+processor_configuration:
+  values:
+    type: accounts
+  update_existing: 1
+  update_non_existent: _delete
+  skip_hash_check: false
+  authorize: true
+  expire: -1
+  owner_feed_author: false
+  owner_id: 1
+custom_sources:
+  -
+    value: '0'
+    label: '0'
+    machine_name: '0'
+  -
+    value: '1'
+    label: '1'
+    machine_name: '1'
+  -
+    value: '2'
+    label: '2'
+    machine_name: '2'
+  -
+    value: '3'
+    label: '3'
+    machine_name: '3'
+  -
+    value: '4'
+    label: '4'
+    machine_name: '4'
+  -
+    value: '5'
+    label: '5'
+    machine_name: '5'
+  -
+    value: '6'
+    label: '6'
+    machine_name: '6'
+  -
+    value: '7'
+    label: '7'
+    machine_name: '7'
+  -
+    value: '8'
+    label: '8'
+    machine_name: '8'
+  -
+    value: '9'
+    label: '9'
+    machine_name: '9'
+mappings:
+  -
+    target: title
+    map:
+      value: '0'
+    unique: {  }
+  -
+    target: field_account_manager
+    map:
+      target_id: '1'
+    settings:
+      reference_by: name
+      autocreate: 0
+  -
+    target: field_account_type
+    map:
+      target_id: '2'
+    settings:
+      reference_by: name
+      autocreate: 0
+  -
+    target: field_billing_email
+    map:
+      value: '3'
+    settings:
+      defuse: 0
+    unique: {  }
+  -
+    target: field_phone
+    map:
+      value: '4'
+    unique: {  }
+  -
+    target: field__billing_address
+    map:
+      value: '5'
+    unique: {  }
+  -
+    target: field__billing_city
+    map:
+      value: '6'
+    unique: {  }
+  -
+    target: field__billing_state
+    map:
+      value: '7'
+    unique: {  }
+  -
+    target: field_billing_zip
+    map:
+      value: '8'
+    unique: {  }
+  -
+    target: field_audit_id
+    map:
+      value: '9'

@@ -1,0 +1,29 @@
+uuid: 18645eee-5cae-45a0-806b-e307d7d4bade
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_append_pdf
+    - media.type.document
+    - node.type.pdf_template
+id: node.pdf_template.field_append_pdf
+field_name: field_append_pdf
+entity_type: node
+bundle: pdf_template
+label: 'Append PDF'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      document: document
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

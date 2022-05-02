@@ -1,0 +1,114 @@
+uuid: d883dced-09e6-49f6-99f8-d76269863c59
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.service_tasks.field_assign_to_account_manager
+    - field.field.node.service_tasks.field_audit_id
+    - field.field.node.service_tasks.field_date_offset
+    - field.field.node.service_tasks.field_disable_auto_task
+    - field.field.node.service_tasks.field_st_assigned_to
+    - field.field.node.service_tasks.field_task_id
+    - field.field.node.service_tasks.field_task_list
+    - node.type.service_tasks
+  module:
+    - node
+label: 'Service Task Import'
+id: service_task_import
+description: ''
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: true
+  line_limit: 100
+processor: 'entity:node'
+processor_configuration:
+  values:
+    type: service_tasks
+  update_existing: 1
+  update_non_existent: _delete
+  skip_hash_check: false
+  authorize: true
+  expire: -1
+  owner_feed_author: false
+  owner_id: 1
+custom_sources:
+  -
+    value: '0'
+    label: '0'
+    machine_name: '0'
+  -
+    value: '1'
+    label: '1'
+    machine_name: '1'
+  -
+    value: '2'
+    label: '2'
+    machine_name: '2'
+  -
+    value: '3'
+    label: '3'
+    machine_name: '3'
+  -
+    value: '4'
+    label: '4'
+    machine_name: '4'
+  -
+    value: '5'
+    label: '5'
+    machine_name: '5'
+  -
+    value: '6'
+    label: '6'
+    machine_name: '6'
+  -
+    value: '7'
+    label: '7'
+    machine_name: '7'
+mappings:
+  -
+    target: title
+    map:
+      value: '0'
+    unique: {  }
+  -
+    target: field_date_offset
+    map:
+      value: '1'
+  -
+    target: field_st_assigned_to
+    map:
+      target_id: '2'
+    settings:
+      reference_by: name
+      autocreate: 0
+  -
+    target: field_task_id
+    map:
+      value: '3'
+    unique: {  }
+  -
+    target: field_task_list
+    map:
+      target_id: '4'
+    settings:
+      reference_by: title
+      feeds_item: guid
+      autocreate: 0
+  -
+    target: field_assign_to_account_manager
+    map:
+      value: '5'
+  -
+    target: field_disable_auto_task
+    map:
+      value: '6'
+  -
+    target: field_audit_id
+    map:
+      value: '7'

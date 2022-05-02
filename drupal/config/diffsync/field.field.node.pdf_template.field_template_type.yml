@@ -1,0 +1,29 @@
+uuid: 8fb5496d-2b9b-4cf2-a7b5-285b39e09db9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_template_type
+    - node.type.pdf_template
+    - taxonomy.vocabulary.template_type
+id: node.pdf_template.field_template_type
+field_name: field_template_type
+entity_type: node
+bundle: pdf_template
+label: 'Template Type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      template_type: template_type
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

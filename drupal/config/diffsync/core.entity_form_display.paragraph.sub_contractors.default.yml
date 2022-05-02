@@ -1,0 +1,33 @@
+uuid: efd9c46c-389b-44a7-94b9-88edc3554d14
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.sub_contractors.field_grade
+    - field.field.paragraph.sub_contractors.field_sub_contractor
+    - paragraphs.paragraphs_type.sub_contractors
+id: paragraph.sub_contractors.default
+targetEntityType: paragraph
+bundle: sub_contractors
+mode: default
+content:
+  field_grade:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_sub_contractor:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

@@ -1,0 +1,65 @@
+uuid: b9b7a6f8-2037-4ae6-8dd5-2ac0a117cd3f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_project_services
+    - node.type.projects
+    - views.view.project_services
+  module:
+    - viewfield
+id: node.projects.field_project_services
+field_name: field_project_services
+entity_type: node
+bundle: projects
+label: 'Project Services'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: d6152a86-c447-4825-b6f0-137c7f0ffa2b
+    display_id: block_1
+    arguments: ''
+    items_to_display: ''
+    token_help: ''
+default_value_callback: ''
+settings:
+  force_default: true
+  allowed_views:
+    project_services: project_services
+    accounts: '0'
+    comment: '0'
+    content: '0'
+    block_content: '0'
+    entity_reference_services: '0'
+    feeds_feed: '0'
+    files: '0'
+    frontpage: '0'
+    autocompletion_callbacks_nodes: '0'
+    opportunity: '0'
+    opportunity_services: '0'
+    user_admin_people: '0'
+    project_contacts: '0'
+    projects: '0'
+    project_tasks: '0'
+    project_units: '0'
+    comments_recent: '0'
+    content_recent: '0'
+    tasks_all: '0'
+    taxonomy_term: '0'
+    autocompletion_callbacks_users: '0'
+    watchdog: '0'
+    who_s_new: '0'
+    who_s_online: '0'
+    autocompletion_callbacks_words: '0'
+  allowed_display_types:
+    block: block
+    autocompletion_callback: '0'
+    entity_reference: '0'
+    feed: '0'
+    default: '0'
+    page: '0'
+  handler: 'default:view'
+  handler_settings: {  }
+field_type: viewfield

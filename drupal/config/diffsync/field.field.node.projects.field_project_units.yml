@@ -1,0 +1,43 @@
+uuid: 8ce74d6d-1744-43d7-95de-160bbb352e9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_project_units
+    - node.type.projects
+    - paragraphs.paragraphs_type.project_units
+  module:
+    - entity_reference_revisions
+id: node.projects.field_project_units
+field_name: field_project_units
+entity_type: node
+bundle: projects
+label: 'Project Units'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      project_units: project_units
+    negate: 0
+    target_bundles_drag_drop:
+      block:
+        weight: 6
+        enabled: false
+      column_2:
+        weight: 7
+        enabled: false
+      column_3:
+        weight: 8
+        enabled: false
+      project_contacts:
+        weight: 9
+        enabled: false
+      project_units:
+        weight: 10
+        enabled: true
+field_type: entity_reference_revisions

@@ -1,0 +1,19 @@
+uuid: aeb19573-12c0-436c-8829-3c82cb4a74a2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_template_html
+    - node.type.pdf_template
+id: node.pdf_template.field_template_html
+field_name: field_template_html
+entity_type: node
+bundle: pdf_template
+label: 'Template HTML'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

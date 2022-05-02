@@ -1,0 +1,23 @@
+uuid: e57c308b-196c-4eed-b113-8beb49883491
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_primary
+    - paragraphs.paragraphs_type.project_contacts
+id: paragraph.project_contacts.field_primary
+field_name: field_primary
+entity_type: paragraph
+bundle: project_contacts
+label: Primary
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

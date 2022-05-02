@@ -1,0 +1,26 @@
+uuid: 3c9fbbbd-c6b7-4d1e-bbb0-6547c0b10074
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_related_to
+    - node.type.to_do
+  module:
+    - gary_fields
+id: node.to_do.field_related_to
+field_name: field_related_to
+entity_type: node
+bundle: to_do
+label: 'Related To'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    parent_field_name_description: ''
+    parent_bundle: projects
+    parent_bundle_shared: 1
+    parent_field_name: field_to_do_list
+default_value_callback: ''
+settings: {  }
+field_type: entity_reverse_lookup

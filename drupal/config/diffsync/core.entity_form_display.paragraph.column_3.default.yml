@@ -1,0 +1,27 @@
+uuid: 221b81d6-cf2e-4e98-89e5-c8e5ebe525c3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.column_3.field_block
+    - paragraphs.paragraphs_type.column_3
+  module:
+    - block_field
+id: paragraph.column_3.default
+targetEntityType: paragraph
+bundle: column_3
+mode: default
+content:
+  field_block:
+    type: block_field_default
+    weight: 0
+    region: content
+    settings:
+      plugin_id: ''
+      settings: {  }
+      configuration_form: full
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

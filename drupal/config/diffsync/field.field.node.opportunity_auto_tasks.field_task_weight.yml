@@ -1,0 +1,23 @@
+uuid: 623daaaa-f57b-4f4d-8538-6bed6dfd73a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_task_weight
+    - node.type.opportunity_auto_tasks
+id: node.opportunity_auto_tasks.field_task_weight
+field_name: field_task_weight
+entity_type: node
+bundle: opportunity_auto_tasks
+label: 'Task Weight'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

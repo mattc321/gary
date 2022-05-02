@@ -1,0 +1,64 @@
+uuid: f9a9a274-8d48-444e-ac52-09844d30fd95
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.opportunities.feeds_item
+    - field.field.node.opportunities.field_account_manager
+    - field.field.node.opportunities.field_account_reference
+    - field.field.node.opportunities.field_address
+    - field.field.node.opportunities.field_amount
+    - field.field.node.opportunities.field_audit_id
+    - field.field.node.opportunities.field_billing_status
+    - field.field.node.opportunities.field_city
+    - field.field.node.opportunities.field_comments
+    - field.field.node.opportunities.field_date_closed
+    - field.field.node.opportunities.field_description
+    - field.field.node.opportunities.field_intake_date
+    - field.field.node.opportunities.field_legacy
+    - field.field.node.opportunities.field_opportunity_services_ref
+    - field.field.node.opportunities.field_opportunity_type
+    - field.field.node.opportunities.field_orig_account
+    - field.field.node.opportunities.field_project_contacts
+    - field.field.node.opportunities.field_project_reference
+    - field.field.node.opportunities.field_proposal_template_ref
+    - field.field.node.opportunities.field_state
+    - field.field.node.opportunities.field_tasks
+    - field.field.node.opportunities.field_zip
+    - node.type.opportunities
+  module:
+    - user
+id: node.opportunities.teaser
+targetEntityType: node
+bundle: opportunities
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  feeds_item: true
+  field_account_manager: true
+  field_account_reference: true
+  field_address: true
+  field_amount: true
+  field_audit_id: true
+  field_billing_status: true
+  field_city: true
+  field_comments: true
+  field_date_closed: true
+  field_description: true
+  field_intake_date: true
+  field_legacy: true
+  field_opportunity_services_ref: true
+  field_opportunity_type: true
+  field_orig_account: true
+  field_project_contacts: true
+  field_project_reference: true
+  field_proposal_template_ref: true
+  field_state: true
+  field_tasks: true
+  field_zip: true

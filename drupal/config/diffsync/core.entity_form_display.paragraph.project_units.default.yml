@@ -1,0 +1,100 @@
+uuid: 8749062b-4ce4-422a-a3ea-caa9bac04ebe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.project_units.feeds_item
+    - field.field.paragraph.project_units.field_ach50
+    - field.field.paragraph.project_units.field_beds
+    - field.field.paragraph.project_units.field_cfa
+    - field.field.paragraph.project_units.field_cfm_50
+    - field.field.paragraph.project_units.field_description
+    - field.field.paragraph.project_units.field_height
+    - field.field.paragraph.project_units.field_last_updated
+    - field.field.paragraph.project_units.field_mf_qty
+    - field.field.paragraph.project_units.field_unit
+    - field.field.paragraph.project_units.field_unit_types
+    - field.field.paragraph.project_units.field_volume
+    - paragraphs.paragraphs_type.project_units
+id: paragraph.project_units.default
+targetEntityType: paragraph
+bundle: project_units
+mode: default
+content:
+  field_ach50:
+    type: number
+    weight: 7
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_beds:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_cfa:
+    type: number
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_cfm_50:
+    type: number
+    weight: 6
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_description:
+    type: string_textfield
+    weight: 9
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_height:
+    type: number
+    weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_mf_qty:
+    type: number
+    weight: 2
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_unit:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_unit_types:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_volume:
+    type: number
+    weight: 8
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  feeds_item: true
+  field_last_updated: true
+  status: true
+  uid: true

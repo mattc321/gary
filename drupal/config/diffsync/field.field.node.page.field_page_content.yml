@@ -1,0 +1,49 @@
+uuid: 0353a872-a62e-4713-84f4-4d91d306b5b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_content
+    - node.type.page
+    - paragraphs.paragraphs_type.block
+  module:
+    - entity_reference_revisions
+id: node.page.field_page_content
+field_name: field_page_content
+entity_type: node
+bundle: page
+label: 'Page Content'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      block: block
+    negate: 0
+    target_bundles_drag_drop:
+      article_type:
+        weight: 8
+        enabled: false
+      block:
+        weight: 2
+        enabled: true
+      column_2:
+        weight: 5
+        enabled: false
+      column_3:
+        weight: 6
+        enabled: false
+      opportunity_services:
+        weight: 12
+        enabled: false
+      project_contacts:
+        weight: 13
+        enabled: false
+      project_units:
+        weight: 14
+        enabled: false
+field_type: entity_reference_revisions

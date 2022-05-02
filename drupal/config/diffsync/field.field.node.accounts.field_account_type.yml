@@ -1,0 +1,29 @@
+uuid: e35f20a4-601e-4747-bb4f-5f69b8ce5d1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_account_type
+    - node.type.accounts
+    - taxonomy.vocabulary.account_type
+id: node.accounts.field_account_type
+field_name: field_account_type
+entity_type: node
+bundle: accounts
+label: 'Account Type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      account_type: account_type
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

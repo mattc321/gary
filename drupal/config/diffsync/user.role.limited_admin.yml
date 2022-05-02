@@ -1,0 +1,62 @@
+uuid: 037193ba-471a-4c2d-8e05-338dea0c9712
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.plain_text_main
+    - node.type.accounts
+    - node.type.contacts
+    - node.type.messages
+    - node.type.opportunities
+    - node.type.projects
+    - node.type.report_link
+    - node.type.service_tasks
+    - node.type.services
+    - node.type.sub_contractor
+    - node.type.tasks
+  module:
+    - comment
+    - contextual
+    - draggableviews
+    - filter
+    - gary_field_formatter
+    - node
+    - quickedit
+id: limited_admin
+label: 'EC Main User'
+weight: 4
+is_admin: null
+permissions:
+  - 'access comments'
+  - 'access contextual links'
+  - 'access draggableviews'
+  - 'access in-place editing'
+  - 'administer comments'
+  - 'create accounts content'
+  - 'create contacts content'
+  - 'create messages content'
+  - 'create opportunities content'
+  - 'create projects content'
+  - 'create report_link content'
+  - 'create service_tasks content'
+  - 'create services content'
+  - 'create sub_contractor content'
+  - 'create tasks content'
+  - 'delete any contacts content'
+  - 'delete any report_link content'
+  - 'delete any sub_contractor content'
+  - 'delete any tasks content'
+  - 'edit any accounts content'
+  - 'edit any contacts content'
+  - 'edit any opportunities content'
+  - 'edit any projects content'
+  - 'edit any report_link content'
+  - 'edit any service_tasks content'
+  - 'edit any services content'
+  - 'edit any sub_contractor content'
+  - 'edit any tasks content'
+  - 'edit own comments'
+  - 'post comments'
+  - 'skip comment approval'
+  - 'use delete paragraph'
+  - 'use text format plain_text_main'

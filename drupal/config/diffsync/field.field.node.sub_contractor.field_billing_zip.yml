@@ -1,0 +1,19 @@
+uuid: 7386d6c1-38a3-4e39-914c-396c4f2e9690
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_billing_zip
+    - node.type.sub_contractor
+id: node.sub_contractor.field_billing_zip
+field_name: field_billing_zip
+entity_type: node
+bundle: sub_contractor
+label: 'Billing Zip'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,23 @@
+uuid: b540b360-3a6a-4be3-8324-8225d9c0d36a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_grade_value
+    - taxonomy.vocabulary.grade
+id: taxonomy_term.grade.field_grade_value
+field_name: field_grade_value
+entity_type: taxonomy_term
+bundle: grade
+label: 'Grade Value'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

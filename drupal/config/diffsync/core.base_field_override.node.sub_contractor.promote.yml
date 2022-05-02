@@ -1,0 +1,22 @@
+uuid: b61e943b-393e-4344-aa69-c4b115180798
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.sub_contractor
+id: node.sub_contractor.promote
+field_name: promote
+entity_type: node
+bundle: sub_contractor
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

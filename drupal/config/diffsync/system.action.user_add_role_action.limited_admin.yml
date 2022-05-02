@@ -1,0 +1,14 @@
+uuid: 173ab805-522e-4aaa-b4b2-6b87b1ee06c5
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.limited_admin
+  module:
+    - user
+id: user_add_role_action.limited_admin
+label: 'Add the Limited Admin role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: limited_admin

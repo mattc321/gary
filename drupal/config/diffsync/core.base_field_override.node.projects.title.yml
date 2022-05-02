@@ -1,0 +1,18 @@
+uuid: 9a3366b6-1a36-4428-9673-6c7d2ce372b6
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.projects
+id: node.projects.title
+field_name: title
+entity_type: node
+bundle: projects
+label: 'Project Title'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

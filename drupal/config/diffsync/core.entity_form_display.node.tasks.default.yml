@@ -1,0 +1,74 @@
+uuid: ffa42960-8830-4afe-b778-c9ffdea18fc9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.tasks.feeds_item
+    - field.field.node.tasks.field_audit_id
+    - field.field.node.tasks.field_comments
+    - field.field.node.tasks.field_parent_re
+    - field.field.node.tasks.field_priority
+    - field.field.node.tasks.field_task_assigned_to
+    - field.field.node.tasks.field_task_due_date
+    - field.field.node.tasks.field_task_list
+    - field.field.node.tasks.field_task_status
+    - field.field.node.tasks.field_task_weight
+    - node.type.tasks
+  module:
+    - datetime
+    - gary_fields
+id: node.tasks.default
+targetEntityType: node
+bundle: tasks
+mode: default
+content:
+  field_parent_re:
+    type: entity_reverse_widget
+    weight: 26
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_task_assigned_to:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_task_due_date:
+    type: datetime_default
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_task_list:
+    type: options_select
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_task_status:
+    type: options_select
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  feeds_item: true
+  field_audit_id: true
+  field_comments: true
+  field_priority: true
+  field_task_weight: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

@@ -1,0 +1,23 @@
+uuid: a9286ee1-3c29-4eb5-bc99-9cf73511201d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_disable_auto_task
+    - node.type.service_tasks
+id: node.service_tasks.field_disable_auto_task
+field_name: field_disable_auto_task
+entity_type: node
+bundle: service_tasks
+label: 'Disable Auto Task'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

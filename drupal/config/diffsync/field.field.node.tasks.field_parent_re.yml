@@ -1,0 +1,26 @@
+uuid: e8f43e00-7c13-469e-881b-6224047fa3fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_parent_re
+    - node.type.tasks
+  module:
+    - gary_fields
+id: node.tasks.field_parent_re
+field_name: field_parent_re
+entity_type: node
+bundle: tasks
+label: 'Parent Reference'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    parent_field_name_description: ''
+    parent_bundle: projects
+    parent_bundle_shared: 1
+    parent_field_name: field_tasks
+default_value_callback: ''
+settings: {  }
+field_type: entity_reverse_lookup

@@ -1,0 +1,31 @@
+uuid: b1bda041-4238-449c-b419-f16c03b4b55a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.grade.field_grade_value
+    - taxonomy.vocabulary.grade
+  module:
+    - text
+id: taxonomy_term.grade.default
+targetEntityType: taxonomy_term
+bundle: grade
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_grade_value:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

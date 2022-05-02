@@ -1,0 +1,23 @@
+uuid: f8b2ec54-5a04-47a7-afe3-6f12462f592c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_color
+  module:
+    - options
+    - user
+id: user.user.field_color
+field_name: field_color
+entity_type: user
+bundle: user
+label: Color
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: light
+default_value_callback: ''
+settings: {  }
+field_type: list_string

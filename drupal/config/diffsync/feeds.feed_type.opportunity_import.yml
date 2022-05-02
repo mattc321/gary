@@ -1,0 +1,248 @@
+uuid: 9212d715-827c-4d70-a99f-502ca3981d96
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.opportunities.field_account_manager
+    - field.field.node.opportunities.field_account_reference
+    - field.field.node.opportunities.field_address
+    - field.field.node.opportunities.field_amount
+    - field.field.node.opportunities.field_audit_id
+    - field.field.node.opportunities.field_billing_status
+    - field.field.node.opportunities.field_city
+    - field.field.node.opportunities.field_date_closed
+    - field.field.node.opportunities.field_intake_date
+    - field.field.node.opportunities.field_opportunity_type
+    - field.field.node.opportunities.field_orig_account
+    - field.field.node.opportunities.field_state
+    - field.field.node.opportunities.field_zip
+    - node.type.opportunities
+  module:
+    - node
+label: 'Opportunity Import'
+id: opportunity_import
+description: ''
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: false
+  line_limit: 100
+processor: 'entity:node'
+processor_configuration:
+  values:
+    type: opportunities
+  update_existing: 1
+  update_non_existent: _delete
+  skip_hash_check: false
+  authorize: true
+  expire: -1
+  owner_feed_author: false
+  owner_id: 1
+custom_sources:
+  0:
+    value: '0'
+    label: '0'
+    machine_name: '0'
+  1:
+    value: '1'
+    label: '1'
+    machine_name: '1'
+  2:
+    value: '2'
+    label: '2'
+    machine_name: '2'
+  3:
+    value: '3'
+    label: '3'
+    machine_name: '3'
+  4:
+    value: '4'
+    label: '4'
+    machine_name: '4'
+  5:
+    value: '5'
+    label: '5'
+    machine_name: '5'
+  6:
+    value: '6'
+    label: '6'
+    machine_name: '6'
+  7:
+    value: '7'
+    label: '7'
+    machine_name: '7'
+  8:
+    value: '8'
+    label: '8'
+    machine_name: '8'
+  9:
+    value: '9'
+    label: '9'
+    machine_name: '9'
+  10:
+    value: '10'
+    label: '10'
+    machine_name: '10'
+  11:
+    value: '11'
+    label: '11'
+    machine_name: '11'
+  12:
+    value: '12'
+    label: '12'
+    machine_name: '12'
+  13:
+    value: '13'
+    label: '13'
+    machine_name: '13'
+  14:
+    value: '14'
+    label: '14'
+    machine_name: '14'
+  title:
+    value: title
+    label: title
+    machine_name: title
+  acct:
+    value: acct
+    label: acct
+    machine_name: acct
+  acctmgr:
+    value: acctmgr
+    label: acctmgr
+    machine_name: acctmgr
+  addr:
+    value: addr
+    label: addr
+    machine_name: addr
+  bacct:
+    value: bacct
+    label: bacct
+    machine_name: bacct
+  otype:
+    value: otype
+    label: otype
+    machine_name: otype
+  city:
+    value: city
+    label: city
+    machine_name: city
+  billstatus:
+    value: billstatus
+    label: billstatus
+    machine_name: billstatus
+  intake:
+    value: intake
+    label: intake
+    machine_name: intake
+  intakedate:
+    value: intake
+    label: intake
+    machine_name: intakedate
+  dateclosed:
+    value: dateclosed
+    label: dateclosed
+    machine_name: dateclosed
+  st:
+    value: st
+    label: st
+    machine_name: st
+  zip:
+    value: zip
+    label: zip
+    machine_name: zip
+  audit:
+    value: audit
+    label: audit
+    machine_name: audit
+  amt:
+    value: amt
+    label: amt
+    machine_name: amt
+mappings:
+  -
+    target: title
+    map:
+      value: title
+    unique: {  }
+  -
+    target: field_orig_account
+    map:
+      target_id: acct
+    settings:
+      reference_by: title
+      autocreate: false
+      feeds_item: false
+  -
+    target: field_account_manager
+    map:
+      target_id: acctmgr
+    settings:
+      reference_by: name
+      autocreate: 0
+  -
+    target: field_address
+    map:
+      value: addr
+    unique: {  }
+  -
+    target: field_account_reference
+    map:
+      target_id: bacct
+    settings:
+      reference_by: title
+      autocreate: false
+      feeds_item: false
+  -
+    target: field_opportunity_type
+    map:
+      target_id: otype
+    settings:
+      reference_by: name
+      autocreate: false
+  -
+    target: field_city
+    map:
+      value: city
+    unique: {  }
+  -
+    target: field_billing_status
+    map:
+      target_id: billstatus
+    settings:
+      reference_by: name
+      autocreate: false
+  -
+    target: field_intake_date
+    map:
+      value: intakedate
+    settings:
+      timezone: UTC
+  -
+    target: field_date_closed
+    map:
+      value: dateclosed
+    settings:
+      timezone: UTC
+  -
+    target: field_state
+    map:
+      value: st
+    unique: {  }
+  -
+    target: field_zip
+    map:
+      value: zip
+  -
+    target: field_audit_id
+    map:
+      value: audit
+  -
+    target: field_amount
+    map:
+      value: amt

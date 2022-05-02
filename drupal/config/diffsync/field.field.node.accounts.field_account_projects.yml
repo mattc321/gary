@@ -1,0 +1,70 @@
+uuid: ef84d745-81da-4b45-a174-10e0c76b2559
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_account_projects
+    - node.type.accounts
+    - views.view.projects
+  module:
+    - viewfield
+id: node.accounts.field_account_projects
+field_name: field_account_projects
+entity_type: node
+bundle: accounts
+label: 'Account Projects'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: ce5998b0-1f6e-471b-9c82-086473ab951b
+    display_id: block_1
+    arguments: '[node:nid]'
+    items_to_display: ''
+    token_help: ''
+default_value_callback: ''
+settings:
+  force_default: true
+  allowed_views:
+    projects: projects
+    accounts: '0'
+    comment: '0'
+    contacts: '0'
+    content: '0'
+    block_content: '0'
+    entity_reference_services: '0'
+    feeds_feed: '0'
+    files: '0'
+    final_submittals: '0'
+    frontpage: '0'
+    autocompletion_callbacks_nodes: '0'
+    opportunity: '0'
+    opportunity_services: '0'
+    opportunity_tasks: '0'
+    user_admin_people: '0'
+    project_contacts: '0'
+    project_contacts_by_term: '0'
+    project_services: '0'
+    project_tasks: '0'
+    project_units: '0'
+    comments_recent: '0'
+    content_recent: '0'
+    tasks: '0'
+    tasks_all: '0'
+    taxonomy_term: '0'
+    autocompletion_callbacks_users: '0'
+    watchdog: '0'
+    who_s_new: '0'
+    who_s_online: '0'
+    autocompletion_callbacks_words: '0'
+  allowed_display_types:
+    block: block
+    autocompletion_callback: '0'
+    entity_reference: '0'
+    feed: '0'
+    default: '0'
+    page: '0'
+  handler: 'default:view'
+  handler_settings: {  }
+field_type: viewfield

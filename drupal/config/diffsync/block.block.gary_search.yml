@@ -1,0 +1,23 @@
+uuid: 28c47e33-d594-4c38-82db-be471802061e
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - gary
+_core:
+  default_config_hash: za-39d5WDUg6XvbyqSnuVYEeq6QM4qKJxW8MnoAha5A
+id: gary_search
+theme: gary
+region: menu
+weight: -4
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: Search
+  label_display: '0'
+  provider: search
+  page_id: ''
+visibility: {  }

@@ -1,0 +1,23 @@
+uuid: 94828f44-623f-4815-9977-d89fd878f834
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_disable_auto_task
+    - node.type.opportunity_auto_tasks
+id: node.opportunity_auto_tasks.field_disable_auto_task
+field_name: field_disable_auto_task
+entity_type: node
+bundle: opportunity_auto_tasks
+label: 'Disable Auto Task'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

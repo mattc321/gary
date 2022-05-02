@@ -1,0 +1,22 @@
+uuid: 125ce6c7-10c0-4aa1-9134-52d627a22ce1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: projects_pattern
+label: 'Projects Pattern'
+type: 'canonical_entities:node'
+pattern: 'content/projects/[node:title]'
+selection_criteria:
+  30e1e721-6323-4941-9568-a673e59741bf:
+    id: node_type
+    negate: false
+    uuid: 30e1e721-6323-4941-9568-a673e59741bf
+    context_mapping:
+      node: node
+    bundles:
+      projects: projects
+selection_logic: and
+weight: -5
+relationships: {  }

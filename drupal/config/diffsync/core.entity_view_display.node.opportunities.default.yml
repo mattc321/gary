@@ -1,0 +1,310 @@
+uuid: 81c3d4cc-dced-4f51-aadc-6c1b208afcc6
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_display.comment.comment.default
+    - field.field.node.opportunities.feeds_item
+    - field.field.node.opportunities.field_account_manager
+    - field.field.node.opportunities.field_account_reference
+    - field.field.node.opportunities.field_address
+    - field.field.node.opportunities.field_amount
+    - field.field.node.opportunities.field_audit_id
+    - field.field.node.opportunities.field_billing_status
+    - field.field.node.opportunities.field_city
+    - field.field.node.opportunities.field_comments
+    - field.field.node.opportunities.field_date_closed
+    - field.field.node.opportunities.field_description
+    - field.field.node.opportunities.field_intake_date
+    - field.field.node.opportunities.field_legacy
+    - field.field.node.opportunities.field_opportunity_services_ref
+    - field.field.node.opportunities.field_opportunity_type
+    - field.field.node.opportunities.field_orig_account
+    - field.field.node.opportunities.field_project_contacts
+    - field.field.node.opportunities.field_project_reference
+    - field.field.node.opportunities.field_proposal_template_ref
+    - field.field.node.opportunities.field_state
+    - field.field.node.opportunities.field_tasks
+    - field.field.node.opportunities.field_zip
+    - node.type.opportunities
+  module:
+    - comment
+    - datetime
+    - field_group
+    - gary_field_formatter
+    - gary_fields
+    - user
+third_party_settings:
+  field_group:
+    group_contacts:
+      children:
+        - field_project_contacts
+      label: Contacts
+      parent_name: ''
+      region: content
+      weight: 17
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend contacts'
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+    group_comments:
+      children:
+        - field_comments
+      label: Comments
+      parent_name: ''
+      region: content
+      weight: 18
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend comments'
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+    group_services:
+      children:
+        - field_opportunity_services_ref
+      label: Services
+      parent_name: ''
+      region: content
+      weight: 15
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend services'
+        id: services
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+    group_tasks:
+      children:
+        - field_tasks
+      label: Tasks
+      parent_name: ''
+      region: content
+      weight: 16
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend tasks'
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+    group_to_do_list:
+      children: {  }
+      label: 'To-Do List'
+      parent_name: ''
+      region: hidden
+      weight: 19
+      format_type: html_element
+      format_settings:
+        classes: ''
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: node.opportunities.default
+targetEntityType: node
+bundle: opportunities
+mode: default
+content:
+  field_account_manager:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_account_reference:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_address:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_amount:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_billing_status:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_city:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_comments:
+    type: comment_default
+    label: hidden
+    settings:
+      view_mode: default
+      pager_id: 0
+    third_party_settings: {  }
+    weight: 16
+    region: content
+  field_description:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_intake_date:
+    type: datetime_custom
+    label: inline
+    settings:
+      timezone_override: ''
+      date_format: m/d/Y
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_opportunity_services_ref:
+    type: paragraph_views_formatter
+    label: hidden
+    settings:
+      ajax_inputs: '1'
+      view_machine_name: opportunity_services
+      view_display_name: ''
+      form_class: inline-pg-form
+      switch_view: ''
+      switch_view_display: ''
+      switch_view_link_text: ''
+      mobile_view: opportunity_services
+      mobile_view_display: block_2
+      keep_form_expanded: 0
+    third_party_settings: {  }
+    weight: 17
+    region: content
+  field_opportunity_type:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_orig_account:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_project_contacts:
+    type: paragraph_views_formatter
+    label: hidden
+    settings:
+      ajax_inputs: '1'
+      view_machine_name: project_contacts
+      view_display_name: block_1
+      form_class: inline-pg-form
+      switch_view: project_contacts
+      switch_view_display: block_2
+      switch_view_link_text: ''
+      mobile_view: project_contacts
+      mobile_view_display: block_3
+      keep_form_expanded: 0
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  field_project_reference:
+    type: entity_reverse_formatter
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_proposal_template_ref:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_state:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_tasks:
+    type: paragraph_views_formatter
+    label: hidden
+    settings:
+      ajax_inputs: '1'
+      keep_form_expanded: '1'
+      view_machine_name: opportunity_tasks
+      view_display_name: block_1
+      form_class: inline-pg-form
+      switch_view: opportunity_tasks
+      switch_view_display: block_2
+      switch_view_link_text: ''
+      mobile_view: opportunity_tasks
+      mobile_view_display: block_3
+    third_party_settings: {  }
+    weight: 19
+    region: content
+  field_zip:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 11
+    region: content
+hidden:
+  feeds_item: true
+  field_audit_id: true
+  field_date_closed: true
+  field_legacy: true
+  links: true

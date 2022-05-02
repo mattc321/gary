@@ -1,0 +1,116 @@
+uuid: 8631625b-a3d1-418c-bf71-a8c05008efb4
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.base_field_override.node.contacts.title
+    - field.field.node.contacts.field_account_reference
+    - field.field.node.contacts.field_audit_id
+    - field.field.node.contacts.field_contact_email
+    - field.field.node.contacts.field_contact_phone
+    - field.field.node.contacts.field_contact_type
+    - field.field.node.contacts.field_job_title
+    - node.type.contacts
+  module:
+    - node
+label: 'Contacts Import'
+id: contacts_import
+description: ''
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: true
+  line_limit: 100
+processor: 'entity:node'
+processor_configuration:
+  values:
+    type: contacts
+  update_existing: 1
+  update_non_existent: _keep
+  skip_hash_check: false
+  authorize: true
+  expire: -1
+  owner_feed_author: false
+  owner_id: 1
+custom_sources:
+  -
+    value: '0'
+    label: '0'
+    machine_name: '0'
+  -
+    value: '1'
+    label: '1'
+    machine_name: '1'
+  -
+    value: '2'
+    label: '2'
+    machine_name: '2'
+  -
+    value: '3'
+    label: '3'
+    machine_name: '3'
+  -
+    value: '4'
+    label: '4'
+    machine_name: '4'
+  -
+    value: '5'
+    label: '5'
+    machine_name: '5'
+  -
+    value: '6'
+    label: '6'
+    machine_name: '6'
+  -
+    value: '7'
+    label: '7'
+    machine_name: '7'
+mappings:
+  -
+    target: title
+    map:
+      value: '0'
+    unique: {  }
+  -
+    target: field_account_reference
+    map:
+      target_id: '1'
+    settings:
+      reference_by: title
+      autocreate: false
+      feeds_item: false
+  -
+    target: field_contact_email
+    map:
+      value: '2'
+    settings:
+      defuse: false
+    unique: {  }
+  -
+    target: field_job_title
+    map:
+      target_id: '3'
+    settings:
+      reference_by: name
+      autocreate: false
+  -
+    target: field_contact_phone
+    map:
+      value: '4'
+    unique: {  }
+  -
+    target: field_contact_type
+    map:
+      target_id: '5'
+    settings:
+      reference_by: name
+      autocreate: false
+  -
+    target: field_audit_id
+    map:
+      value: '6'

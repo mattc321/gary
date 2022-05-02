@@ -1,0 +1,39 @@
+_core:
+  default_config_hash: jdY7AU0tU-QsjmiOw3W8vwpYMb-By--_MSFgbqKUTYM
+definitions:
+  contact__site_page:
+    menu_name: footer
+    parent: ''
+    weight: 0
+    expanded: false
+    enabled: true
+  standard__front_page:
+    menu_name: main
+    parent: ''
+    weight: -44
+    expanded: false
+    enabled: false
+  user__page:
+    menu_name: account
+    parent: ''
+    weight: -48
+    expanded: false
+    enabled: true
+  user__logout:
+    menu_name: account
+    parent: ''
+    weight: -41
+    expanded: false
+    enabled: true
+  gary_comments__get_messages:
+    menu_name: account
+    parent: ''
+    weight: -49
+    expanded: false
+    enabled: true
+  gary_comments__palette_changer:
+    menu_name: account
+    parent: ''
+    weight: -42
+    expanded: false
+    enabled: true

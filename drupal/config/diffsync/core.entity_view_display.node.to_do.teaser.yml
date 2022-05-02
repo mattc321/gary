@@ -1,0 +1,42 @@
+uuid: afa1d23b-f387-4de8-9b9e-afde84ff5391
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.to_do.body
+    - field.field.node.to_do.field_comments
+    - field.field.node.to_do.field_priority
+    - field.field.node.to_do.field_related_to
+    - field.field.node.to_do.field_task_assigned_to
+    - field.field.node.to_do.field_task_due_date
+    - field.field.node.to_do.field_task_status
+    - node.type.to_do
+  module:
+    - text
+    - user
+id: node.to_do.teaser
+targetEntityType: node
+bundle: to_do
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_comments: true
+  field_priority: true
+  field_related_to: true
+  field_task_assigned_to: true
+  field_task_due_date: true
+  field_task_status: true

@@ -1,0 +1,23 @@
+uuid: 3817ee52-0e69-428c-bbe1-bd05d41d0a96
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_offset
+    - node.type.service_tasks
+id: node.service_tasks.field_date_offset
+field_name: field_date_offset
+entity_type: node
+bundle: service_tasks
+label: 'Date Offset'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,21 @@
+uuid: f99a9a26-1b54-4aca-9d59-f1a1cffd1df8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_closed
+    - node.type.opportunities
+  module:
+    - datetime
+id: node.opportunities.field_date_closed
+field_name: field_date_closed
+entity_type: node
+bundle: opportunities
+label: 'Est Finish Date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,28 @@
+uuid: a9912a4f-9090-47d4-8de4-371d717e6fec
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.task_list.field_description
+    - node.type.task_list
+  module:
+    - user
+id: node.task_list.default
+targetEntityType: node
+bundle: task_list
+mode: default
+content:
+  field_description:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

@@ -1,0 +1,33 @@
+uuid: fb7a60e8-7b7f-41ac-83eb-f6480843cde4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_priority
+    - node.type.tasks
+    - taxonomy.vocabulary.priority
+  content:
+    - 'taxonomy_term:priority:56397d95-1fcb-4a1a-854d-bb594bf5a4d6'
+id: node.tasks.field_priority
+field_name: field_priority
+entity_type: node
+bundle: tasks
+label: Priority
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    target_uuid: 56397d95-1fcb-4a1a-854d-bb594bf5a4d6
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      priority: priority
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

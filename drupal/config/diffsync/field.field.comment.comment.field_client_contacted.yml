@@ -1,0 +1,23 @@
+uuid: a1382341-5bee-40a5-8836-ebca9a60040c
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment
+    - field.storage.comment.field_client_contacted
+id: comment.comment.field_client_contacted
+field_name: field_client_contacted
+entity_type: comment
+bundle: comment
+label: 'Client Contacted'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean
