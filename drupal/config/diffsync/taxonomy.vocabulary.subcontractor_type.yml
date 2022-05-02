@@ -1,8 +1,0 @@
-uuid: bde0cb57-d78f-42c6-852e-20f03ca43cb9
-langcode: en
-status: true
-dependencies: {  }
-name: 'Subcontractor Type'
-vid: subcontractor_type
-description: ''
-weight: 0

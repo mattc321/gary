@@ -28,7 +28,6 @@ dependencies:
     - field.field.node.projects.field_permit_number
     - field.field.node.projects.field_priority_green
     - field.field.node.projects.field_project_contacts
-    - field.field.node.projects.field_project_flag
     - field.field.node.projects.field_project_image
     - field.field.node.projects.field_project_services
     - field.field.node.projects.field_project_status

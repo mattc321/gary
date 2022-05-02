@@ -1,9 +1,0 @@
-uuid: de943db8-cec1-43fe-8028-d0e9b9a6a6ec
-langcode: en
-status: true
-dependencies: {  }
-id: project_contacts
-label: 'Project Contacts'
-icon_uuid: null
-description: ''
-behavior_plugins: {  }

@@ -1,8 +1,0 @@
-uuid: cd8113a6-c7c9-40ca-b7df-98a80a76d71d
-langcode: en
-status: true
-dependencies: {  }
-id: add-content
-label: 'Add Content'
-description: ''
-locked: false

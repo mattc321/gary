@@ -5,8 +5,6 @@ dependencies:
   config:
     - field.storage.node.field_far_incentive
     - field.storage.node.field_priority_green
-    - field.storage.node.field_project_flag
-    - field.storage.node.field_project_status
     - node.type.projects
     - node.type.task_list
     - taxonomy.vocabulary.billing_status
@@ -221,132 +219,6 @@ display:
           settings:
             link_to_entity: true
           group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_project_flag:
-          id: field_project_flag
-          table: node__field_project_flag
-          field: field_project_flag
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: false
-          group_column: target_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_project_status:
-          id: field_project_status
-          table: node__field_project_status
-          field: field_project_status
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: 'Project Status'
-          exclude: false
-          alter:
-            alter_text: true
-            text: '{{ field_project_status }} {%if field_project_flag %} ({{ field_project_flag }}) {% endif %}'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: false
-          group_column: target_id
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -1046,8 +918,6 @@ display:
             title: title
             name_1: name_1
             title_1: title_1
-            field_project_flag: field_project_flag
-            field_project_status: field_project_status
             name: name
             field_far_incentive: field_far_incentive
             field_priority_green: field_priority_green
@@ -1055,6 +925,7 @@ display:
             field_unit_types_count_1: field_unit_types_count_1
             field_unit_types_count_2: field_unit_types_count_2
             field_unit_types_count_3: field_unit_types_count_3
+            field_billing_status: field_billing_status
           default: '-1'
           info:
             title:
@@ -1072,20 +943,6 @@ display:
               empty_column: false
               responsive: ''
             title_1:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_project_flag:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_project_status:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -1136,6 +993,13 @@ display:
               responsive: ''
             field_unit_types_count_3:
               sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_billing_status:
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
@@ -1235,8 +1099,6 @@ display:
       tags:
         - 'config:field.storage.node.field_far_incentive'
         - 'config:field.storage.node.field_priority_green'
-        - 'config:field.storage.node.field_project_flag'
-        - 'config:field.storage.node.field_project_status'
   mobile_page:
     id: mobile_page
     display_title: 'Mobile Page'
@@ -1275,8 +1137,6 @@ display:
       tags:
         - 'config:field.storage.node.field_far_incentive'
         - 'config:field.storage.node.field_priority_green'
-        - 'config:field.storage.node.field_project_flag'
-        - 'config:field.storage.node.field_project_status'
   page_1:
     id: page_1
     display_title: Page
@@ -1298,5 +1158,3 @@ display:
       tags:
         - 'config:field.storage.node.field_far_incentive'
         - 'config:field.storage.node.field_priority_green'
-        - 'config:field.storage.node.field_project_flag'
-        - 'config:field.storage.node.field_project_status'

@@ -13,7 +13,6 @@ dependencies:
     - field.storage.node.field_orig_account
     - field.storage.node.field_zip
     - node.type.opportunities
-    - user.role.administrator
   module:
     - csv_serialization
     - node
@@ -356,15 +355,13 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        nid_1:
-          id: nid_1
-          table: node_field_data
-          field: nid
-          relationship: field_account_reference
+        field_account_reference_1:
+          id: field_account_reference_1
+          table: node__field_account_reference
+          field: field_account_reference
+          relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: nid
           plugin_id: field
           label: BillingAccountID
           exclude: false
@@ -407,12 +404,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: number_integer
-          settings:
-            thousand_separator: ''
-            prefix_suffix: true
-          group_column: value
+          click_sort_column: target_id
+          type: entity_reference_entity_id
+          settings: {  }
+          group_column: target_id
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -1006,31 +1001,29 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: role
+        type: perm
         options:
-          role:
-            administrator: administrator
+          perm: 'access content'
       cache:
         type: tag
         options: {  }
       empty: {  }
       sorts:
-        created:
-          id: created
+        nid:
+          id: nid
           table: node_field_data
-          field: created
+          field: nid
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
-          entity_field: created
-          plugin_id: date
-          order: DESC
+          entity_field: nid
+          plugin_id: standard
+          order: ASC
           expose:
             label: ''
-            field_identifier: created
+            field_identifier: nid
           exposed: false
-          granularity: second
       arguments: {  }
       filters:
         status:
@@ -1098,16 +1091,8 @@ display:
           distinct: false
           replica: false
           query_tags: {  }
-      relationships:
-        field_account_reference:
-          id: field_account_reference
-          table: node__field_account_reference
-          field: field_account_reference
-          relationship: none
-          group_type: group
-          admin_label: 'field_account_reference: Content'
-          plugin_id: standard
-          required: false
+      relationships: {  }
+      use_ajax: true
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -1117,7 +1102,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - 'user.node_grants:view'
-        - user.roles
+        - user.permissions
       tags:
         - 'config:field.storage.node.field_account_reference'
         - 'config:field.storage.node.field_address'
@@ -1165,15 +1150,15 @@ display:
       path: export/opportunities-dat
       auth: {  }
       displays:
-        page_1: page_1
         default: '0'
-      filename: 'opportunities-export-[date:html_date].csv'
+        page_1: '0'
+      filename: 'opportunities-[date:html_date].csv'
       automatic_download: true
       export_method: batch
       export_batch_size: 1000
       store_in_public_file_directory: false
       custom_redirect_path: false
-      redirect_to_display: page_1
+      redirect_to_display: none
       include_query_params: false
     cache_metadata:
       max-age: -1
@@ -1182,7 +1167,7 @@ display:
         - 'languages:language_interface'
         - request_format
         - 'user.node_grants:view'
-        - user.roles
+        - user.permissions
       tags:
         - 'config:field.storage.node.field_account_reference'
         - 'config:field.storage.node.field_address'
@@ -1206,7 +1191,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - 'user.node_grants:view'
-        - user.roles
+        - user.permissions
       tags:
         - 'config:field.storage.node.field_account_reference'
         - 'config:field.storage.node.field_address'

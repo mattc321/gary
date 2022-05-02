@@ -2,10 +2,13 @@ uuid: 3dc83c50-3022-4cd5-a262-dbc9f4e0d326
 langcode: en
 status: true
 dependencies:
+  config:
+    - field.field.comment.comment.field_client_contacted
   module:
     - comment
     - user
     - views_autocomplete_filters
+    - views_entity_form_field
 _core:
   default_config_hash: cCq1vjj1qmyd39oBIUyOe8YPDsobJ5fZRhp2Xy5O7lA
 id: comment
@@ -521,6 +524,63 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        form_field_field_client_contacted:
+          id: form_field_field_client_contacted
+          table: comment_field_data
+          field: form_field_field_client_contacted
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: comment
+          plugin_id: entity_form_field
+          label: 'Client Contacted'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          plugin:
+            hide_title: 1
+            hide_description: 1
+            type: boolean_checkbox
+            settings:
+              display_label: 1
+            third_party_settings: {  }
       pager:
         type: full
         options:
@@ -863,8 +923,11 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.field.comment.comment.field_client_contacted'
+        - 'config:field.storage.comment.field_client_contacted'
       cacheable: false
   page_published:
     id: page_published
@@ -892,8 +955,11 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.field.comment.comment.field_client_contacted'
+        - 'config:field.storage.comment.field_client_contacted'
       cacheable: false
   page_unapproved:
     id: page_unapproved

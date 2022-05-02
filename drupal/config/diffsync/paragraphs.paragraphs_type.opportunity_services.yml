@@ -1,9 +1,0 @@
-uuid: e5c28f6d-1ed1-4609-ae6f-ee31f492ed62
-langcode: en
-status: true
-dependencies: {  }
-id: opportunity_services
-label: 'Opportunity Services'
-icon_uuid: null
-description: ''
-behavior_plugins: {  }

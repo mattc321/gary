@@ -1,9 +1,0 @@
-uuid: cea0c32e-581e-4a0f-b49a-28d0ce3f96cc
-langcode: en
-status: true
-dependencies: {  }
-id: sub_contractors
-label: 'Sub Contractors'
-icon_uuid: null
-description: ''
-behavior_plugins: {  }

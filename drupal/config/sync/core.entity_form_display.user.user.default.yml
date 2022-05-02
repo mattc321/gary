@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.field.user.user.field_color
     - field.field.user.user.field_full_name
-    - field.field.user.user.field_tag_nicknames
     - field.field.user.user.field_user_phone
     - field.field.user.user.user_picture
     - image.style.user_pic
@@ -44,14 +43,6 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_tag_nicknames:
-    type: string_textfield
-    weight: 9
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   field_user_phone:
     type: string_textfield
     weight: 2
@@ -84,4 +75,5 @@ content:
       progress_indicator: throbber
       preview_image_style: user_pic
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_tag_nicknames: true

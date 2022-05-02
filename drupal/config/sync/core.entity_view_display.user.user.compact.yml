@@ -6,7 +6,6 @@ dependencies:
     - core.entity_view_mode.user.compact
     - field.field.user.user.field_color
     - field.field.user.user.field_full_name
-    - field.field.user.user.field_tag_nicknames
     - field.field.user.user.field_user_phone
     - field.field.user.user.user_picture
     - image.style.thumbnail

@@ -105,8 +105,7 @@ third_party_settings:
         effect: none
         speed: fast
     group_to_do_list:
-      children:
-        - field_to_do_list
+      children: {  }
       label: 'To-Do List'
       parent_name: ''
       region: hidden
@@ -186,15 +185,6 @@ content:
       pager_id: 0
     third_party_settings: {  }
     weight: 16
-    region: content
-  field_date_closed:
-    type: datetime_custom
-    label: inline
-    settings:
-      timezone_override: ''
-      date_format: m/d/Y
-    third_party_settings: {  }
-    weight: 14
     region: content
   field_description:
     type: string
@@ -315,5 +305,6 @@ content:
 hidden:
   feeds_item: true
   field_audit_id: true
+  field_date_closed: true
   field_legacy: true
   links: true

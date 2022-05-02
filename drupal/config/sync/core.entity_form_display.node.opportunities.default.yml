@@ -90,13 +90,7 @@ content:
     third_party_settings: {  }
   field_comments:
     type: comment_default
-    weight: 23
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_date_closed:
-    type: datetime_default
-    weight: 20
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -116,7 +110,7 @@ content:
     third_party_settings: {  }
   field_opportunity_services_ref:
     type: entity_reference_paragraphs
-    weight: 24
+    weight: 23
     region: content
     settings:
       title: Paragraph
@@ -156,7 +150,7 @@ content:
     third_party_settings: {  }
   field_project_reference:
     type: entity_reverse_widget
-    weight: 25
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -171,16 +165,6 @@ content:
     weight: 15
     region: content
     settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_tasks:
-    type: entity_reference_autocomplete
-    weight: 22
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
@@ -239,4 +223,6 @@ content:
 hidden:
   feeds_item: true
   field_audit_id: true
+  field_date_closed: true
   field_legacy: true
+  field_tasks: true

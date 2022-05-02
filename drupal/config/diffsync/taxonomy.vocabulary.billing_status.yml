@@ -1,8 +1,0 @@
-uuid: 20cfd040-bfd0-47d8-b687-c301cc875331
-langcode: en
-status: true
-dependencies: {  }
-name: 'Billing Status'
-vid: billing_status
-description: ''
-weight: 0

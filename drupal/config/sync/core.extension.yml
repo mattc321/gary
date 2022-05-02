@@ -43,7 +43,6 @@ module:
   gary_fields: 0
   gary_google_maps_api: 0
   gary_pdf_templates: 0
-  gary_seattle_api: 0
   geolocation: 0
   help: 0
   history: 0
