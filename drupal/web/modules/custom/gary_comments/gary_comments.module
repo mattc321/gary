@@ -104,8 +104,8 @@ function gary_comments_mail($key, &$message, $params) {
    //prepare email for comments tagged in opps or projects
    case 'comment_project_tag':
 
-     // $message['from'] = \Drupal::config('system.site')->get('mail');
-     $message['from'] = $params['poster'];
+      $message['from'] = \Drupal::config('system.site')->get('mail');
+//     $message['from'] = $params['poster'];
 
      $message['subject'] = t('Comment Tag: @account - @title', array('@account' => $params['account_title'], '@title' => $params['node_title']));
      $message['body'][] = t('Posted by: @who', array('@who' => $params['poster_name']));
@@ -122,7 +122,7 @@ function gary_comments_mail($key, &$message, $params) {
       'MIME-Version' => '1.0',
       'reply-to' => $params['poster'],
       'Return-Path' => $params['poster'],
-      'from' => $params['poster_name'].' <'.$params['poster'].'>'
+      'from' => $message['from']
      ];
 
      $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$params['node_id']);
