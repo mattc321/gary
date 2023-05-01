@@ -73,27 +73,30 @@ function gary_seattle_api_entity_view(array &$build, EntityInterface $entity, En
 
   if (strtolower($cityName) === 'seattle' && $permitNumbers) {
 
-    $table = $dataTableService->generatePermitDataTableRenderArray($permitNumbers);
-    \Drupal::logger('gary_seattle_api')->notice("Rendering permit data table for {$entity->id()}");
-    $build['field_api_permit_data'] = [
-      '#theme' => 'field',
-      '#attributes' => ['id' => 'field-api-permit-data-wrapper'],
-      '#prefix' => '<div class="ec-legend permit-data"><h3>Permit Data</h3>',
-      '#suffix' => '</div>',
-      '#title' => '',
-      '#view_mode' => 'full',
-      '#label_display' => 'hidden',
-      '#language' => 'en',
-      '#field_type' => 'textfield',
-      '#field_name' => 'field_api_permit_data',
-      '#entity_type' => 'node',
-      '#is_multiple' => false,
-      '#bundle' => $entity->bundle(),
-      '#object' => $entity,
-      '#items' => array(),
-      '#weight' => $build['field_project_services']['#weight'] - 5,
-      '#comment_display_mode' => '',
-      0 => $table
-    ];
+    try {
+      $table = $dataTableService->generatePermitDataTableRenderArray($permitNumbers);
+      \Drupal::logger('gary_seattle_api')->notice("Rendering permit data table for {$entity->id()}");
+      $build['field_api_permit_data'] = [
+        '#theme' => 'field',
+        '#attributes' => ['id' => 'field-api-permit-data-wrapper'],
+        '#prefix' => '<div class="ec-legend permit-data"><h3>Permit Data</h3>',
+        '#suffix' => '</div>',
+        '#title' => '',
+        '#view_mode' => 'full',
+        '#label_display' => 'hidden',
+        '#language' => 'en',
+        '#field_type' => 'textfield',
+        '#field_name' => 'field_api_permit_data',
+        '#entity_type' => 'node',
+        '#is_multiple' => false,
+        '#bundle' => $entity->bundle(),
+        '#object' => $entity,
+        '#items' => array(),
+        '#weight' => $build['field_project_services']['#weight'] - 5,
+        '#comment_display_mode' => '',
+        0 => $table
+      ];
+    } catch (\Throwable $t) {
+    }
   }
 }
