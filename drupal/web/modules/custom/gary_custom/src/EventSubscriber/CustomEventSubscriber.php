@@ -3,7 +3,7 @@ namespace Drupal\gary_custom\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
@@ -31,7 +31,7 @@ class CustomEventSubscriber implements EventSubscriberInterface {
     $this->tempstore->set('is_mobile', $this->is_mobile);
   }
 
-  public function checkAuthStatus(GetResponseEvent $event) {
+  public function checkAuthStatus(RequestEvent $event) {
     if ($this->account->isAnonymous()
       && \Drupal::service('path.current')->getPath() != '/user/login') {
       $response = new RedirectResponse('/user/login', 301);

@@ -65,7 +65,7 @@ class UserIndex extends ManyToOne {
   /**
    * {@inheritdoc}
    */
-  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL) {
     parent::init($view, $display, $options);
     // if (!empty($this->definition['node'])) {
     //   $this->options['bundle'] = $this->definition['node'];
@@ -94,7 +94,7 @@ class UserIndex extends ManyToOne {
     // ksm($this->value);
     $users = $this->userTypeStorage->loadMultiple();
     $options = array();
-    $roles = \Drupal::entityManager()
+    $roles = \Drupal::entityTypeManager()
       ->getStorage('user_role')->loadMultiple();
     unset($roles['anonymous']);
     foreach ($roles as $role) {
@@ -133,7 +133,7 @@ class UserIndex extends ManyToOne {
     // ksm($this->value);
       if ($this->options['type'] == 'textfield') {
         $roles = $this->options['bundle'];
-        $query = $this->userTypeStorage->getQuery();
+        $query = $this->userTypeStorage->getQuery()->accessCheck(FALSE);
 
         if (count($roles) > 1) {
           $group = $query->orConditionGroup();
@@ -167,7 +167,7 @@ class UserIndex extends ManyToOne {
       }
     else {
       $roles = $this->options['bundle'];
-      $query = $this->userTypeStorage->getQuery();
+      $query = $this->userTypeStorage->getQuery()->accessCheck(FALSE);
 
       if (count($roles) > 1) {
         $group = $query->orConditionGroup();
