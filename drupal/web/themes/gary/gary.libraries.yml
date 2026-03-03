@@ -39,7 +39,7 @@ global:
   dependencies:
     - core/drupal
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/underscore
     - core/backbone
     - core/drupal.dialog.ajax
