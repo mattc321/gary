@@ -14,6 +14,8 @@ class CustomEventSubscriber implements EventSubscriberInterface {
 
   public $is_mobile;
 
+  protected $account;
+
   protected $tempstore;
 
   public function __construct() {

@@ -250,6 +250,7 @@ class GaryFunctions {
   public static function loadUsersByRole(string $role = NULL) {
 
     $ids = \Drupal::entityQuery('user')
+    ->accessCheck(FALSE)
     ->condition('status', 1)
     ->condition('roles', $role)
     ->execute();
@@ -747,6 +748,7 @@ class GaryFunctions {
   private function getOpportunityAutoTasks() {
     $storage = \Drupal::entityTypeManager()->getStorage('node');
     $query_result = $storage->getQuery()
+      ->accessCheck(FALSE)
       ->condition('status', 1)
       ->condition('type', 'opportunity_auto_tasks')
       ->execute();

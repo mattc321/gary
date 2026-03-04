@@ -174,6 +174,7 @@ class NodeIndexNid extends ManyToOne {
     else {
       $options = array();
       $query = \Drupal::entityQuery('node')
+        ->accessCheck(TRUE)
         // @todo Sorting on bundle properties -
         ->sort('title')
         ->addTag('node_access');

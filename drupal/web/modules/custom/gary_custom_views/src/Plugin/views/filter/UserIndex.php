@@ -147,7 +147,7 @@ class UserIndex extends ManyToOne {
         } else {
           $ids = $query
             ->condition('status', 1)
-            ->condition('roles', $roles)
+            ->condition('roles', $roles, 'IN')
             ->execute();
         }
         $users = $this->value ? User::loadMultiple(($this->value)) : [];
@@ -181,7 +181,7 @@ class UserIndex extends ManyToOne {
       } else {
         $ids = $query
           ->condition('status', 1)
-          ->condition('roles', $roles)
+          ->condition('roles', $roles, 'IN')
           ->execute();
       }
 
