@@ -2,7 +2,7 @@
  * @file
  * Custom Scripts
  */
- (function($, Drupal, drupalSettings) {
+ (function($, Drupal, drupalSettings, once) {
 
    var initialized;
 
@@ -74,11 +74,11 @@
              slider_html += '<span class="slider round"></span>';
              slider_html += '</label>';
 
-           $('a[palette-selector="change-palette"]').once('a').append(slider_html);
+           $(once('a', 'a[palette-selector="change-palette"]')).append(slider_html);
 
          });
 
-         $('a[palette-selector="change-palette"]').once('a[palette-selector="change-palette"]').click(function(e){
+         $(once('palette-selector', 'a[palette-selector="change-palette"]')).click(function(e){
            setTimeout(function() {
              var ajaxObject = Drupal.ajax({
                type: 'GET',
@@ -93,4 +93,4 @@
 
      }
    };
- })(jQuery, Drupal, drupalSettings);
+ })(jQuery, Drupal, drupalSettings, once);

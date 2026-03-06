@@ -1,5 +1,5 @@
 
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   Drupal.behaviors.garyFront = {
     attach: function (context, settings) {
 
@@ -7,7 +7,7 @@
       $('.dashboard-block').staggerBounceIn('.dashboard-block');
 
       //user menu handler
-      $('.right-menu').once('.right-menu').click( function(){
+      $(once('right-menu', '.right-menu')).click( function(){
         let nav = '#'+$(this).attr('nav-id');
         if ($(nav).hasClass('user-nav-expanded')) {
           $(nav).removeClass('user-nav-expanded');
@@ -68,4 +68,4 @@
    }
   };
 
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

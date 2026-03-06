@@ -1,5 +1,5 @@
 
-(function ($, Drupal) {
+(function ($, Drupal, once) {
 
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
@@ -12,18 +12,18 @@
         }
         let submit = $('form.node-form input.js-form-submit');
         event.preventDefault();
-        submit.once('.node-form').trigger('click');
+        $(once('node-form', submit)).trigger('click');
         return false;
       });
 
       //Only display save order after a row has been dropped
-      $('.draggable', context).once('draggable').on('mouseup pointerup', function (event) {
+      $(once('draggable', '.draggable', context)).on('mouseup pointerup', function (event) {
         let form = $(this).closest('form').attr('id');
         $('#'+form).find('div[class*="jelly-form-edit-save-order"]').fadeIn();
       });
 
       //attach event listener to field - attribute "jelly" attached to any form input
-      $('.jelly-button', context).once('.jelly-button').click(function (e) {
+      $(once('jelly-button', '.jelly-button', context)).click(function (e) {
 
         //grab the actual input were going to submit
         let childinput = ($(this).next().children('input'));
@@ -50,7 +50,7 @@
 
       //update close date after intake date chosen
       //gives user a projected End Date
-      $('#edit-field-intake-date-0-value-date', context).once('#edit-field-intake-date-0-value-date').bind('focusout', function() {
+      $(once('intake-date', '#edit-field-intake-date-0-value-date', context)).bind('focusout', function() {
         var tt = $('#edit-field-intake-date-0-value-date').val();
         if(tt == '') {
           tt = Date();
@@ -75,7 +75,7 @@
 
 
       //Alert user of improper address formatting
-      $('#edit-field-address-0-value', context).once('#edit-field-address-0-value').bind('focusout', function() {
+      $(once('address-value', '#edit-field-address-0-value', context)).bind('focusout', function() {
         var msg = 'Remember to abbrieviate street suffixes and direction';
         var text2 = $('#edit-field-address-0-value').val().toLowerCase();
 
@@ -108,4 +108,4 @@
     }
   };
 
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

@@ -1,5 +1,5 @@
 
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   Drupal.gary = {
     breakpoints: {
       medium: 850,
@@ -9,7 +9,7 @@
 
   var delayInterval = 0;
   $.fn.staggerBounceIn = function(selector) {
-    $(this).once(selector).each(function (index,value) {
+    $(once(selector.replace(/[^a-z0-9-]/gi, ''), this)).each(function (index,value) {
       setTimeout(function(){ $(value).bounceIn(2); }, delayInterval);
       delayInterval += 100;
     })
@@ -61,12 +61,12 @@
     }
     let quickedita = $('li.quickedit a');
     event.preventDefault();
-    quickedita.once('.quick-edit').trigger('click');
+    $(once('quick-edit', quickedita)).trigger('click');
     return false;
   });
 
   //make clickable containers for mobile
-  $(".item-clickable").once(".item-clickable").click(function() {
+  $(once('item-clickable', '.item-clickable')).click(function() {
     let link = $(this).find(".item-follow > a").attr('href');
     window.location = link;
     return false;
@@ -119,4 +119,4 @@
 
   });
 
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);
