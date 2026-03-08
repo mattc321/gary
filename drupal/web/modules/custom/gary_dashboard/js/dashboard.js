@@ -1,12 +1,12 @@
 
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal, drupalSettings, once) {
 
   Drupal.behaviors.garyForms = {
     attach: function (context, settings) {
 
 
       if(drupalSettings.path.isFront) {
-        $('svg#logo').once('svg#logo').toggleClass('animate-logo');
+        $(once('svg-logo', 'svg#logo')).toggleClass('animate-logo');
       }
 
       if ($('.popup-filter-icon').length > 0) {
@@ -20,7 +20,7 @@
         })
 
         //click listener
-        $(context).find('.popup-filter-icon').once('.popup-filter-icon').click(function () {
+        $(once('popup-filter-icon', '.popup-filter-icon', context)).click(function () {
           var selector = '#'+($(this).attr('popup-selector'));
           let form = $(selector);
           if (form.length > 0) {
@@ -33,4 +33,4 @@
     }
   };
 
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal, drupalSettings, once);

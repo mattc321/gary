@@ -3,7 +3,7 @@
  * Refresh the view
  * dom_id string  any class within views children or a class on the view itself
  */
- (function($, Drupal, drupalSettings) {
+ (function($, Drupal, drupalSettings, once) {
    Drupal.behaviors.garyFieldFormatter = {
      attach: function (context, settings) {
 
@@ -17,7 +17,7 @@
             if ($view.length === 0) {
               location.reload();
             }
-            $view.once('.'+dom_id).trigger('RefreshView');
+            $(once(dom_id, $view)).trigger('RefreshView');
           }
         };
 
@@ -37,8 +37,8 @@
            //no domid is null just reload the page
            let $view = $('.'+dom_id);
            let $switch_view = $('.'+switch_id);
-           $view.once('.'+dom_id).trigger('RefreshView');
-           $switch_view.once('.'+dom_id).trigger('RefreshView');
+           $(once(dom_id, $view)).trigger('RefreshView');
+           $(once(dom_id, $switch_view)).trigger('RefreshView');
            $switch_view.toggle('hidden');
          };
 
@@ -101,7 +101,7 @@
           };
 
            //listener for add item button
-           $('.add-pg-item', context).once(this.id).click(function () {
+           $(once('add-pg-item', '.add-pg-item', context)).click(function () {
              formid = $(this).attr('data-id');
              let $form = $('#'+formid);
              $form.toggle('hidden');
@@ -110,4 +110,4 @@
 
      }
    };
- })(jQuery, Drupal, drupalSettings);
+ })(jQuery, Drupal, drupalSettings, once);

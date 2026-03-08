@@ -3,16 +3,16 @@
  * This file contains all Comment funnctions
  */
 
-  (function($, Drupal, drupalSettings) {
+  (function($, Drupal, drupalSettings, once) {
 
     window.setInterval(function(){
       $('.notifications').checkMessages();
     }, 10000);
 
     //initialize the messages container and attach a leave listener
-    $('body').once('body').before('<div class="messages-popup-container"></div>');
+    $(once('body', 'body')).before('<div class="messages-popup-container"></div>');
     //go to the comment on message click
-    $('.messages-popup-container').once('.messages-popup-container').on('click', '.message', function (event) {
+    $(once('messages-popup-container', '.messages-popup-container')).on('click', '.message', function (event) {
       window.location = $(this).attr('rel');
     });
     $('.messages-popup-container').on('mouseout, mouseleave', function() {
@@ -32,7 +32,7 @@
             let li = $(this).parent('li');
             let ul = $(li).parent('ul');
             $(li).addClass('message-popup-activator');
-            $('.message-popup-activator', context).once('.message-popup-activator').on('mouseover', function (event) {
+            $(once('message-popup-activator', '.message-popup-activator', context)).on('mouseover', function (event) {
               $('.messages-popup').remove();
               $(ul).buildMessages($(li).offset());
             });
@@ -40,7 +40,7 @@
         })
 
         //override the message menu link click
-        $('.message-popup-activator a').once('.message-popup-activator a').on('click', function (event) {
+        $(once('message-popup-activator-link', '.message-popup-activator a')).on('click', function (event) {
           event.preventDefault();
           window.location = '/user/'+drupalSettings.user.uid+'/#block-views-block-my-messages-block-1';
         });
@@ -52,7 +52,7 @@
         // });
 
         //message div clickable
-        $(".message-item-clickable").once(".message-item-clickable").click(function() {
+        $(once('message-item-clickable', '.message-item-clickable')).click(function() {
           let link = $(this).find(".message-follow > a");
           let link_follow = link.attr("href") + "#node-projects-field-comments";
           window.location = link_follow;
@@ -62,7 +62,7 @@
         //get the message count
          $.fn.checkMessages = function() {
            let $el = $('.notifications');
-           let ajaxObject = Drupal.ajax({
+           $.ajax({
              type: 'GET',
              url: '/check-messages',
              success: function(responseData) {
@@ -74,15 +74,15 @@
                 }
               }
             });
-           ajaxObject.execute();
          };
 
          //get the message count
           $.fn.buildMessages = function(position) {
             $el = $(this);
-            let ajaxObject = Drupal.ajax({
+            $.ajax({
               type: 'GET',
               url: '/build-messages',
+              dataType: 'json',
               success: function(response) {
                 $('.messages-popup').remove();
                 let messages = [];
@@ -102,17 +102,13 @@
                   $('.messages-popup-container').html(messagesObject.theme(position, messages));
                }
              });
-            ajaxObject.execute();
 
           };
           $.fn.markRead = function() {
-            let ajaxReadObject = Drupal.ajax({
+            $.ajax({
               type: 'GET',
               url: '/mark-read/'+$(this).attr('message-id'),
-              success: function(response) {
-               }
-             });
-            ajaxReadObject.execute();
+            });
 
           };
 
@@ -155,4 +151,4 @@
 
       }
     };
-  })(jQuery, Drupal, drupalSettings);
+  })(jQuery, Drupal, drupalSettings, once);

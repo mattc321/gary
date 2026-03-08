@@ -10,5 +10,6 @@ dashboard:
     js/dashboard.js: {}
   dependencies:
     - core/jquery
+    - core/once
     - core/drupal.ajax
     - core/drupalSettings

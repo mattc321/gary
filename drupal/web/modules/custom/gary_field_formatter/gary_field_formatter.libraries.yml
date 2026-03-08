@@ -4,5 +4,6 @@ refresh:
     js/refresh.js: {}
   dependencies:
     - core/jquery
+    - core/once
     - core/drupal.ajax
     - core/drupalSettings

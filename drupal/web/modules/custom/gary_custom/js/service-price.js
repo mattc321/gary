@@ -3,12 +3,12 @@
  * This file contains all Service Price funnctions
  */
 
-  (function($, Drupal, drupalSettings) {
+  (function($, Drupal, drupalSettings, once) {
     Drupal.behaviors.garyServicePrices = {
       attach: function (context, settings) {
 
         //attach event listener to field - attached in form_alter
-        $('.calculate-price', context).once(this.id).change(function () {
+        $(once('calculate-price', '.calculate-price', context)).change(function () {
 
           let subform = ($(this).closest('.paragraphs-subform').length > 0)
             ? $(this).closest('.paragraphs-subform')
@@ -20,7 +20,7 @@
         });
 
         //attach event listener to field - attached in form_alter
-        $('.update-price', context).once(this.id).change(function () {
+        $(once('update-price', '.update-price', context)).change(function () {
 
           let subform = ($(this).closest('.paragraphs-subform').length > 0)
             ? $(this).closest('.paragraphs-subform')
@@ -73,7 +73,7 @@
 
       }
     };
-  })(jQuery, Drupal, drupalSettings);
+  })(jQuery, Drupal, drupalSettings, once);
 
 
 

@@ -4,4 +4,5 @@ gary_comments:
     js/comments.js: {}
   dependencies:
     - core/jquery
+    - core/once
     - core/drupal.ajax

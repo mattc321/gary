@@ -4,6 +4,7 @@ service_price:
     js/service-price.js: {}
   dependencies:
     - core/jquery
+    - core/once
     - core/drupal.ajax
 
 custom:
