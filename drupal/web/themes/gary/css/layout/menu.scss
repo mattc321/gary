@@ -20,7 +20,7 @@
   .site-logo:not(a) {
       height: 80px;
       width: 80px;
-      background: $dark-grey;
+      //background: $dark-grey;
       padding: 2px;
       border-radius: 50%;
       display: inline-block;
@@ -51,8 +51,11 @@
     }
   }
   @keyframes logo-inner-rotate {
-    to {transform: rotate(1080deg)};
+    to {
+      transform: rotate(1080deg)
+    }
   }
+
   .site-name {
     @include min-width($break-xl) {
       visibility: visible;
@@ -84,6 +87,7 @@
     transform: translateY(2px);
     height: 100px;
   }
+
 }
 
 #mobile-toggle {
@@ -111,6 +115,7 @@
     top: 20px;
   }
 }
+
 #menu-wrap.expanded #mobile-toggle {
   div.top {
     top: 15px;
