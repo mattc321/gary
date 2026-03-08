@@ -56,7 +56,7 @@
         "drush/drush": "^13",
         "mpdf/mpdf": "^8.0",
         "npm-asset/gsap": "^2.1",
-        "npm-asset/select2": "^4.0",
+        "npm-asset/select2": "4.1.0-RC.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "vlucas/phpdotenv": "^5.0",
         "webflo/drupal-finder": "^1.0.0",
@@ -132,7 +132,7 @@
             "Fix broken submit handlers when draggableviews installed": "patches/fix-entity-form-submit-handlers.patch",
             "Move submit to custom button": "patches/move-submit-to-custom-button.patch",
             "Mod call draggable views submit directly": "patches/mod-call-draggable-views-submit-directly-if-needed.patch"
-          },
+          }
         }
     }
 }
