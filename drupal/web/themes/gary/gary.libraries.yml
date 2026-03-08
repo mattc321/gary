@@ -4,7 +4,6 @@ global:
       dist/base/drupal.css: {}
       dist/base/elements.css: {}
       dist/base/comments.css: {}
-      /libraries/qtip2/dist/jquery.qtip.min.css: { minified: true }
     layout:
       dist/layout/header.css: {}
       dist/layout/menu.css: {}
@@ -29,7 +28,6 @@ global:
       dist/theme/print.css: { media: print }
   js:
     /libraries/polyfill.min.js: { minified: true }
-    /libraries/qtip2/dist/jquery.qtip.min.js: { minified: true }
     dist/global/global.js: {}
     dist/global/models/AppStateModel.js: {}
     dist/global/views/MobileMenuView.js: {}

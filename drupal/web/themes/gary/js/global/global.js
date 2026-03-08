@@ -89,24 +89,6 @@
       model: Drupal.gary.appState,
     });
 
-    //init qtip implementation
-    $('.tooltip').each(function() {
-      let content = $(this).children('.tooltip-content');
-      let title = $(this).children('.tooltip-title');
-        $(this).qtip({
-            content: {
-                text: $(content).html(),
-                title: $(title).html()
-            },
-            style: {
-                classes: 'qtip-bootstrap qtip-shadow'
-            },
-            position: {
-                target: 'mouse',
-                adjust: { mouse: false }
-            }
-        });
-    });
 
     // Drupal.gary.globalView = new Drupal.gary.GlobalView({
     //   model: Drupal.gary.appState,
