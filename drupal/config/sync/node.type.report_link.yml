@@ -12,7 +12,7 @@ third_party_settings:
 name: 'Report Link'
 type: report_link
 description: 'Links to Reports for EC'
-help: ''
+help: null
 new_revision: false
 preview_mode: 0
 display_submitted: false

@@ -20,9 +20,16 @@ settings:
   handler_settings:
     target_bundles: null
     sort:
-      field: _none
+      field: name
+      direction: ASC
     auto_create: false
     filter:
-      type: _none
+      type: role
+      role:
+        assignees: assignees
+        administrator: '0'
+        limited_admin: '0'
+        ec_admin: '0'
+        content_admin: '0'
     include_anonymous: false
 field_type: entity_reference

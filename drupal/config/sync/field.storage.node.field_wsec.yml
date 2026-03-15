@@ -17,6 +17,9 @@ settings:
     -
       value: '2018'
       label: '2018'
+    -
+      value: '2021'
+      label: '2021'
   allowed_values_function: ''
 module: options
 locked: false

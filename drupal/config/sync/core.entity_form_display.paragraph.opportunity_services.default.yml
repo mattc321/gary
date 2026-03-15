@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.opportunity_services.field_line_description
     - field.field.paragraph.opportunity_services.field_line_total
     - field.field.paragraph.opportunity_services.field_opportunity_service
     - field.field.paragraph.opportunity_services.field_quantity
@@ -13,9 +14,17 @@ targetEntityType: paragraph
 bundle: opportunity_services
 mode: default
 content:
+  field_line_description:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_line_total:
     type: number
-    weight: 3
+    weight: 4
     region: content
     settings:
       placeholder: ''
@@ -28,14 +37,14 @@ content:
     third_party_settings: {  }
   field_quantity:
     type: number
-    weight: 2
+    weight: 3
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_service_amount:
     type: number
-    weight: 1
+    weight: 2
     region: content
     settings:
       placeholder: ''

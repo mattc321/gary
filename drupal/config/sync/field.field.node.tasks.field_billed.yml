@@ -1,0 +1,23 @@
+uuid: 378e6302-c421-4fb0-a194-ef863384fe33
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_billed
+    - node.type.tasks
+id: node.tasks.field_billed
+field_name: field_billed
+entity_type: node
+bundle: tasks
+label: Billed
+description: 'Yes indicates the work was invoiced.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

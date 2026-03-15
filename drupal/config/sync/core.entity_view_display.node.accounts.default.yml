@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.accounts.field_account_opportunities_bill
     - field.field.node.accounts.field_account_projects
     - field.field.node.accounts.field_account_type
+    - field.field.node.accounts.field_affiliated_contacts
     - field.field.node.accounts.field_audit_id
     - field.field.node.accounts.field_billing_email
     - field.field.node.accounts.field_billing_zip
@@ -21,6 +22,7 @@ dependencies:
     - field.field.node.accounts.field_parent_account
     - field.field.node.accounts.field_payment_issues
     - field.field.node.accounts.field_phone
+    - field.field.node.accounts.field_phone_ext
     - field.field.node.accounts.field_website
     - node.type.accounts
   module:
@@ -36,7 +38,7 @@ third_party_settings:
       label: Projects
       parent_name: ''
       region: content
-      weight: 13
+      weight: 15
       format_type: html_element
       format_settings:
         classes: 'ec-legend projects'
@@ -53,7 +55,7 @@ third_party_settings:
       label: Comments
       parent_name: ''
       region: content
-      weight: 15
+      weight: 17
       format_type: html_element
       format_settings:
         classes: 'ec-legend comments'
@@ -70,7 +72,7 @@ third_party_settings:
       label: Contacts
       parent_name: ''
       region: content
-      weight: 12
+      weight: 13
       format_type: html_element
       format_settings:
         classes: 'ec-legend contacts'
@@ -88,7 +90,7 @@ third_party_settings:
       label: Opportunities
       parent_name: ''
       region: content
-      weight: 14
+      weight: 16
       format_type: html_element
       format_settings:
         classes: 'ec-legend opportunities'
@@ -96,6 +98,24 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+    group_affiliated_contacts:
+      children:
+        - field_affiliated_contacts
+      label: 'Affiliated Contacts'
+      parent_name: ''
+      region: content
+      weight: 14
+      format_type: html_element
+      format_settings:
+        classes: 'ec-legend contacts'
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
         attributes: ''
         effect: none
         speed: fast
@@ -110,7 +130,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   field__billing_city:
     type: string
@@ -118,7 +138,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   field__billing_state:
     type: string
@@ -126,7 +146,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   field_account_manager:
     type: entity_reference_label
@@ -174,12 +194,22 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  field_affiliated_contacts:
+    type: viewfield_default
+    label: hidden
+    settings:
+      view_title: hidden
+      always_build_output: false
+      empty_view_title: hidden
+    third_party_settings: {  }
+    weight: 16
+    region: content
   field_billing_email:
     type: basic_string
     label: inline
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 11
     region: content
   field_billing_zip:
     type: string
@@ -187,7 +217,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 8
+    weight: 9
     region: content
   field_comments:
     type: comment_default
@@ -224,7 +254,7 @@ content:
       always_build_output: false
       empty_view_title: hidden
     third_party_settings: {  }
-    weight: 11
+    weight: 12
     region: content
   field_phone:
     type: string
@@ -234,13 +264,21 @@ content:
     third_party_settings: {  }
     weight: 4
     region: content
+  field_phone_ext:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
   field_website:
     type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   links:
     settings: {  }

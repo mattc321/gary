@@ -28,6 +28,7 @@ dependencies:
     - field.field.node.projects.field_permit_number
     - field.field.node.projects.field_priority_green
     - field.field.node.projects.field_project_contacts
+    - field.field.node.projects.field_project_flag
     - field.field.node.projects.field_project_image
     - field.field.node.projects.field_project_services
     - field.field.node.projects.field_project_status
@@ -35,9 +36,11 @@ dependencies:
     - field.field.node.projects.field_related_address
     - field.field.node.projects.field_state
     - field.field.node.projects.field_sub_contractor
+    - field.field.node.projects.field_target_ach
     - field.field.node.projects.field_tasks
     - field.field.node.projects.field_wsec
     - field.field.node.projects.field_zip
+    - filter.format.plain_text
     - image.style.large
     - node.type.projects
   module:
@@ -45,6 +48,7 @@ dependencies:
     - datetime
     - field_group
     - gary_field_formatter
+    - geolocation
     - image
     - options
     - user
@@ -57,7 +61,7 @@ third_party_settings:
       label: Contacts
       parent_name: ''
       region: content
-      weight: 29
+      weight: 30
       format_type: html_element
       format_settings:
         classes: 'ec-legend contacts'
@@ -74,7 +78,7 @@ third_party_settings:
       label: Units
       parent_name: ''
       region: content
-      weight: 30
+      weight: 31
       format_type: html_element
       format_settings:
         classes: 'ec-legend units'
@@ -91,7 +95,7 @@ third_party_settings:
       label: Comments
       parent_name: ''
       region: content
-      weight: 27
+      weight: 29
       format_type: html_element
       format_settings:
         classes: 'ec-legend comments'
@@ -108,7 +112,7 @@ third_party_settings:
       label: Tasks
       parent_name: ''
       region: content
-      weight: 26
+      weight: 28
       format_type: html_element
       format_settings:
         classes: 'ec-legend tasks'
@@ -125,7 +129,7 @@ third_party_settings:
       label: Services
       parent_name: ''
       region: content
-      weight: 24
+      weight: 25
       format_type: html_element
       format_settings:
         classes: 'ec-legend services'
@@ -137,12 +141,11 @@ third_party_settings:
         effect: none
         speed: fast
     group_sub_contractor:
-      children:
-        - field_sub_contractor
+      children: {  }
       label: 'Sub Contractor'
       parent_name: ''
-      region: content
-      weight: 28
+      region: hidden
+      weight: 34
       format_type: html_element
       format_settings:
         classes: 'ec-legend subcontractors'
@@ -150,6 +153,23 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+    group_billing:
+      children: {  }
+      label: '🛑 Account Issues'
+      parent_name: ''
+      region: hidden
+      weight: 38
+      format_type: html_element
+      format_settings:
+        classes: ''
+        id: ''
+        element: div
+        show_label: true
+        label_element: h3
+        label_element_classes: ''
         attributes: ''
         effect: none
         speed: fast
@@ -164,17 +184,17 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   field_account_payment_issues:
     type: viewfield_default
-    label: hidden
+    label: inline
     settings:
       view_title: hidden
       always_build_output: false
       empty_view_title: hidden
     third_party_settings: {  }
-    weight: 23
+    weight: 27
     region: content
   field_account_reference:
     type: entity_reference_label
@@ -182,7 +202,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
   field_address:
     type: string
@@ -190,7 +210,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   field_architect:
     type: entity_reference_label
@@ -198,7 +218,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 17
+    weight: 19
     region: content
   field_billing_status_ref:
     type: viewfield_default
@@ -208,7 +228,7 @@ content:
       always_build_output: false
       empty_view_title: hidden
     third_party_settings: {  }
-    weight: 25
+    weight: 26
     region: content
   field_city:
     type: string
@@ -216,7 +236,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   field_client_project_name:
     type: string
@@ -224,7 +244,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   field_comments:
     type: comment_default
@@ -233,7 +253,7 @@ content:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
-    weight: 28
+    weight: 38
     region: content
   field_enrolled_with_bg:
     type: boolean
@@ -243,7 +263,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 20
+    weight: 22
     region: content
   field_far_incentive:
     type: boolean
@@ -253,7 +273,17 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 19
+    weight: 21
+    region: content
+  field_geolocation:
+    type: geolocation_token
+    label: above
+    settings:
+      tokenized_text:
+        value: ''
+        format: plain_text
+    third_party_settings: {  }
+    weight: 32
     region: content
   field_intake_date:
     type: datetime_custom
@@ -262,7 +292,7 @@ content:
       timezone_override: ''
       date_format: m/d/Y
     third_party_settings: {  }
-    weight: 11
+    weight: 12
     region: content
   field_key_box_code:
     type: string
@@ -270,7 +300,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 22
+    weight: 24
     region: content
   field_key_box_location:
     type: string
@@ -278,7 +308,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 21
+    weight: 23
     region: content
   field_opportunity:
     type: entity_reference_label
@@ -286,7 +316,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 10
+    weight: 11
     region: content
   field_permit_city:
     type: entity_reference_label
@@ -294,7 +324,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 14
+    weight: 16
     region: content
   field_permit_issue:
     type: datetime_custom
@@ -303,7 +333,7 @@ content:
       timezone_override: ''
       date_format: m/d/Y
     third_party_settings: {  }
-    weight: 15
+    weight: 17
     region: content
   field_permit_number:
     type: string
@@ -311,7 +341,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 13
+    weight: 15
     region: content
   field_priority_green:
     type: boolean
@@ -321,7 +351,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 18
+    weight: 20
     region: content
   field_project_contacts:
     type: paragraph_views_formatter
@@ -338,7 +368,15 @@ content:
       mobile_view_display: block_3
       keep_form_expanded: 0
     third_party_settings: {  }
-    weight: 26
+    weight: 42
+    region: content
+  field_project_flag:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_project_image:
     type: image
@@ -346,6 +384,8 @@ content:
     settings:
       image_link: ''
       image_style: large
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 1
     region: content
@@ -354,10 +394,10 @@ content:
     label: hidden
     settings:
       view_title: hidden
-      always_build_output: false
+      always_build_output: true
       empty_view_title: hidden
     third_party_settings: {  }
-    weight: 30
+    weight: 32
     region: content
   field_project_status:
     type: entity_reference_label
@@ -382,7 +422,7 @@ content:
       mobile_view: project_units
       mobile_view_display: block_4
     third_party_settings: {  }
-    weight: 27
+    weight: 44
     region: content
   field_related_address:
     type: entity_reference_label
@@ -390,7 +430,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 16
+    weight: 18
     region: content
   field_state:
     type: string
@@ -398,24 +438,15 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
-  field_sub_contractor:
-    type: paragraph_views_formatter
+  field_target_ach:
+    type: entity_reference_label
     label: inline
     settings:
-      ajax_inputs: '1'
-      view_machine_name: subcontractors
-      view_display_name: block_1
-      form_class: inline-pg-form
-      switch_view: subcontractors
-      switch_view_display: block_2
-      switch_view_link_text: ''
-      mobile_view: subcontractors
-      mobile_view_display: block_3
-      keep_form_expanded: 0
+      link: true
     third_party_settings: {  }
-    weight: 30
+    weight: 14
     region: content
   field_tasks:
     type: paragraph_views_formatter
@@ -432,14 +463,14 @@ content:
       mobile_view_display: block_3
       keep_form_expanded: 0
     third_party_settings: {  }
-    weight: 32
+    weight: 36
     region: content
   field_wsec:
     type: list_default
     label: inline
     settings: {  }
     third_party_settings: {  }
-    weight: 12
+    weight: 13
     region: content
   field_zip:
     type: number_integer
@@ -448,7 +479,7 @@ content:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 8
+    weight: 9
     region: content
   links:
     settings: {  }
@@ -459,5 +490,4 @@ hidden:
   feeds_item: true
   field_audit_id: true
   field_date_submitted: true
-  field_geolocation: true
-  field_project_flag: true
+  field_sub_contractor: true

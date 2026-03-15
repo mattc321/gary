@@ -7,7 +7,7 @@ _core:
 id: feedback
 label: 'Website feedback'
 recipients:
-  - mcampbell@ashlandfood.coop
+  - ecteam.net@outlook.com
 reply: ''
 weight: 0
 message: 'Your message has been sent.'

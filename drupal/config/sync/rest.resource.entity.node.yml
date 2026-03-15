@@ -1,11 +1,11 @@
 uuid: e756e657-9672-4c90-a86e-5bcba62071a9
 langcode: en
-status: false
+status: true
 dependencies:
   module:
+    - basic_auth
     - node
     - serialization
-    - user
 id: entity.node
 plugin_id: 'entity:node'
 granularity: resource
@@ -15,4 +15,4 @@ configuration:
   formats:
     - json
   authentication:
-    - cookie
+    - basic_auth

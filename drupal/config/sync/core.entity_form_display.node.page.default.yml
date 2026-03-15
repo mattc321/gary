@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.page.body
     - field.field.node.page.field_page_content
+    - field.field.node.page.layout_builder__layout
     - node.type.page
   module:
     - paragraphs
@@ -90,4 +91,5 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  layout_builder__layout: true

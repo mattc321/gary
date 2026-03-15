@@ -1,0 +1,161 @@
+uuid: b0a28dff-a20e-4b9b-995a-245dc025c87e
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_display.comment.comment.default
+    - core.entity_view_mode.node.search_index
+    - field.field.node.tasks.feeds_item
+    - field.field.node.tasks.field_audit_id
+    - field.field.node.tasks.field_billed
+    - field.field.node.tasks.field_billing
+    - field.field.node.tasks.field_billing_quantity
+    - field.field.node.tasks.field_billing_rate
+    - field.field.node.tasks.field_comments
+    - field.field.node.tasks.field_parent_re
+    - field.field.node.tasks.field_priority
+    - field.field.node.tasks.field_task_assigned_to
+    - field.field.node.tasks.field_task_due_date
+    - field.field.node.tasks.field_task_list
+    - field.field.node.tasks.field_task_status
+    - field.field.node.tasks.field_task_type
+    - field.field.node.tasks.field_task_weight
+    - node.type.tasks
+    - views.view.task_type_viewfield
+  module:
+    - comment
+    - datetime
+    - gary_fields
+    - user
+    - views_field_formatter
+id: node.tasks.search_index
+targetEntityType: node
+bundle: tasks
+mode: search_index
+content:
+  field_billed:
+    type: boolean
+    label: inline
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_billing:
+    type: boolean
+    label: inline
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_billing_quantity:
+    type: number_integer
+    label: inline
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_billing_rate:
+    type: number_decimal
+    label: inline
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_comments:
+    type: comment_default
+    label: inline
+    settings:
+      view_mode: default
+      pager_id: 0
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_parent_re:
+    type: entity_reverse_formatter
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_priority:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_task_assigned_to:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_task_due_date:
+    type: datetime_default
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_task_list:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_task_status:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_task_type:
+    type: views_field_formatter
+    label: inline
+    settings:
+      view: 'task_type_viewfield::entity_reference_1'
+      arguments:
+        field_value:
+          checked: '1'
+          weight: '-10'
+        entity_id:
+          weight: '-9'
+          checked: 0
+        delta:
+          weight: '-8'
+          checked: 0
+        entity_revision_id:
+          weight: '-7'
+          checked: 0
+      implode_character: ''
+      hide_empty: 0
+      multiple: 0
+    third_party_settings: {  }
+    weight: 7
+    region: content
+hidden:
+  feeds_item: true
+  field_audit_id: true
+  field_task_weight: true
+  links: true

@@ -1,0 +1,30 @@
+uuid: 6affec0d-a6dc-495a-a87c-3c82a6c355ee
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_list
+field_name: field_list
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '01'
+      label: Recycling
+    -
+      value: '02'
+      label: Landscaping
+    -
+      value: '03'
+      label: Appliances
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.task_list.field_description
+    - field.field.node.task_list.field_task_group
     - node.type.task_list
   module:
     - user
@@ -20,3 +21,4 @@ content:
     region: content
 hidden:
   field_description: true
+  field_task_group: true

@@ -1,6 +1,6 @@
 uuid: c8b20921-fdd8-48d5-9662-f558dce1cba5
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - field.storage.node.field_address
@@ -151,6 +151,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:

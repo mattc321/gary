@@ -6,13 +6,12 @@ dependencies:
     - menu_ui
 third_party_settings:
   menu_ui:
-    available_menus:
-      - account
-    parent: 'account:'
+    available_menus: {  }
+    parent: ''
 name: 'To Do'
 type: to_do
 description: 'Personal to-do items'
-help: ''
+help: null
 new_revision: true
 preview_mode: 0
 display_submitted: false

@@ -1,0 +1,18 @@
+uuid: fcbc7cf2-18f2-4dc2-8497-e2409259aac7
+langcode: en
+status: false
+dependencies:
+  module:
+    - basic_auth
+    - node
+    - serialization
+id: entity.node_type
+plugin_id: 'entity:node_type'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth

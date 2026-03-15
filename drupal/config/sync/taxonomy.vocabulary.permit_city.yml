@@ -4,5 +4,6 @@ status: true
 dependencies: {  }
 name: 'Permit City'
 vid: permit_city
-description: ''
+description: null
 weight: 0
+new_revision: false

@@ -1,0 +1,25 @@
+uuid: 28f09dc0-136a-4a8c-a754-d60d7daf19ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_task_type
+    - node.type.service_tasks
+id: node.service_tasks.field_task_type
+field_name: field_task_type
+entity_type: node
+bundle: service_tasks
+label: 'Task Type'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: task_type_viewfield
+      display_name: entity_reference_2
+      arguments: {  }
+field_type: entity_reference

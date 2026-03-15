@@ -1,0 +1,29 @@
+uuid: be611fb8-f82c-45c5-b9e2-0bceb5932a46
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_related_to_accounts
+    - node.type.accounts
+    - node.type.contacts
+id: node.contacts.field_related_to_accounts
+field_name: field_related_to_accounts
+entity_type: node
+bundle: contacts
+label: 'Related to Accounts'
+description: 'For contacts with roles at multiple companies, e.g. consultants or PMs who work with different builders. This will display the contact on related account pages.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      accounts: accounts
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -6,5 +6,6 @@ dependencies:
     - comment
 id: comment.body_only
 label: 'Body Only'
+description: ''
 targetEntityType: comment
 cache: true

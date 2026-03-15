@@ -525,6 +525,15 @@ display:
             date_format: custom
             custom_date_format: m-d-Y
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -556,6 +565,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 5
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -645,11 +655,6 @@ display:
             multiple: false
             remember_roles:
               limited_admin: limited_admin
-              anonymous: '0'
-              authenticated: '0'
-              administrator: '0'
-              assignees: '0'
-              ec_admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -695,11 +700,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -802,6 +802,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
       query:
@@ -1272,6 +1273,15 @@ display:
             date_format: custom
             custom_date_format: m-d-Y
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -1363,6 +1373,15 @@ display:
             date_format: custom
             custom_date_format: m-d-Y
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
           group_column: value
           group_columns: {  }
           group_rows: true

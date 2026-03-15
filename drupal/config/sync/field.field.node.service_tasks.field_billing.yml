@@ -1,0 +1,23 @@
+uuid: 637dc00d-3f33-4df7-be93-c0692394dc3b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_billing
+    - node.type.service_tasks
+id: node.service_tasks.field_billing
+field_name: field_billing
+entity_type: node
+bundle: service_tasks
+label: Billable
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

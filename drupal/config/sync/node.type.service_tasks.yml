@@ -12,7 +12,7 @@ third_party_settings:
 name: 'Service Tasks'
 type: service_tasks
 description: 'The default tasks associated with each service. When a service is selected for an opp, this entity holds the default tasks to load onto that opp for that service'
-help: ''
+help: null
 new_revision: false
 preview_mode: 0
 display_submitted: false

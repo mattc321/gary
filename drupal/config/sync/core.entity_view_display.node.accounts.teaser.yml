@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.accounts.field_account_opportunities_bill
     - field.field.node.accounts.field_account_projects
     - field.field.node.accounts.field_account_type
+    - field.field.node.accounts.field_affiliated_contacts
     - field.field.node.accounts.field_audit_id
     - field.field.node.accounts.field_billing_email
     - field.field.node.accounts.field_billing_zip
@@ -21,6 +22,7 @@ dependencies:
     - field.field.node.accounts.field_parent_account
     - field.field.node.accounts.field_payment_issues
     - field.field.node.accounts.field_phone
+    - field.field.node.accounts.field_phone_ext
     - field.field.node.accounts.field_website
     - node.type.accounts
   module:
@@ -45,6 +47,7 @@ hidden:
   field_account_opportunities_bill: true
   field_account_projects: true
   field_account_type: true
+  field_affiliated_contacts: true
   field_audit_id: true
   field_billing_email: true
   field_billing_zip: true
@@ -53,4 +56,5 @@ hidden:
   field_parent_account: true
   field_payment_issues: true
   field_phone: true
+  field_phone_ext: true
   field_website: true

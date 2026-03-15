@@ -12,7 +12,6 @@ dashboard_layout_second:
   'views_block:dashboard_tasks_by_opportunity-block_1': 'views_block:dashboard_tasks_by_opportunity-block_1'
 dashboard_layout_bottom:
   'views_block:dashboard_recent_comments-block_1': 'views_block:dashboard_recent_comments-block_1'
-  'views_block:dashboard_stalled_projects-block_1': 'views_block:dashboard_stalled_projects-block_1'
 mobile_dashboard_layout:
   'views_block:dashboard_comment_messages-block_2': 'views_block:dashboard_comment_messages-block_2'
   'views_block:dashboard_recently_worked_with-block_2': 'views_block:dashboard_recently_worked_with-block_2'

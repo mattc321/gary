@@ -49,11 +49,11 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: Account
+          label: ''
           exclude: true
           alter:
             alter_text: false
-            text: ''
+            text: '<span><h2>{{ field_account_reference }}</h2></span>'
             make_link: false
             path: ''
             absolute: false
@@ -78,12 +78,12 @@ display:
             trim: false
             preserve_tags: ''
             html: false
-          element_type: ''
+          element_type: h1
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: h2
+          element_label_colon: false
+          element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
@@ -148,7 +148,7 @@ display:
           element_label_type: ''
           element_label_class: ''
           element_label_colon: true
-          element_wrapper_type: ''
+          element_wrapper_type: h4
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
@@ -830,6 +830,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -918,11 +919,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -948,7 +944,7 @@ display:
             -
               field: field_account_reference
               rendered: true
-              rendered_strip: false
+              rendered_strip: true
             -
               field: title
               rendered: true
@@ -1060,6 +1056,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
         options:

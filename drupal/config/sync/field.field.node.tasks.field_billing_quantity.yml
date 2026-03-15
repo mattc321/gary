@@ -1,0 +1,23 @@
+uuid: 94a40f7a-ecb6-4ac0-8868-303cece5ea38
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_billing_quantity
+    - node.type.tasks
+id: node.tasks.field_billing_quantity
+field_name: field_billing_quantity
+entity_type: node
+bundle: tasks
+label: Quantity
+description: 'Enter the billing quantity for this task. Typically the number of units. May be other measures like number of energy models, depending on the scope of work.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

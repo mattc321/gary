@@ -1,0 +1,27 @@
+uuid: ff923e2c-123e-4b68-a00f-1e93e41ca7ac
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_list
+field_name: field_list
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '01'
+      label: Recycling
+    -
+      value: '02'
+      label: Landscaping
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

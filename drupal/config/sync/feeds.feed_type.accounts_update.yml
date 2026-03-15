@@ -8,10 +8,12 @@ dependencies:
     - node.type.accounts
   module:
     - node
-label: 'Accounts update'
 id: accounts_update
+label: 'Accounts update'
 description: ''
+help: null
 import_period: -1
+import_period_per_feed: false
 fetcher: upload
 fetcher_configuration:
   allowed_extensions: 'txt csv tsv xml opml'
@@ -32,15 +34,22 @@ processor_configuration:
   expire: -1
   owner_feed_author: false
   owner_id: 1
+  insert_new: 1
+  skip_validation: false
+  skip_validation_types: {  }
+  revision: false
+  langcode: en
 custom_sources:
   -
     value: '0'
     label: '0'
-    machine_name: '0'
+    machine_name: 0
+    type: csv
   -
     value: '1'
     label: '1'
-    machine_name: '1'
+    machine_name: 1
+    type: csv
 mappings:
   -
     target: title

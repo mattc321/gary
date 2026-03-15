@@ -1,0 +1,21 @@
+uuid: b715cea4-8161-4c3d-a349-6a60dbfc209d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_list
+    - paragraphs.paragraphs_type.sub_contractors
+  module:
+    - options
+id: paragraph.sub_contractors.field_list
+field_name: field_list
+entity_type: paragraph
+bundle: sub_contractors
+label: List
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

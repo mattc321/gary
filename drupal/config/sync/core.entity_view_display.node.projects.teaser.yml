@@ -28,6 +28,7 @@ dependencies:
     - field.field.node.projects.field_permit_number
     - field.field.node.projects.field_priority_green
     - field.field.node.projects.field_project_contacts
+    - field.field.node.projects.field_project_flag
     - field.field.node.projects.field_project_image
     - field.field.node.projects.field_project_services
     - field.field.node.projects.field_project_status
@@ -35,6 +36,7 @@ dependencies:
     - field.field.node.projects.field_related_address
     - field.field.node.projects.field_state
     - field.field.node.projects.field_sub_contractor
+    - field.field.node.projects.field_target_ach
     - field.field.node.projects.field_tasks
     - field.field.node.projects.field_wsec
     - field.field.node.projects.field_zip
@@ -84,6 +86,7 @@ hidden:
   field_related_address: true
   field_state: true
   field_sub_contractor: true
+  field_target_ach: true
   field_tasks: true
   field_wsec: true
   field_zip: true

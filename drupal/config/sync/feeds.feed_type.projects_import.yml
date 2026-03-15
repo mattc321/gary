@@ -27,10 +27,12 @@ dependencies:
     - node.type.projects
   module:
     - node
-label: 'Projects Import'
 id: projects_import
+label: 'Projects Import'
 description: ''
+help: null
 import_period: -1
+import_period_per_feed: false
 fetcher: upload
 fetcher_configuration:
   allowed_extensions: 'txt csv tsv xml opml'
@@ -51,95 +53,122 @@ processor_configuration:
   expire: -1
   owner_feed_author: false
   owner_id: 1
+  insert_new: 1
+  skip_validation: false
+  skip_validation_types: {  }
+  revision: false
+  langcode: en
 custom_sources:
   -
     value: '0'
     label: '0'
-    machine_name: '0'
+    machine_name: 0
+    type: csv
   -
     value: '1'
     label: '1'
-    machine_name: '1'
+    machine_name: 1
+    type: csv
   -
     value: '2'
     label: '2'
-    machine_name: '2'
+    machine_name: 2
+    type: csv
   -
     value: '3'
     label: '3'
-    machine_name: '3'
+    machine_name: 3
+    type: csv
   -
     value: '4'
     label: '4'
-    machine_name: '4'
+    machine_name: 4
+    type: csv
   -
     value: '5'
     label: '5'
-    machine_name: '5'
+    machine_name: 5
+    type: csv
   -
     value: '6'
     label: '6'
-    machine_name: '6'
+    machine_name: 6
+    type: csv
   -
     value: '7'
     label: '7'
-    machine_name: '7'
+    machine_name: 7
+    type: csv
   -
     value: '8'
     label: '8'
-    machine_name: '8'
+    machine_name: 8
+    type: csv
   -
     value: '9'
     label: '9'
-    machine_name: '9'
+    machine_name: 9
+    type: csv
   -
     value: '10'
     label: '10'
-    machine_name: '10'
+    machine_name: 10
+    type: csv
   -
     value: '11'
     label: '11'
-    machine_name: '11'
+    machine_name: 11
+    type: csv
   -
     value: '12'
     label: '12'
-    machine_name: '12'
+    machine_name: 12
+    type: csv
   -
     value: '13'
     label: '13'
-    machine_name: '13'
+    machine_name: 13
+    type: csv
   -
     value: '14'
     label: '14'
-    machine_name: '14'
+    machine_name: 14
+    type: csv
   -
     value: '15'
     label: '15'
-    machine_name: '15'
+    machine_name: 15
+    type: csv
   -
     value: '16'
     label: '16'
-    machine_name: '16'
+    machine_name: 16
+    type: csv
   -
     value: '17'
     label: '17'
-    machine_name: '17'
+    machine_name: 17
+    type: csv
   -
     value: '18'
     label: '18'
-    machine_name: '18'
+    machine_name: 18
+    type: csv
   -
     value: '19'
     label: '19'
-    machine_name: '19'
+    machine_name: 19
+    type: csv
   -
     value: '20'
     label: '20'
-    machine_name: '20'
+    machine_name: 20
+    type: csv
   -
     value: '21'
     label: '21'
-    machine_name: '21'
+    machine_name: 21
+    type: csv
 mappings:
   -
     target: title

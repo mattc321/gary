@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.sub_contractor.field_billing_zip
     - field.field.node.sub_contractor.field_contact_email
     - field.field.node.sub_contractor.field_full_name
+    - field.field.node.sub_contractor.field_list
     - field.field.node.sub_contractor.field_phone
     - field.field.node.sub_contractor.field_project_sub_contractors
     - field.field.node.sub_contractor.field_state
@@ -67,6 +68,12 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_list:
+    type: options_buttons
+    weight: 28
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_phone:
     type: string_textfield

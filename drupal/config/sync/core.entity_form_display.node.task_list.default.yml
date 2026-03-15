@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.task_list.field_description
+    - field.field.node.task_list.field_task_group
     - node.type.task_list
   module:
     - path
@@ -25,6 +26,12 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_task_group:
+    type: options_select
+    weight: 123
+    region: content
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path

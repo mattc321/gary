@@ -18,10 +18,10 @@ dependencies:
     - comment
     - contextual
     - draggableviews
+    - file
     - filter
     - gary_field_formatter
     - node
-    - quickedit
 id: limited_admin
 label: 'EC Main User'
 weight: 4
@@ -30,7 +30,6 @@ permissions:
   - 'access comments'
   - 'access contextual links'
   - 'access draggableviews'
-  - 'access in-place editing'
   - 'administer comments'
   - 'create accounts content'
   - 'create contacts content'
@@ -42,10 +41,9 @@ permissions:
   - 'create services content'
   - 'create sub_contractor content'
   - 'create tasks content'
-  - 'delete any contacts content'
-  - 'delete any report_link content'
-  - 'delete any sub_contractor content'
-  - 'delete any tasks content'
+  - 'delete own files'
+  - 'delete own messages content'
+  - 'delete own tasks content'
   - 'edit any accounts content'
   - 'edit any contacts content'
   - 'edit any opportunities content'
@@ -56,6 +54,7 @@ permissions:
   - 'edit any sub_contractor content'
   - 'edit any tasks content'
   - 'edit own comments'
+  - 'edit own messages content'
   - 'post comments'
   - 'skip comment approval'
   - 'use delete paragraph'

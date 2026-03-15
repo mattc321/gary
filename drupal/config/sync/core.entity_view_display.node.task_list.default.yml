@@ -4,8 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.node.task_list.field_description
+    - field.field.node.task_list.field_task_group
     - node.type.task_list
   module:
+    - options
     - user
 id: node.task_list.default
 targetEntityType: node
@@ -19,6 +21,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 102
+    region: content
+  field_task_group:
+    type: list_key
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
     region: content
   links:
     settings: {  }

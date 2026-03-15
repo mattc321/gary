@@ -1,0 +1,19 @@
+uuid: 295804a1-42ad-4270-b901-ab87231e0caf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_line_description
+    - paragraphs.paragraphs_type.opportunity_services
+id: paragraph.opportunity_services.field_line_description
+field_name: field_line_description
+entity_type: paragraph
+bundle: opportunity_services
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.user.user.field_color
     - field.field.user.user.field_full_name
+    - field.field.user.user.field_tag_nicknames
     - field.field.user.user.field_user_phone
     - field.field.user.user.user_picture
     - image.style.user_pic
@@ -45,6 +46,8 @@ content:
     settings:
       image_link: ''
       image_style: user_pic
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 0
     region: content

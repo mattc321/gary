@@ -1,0 +1,191 @@
+uuid: b6e0f64c-45d1-4813-b514-369db23ad1e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+    - filter.format.restricted_html
+    - media.type.audio
+    - media.type.document
+    - media.type.image
+    - media.type.remote_video
+    - media.type.video
+    - node.type.accounts
+    - node.type.contacts
+    - node.type.page
+    - node.type.pdf_template
+    - node.type.task_list
+    - taxonomy.vocabulary.account_type
+    - taxonomy.vocabulary.ach_standards
+    - taxonomy.vocabulary.article_category
+    - taxonomy.vocabulary.bg_level
+    - taxonomy.vocabulary.billing_status
+    - taxonomy.vocabulary.contact_type
+    - taxonomy.vocabulary.grade
+    - taxonomy.vocabulary.high_priority_reason
+    - taxonomy.vocabulary.job_title
+    - taxonomy.vocabulary.opportunity_type
+    - taxonomy.vocabulary.permit_city
+    - taxonomy.vocabulary.priority
+    - taxonomy.vocabulary.project_flag
+    - taxonomy.vocabulary.project_status
+    - taxonomy.vocabulary.role
+    - taxonomy.vocabulary.subcontractor_type
+    - taxonomy.vocabulary.tags
+    - taxonomy.vocabulary.task_status
+    - taxonomy.vocabulary.task_type
+    - taxonomy.vocabulary.template_type
+    - taxonomy.vocabulary.unit_type
+  module:
+    - admin_toolbar_search
+    - block
+    - block_content
+    - contact
+    - field_ui
+    - file
+    - filter
+    - geolocation
+    - help
+    - media
+    - node
+    - paragraphs
+    - path
+    - search
+    - system
+    - taxonomy
+    - toolbar
+    - views_bulk_edit
+    - views_ui
+id: content_admin
+label: 'Content Admin'
+weight: 6
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access block library'
+  - 'access content overview'
+  - 'access files overview'
+  - 'access help pages'
+  - 'access media overview'
+  - 'access site reports'
+  - 'access taxonomy overview'
+  - 'access toolbar'
+  - 'administer block content'
+  - 'administer block types'
+  - 'administer block_content display'
+  - 'administer block_content fields'
+  - 'administer block_content form display'
+  - 'administer blocks'
+  - 'administer contact forms'
+  - 'administer content types'
+  - 'administer display modes'
+  - 'administer media display'
+  - 'administer media fields'
+  - 'administer media form display'
+  - 'administer node display'
+  - 'administer node fields'
+  - 'administer node form display'
+  - 'administer nodes'
+  - 'administer paragraph display'
+  - 'administer paragraph fields'
+  - 'administer paragraph form display'
+  - 'administer taxonomy'
+  - 'administer taxonomy_term display'
+  - 'administer taxonomy_term fields'
+  - 'administer url aliases'
+  - 'administer views'
+  - 'configure geolocation'
+  - 'create document media'
+  - 'create image media'
+  - 'create media'
+  - 'create page content'
+  - 'create pdf_template content'
+  - 'create remote_video media'
+  - 'create task_list content'
+  - 'create terms in account_type'
+  - 'create terms in ach_standards'
+  - 'create terms in article_category'
+  - 'create terms in bg_level'
+  - 'create terms in billing_status'
+  - 'create terms in contact_type'
+  - 'create terms in grade'
+  - 'create terms in high_priority_reason'
+  - 'create terms in job_title'
+  - 'create terms in opportunity_type'
+  - 'create terms in permit_city'
+  - 'create terms in priority'
+  - 'create terms in project_flag'
+  - 'create terms in project_status'
+  - 'create terms in role'
+  - 'create terms in subcontractor_type'
+  - 'create terms in tags'
+  - 'create terms in task_status'
+  - 'create terms in task_type'
+  - 'create terms in template_type'
+  - 'create terms in unit_type'
+  - 'create url aliases'
+  - 'create video media'
+  - 'delete accounts revisions'
+  - 'delete any audio media'
+  - 'delete media'
+  - 'delete own audio media'
+  - 'delete own contacts content'
+  - 'delete own document media'
+  - 'delete own files'
+  - 'delete own image media'
+  - 'delete own page content'
+  - 'delete own pdf_template content'
+  - 'delete own remote_video media'
+  - 'delete own video media'
+  - 'delete page revisions'
+  - 'delete pdf_template revisions'
+  - 'edit any audio media'
+  - 'edit any document media'
+  - 'edit any image media'
+  - 'edit any page content'
+  - 'edit any pdf_template content'
+  - 'edit any remote_video media'
+  - 'edit any video media'
+  - 'edit own audio media'
+  - 'edit own document media'
+  - 'edit own image media'
+  - 'edit own pdf_template content'
+  - 'edit own remote_video media'
+  - 'edit own video media'
+  - 'edit terms in account_type'
+  - 'edit terms in ach_standards'
+  - 'edit terms in article_category'
+  - 'edit terms in bg_level'
+  - 'edit terms in billing_status'
+  - 'edit terms in contact_type'
+  - 'edit terms in grade'
+  - 'edit terms in high_priority_reason'
+  - 'edit terms in job_title'
+  - 'edit terms in opportunity_type'
+  - 'edit terms in priority'
+  - 'edit terms in project_flag'
+  - 'edit terms in project_status'
+  - 'edit terms in role'
+  - 'edit terms in subcontractor_type'
+  - 'edit terms in tags'
+  - 'edit terms in task_status'
+  - 'edit terms in task_type'
+  - 'edit terms in template_type'
+  - 'edit terms in unit_type'
+  - 'rebuild node access permissions'
+  - 'revert pdf_template revisions'
+  - 'update any media'
+  - 'update media'
+  - 'use admin toolbar search'
+  - 'use advanced search'
+  - 'use text format full_html'
+  - 'use text format restricted_html'
+  - 'use views bulk edit'
+  - 'view all media revisions'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view page revisions'
+  - 'view pdf_template revisions'
+  - 'view the administration theme'
+  - 'view unpublished paragraphs'
+  - 'view user email addresses'

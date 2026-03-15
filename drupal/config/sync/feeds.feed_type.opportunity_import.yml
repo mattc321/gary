@@ -19,10 +19,12 @@ dependencies:
     - node.type.opportunities
   module:
     - node
-label: 'Opportunity Import'
 id: opportunity_import
+label: 'Opportunity Import'
 description: ''
+help: null
 import_period: -1
+import_period_per_feed: false
 fetcher: upload
 fetcher_configuration:
   allowed_extensions: 'txt csv tsv xml opml'
@@ -43,127 +45,162 @@ processor_configuration:
   expire: -1
   owner_feed_author: false
   owner_id: 1
+  insert_new: 1
+  skip_validation: false
+  skip_validation_types: {  }
+  revision: false
+  langcode: en
 custom_sources:
   0:
     value: '0'
     label: '0'
-    machine_name: '0'
+    machine_name: 0
+    type: csv
   1:
     value: '1'
     label: '1'
-    machine_name: '1'
+    machine_name: 1
+    type: csv
   2:
     value: '2'
     label: '2'
-    machine_name: '2'
+    machine_name: 2
+    type: csv
   3:
     value: '3'
     label: '3'
-    machine_name: '3'
+    machine_name: 3
+    type: csv
   4:
     value: '4'
     label: '4'
-    machine_name: '4'
+    machine_name: 4
+    type: csv
   5:
     value: '5'
     label: '5'
-    machine_name: '5'
+    machine_name: 5
+    type: csv
   6:
     value: '6'
     label: '6'
-    machine_name: '6'
+    machine_name: 6
+    type: csv
   7:
     value: '7'
     label: '7'
-    machine_name: '7'
+    machine_name: 7
+    type: csv
   8:
     value: '8'
     label: '8'
-    machine_name: '8'
+    machine_name: 8
+    type: csv
   9:
     value: '9'
     label: '9'
-    machine_name: '9'
+    machine_name: 9
+    type: csv
   10:
     value: '10'
     label: '10'
-    machine_name: '10'
+    machine_name: 10
+    type: csv
   11:
     value: '11'
     label: '11'
-    machine_name: '11'
+    machine_name: 11
+    type: csv
   12:
     value: '12'
     label: '12'
-    machine_name: '12'
+    machine_name: 12
+    type: csv
   13:
     value: '13'
     label: '13'
-    machine_name: '13'
+    machine_name: 13
+    type: csv
   14:
     value: '14'
     label: '14'
-    machine_name: '14'
+    machine_name: 14
+    type: csv
   title:
     value: title
     label: title
     machine_name: title
+    type: csv
   acct:
     value: acct
     label: acct
     machine_name: acct
+    type: csv
   acctmgr:
     value: acctmgr
     label: acctmgr
     machine_name: acctmgr
+    type: csv
   addr:
     value: addr
     label: addr
     machine_name: addr
+    type: csv
   bacct:
     value: bacct
     label: bacct
     machine_name: bacct
+    type: csv
   otype:
     value: otype
     label: otype
     machine_name: otype
+    type: csv
   city:
     value: city
     label: city
     machine_name: city
+    type: csv
   billstatus:
     value: billstatus
     label: billstatus
     machine_name: billstatus
+    type: csv
   intake:
     value: intake
     label: intake
     machine_name: intake
+    type: csv
   intakedate:
     value: intake
     label: intake
     machine_name: intakedate
+    type: csv
   dateclosed:
     value: dateclosed
     label: dateclosed
     machine_name: dateclosed
+    type: csv
   st:
     value: st
     label: st
     machine_name: st
+    type: csv
   zip:
     value: zip
     label: zip
     machine_name: zip
+    type: csv
   audit:
     value: audit
     label: audit
     machine_name: audit
+    type: csv
   amt:
     value: amt
     label: amt
     machine_name: amt
+    type: csv
 mappings:
   -
     target: title

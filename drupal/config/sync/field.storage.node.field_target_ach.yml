@@ -1,0 +1,20 @@
+uuid: af392c1f-58d1-4d1d-8b88-10a7108a3f30
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_target_ach
+field_name: field_target_ach
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

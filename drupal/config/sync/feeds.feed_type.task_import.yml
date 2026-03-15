@@ -14,10 +14,12 @@ dependencies:
     - node.type.tasks
   module:
     - node
-label: 'Task Import'
 id: task_import
+label: 'Task Import'
 description: ''
+help: null
 import_period: -1
+import_period_per_feed: false
 fetcher: upload
 fetcher_configuration:
   allowed_extensions: 'txt csv tsv xml opml'
@@ -38,39 +40,52 @@ processor_configuration:
   expire: -1
   owner_feed_author: false
   owner_id: 1
+  insert_new: 1
+  skip_validation: false
+  skip_validation_types: {  }
+  revision: false
+  langcode: en
 custom_sources:
   -
     value: '0'
     label: '0'
-    machine_name: '0'
+    machine_name: 0
+    type: csv
   -
     value: '1'
     label: '1'
-    machine_name: '1'
+    machine_name: 1
+    type: csv
   -
     value: '2'
     label: '2'
-    machine_name: '2'
+    machine_name: 2
+    type: csv
   -
     value: '3'
     label: '3'
-    machine_name: '3'
+    machine_name: 3
+    type: csv
   -
     value: '4'
     label: '4'
-    machine_name: '4'
+    machine_name: 4
+    type: csv
   -
     value: '5'
     label: '5'
-    machine_name: '5'
+    machine_name: 5
+    type: csv
   -
     value: '6'
     label: '6'
-    machine_name: '6'
+    machine_name: 6
+    type: csv
   -
     value: '7'
     label: '7'
-    machine_name: '7'
+    machine_name: 7
+    type: csv
 mappings:
   -
     target: title

@@ -12,7 +12,7 @@ id: node.projects.field_account_payment_issues
 field_name: field_account_payment_issues
 entity_type: node
 bundle: projects
-label: 'Account Payment Issues'
+label: '🛑 Account Issues'
 description: ''
 required: false
 translatable: false
@@ -29,6 +29,7 @@ settings:
   allowed_views:
     account_delinquency: '0'
     accounts: '0'
+    billable_tasks: '0'
     billing_status_ref: '0'
     comment: '0'
     comments_export: '0'
@@ -47,17 +48,22 @@ settings:
     dashboard_upcoming_site_visits: '0'
     dashboard_upcoming_site_visits_table: '0'
     entity_reference_services: '0'
+    export_accounts: '0'
     reports_project_tasks_export: '0'
+    export_comments: '0'
     reports_contacts_export: '0'
     reports_opportunities_export: '0'
     reports_opportunity_services_export: '0'
     reports_opportunity_tasks_export: '0'
     export_project_contacts: '0'
+    export_project_contacts_2: '0'
     export_projects: '0'
     reports_projects_export: '0'
-    export_projects_opportunities: '0'
+    export_project_services: '0'
     export_project_tasks: '0'
     reports_project_units_export: '0'
+    export_taxonomy: '0'
+    export_users: '0'
     feeds_feed: '0'
     files: '0'
     final_submittals: '0'

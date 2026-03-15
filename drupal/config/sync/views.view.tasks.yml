@@ -1014,7 +1014,7 @@ display:
             group_items: {  }
           reduce_duplicates: false
           vid: task_status
-          type: select
+          type: select2
           hierarchy: false
           limit: true
           error_message: true
@@ -1064,7 +1064,7 @@ display:
             group_items: {  }
           reduce_duplicates: false
           vid: priority
-          type: select
+          type: select2
           hierarchy: false
           limit: true
           error_message: true
@@ -2465,7 +2465,6 @@ display:
           title: ''
           default_argument_type: current_user
           default_argument_options: {  }
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -2482,6 +2481,7 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
+          default_argument_skip_url: false
       filters:
         status:
           id: status
@@ -2760,7 +2760,7 @@ display:
             group_items: {  }
           reduce_duplicates: false
           vid: task_status
-          type: select
+          type: select2
           hierarchy: false
           limit: true
           error_message: true
@@ -2810,7 +2810,7 @@ display:
             group_items: {  }
           reduce_duplicates: false
           vid: priority
-          type: select
+          type: select2
           hierarchy: false
           limit: true
           error_message: true

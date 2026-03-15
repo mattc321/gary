@@ -244,6 +244,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -346,9 +347,6 @@ display:
               authenticated: authenticated
               assignees: assignees
               limited_admin: limited_admin
-              anonymous: '0'
-              administrator: '0'
-              ec_admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -407,6 +405,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: 'entity:node'
         options:
@@ -527,11 +526,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
             reduce: false
           is_grouped: false
           group_info:

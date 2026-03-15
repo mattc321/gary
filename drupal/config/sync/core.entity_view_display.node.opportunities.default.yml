@@ -209,10 +209,10 @@ content:
     settings:
       ajax_inputs: '1'
       view_machine_name: opportunity_services
-      view_display_name: ''
+      view_display_name: block_1
       form_class: inline-pg-form
-      switch_view: ''
-      switch_view_display: ''
+      switch_view: opportunity_services
+      switch_view_display: block_3
       switch_view_link_text: ''
       mobile_view: opportunity_services
       mobile_view_display: block_2

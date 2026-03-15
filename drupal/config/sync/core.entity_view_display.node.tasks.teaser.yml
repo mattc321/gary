@@ -6,6 +6,10 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.tasks.feeds_item
     - field.field.node.tasks.field_audit_id
+    - field.field.node.tasks.field_billed
+    - field.field.node.tasks.field_billing
+    - field.field.node.tasks.field_billing_quantity
+    - field.field.node.tasks.field_billing_rate
     - field.field.node.tasks.field_comments
     - field.field.node.tasks.field_parent_re
     - field.field.node.tasks.field_priority
@@ -13,6 +17,7 @@ dependencies:
     - field.field.node.tasks.field_task_due_date
     - field.field.node.tasks.field_task_list
     - field.field.node.tasks.field_task_status
+    - field.field.node.tasks.field_task_type
     - field.field.node.tasks.field_task_weight
     - node.type.tasks
   module:
@@ -30,6 +35,10 @@ content:
 hidden:
   feeds_item: true
   field_audit_id: true
+  field_billed: true
+  field_billing: true
+  field_billing_quantity: true
+  field_billing_rate: true
   field_comments: true
   field_parent_re: true
   field_priority: true
@@ -37,4 +46,5 @@ hidden:
   field_task_due_date: true
   field_task_list: true
   field_task_status: true
+  field_task_type: true
   field_task_weight: true

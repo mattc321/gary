@@ -1,0 +1,39 @@
+uuid: 1b5bd18e-c407-4741-8722-7506d762dd69
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_task_group
+field_name: field_task_group
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'AB Testing'
+      label: 'Air-Barrier Testing'
+    -
+      value: Admin
+      label: Administration
+    -
+      value: Energy
+      label: 'Building Energy Performance'
+    -
+      value: Inspection
+      label: 'Site Inspections'
+    -
+      value: 'Other Testing'
+      label: 'Green Testing'
+    -
+      value: General
+      label: General
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

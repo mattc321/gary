@@ -509,7 +509,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: 'No contacts have been added yet'
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -603,6 +602,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
       query:
@@ -722,9 +722,10 @@ display:
           plugin:
             hide_title: 1
             hide_description: 1
-            type: entity_reference_autocomplete_tags
+            type: entity_reference_autocomplete
             settings:
               match_operator: CONTAINS
+              match_limit: '10'
               size: '60'
               placeholder: ''
             third_party_settings: {  }

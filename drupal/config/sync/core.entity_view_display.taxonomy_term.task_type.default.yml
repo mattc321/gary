@@ -1,0 +1,21 @@
+uuid: e24ca2ca-1f7a-4554-be46-f2fdedc98dfe
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.task_type
+  module:
+    - text
+id: taxonomy_term.task_type.default
+targetEntityType: taxonomy_term
+bundle: task_type
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

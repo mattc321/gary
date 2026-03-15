@@ -1,0 +1,21 @@
+uuid: a6b532aa-6d7a-4c30-ac72-4a9b8cb07932
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_task_group
+    - node.type.task_list
+  module:
+    - options
+id: node.task_list.field_task_group
+field_name: field_task_group
+entity_type: node
+bundle: task_list
+label: 'Task Group'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

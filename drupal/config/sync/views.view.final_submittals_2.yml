@@ -1,26 +1,28 @@
 uuid: 62d6bc84-5915-4c05-a8ab-bab83ae4b5ab
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - field.storage.node.field_account_reference
-    - field.storage.node.field_billing_status
+    - field.storage.node.field_billing_status_ref
     - field.storage.node.field_far_incentive
     - field.storage.node.field_priority
     - field.storage.node.field_priority_green
     - field.storage.node.field_task_assigned_to
     - field.storage.node.field_task_status
+    - node.type.projects
+    - node.type.task_list
     - node.type.tasks
-    - taxonomy.vocabulary.billing_status
     - taxonomy.vocabulary.project_status
   content:
+    - 'node:task_list:8233eb86-764c-4343-9778-cc793bf2ee28'
     - 'taxonomy_term:project_status:c9b7c9bb-3452-43c3-a282-c15091dca652'
   module:
     - gary_custom_views
     - node
     - taxonomy
     - user
-    - views_autocomplete_filters
+    - viewfield
 id: final_submittals_2
 label: 'Final Submittals Tasks'
 module: views
@@ -484,11 +486,11 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_billing_status:
-          id: field_billing_status
-          table: node__field_billing_status
-          field: field_billing_status
-          relationship: field_opportunity
+        field_billing_status_ref:
+          id: field_billing_status_ref
+          table: node__field_billing_status_ref
+          field: field_billing_status_ref
+          relationship: reverse__node__field_tasks
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -533,11 +535,13 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
+          click_sort_column: display_id
+          type: viewfield_default
           settings:
-            link: false
-          group_column: target_id
+            view_title: hidden
+            always_build_output: false
+            empty_view_title: hidden
+          group_column: ''
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -565,6 +569,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -602,44 +607,19 @@ display:
           granularity: second
       arguments: {  }
       filters:
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-        type:
-          id: type
+        type_1:
+          id: type_1
           table: node_field_data
           field: type
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          value:
-            tasks: tasks
-          group: 1
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          relationship: none
+          relationship: reverse__node__field_tasks
           group_type: group
           admin_label: ''
           entity_type: node
-          entity_field: title
-          plugin_id: views_autocomplete_filters_string
-          operator: contains
-          value: 'Final Submittal'
+          entity_field: type
+          plugin_id: bundle
+          operator: in
+          value:
+            projects: projects
           group: 1
           exposed: false
           expose:
@@ -656,14 +636,7 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            placeholder: ''
-            autocomplete_filter: 0
-            autocomplete_min_chars: '0'
-            autocomplete_items: '10'
-            autocomplete_field: ''
-            autocomplete_raw_suggestion: 1
-            autocomplete_raw_dropdown: 1
-            autocomplete_dependent: 0
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -676,6 +649,77 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            tasks: tasks
+          group: 1
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+        field_task_list_target_id:
+          id: field_task_list_target_id
+          table: node__field_task_list
+          field: field_task_list_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: node_index_nid
+          operator: or
+          value:
+            6448: '6448'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: 0
+          type: select
+          limit: true
+          bundle: task_list
+          error_message: true
         field_project_status_target_id:
           id: field_project_status_target_id
           table: node__field_project_status
@@ -748,11 +792,6 @@ display:
             multiple: true
             remember_roles:
               limited_admin: limited_admin
-              anonymous: '0'
-              authenticated: '0'
-              administrator: '0'
-              assignees: '0'
-              ec_admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -771,56 +810,6 @@ display:
           limit: true
           bundle: ''
           error_message: 1
-        field_billing_status_target_id:
-          id: field_billing_status_target_id
-          table: node__field_billing_status
-          field: field_billing_status_target_id
-          relationship: field_opportunity
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_billing_status_target_id_op
-            label: 'Billing Status'
-            description: ''
-            use_operator: false
-            operator: field_billing_status_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: field_billing_status_target_id
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          vid: billing_status
-          type: textfield
-          hierarchy: false
-          limit: true
-          error_message: true
         field_far_incentive_value:
           id: field_far_incentive_value
           table: node__field_far_incentive
@@ -847,11 +836,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -890,11 +874,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -926,6 +905,7 @@ display:
             field_far_incentive: field_far_incentive
             field_priority_green: field_priority_green
             field_billing_status: field_billing_status
+            field_billing_status_ref: field_billing_status_ref
           default: '-1'
           info:
             title:
@@ -984,12 +964,20 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
+            field_billing_status_ref:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
           override: true
           sticky: false
           summary: ''
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
         options:
@@ -1031,17 +1019,7 @@ display:
           plugin_id: standard
           required: false
       use_ajax: true
-      header:
-        result:
-          id: result
-          table: views
-          field: result
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: result
-          empty: false
-          content: 'Displaying @start - @end of @total'
+      header: {  }
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -1056,7 +1034,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_account_reference'
-        - 'config:field.storage.node.field_billing_status'
+        - 'config:field.storage.node.field_billing_status_ref'
         - 'config:field.storage.node.field_far_incentive'
         - 'config:field.storage.node.field_priority'
         - 'config:field.storage.node.field_priority_green'
@@ -1091,7 +1069,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_account_reference'
-        - 'config:field.storage.node.field_billing_status'
+        - 'config:field.storage.node.field_billing_status_ref'
         - 'config:field.storage.node.field_far_incentive'
         - 'config:field.storage.node.field_priority'
         - 'config:field.storage.node.field_priority_green'

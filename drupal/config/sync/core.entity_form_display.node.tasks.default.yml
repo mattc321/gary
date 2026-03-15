@@ -5,6 +5,10 @@ dependencies:
   config:
     - field.field.node.tasks.feeds_item
     - field.field.node.tasks.field_audit_id
+    - field.field.node.tasks.field_billed
+    - field.field.node.tasks.field_billing
+    - field.field.node.tasks.field_billing_quantity
+    - field.field.node.tasks.field_billing_rate
     - field.field.node.tasks.field_comments
     - field.field.node.tasks.field_parent_re
     - field.field.node.tasks.field_priority
@@ -12,6 +16,7 @@ dependencies:
     - field.field.node.tasks.field_task_due_date
     - field.field.node.tasks.field_task_list
     - field.field.node.tasks.field_task_status
+    - field.field.node.tasks.field_task_type
     - field.field.node.tasks.field_task_weight
     - node.type.tasks
   module:
@@ -22,33 +27,66 @@ targetEntityType: node
 bundle: tasks
 mode: default
 content:
+  field_billed:
+    type: boolean_checkbox
+    weight: 26
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_billing:
+    type: options_buttons
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_billing_quantity:
+    type: number
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_billing_rate:
+    type: number
+    weight: 9
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_parent_re:
     type: entity_reverse_widget
-    weight: 26
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   field_task_assigned_to:
     type: options_select
-    weight: 1
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   field_task_due_date:
     type: datetime_default
-    weight: 2
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   field_task_list:
     type: options_select
-    weight: 3
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   field_task_status:
     type: options_select
-    weight: 4
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_task_type:
+    type: options_select
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }

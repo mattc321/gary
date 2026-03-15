@@ -1,6 +1,6 @@
 uuid: 8b521f76-26b9-4d3b-95e1-6f8f060adf73
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - field.storage.node.field_account_reference
@@ -21,7 +21,6 @@ dependencies:
     - taxonomy
     - user
     - viewfield
-    - views_autocomplete_filters
 id: final_submittals_list
 label: 'Final Submittals List'
 module: views
@@ -568,6 +567,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -702,11 +702,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -800,11 +795,6 @@ display:
             multiple: true
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -849,11 +839,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -892,11 +877,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              assignees: '0'
-              limited_admin: '0'
-              ec_admin: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -988,6 +968,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
       query:

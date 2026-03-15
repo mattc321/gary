@@ -1,6 +1,6 @@
 uuid: 62c255db-4aa2-40a6-863c-df15b5e51eeb
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - node.type.projects
@@ -331,6 +331,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
         options:

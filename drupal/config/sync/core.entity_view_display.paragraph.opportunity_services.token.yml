@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.paragraph.token
+    - field.field.paragraph.opportunity_services.field_line_description
     - field.field.paragraph.opportunity_services.field_line_total
     - field.field.paragraph.opportunity_services.field_opportunity_service
     - field.field.paragraph.opportunity_services.field_quantity
@@ -23,6 +24,7 @@ content:
     weight: 0
     region: content
 hidden:
+  field_line_description: true
   field_line_total: true
   field_quantity: true
   field_service_amount: true

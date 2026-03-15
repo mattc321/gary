@@ -1,0 +1,21 @@
+uuid: fc7d0509-32a4-457e-8231-b44de31f4730
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_list
+    - node.type.sub_contractor
+  module:
+    - options
+id: node.sub_contractor.field_list
+field_name: field_list
+entity_type: node
+bundle: sub_contractor
+label: List
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

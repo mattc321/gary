@@ -10,7 +10,7 @@ id: node.opportunities.field_orig_account
 field_name: field_orig_account
 entity_type: node
 bundle: opportunities
-label: Account
+label: 'Client Account'
 description: ''
 required: false
 translatable: false
@@ -23,6 +23,7 @@ settings:
       accounts: accounts
     sort:
       field: _none
+      direction: ASC
     auto_create: false
     auto_create_bundle: ''
 field_type: entity_reference

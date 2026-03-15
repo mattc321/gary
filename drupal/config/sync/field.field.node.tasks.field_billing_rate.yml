@@ -1,0 +1,23 @@
+uuid: edae115b-92ec-4888-97d6-d06810fe5ca1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_billing_rate
+    - node.type.tasks
+id: node.tasks.field_billing_rate
+field_name: field_billing_rate
+entity_type: node
+bundle: tasks
+label: 'Billing Rate'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.sub_contractor.field_billing_zip
     - field.field.node.sub_contractor.field_contact_email
     - field.field.node.sub_contractor.field_full_name
+    - field.field.node.sub_contractor.field_list
     - field.field.node.sub_contractor.field_phone
     - field.field.node.sub_contractor.field_project_sub_contractors
     - field.field.node.sub_contractor.field_state
@@ -35,6 +36,7 @@ hidden:
   field_billing_zip: true
   field_contact_email: true
   field_full_name: true
+  field_list: true
   field_phone: true
   field_project_sub_contractors: true
   field_state: true

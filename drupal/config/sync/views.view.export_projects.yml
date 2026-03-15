@@ -20,8 +20,8 @@ dependencies:
     - field.storage.node.field_project_status
     - field.storage.node.field_state
     - field.storage.node.field_zip
+    - filter.format.plain_text
     - node.type.projects
-    - user.role.administrator
   module:
     - comment
     - csv_serialization
@@ -148,7 +148,7 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
             preserve_tags: ''
             html: false
@@ -159,7 +159,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -211,7 +211,7 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
             preserve_tags: ''
             html: false
@@ -222,7 +222,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -337,7 +337,7 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
             preserve_tags: ''
             html: false
@@ -348,7 +348,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -400,7 +400,7 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
             preserve_tags: ''
             html: false
@@ -411,7 +411,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -442,7 +442,7 @@ display:
           exclude: false
           alter:
             alter_text: false
-            text: ''
+            text: '{{ field_address__value }}'
             make_link: false
             path: ''
             absolute: false
@@ -463,7 +463,7 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
             preserve_tags: ''
             html: false
@@ -474,7 +474,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -695,8 +695,8 @@ display:
           label: ProjectGeolocation
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '{{ field_geolocation__lat }},{{ field_geolocation__lng }}'
             make_link: false
             path: ''
             absolute: false
@@ -717,7 +717,7 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
             preserve_tags: ''
             html: false
@@ -728,14 +728,19 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: ''
-          type: geolocation_latlng
-          settings: {  }
+          type: geolocation_token
+          settings:
+            tokenized_text:
+              value: '[geolocation_current_item:lat],[geolocation_current_item:lng]'
+              format: plain_text
+            token_help:
+              token_items: ''
           group_column: ''
           group_columns: {  }
           group_rows: true
@@ -909,7 +914,7 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
             preserve_tags: ''
             html: false
@@ -926,10 +931,9 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: datetime_default
+          type: datetime_plain
           settings:
             timezone_override: ''
-            format_type: html_date
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -973,7 +977,7 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
             preserve_tags: ''
             html: false
@@ -984,16 +988,15 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: datetime_default
+          type: datetime_plain
           settings:
             timezone_override: ''
-            format_type: html_date
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -1184,9 +1187,18 @@ display:
           click_sort_column: value
           type: timestamp
           settings:
-            date_format: html_date
+            date_format: html_datetime
             custom_date_format: ''
             timezone: ''
+            tooltip:
+              date_format: ''
+              custom_date_format: ''
+            time_diff:
+              enabled: false
+              future_format: '@interval hence'
+              past_format: '@interval ago'
+              granularity: 2
+              refresh: 60
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -1246,7 +1258,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          date_format: html_date
+          date_format: html_datetime
           custom_date_format: ''
           timezone: ''
         field_opportunity:
@@ -1516,6 +1528,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -1527,10 +1540,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: role
+        type: perm
         options:
-          role:
-            administrator: administrator
+          perm: 'access content'
       cache:
         type: tag
         options: {  }
@@ -1611,7 +1623,7 @@ display:
         - 'languages:language_interface'
         - url.query_args
         - 'user.node_grants:view'
-        - user.roles
+        - user.permissions
       tags:
         - 'config:field.storage.node.field_account_manager'
         - 'config:field.storage.node.field_account_reference'
@@ -1653,7 +1665,7 @@ display:
       display_extenders: {  }
       path: export/projects-dat
       auth: {  }
-      filename: 'projects-[date:html_date].csv'
+      filename: projects.csv
       automatic_download: true
       export_method: batch
       export_batch_size: 500
@@ -1668,7 +1680,142 @@ display:
         - 'languages:language_interface'
         - request_format
         - 'user.node_grants:view'
-        - user.roles
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_account_manager'
+        - 'config:field.storage.node.field_account_reference'
+        - 'config:field.storage.node.field_address'
+        - 'config:field.storage.node.field_architect'
+        - 'config:field.storage.node.field_city'
+        - 'config:field.storage.node.field_client_project_name'
+        - 'config:field.storage.node.field_far_incentive'
+        - 'config:field.storage.node.field_geolocation'
+        - 'config:field.storage.node.field_intake_date'
+        - 'config:field.storage.node.field_opportunity'
+        - 'config:field.storage.node.field_permit_city'
+        - 'config:field.storage.node.field_permit_issue'
+        - 'config:field.storage.node.field_permit_number'
+        - 'config:field.storage.node.field_priority_green'
+        - 'config:field.storage.node.field_project_status'
+        - 'config:field.storage.node.field_state'
+        - 'config:field.storage.node.field_zip'
+  rest_export_1:
+    id: rest_export_1
+    display_title: 'REST export'
+    display_plugin: rest_export
+    position: 2
+    display_options:
+      pager:
+        type: mini
+        options:
+          offset: 0
+          items_per_page: 500
+          total_pages: null
+          id: 0
+          tags:
+            next: Next
+            previous: Previous
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          pagination_heading_level: h4
+      style:
+        type: serializer
+        options:
+          uses_fields: false
+          formats:
+            json: json
+      row:
+        type: data_field
+        options:
+          field_options:
+            nid:
+              alias: ProjectID
+              raw_output: false
+            title:
+              alias: ProjectTitle
+              raw_output: true
+            field_client_project_name:
+              alias: ClientProjectName
+              raw_output: true
+            field_project_status:
+              alias: ProjectStatus
+              raw_output: false
+            field_account_reference:
+              alias: BuilderAccount
+              raw_output: false
+            field_architect:
+              alias: Architect
+              raw_output: false
+            field_address:
+              alias: ProjectAddress
+              raw_output: false
+            field_city:
+              alias: ProjectCity
+              raw_output: false
+            field_state:
+              alias: ProjectState
+              raw_output: false
+            field_zip:
+              alias: ProjectZip
+              raw_output: false
+            field_geolocation:
+              alias: ProjectGeolocation
+              raw_output: false
+            field_far_incentive:
+              alias: FARIncentive
+              raw_output: false
+            field_priority_green:
+              alias: PriorityGreen
+              raw_output: false
+            field_intake_date:
+              alias: IntakeDate
+              raw_output: false
+            field_permit_issue:
+              alias: PermitIssue
+              raw_output: false
+            field_permit_city:
+              alias: PermitCity
+              raw_output: false
+            field_permit_number:
+              alias: PermitNumber
+              raw_output: false
+            created:
+              alias: CreatedOn
+              raw_output: false
+            last_updated:
+              alias: ChangedOn
+              raw_output: false
+            field_opportunity:
+              alias: OpportunityID
+              raw_output: false
+            field_account_manager:
+              alias: AccountManager
+              raw_output: false
+            field_account_reference_1:
+              alias: BuilderAccountID
+              raw_output: false
+            field_architect_1:
+              alias: ArchitectAccountID
+              raw_output: false
+      display_extenders: {  }
+      path: r/projects
+      auth:
+        - basic_auth
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
       tags:
         - 'config:field.storage.node.field_account_manager'
         - 'config:field.storage.node.field_account_reference'

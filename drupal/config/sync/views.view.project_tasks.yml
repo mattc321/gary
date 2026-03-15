@@ -5,20 +5,27 @@ dependencies:
   config:
     - core.base_field_override.node.accounts.title
     - field.field.node.opportunity_auto_tasks.field_task_assigned_to
-    - field.field.node.opportunity_auto_tasks.field_task_list
+    - field.field.node.service_tasks.field_billing
+    - field.field.node.service_tasks.field_task_type
+    - field.field.node.tasks.field_billing_quantity
     - field.field.node.tasks.field_task_due_date
     - field.field.node.tasks.field_task_status
+    - field.storage.node.field_billed
+    - field.storage.node.field_billing
+    - field.storage.node.field_billing_quantity
     - field.storage.node.field_st_assigned_to
     - field.storage.node.field_task_assigned_to
     - field.storage.node.field_task_due_date
     - field.storage.node.field_task_list
     - field.storage.node.field_task_status
+    - field.storage.node.field_task_type
     - node.type.projects
   module:
     - datetime
     - draggableviews
     - gary_field_formatter
     - node
+    - taxonomy
     - user
     - views_entity_form_field
 id: project_tasks
@@ -425,6 +432,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -478,7 +486,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -559,61 +566,71 @@ display:
           default_row_class: true
           columns:
             title: title
-            form_field_title: form_field_title
-            form_field_field_task_assigned_to: form_field_field_task_assigned_to
-            form_field_field_task_due_date: form_field_field_task_due_date
-            form_field_field_task_list: form_field_field_task_list
-            form_field_field_task_status: form_field_field_task_status
+            field_billing_quantity: field_billing_quantity
+            field_task_assigned_to: field_task_assigned_to
+            field_task_due_date: field_task_due_date
+            parent_target_id: parent_target_id
+            field_task_type: field_task_type
+            field_task_status: field_task_status
+            field_billing: field_billing
             entity_delete_item: entity_delete_item
-            draggableviews: draggableviews
-            weight: weight
           default: '-1'
           info:
             title:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_billing_quantity:
               sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            form_field_title:
+            field_task_assigned_to:
+              sortable: true
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            form_field_field_task_assigned_to:
+            field_task_due_date:
+              sortable: true
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            form_field_field_task_due_date:
+            parent_target_id:
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            form_field_field_task_list:
+            field_task_type:
+              sortable: true
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            form_field_field_task_status:
+            field_task_status:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_billing:
+              sortable: false
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             entity_delete_item:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            draggableviews:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            weight:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -626,6 +643,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
         options:
@@ -649,6 +667,15 @@ display:
           relationship: none
           group_type: group
           admin_label: 'field_tasks: Content'
+          plugin_id: standard
+          required: false
+        field_task_type:
+          id: field_task_type
+          table: node__field_task_type
+          field: field_task_type
+          relationship: field_tasks
+          group_type: group
+          admin_label: 'field_task_type: Taxonomy term'
           plugin_id: standard
           required: false
       use_ajax: true
@@ -676,6 +703,134 @@ display:
     position: 1
     display_options:
       fields:
+        parent_target_id:
+          id: parent_target_id
+          table: taxonomy_term__parent
+          field: parent_target_id
+          relationship: field_task_type
+          group_type: group
+          admin_label: ''
+          entity_type: taxonomy_term
+          entity_field: parent
+          plugin_id: field
+          label: 'Term Parents'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_task_type:
+          id: field_task_type
+          table: node__field_task_type
+          field: field_task_type
+          relationship: field_tasks
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Task
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ parent_target_id }}: {{ field_task_type }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         title:
           id: title
           table: node_field_data
@@ -686,7 +841,7 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: field
-          label: Task
+          label: Description
           exclude: false
           alter:
             alter_text: false
@@ -731,6 +886,70 @@ display:
           type: string
           settings:
             link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_billing_quantity:
+          id: field_billing_quantity
+          table: node__field_billing_quantity
+          field: field_billing_quantity
+          relationship: field_tasks
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Quantity
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -868,69 +1087,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_task_list:
-          id: field_task_list
-          table: node__field_task_list
-          field: field_task_list
-          relationship: field_tasks
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: 'Task List'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: false
-          group_column: target_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
         field_task_status:
           id: field_task_status
           table: node__field_task_status
@@ -985,6 +1141,136 @@ display:
           settings:
             link: false
           group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_billing:
+          id: field_billing
+          table: node__field_billing
+          field: field_billing
+          relationship: field_tasks
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Billable
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: boolean
+          settings:
+            format: default
+            format_custom_false: ''
+            format_custom_true: ''
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_billed:
+          id: field_billed
+          table: node__field_billed
+          field: field_billed
+          relationship: field_tasks
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Billed
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: boolean
+          settings:
+            format: yes-no
+            format_custom_false: ''
+            format_custom_true: ''
+          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -1058,10 +1344,13 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_billed'
+        - 'config:field.storage.node.field_billing'
+        - 'config:field.storage.node.field_billing_quantity'
         - 'config:field.storage.node.field_task_assigned_to'
         - 'config:field.storage.node.field_task_due_date'
-        - 'config:field.storage.node.field_task_list'
         - 'config:field.storage.node.field_task_status'
+        - 'config:field.storage.node.field_task_type'
   block_2:
     id: block_2
     display_title: 'Edit Tasks'
@@ -1134,6 +1423,62 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        form_field_field_task_type:
+          id: form_field_field_task_type
+          table: node_field_data
+          field: form_field_field_task_type
+          relationship: field_tasks
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: entity_form_field
+          label: Task
+          exclude: false
+          alter:
+            alter_text: false
+            text: '{{ parent_target_id }}: {{ field_task_type }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          plugin:
+            hide_title: 1
+            hide_description: 1
+            type: options_select
+            settings: {  }
+            third_party_settings: {  }
         form_field_title:
           id: form_field_title
           table: node_field_data
@@ -1143,7 +1488,7 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: entity_form_field
-          label: Title
+          label: Description
           exclude: false
           alter:
             alter_text: false
@@ -1190,6 +1535,63 @@ display:
             type: string_textfield
             settings:
               size: '60'
+              placeholder: ''
+            third_party_settings: {  }
+        form_field_field_billing_quantity:
+          id: form_field_field_billing_quantity
+          table: node_field_data
+          field: form_field_field_billing_quantity
+          relationship: field_tasks
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: entity_form_field
+          label: Quantity
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          plugin:
+            hide_title: 1
+            hide_description: 1
+            type: number
+            settings:
               placeholder: ''
             third_party_settings: {  }
         form_field_field_task_assigned_to:
@@ -1304,62 +1706,6 @@ display:
             type: datetime_default
             settings: {  }
             third_party_settings: {  }
-        form_field_field_task_list:
-          id: form_field_field_task_list
-          table: node_field_data
-          field: form_field_field_task_list
-          relationship: field_tasks
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: entity_form_field
-          label: 'Task List'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          plugin:
-            hide_title: 1
-            hide_description: 1
-            type: options_select
-            settings: {  }
-            third_party_settings: {  }
         form_field_field_task_status:
           id: form_field_field_task_status
           table: node_field_data
@@ -1415,6 +1761,63 @@ display:
             hide_description: 1
             type: options_select
             settings: {  }
+            third_party_settings: {  }
+        form_field_field_billing:
+          id: form_field_field_billing
+          table: node_field_data
+          field: form_field_field_billing
+          relationship: field_tasks
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: entity_form_field
+          label: Billable
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          plugin:
+            hide_title: 1
+            hide_description: 1
+            type: boolean_checkbox
+            settings:
+              display_label: 1
             third_party_settings: {  }
         entity_delete_item:
           id: entity_delete_item
@@ -1652,6 +2055,7 @@ display:
           empty_table: false
           caption: 'Enter target date for open tasks / actual date for closed tasks.'
           description: ''
+          class: ''
       row:
         type: fields
         options:
@@ -1680,13 +2084,17 @@ display:
       tags:
         - 'config:core.base_field_override.node.accounts.title'
         - 'config:field.field.node.opportunity_auto_tasks.field_task_assigned_to'
-        - 'config:field.field.node.opportunity_auto_tasks.field_task_list'
+        - 'config:field.field.node.tasks.field_billing'
+        - 'config:field.field.node.tasks.field_billing_quantity'
         - 'config:field.field.node.tasks.field_task_due_date'
         - 'config:field.field.node.tasks.field_task_status'
+        - 'config:field.field.node.tasks.field_task_type'
+        - 'config:field.storage.node.field_billing'
+        - 'config:field.storage.node.field_billing_quantity'
         - 'config:field.storage.node.field_task_assigned_to'
         - 'config:field.storage.node.field_task_due_date'
-        - 'config:field.storage.node.field_task_list'
         - 'config:field.storage.node.field_task_status'
+        - 'config:field.storage.node.field_task_type'
   block_3:
     id: block_3
     display_title: 'Mobile Block'
@@ -1799,6 +2207,70 @@ display:
           type: string
           settings:
             link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_billing_quantity:
+          id: field_billing_quantity
+          table: node__field_billing_quantity
+          field: field_billing_quantity
+          relationship: field_tasks
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Quantity
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -1936,15 +2408,143 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_task_list:
-          id: field_task_list
-          table: node__field_task_list
-          field: field_task_list
+        parent_target_id:
+          id: parent_target_id
+          table: taxonomy_term__parent
+          field: parent_target_id
+          relationship: field_task_type
+          group_type: group
+          admin_label: ''
+          entity_type: taxonomy_term
+          entity_field: parent
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_task_type:
+          id: field_task_type
+          table: node__field_task_type
+          field: field_task_type
           relationship: field_tasks
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: 'Task List'
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ parent_target_id }}: {{ field_task_type }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: false
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_billing:
+          id: field_billing
+          table: node__field_billing
+          field: field_billing
+          relationship: field_tasks
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Billable
           exclude: false
           alter:
             alter_text: false
@@ -1985,11 +2585,13 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
+          click_sort_column: value
+          type: boolean
           settings:
-            link: false
-          group_column: target_id
+            format: default
+            format_custom_false: ''
+            format_custom_true: ''
+          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -2091,7 +2693,9 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_billing'
+        - 'config:field.storage.node.field_billing_quantity'
         - 'config:field.storage.node.field_task_assigned_to'
         - 'config:field.storage.node.field_task_due_date'
-        - 'config:field.storage.node.field_task_list'
         - 'config:field.storage.node.field_task_status'
+        - 'config:field.storage.node.field_task_type'

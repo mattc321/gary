@@ -1,0 +1,29 @@
+uuid: 7a9af465-2196-487e-976d-2f930ed5d914
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_target_ach
+    - node.type.projects
+    - taxonomy.vocabulary.ach_standards
+id: node.projects.field_target_ach
+field_name: field_target_ach
+entity_type: node
+bundle: projects
+label: 'Air Leakage Target'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ach_standards: ach_standards
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

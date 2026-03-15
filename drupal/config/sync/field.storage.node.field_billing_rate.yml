@@ -1,0 +1,20 @@
+uuid: 63939bd3-6ac5-4a24-9dac-03cff3d7782c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_billing_rate
+field_name: field_billing_rate
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,17 @@
+uuid: f941330b-79b4-47db-b072-1643e5dc8a06
+langcode: en
+status: false
+dependencies:
+  module:
+    - basic_auth
+    - serialization
+id: entity.entity_view_display
+plugin_id: 'entity:entity_view_display'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth

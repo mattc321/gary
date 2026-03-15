@@ -21,6 +21,8 @@ settings:
   selection: blocks
   selection_settings:
     plugin_ids:
+      'views_block:billable_tasks-block_1': 'views_block:billable_tasks-block_1'
+      'views_block:billable_tasks-block_2': 'views_block:billable_tasks-block_2'
       'views_block:manage_service_tasks-block_2': 'views_block:manage_service_tasks-block_2'
       'views_block:manage_service_tasks-block_1': 'views_block:manage_service_tasks-block_1'
 field_type: block_field
