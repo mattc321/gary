@@ -610,7 +610,9 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
   $multiselects = [
     'field_task_assigned_to_target_id',
     'field_project_status_target_id',
-    'field_opportunity_type_target_id'
+    'field_opportunity_type_target_id',
+    'field_task_status_target_id',
+    'field_priority_target_id'
   ];
 
   foreach ($multiselects as $key => $element) {

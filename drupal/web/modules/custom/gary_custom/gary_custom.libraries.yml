@@ -14,6 +14,7 @@ custom:
   css:
     component:
       css/slider.css: {}
+      css/field-info.css: {}
   dependencies:
     - core/drupal
     - core/jquery

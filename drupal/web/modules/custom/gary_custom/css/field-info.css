@@ -1,0 +1,62 @@
+.form-item .description {
+  display: none;
+}
+
+.field-info-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: #888;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+  font-style: italic;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  margin-left: 5px;
+  vertical-align: middle;
+  line-height: 1;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.field-info-toggle:hover,
+.field-info-toggle:focus {
+  background: #555;
+  outline: none;
+}
+
+.field-info-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-family: sans-serif;
+  line-height: 1.4;
+  padding: 7px 10px;
+  border-radius: 4px;
+  white-space: normal;
+  width: 220px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.field-info-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #333;
+}

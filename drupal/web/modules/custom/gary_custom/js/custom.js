@@ -93,4 +93,55 @@
 
      }
    };
+
+  Drupal.behaviors.fieldInfoIcon = {
+    attach: function (context, settings) {
+      once('field-info-icon', '.form-item', context).forEach(function (item) {
+        var desc = item.querySelector('.description');
+        if (!desc || !desc.textContent.trim()) return;
+
+        var text = desc.textContent.trim();
+
+        var toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'field-info-toggle';
+        toggle.setAttribute('aria-label', 'Field information');
+        toggle.textContent = 'i';
+
+        var tooltip = null;
+
+        function showTooltip() {
+          tooltip = document.createElement('div');
+          tooltip.className = 'field-info-tooltip';
+          tooltip.textContent = text;
+          toggle.appendChild(tooltip);
+        }
+
+        function hideTooltip() {
+          if (tooltip) {
+            tooltip.remove();
+            tooltip = null;
+          }
+        }
+
+        toggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (tooltip) {
+            hideTooltip();
+          } else {
+            showTooltip();
+            document.addEventListener('click', hideTooltip, { once: true });
+          }
+        });
+
+        var label = item.querySelector('label');
+        if (label) {
+          label.appendChild(toggle);
+        } else {
+          desc.parentNode.insertBefore(toggle, desc);
+        }
+      });
+    }
+  };
+
  })(jQuery, Drupal, drupalSettings, once);
