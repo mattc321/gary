@@ -1,0 +1,16 @@
+--- web/core/lib/Drupal/Core/Datetime/Element/Datetime.php	2026-03-16 11:29:11.468158565 -0700
++++ web/core/lib/Drupal/Core/Datetime/Element/Datetime.php	2026-03-16 11:29:38.409332678 -0700
+@@ -369,6 +369,13 @@
+     $input = NestedArray::getValue($form_state->getValues(), $element['#parents'], $input_exists);
+     if ($input_exists) {
+ 
++      // If input has already been converted to a DrupalDateTime object
++      // (form can be validated multiple times, e.g. via Views/ctools blocks),
++      // skip array-based processing to avoid a fatal "object used as array" error.
++      if ($input instanceof DrupalDateTime) {
++        return;
++      }
++
+       $title = static::getElementTitle($element, $complete_form);
+ 
+       // If there's empty input and the field is not required, set it to empty.

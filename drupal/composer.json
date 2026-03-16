@@ -122,19 +122,22 @@
         },
         "patches": {
           "drupal/core": {
-            "Fix mb_strtolower null deprecation in config entity query": "patches/fix-config-entity-query-null-strtolower.patch"
+            "Fix mb_strtolower null deprecation in config entity query": "patches/fix-config-entity-query-null-strtolower.patch",
+            "Fix DrupalDateTime used as array in validateDatetime (Views/ctools double-validation)": "patches/fix-datetime-validate-object-as-array.patch"
           },
           "drupal/paragraphs": {
             "Mod add multiple to paragraphs": "patches/mod_add_multiple_paragraphs.patch"
           },
           "drupal/draggableviews": {
             "Mod fix broken index on weight": "patches/mod-fix-broken-index-on-drag-weight.patch",
-            "Mod remove multi display support because relations dont support it": "patches/mod-no-multi-view-display-support.patch"
+            "Mod remove multi display support because relations dont support it": "patches/mod-no-multi-view-display-support.patch",
+            "Fix DraggableViewsField inheriting BulkForm validation when used as drag-order field": "patches/fix-draggableviews-skip-bulkform-validate.patch"
           },
           "drupal/views_entity_form_field": {
             "Fix broken submit handlers when draggableviews installed": "patches/fix-entity-form-submit-handlers.patch",
             "Move submit to custom button": "patches/move-submit-to-custom-button.patch",
-            "Mod call draggable views submit directly": "patches/mod-call-draggable-views-submit-directly-if-needed.patch"
+            "Mod call draggable views submit directly": "patches/mod-call-draggable-views-submit-directly-if-needed.patch",
+            "Fix entity ID collision when editing related entities (e.g. tasks via project relationship)": "patches/fix-entity-form-field-relationship-entity-id.patch"
           }
         }
     }

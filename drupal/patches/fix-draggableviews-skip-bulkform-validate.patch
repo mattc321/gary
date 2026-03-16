@@ -1,0 +1,17 @@
+--- a/modules/contrib/draggableviews/src/Plugin/views/field/DraggableViewsField.php	2026-03-16 11:47:08.495988035 -0700
++++ b/modules/contrib/draggableviews/src/Plugin/views/field/DraggableViewsField.php	2026-03-16 11:52:51.905036688 -0700
+@@ -184,4 +184,14 @@
+     }
+   }
+ 
++  /**
++   * {@inheritdoc}
++   *
++   * Override BulkForm validation to skip action/selection checks.
++   * DraggableViewsField is used for drag ordering only, not bulk actions.
++   */
++  public function viewsFormValidate(&$form, FormStateInterface $form_state) {
++    // No bulk-action validation needed for a drag-order field.
++  }
++
+ }

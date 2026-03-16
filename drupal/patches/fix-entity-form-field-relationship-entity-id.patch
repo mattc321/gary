@@ -1,0 +1,15 @@
+--- a/src/Plugin/views/field/EntityFormField.php	2026-03-16 12:05:08.313228682 -0700
++++ b/src/Plugin/views/field/EntityFormField.php	2026-03-16 12:05:44.661345264 -0700
+@@ -485,7 +485,11 @@
+       $form[$this->options['id']]['#tree'] = TRUE;
+       $form[$this->options['id']]['#entity_form_field'] = TRUE;
+       foreach ($this->getView()->result as $row_index => $row) {
+-        $entity_id = $row->_entity->id();
++        // Use the relationship entity's ID so each row has a unique form state
++        // path. $row->_entity is the base entity (e.g. the project), not the
++        // related entity being edited (e.g. the task).
++        $related_entity = $this->getEntity($row);
++        $entity_id = $related_entity ? $related_entity->id() : $row->_entity->id();
+         // Initialize this row and column.
+         $form[$this->options['id']][$row_index]['#parents'] = [$this->options['id'], $entity_id];
+         $form[$this->options['id']][$row_index]['#tree'] = TRUE;
