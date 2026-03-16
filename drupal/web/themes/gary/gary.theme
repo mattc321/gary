@@ -135,17 +135,17 @@ function gary_preprocess_comment(&$variables) {
   //change submitted format and output
   $date = date('D, m-d-Y', $variables['comment']->getCreatedTime());
   $author = $variables['comment']->getAuthorName();
-  $submitted = [
-    '#theme' => 'rdf_wrapper',
-    '#content' => t('Submitted by @author on @cdate', [
+  $variables['ec_submitted'] = [
+    '#type' => 'html_tag',
+    '#tag' => 'p',
+    '#attributes' => [
+      'class' => ['ec-submitted', 'comment__submitted'],
+    ],
+    '#value' => t('Submitted by @author on @cdate', [
       '@author' => $author,
       '@cdate' => $date,
-    ])
+    ]),
   ];
-  $variables['ec_submitted'][] = $submitted;
-
-
-
 }
 
 function gary_preprocess_views_view_unformatted__project_units__block_4(&$variables) {
