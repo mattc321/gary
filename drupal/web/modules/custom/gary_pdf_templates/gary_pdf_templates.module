@@ -102,20 +102,15 @@ function getMarkupWithLinkGenerate(string $text, Node $entity, Node $templateEnt
     'template_entity_id' => $templateEntity->id(),
     'text' => $text,
     'file' => $fileName,
-    'download_image' => '/'.drupal_get_path(
-        'module',
-        'gary_pdf_templates'
-      ) . '/img/download.svg'
+    'download_image' => '/' . \Drupal::service('extension.list.module')->getPath('gary_pdf_templates') . '/img/download.svg'
   ];
 
   $twigService = \Drupal::service('twig');
 
-  $path = drupal_get_path(
-      'module',
-      'gary_pdf_templates'
-    ) . '/templates/form-generate.html.twig';
+  $path = \Drupal::service('extension.list.module')->getPath('gary_pdf_templates') . '/templates/form-generate.html.twig';
+  $templateSource = file_get_contents(DRUPAL_ROOT . '/' . $path);
 
   return $twigService
-    ->loadTemplate($path)
+    ->createTemplate($templateSource)
     ->render($build);
 }
