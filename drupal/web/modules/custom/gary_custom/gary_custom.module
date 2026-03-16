@@ -590,6 +590,12 @@ function gary_custom_form_alter(&$form, FormStateInterface $form_state, $form_id
     $form['actions']['save_order']['#access'] = false;
   }
 
+  // When save_entities is present, hide the default views submit button to
+  // avoid showing two save buttons.
+  if (isset($form['actions']['save_entities']) && isset($form['actions']['submit'])) {
+    $form['actions']['submit']['#access'] = false;
+  }
+
 
   //use select2 type on these multiselect elements
   $multiselectsNested = [

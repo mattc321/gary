@@ -1,5 +1,5 @@
 --- a/src/Plugin/views/field/EntityFormField.php	2026-03-16 12:05:08.313228682 -0700
-+++ b/src/Plugin/views/field/EntityFormField.php	2026-03-16 12:05:44.661345264 -0700
++++ b/src/Plugin/views/field/EntityFormField.php	2026-03-16 16:19:04.078214862 -0700
 @@ -485,7 +485,11 @@
        $form[$this->options['id']]['#tree'] = TRUE;
        $form[$this->options['id']]['#entity_form_field'] = TRUE;
@@ -13,3 +13,15 @@
          // Initialize this row and column.
          $form[$this->options['id']][$row_index]['#parents'] = [$this->options['id'], $entity_id];
          $form[$this->options['id']][$row_index]['#tree'] = TRUE;
+@@ -536,6 +540,11 @@
+    */
+   public function viewsFormProcess(array $element, FormStateInterface $form_state) {
+ //    $element['actions']['submit']['#submit'][] = [$this, 'saveEntities'];
++    // Ensure viewsFormSubmit (which calls buildEntities) runs in the submit
++    // phase. When save_entities has its own #submit, Drupal skips the
++    // form-level #submit entirely, so viewsFormSubmit would otherwise be
++    // bypassed and entities would not be built before saveEntities runs.
++    $element['actions']['save_entities']['#submit'][] = [$this, 'viewsFormSubmit'];
+     $element['actions']['save_entities']['#submit'][] = [$this, 'saveEntities'];
+     return $element;
+   }
