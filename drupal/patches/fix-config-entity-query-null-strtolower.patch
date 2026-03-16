@@ -1,0 +1,11 @@
+--- web/core/lib/Drupal/Core/Config/Entity/Query/Condition.php	2026-02-05 00:05:30.000000000 -0800
++++ /tmp/Condition.php.new	2026-03-15 18:22:11.296338648 -0700
+@@ -35,7 +35,7 @@
+           if (is_array($condition['value'])) {
+             $condition['value'] = array_map('mb_strtolower', $condition['value']);
+           }
+-          elseif (!is_bool($condition['value'])) {
++          elseif (!is_bool($condition['value']) && !is_null($condition['value'])) {
+             $condition['value'] = mb_strtolower($condition['value']);
+           }
+         }

@@ -121,6 +121,9 @@
             }
         },
         "patches": {
+          "drupal/core": {
+            "Fix mb_strtolower null deprecation in config entity query": "patches/fix-config-entity-query-null-strtolower.patch"
+          },
           "drupal/paragraphs": {
             "Mod add multiple to paragraphs": "patches/mod_add_multiple_paragraphs.patch"
           },
