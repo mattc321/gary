@@ -294,11 +294,15 @@ class InlineForm extends FormBase {
     $field_list = $this->getFieldList();
 
     $pg_values = [];
+    $maybe_end = function($v) { return is_array($v) ? end($v) : $v; };
     //clean dirty nested arrays
     foreach ($field_list as $key => $field) {
       $i = array_search($field, array_keys($form_values));
-      $sliced_array = array_map('end', array_slice($form_values, $i, 1, TRUE));
-      $pg_values = array_merge($pg_values, array_map('end',$sliced_array));
+      if ($i === FALSE) {
+        continue;
+      }
+      $sliced_array = array_map($maybe_end, array_slice($form_values, $i, 1, TRUE));
+      $pg_values = array_merge($pg_values, array_map($maybe_end, $sliced_array));
     }
     //add the new entity if its node
     if ($this->getTargetType() == 'node') {
@@ -475,6 +479,9 @@ class InlineForm extends FormBase {
 
 
     foreach ($pg_values as $field_name => $value) {
+      if (!$pg_item->hasField($field_name)) {
+        continue;
+      }
       if (trim($value) != "" || !empty($value)) {
 
         //exception if we dont preformat the date field value idk why
