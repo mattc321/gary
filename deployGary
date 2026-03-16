@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+ssh garyDeploy "
+  set -e
+  cd /var/www/gary
+  git pull
+  cd drupal
+  composer install
+  cd ..
+  npm run build
+  ./drupal/vendor/bin/drush config:import -y
+  ./drupal/vendor/bin/drush cr
+"
