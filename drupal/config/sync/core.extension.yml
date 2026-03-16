@@ -69,6 +69,7 @@ module:
   rest: 0
   restui: 0
   search: 0
+  search_autocomplete: 0
   select2: 0
   serialization: 0
   shortcut: 0
@@ -95,7 +96,6 @@ module:
   views: 10
   paragraphs: 11
   standard: 1000
-  search_autocomplete: 0
 theme:
   stable: 0
   classy: 0
