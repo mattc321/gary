@@ -194,15 +194,16 @@ function gary_custom_link_alter(&$variables) {
   }
   //if we have a route match rewrite to its mobile route. The view contains this block
   if(isset($mobile_route_matches[$route])) {
+    $mobile_route_name = $mobile_route_matches[$route];
     $route_provider = \Drupal::service('router.route_provider');
     //check the mobile route. If it doesnt exist then bounce
     try {
-      $new_route = $route_provider->getRouteByName($mobile_route_matches[$route]);
+      $route_provider->getRouteByName($mobile_route_name);
     }
     catch (exception $e){
       return;
     }
-    $new_url = Url::fromRoute($new_route);
+    $new_url = Url::fromRoute($mobile_route_name);
     $variables['url'] = $new_url;
   }
 
