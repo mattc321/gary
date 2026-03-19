@@ -22,6 +22,7 @@ dependencies:
     - filter
     - gary_field_formatter
     - node
+    - quickedit
 id: limited_admin
 label: 'EC Main User'
 weight: 4
@@ -30,6 +31,7 @@ permissions:
   - 'access comments'
   - 'access contextual links'
   - 'access draggableviews'
+  - 'access in-place editing'
   - 'administer comments'
   - 'create accounts content'
   - 'create contacts content'

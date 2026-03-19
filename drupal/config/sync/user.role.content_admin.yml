@@ -50,6 +50,7 @@ dependencies:
     - node
     - paragraphs
     - path
+    - quickedit
     - search
     - system
     - taxonomy
@@ -66,6 +67,7 @@ permissions:
   - 'access content overview'
   - 'access files overview'
   - 'access help pages'
+  - 'access in-place editing'
   - 'access media overview'
   - 'access site reports'
   - 'access taxonomy overview'

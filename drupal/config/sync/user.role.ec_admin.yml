@@ -17,12 +17,14 @@ dependencies:
     - filter
     - gary_field_formatter
     - node
+    - quickedit
 id: ec_admin
 label: 'EC Admin'
 weight: 5
 is_admin: null
 permissions:
   - 'access comments'
+  - 'access in-place editing'
   - 'administer comments'
   - 'administer permissions'
   - 'administer users'
