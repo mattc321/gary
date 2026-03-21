@@ -134,6 +134,9 @@
             "Mod remove multi display support because relations dont support it": "patches/mod-no-multi-view-display-support.patch",
             "Fix DraggableViewsField inheriting BulkForm validation when used as drag-order field": "patches/fix-draggableviews-skip-bulkform-validate.patch"
           },
+          "drupal/quickedit": {
+            "Initialize Quick Edit from existing contextual links when the contextual event was missed": "patches/fix-quickedit-initialize-existing-contextual-links.patch"
+          },
           "drupal/views_entity_form_field": {
             "Fix broken submit handlers when draggableviews installed": "patches/fix-entity-form-submit-handlers.patch",
             "Move submit to custom button": "patches/move-submit-to-custom-button.patch",

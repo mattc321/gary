@@ -1,0 +1,60 @@
+--- a/js/quickedit.js
++++ b/js/quickedit.js
+@@ -208,6 +208,49 @@
+         entityInstanceID: entityInstanceID
+       });
+     }
++  }
++
++  function findEntityContextualLink(entityElement) {
++    var contextualElement = null;
++    $(entityElement).find('.contextual, [data-contextual-id]').each(function (index, element) {
++      if ($(element).closest('.contextual-region').get(0) === entityElement) {
++        contextualElement = element;
++        return false;
++      }
++    });
++    return contextualElement;
++  }
++
++  function initializeExistingEntityContextualLinks(context) {
++    $(context).find('[data-quickedit-entity-id]').addBack('[data-quickedit-entity-id]').each(function (index, entityElement) {
++      var contextualElement = findEntityContextualLink(entityElement);
++
++      if (!contextualElement) {
++        return;
++      }
++
++      var entityID = entityElement.getAttribute('data-quickedit-entity-id');
++      var entityInstanceID = entityElement.getAttribute('data-quickedit-entity-instance-id');
++      var existingEntity = Drupal.quickedit.collections.entities.findWhere({
++        entityID: entityID,
++        entityInstanceID: entityInstanceID
++      });
++
++      if (existingEntity) {
++        return;
++      }
++
++      var contextualLink = {
++        entityID: entityID,
++        entityInstanceID: entityInstanceID,
++        el: contextualElement,
++        region: entityElement
++      };
++
++      if (!initializeEntityContextualLink(contextualLink)) {
++        contextualLinksQueue.push(contextualLink);
++      }
++    });
+   }
+ 
+   function deleteContainedModelsAndQueues($context) {
+@@ -283,6 +326,7 @@
+ 
+       once('quickedit', '[data-quickedit-entity-id]', context).forEach(processEntity);
+       fields.forEach(processField);
++      initializeExistingEntityContextualLinks(context);
+       contextualLinksQueue = _.filter(contextualLinksQueue, function (contextualLink) {
+         return !initializeEntityContextualLink(contextualLink);
+       });
