@@ -1,14 +1,19 @@
 #!/bin/bash
 set -e
 
-ssh garyDeploy "
+ssh garyDeploy '
   set -e
+
+  export NVM_DIR="/usr/local/nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
   cd /var/www/gary
   git pull
   cd drupal
   composer install
   cd ..
   npm install
+  npm run build
   ./drupal/vendor/bin/drush config:import -y
   ./drupal/vendor/bin/drush cr
-"
+'
