@@ -39,14 +39,24 @@
            }
 
            //retrieve a string response
-           let ajaxObject = Drupal.ajax({
+           $.ajax({
              type: 'GET',
              url: '/service_price/' + service_id,
-             success: function(responseData) {
+             dataType: 'text',
+              success: function(responseData) {
                   setCalc(responseData, subform);
+              },
+              error: function(xhr, status, error) {
+                console.error('gary_custom getServicePrice failed', {
+                  url: '/service_price/' + service_id,
+                  serviceId: service_id,
+                  status: status,
+                  error: error,
+                  httpStatus: xhr.status,
+                  responseText: xhr.responseText
+                });
               }
             });
-           ajaxObject.execute();
 
            //now calculate
 
