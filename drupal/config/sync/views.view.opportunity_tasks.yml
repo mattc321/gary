@@ -41,7 +41,7 @@ display:
           id: title
           table: node_field_data
           field: title
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -106,7 +106,7 @@ display:
           id: field_task_assigned_to
           table: node__field_task_assigned_to
           field: field_task_assigned_to
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -169,7 +169,7 @@ display:
           id: field_task_due_date
           table: node__field_task_due_date
           field: field_task_due_date
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -233,7 +233,7 @@ display:
           id: field_task_list
           table: node__field_task_list
           field: field_task_list
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -296,7 +296,7 @@ display:
           id: field_task_status
           table: node__field_task_status
           field: field_task_status
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -359,7 +359,7 @@ display:
           id: field_last_comment
           table: node
           field: field_last_comment
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -409,7 +409,7 @@ display:
           id: last_comment_name
           table: comment_entity_statistics
           field: last_comment_name
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: comment_ces_last_comment_name
@@ -459,7 +459,7 @@ display:
           id: field_last_comment_1
           table: node
           field: field_last_comment
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -558,7 +558,7 @@ display:
           id: entity_delete_item
           table: node
           field: entity_delete_item
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -608,13 +608,13 @@ display:
           id: draggableviews
           table: node_field_data
           field: draggableviews
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
           entity_field: nid
           plugin_id: draggable_views_field
-          label: ''
+          label: Content
           exclude: false
           alter:
             alter_text: false
@@ -657,68 +657,13 @@ display:
           hide_alter_empty: true
           action_title: Action
           include_exclude: exclude
-          selected_actions: null
-        weight:
-          id: weight
-          table: draggableviews_structure
-          field: weight
-          relationship: field_tasks
-          group_type: group
-          admin_label: ''
-          plugin_id: numeric
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          set_precision: false
-          precision: 0
-          decimal: .
-          separator: ''
-          format_plural: false
-          format_plural_string: !!binary MQNAY291bnQ=
-          prefix: ''
-          suffix: ''
+          selected_actions: {  }
+          draggable_views_hierarchy: 0
       pager:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 10
           total_pages: null
           id: 0
@@ -736,7 +681,6 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
-          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -760,21 +704,24 @@ display:
           id: weight
           table: draggableviews_structure
           field: weight
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: standard
+          plugin_id: draggable_views_sort_default
           order: ASC
           expose:
-            label: 'DraggableViews Weight'
-            field_identifier: weight
+            label: ''
+            field_identifier: ''
           exposed: false
+          draggable_views_reference: this
+          draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
       arguments:
         nid:
           id: nid
           table: node_field_data
           field: nid
-          relationship: none
+          relationship: reverse__node__field_tasks
           group_type: group
           admin_label: ''
           entity_type: node
@@ -832,7 +779,7 @@ display:
           plugin_id: bundle
           operator: in
           value:
-            opportunities: opportunities
+            tasks: tasks
           group: 1
           exposed: false
           expose:
@@ -880,7 +827,6 @@ display:
             nothing: nothing
             entity_delete_item: entity_delete_item
             draggableviews: draggableviews
-            weight: weight
           default: '-1'
           info:
             title:
@@ -956,13 +902,6 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            weight:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
           override: true
           sticky: false
           summary: ''
@@ -982,18 +921,19 @@ display:
         options:
           query_comment: ''
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_tags: {  }
       relationships:
-        field_tasks:
-          id: field_tasks
-          table: node__field_tasks
-          field: field_tasks
+        reverse__node__field_tasks:
+          id: reverse__node__field_tasks
+          table: node_field_data
+          field: reverse__node__field_tasks
           relationship: none
           group_type: group
-          admin_label: 'field_tasks: Content'
-          plugin_id: standard
+          admin_label: field_tasks
+          entity_type: node
+          plugin_id: entity_reverse
           required: false
       use_ajax: true
       header: {  }
@@ -1046,7 +986,7 @@ display:
           id: form_field_title
           table: node_field_data
           field: form_field_title
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -1104,7 +1044,7 @@ display:
           id: form_field_field_task_assigned_to
           table: node_field_data
           field: form_field_field_task_assigned_to
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -1160,7 +1100,7 @@ display:
           id: form_field_field_task_due_date
           table: node_field_data
           field: form_field_field_task_due_date
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -1216,7 +1156,7 @@ display:
           id: form_field_field_task_list
           table: node_field_data
           field: form_field_field_task_list
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -1272,7 +1212,7 @@ display:
           id: form_field_field_task_status
           table: node_field_data
           field: form_field_field_task_status
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -1328,7 +1268,7 @@ display:
           id: entity_delete_item
           table: node
           field: entity_delete_item
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -1378,13 +1318,13 @@ display:
           id: draggableviews
           table: node_field_data
           field: draggableviews
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
           entity_field: nid
           plugin_id: draggable_views_field
-          label: ''
+          label: Content
           exclude: false
           alter:
             alter_text: false
@@ -1427,9 +1367,28 @@ display:
           hide_alter_empty: true
           action_title: Action
           include_exclude: exclude
-          selected_actions: null
+          selected_actions: {  }
+          draggable_views_hierarchy: 0
+      sorts:
+        weight:
+          id: weight
+          table: draggableviews_structure
+          field: weight
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: draggable_views_sort_default
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+          draggable_views_reference: 'opportunity_tasks:block_1'
+          draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
       defaults:
         fields: false
+        sorts: false
       display_description: ''
       display_extenders: {  }
     cache_metadata:
@@ -1463,7 +1422,7 @@ display:
           id: title
           table: node_field_data
           field: title
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
@@ -1528,7 +1487,7 @@ display:
           id: field_task_assigned_to
           table: node__field_task_assigned_to
           field: field_task_assigned_to
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -1591,7 +1550,7 @@ display:
           id: field_task_due_date
           table: node__field_task_due_date
           field: field_task_due_date
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -1655,7 +1614,7 @@ display:
           id: field_task_list
           table: node__field_task_list
           field: field_task_list
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
@@ -1718,7 +1677,7 @@ display:
           id: field_task_status
           table: node__field_task_status
           field: field_task_status
-          relationship: field_tasks
+          relationship: none
           group_type: group
           admin_label: ''
           plugin_id: field
