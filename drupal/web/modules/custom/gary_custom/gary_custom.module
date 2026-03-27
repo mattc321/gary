@@ -758,6 +758,53 @@ function gary_custom_sync_opportunity_tasks_block_order(FormStateInterface $form
   }
 }
 
+/**
+ * Mirrors project task drag order from block_2 into block_1 storage.
+ */
+function gary_custom_sync_project_tasks_block_order(FormStateInterface $form_state) {
+  $build_info = $form_state->getBuildInfo();
+  if (empty($build_info['args'][0]) || !($build_info['args'][0] instanceof ViewExecutable)) {
+    return;
+  }
+
+  $view = $build_info['args'][0];
+  if ($view->id() !== 'project_tasks' || $view->current_display !== 'block_2') {
+    return;
+  }
+
+  $items = $form_state->getUserInput()['draggableviews'] ?? [];
+  if (empty($items) || !is_array($items)) {
+    return;
+  }
+
+  $args = !empty($view->args) ? json_encode($view->args) : '[]';
+  $connection = \Drupal\Core\Database\Database::getConnection();
+
+  foreach ($items as $item) {
+    if (empty($item['id']) || !isset($item['weight'])) {
+      continue;
+    }
+
+    $connection->delete('draggableviews_structure')
+      ->condition('view_name', 'project_tasks')
+      ->condition('view_display', 'block_1')
+      ->condition('args', $args)
+      ->condition('entity_id', $item['id'])
+      ->execute();
+
+    $connection->insert('draggableviews_structure')
+      ->fields([
+        'view_name' => 'project_tasks',
+        'view_display' => 'block_1',
+        'args' => $args,
+        'entity_id' => $item['id'],
+        'weight' => $item['weight'],
+        'parent' => 0,
+      ])
+      ->execute();
+  }
+}
+
 function gary_custom_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
   gary_custom_apply_field_widget_alter($element, $context);
 }
