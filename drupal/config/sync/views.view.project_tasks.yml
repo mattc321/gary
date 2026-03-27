@@ -415,6 +415,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 20
           total_pages: null
           id: 0
@@ -432,7 +433,6 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
-          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -1927,6 +1927,23 @@ display:
           action_title: Action
           include_exclude: exclude
           selected_actions: null
+      sorts:
+        weight:
+          id: weight
+          table: draggableviews_structure
+          field: weight
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: draggable_views_sort_default
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+          draggable_views_reference: 'project_tasks:block_1'
+          draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
       style:
         type: table
         options:
@@ -2008,23 +2025,6 @@ display:
         fields: false
         sorts: false
         footer: false
-      sorts:
-        weight:
-          id: weight
-          table: draggableviews_structure
-          field: weight
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: draggable_views_sort_default
-          order: ASC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
-          draggable_views_reference: 'project_tasks:block_1'
-          draggable_views_null_order: after
-          draggable_views_pass_arguments: 0
       display_description: ''
       footer: {  }
       display_extenders: {  }
