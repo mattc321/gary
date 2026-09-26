@@ -1,5 +1,6 @@
 parameters:
-    http.response.debug_cacheability_headers: true
-    twig.config: { debug: true, auto_reload: true, cache: false }
+    http.response.debug_cacheability_headers: false
+    twig.config: { debug: false, auto_reload: false, cache: true }
 services:
+    # still referenced by the cache bins in settings.local.php; remove both together
     cache.backend.null: { class: Drupal\Core\Cache\NullBackendFactory }
