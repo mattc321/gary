@@ -30,7 +30,7 @@ index ce8d108..965c238 100644
  
      if ($widget_state['real_item_count'] < $element['#cardinality'] || $element['#cardinality'] == FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED) {
 -      $widget_state['items_count']++;
-+      if ($how_many = $form_state->getValue('field_project_units')['add_more']['how_many']) {
++      if ($how_many = $form_state->getValue('field_project_units')['add_more']['how_many'] ?? NULL) {
 +          $widget_state['items_count'] = + $how_many;
 +      } else {
 +          $widget_state['items_count']++;
