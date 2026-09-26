@@ -1,3 +1,5 @@
 node_modules
 .idea
 upgrade.path.md
+AGENTS.md
+drupal/db-backups/
