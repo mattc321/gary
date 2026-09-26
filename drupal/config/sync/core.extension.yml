@@ -71,6 +71,8 @@ module:
   restui: 0
   search: 0
   search_autocomplete: 0
+  search_help: 0
+  search_node: 0
   select2: 0
   serialization: 0
   shortcut: 0
