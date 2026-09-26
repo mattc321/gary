@@ -313,13 +313,17 @@ function gary_custom_entity_delete(EntityInterface $entity) {
 
     case 'tasks':
 
-      $parent = Node::load($helper->getParentNid($entity));
+      // getParentNid() returns an empty array when no parent references the task.
+      $parentNid = $helper->getParentNid($entity);
+      $parent = $parentNid ? Node::load($parentNid) : NULL;
 
-      $helper->removeDeletedEntityFromParentEntityParagraph(
-        $parent,
-        $entity,
-        'field_tasks'
-      );
+      if ($parent) {
+        $helper->removeDeletedEntityFromParentEntityParagraph(
+          $parent,
+          $entity,
+          'field_tasks'
+        );
+      }
       break;
 
   }

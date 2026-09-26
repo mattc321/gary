@@ -72,7 +72,11 @@ function gary_pdf_templates_entity_display_build_alter(&$build, $context) {
         $templateEntity = $helper::loadEntityRef($entity, $fieldToAttach);
         $build[$fieldToAttach]['#attached']['library'][] = 'gary_pdf_templates/generate';
 
-        $text = $build[$fieldToAttach][0]['#plain_text'];
+        if (! isset($build[$fieldToAttach][0])) {
+          continue;
+        }
+
+        $text = $build[$fieldToAttach][0]['#plain_text'] ?? '';
         unset($build[$fieldToAttach][0]['#plain_text']);
 
         $fileName = preg_replace('/[^\da-z]/i', '', $entity->getTitle());

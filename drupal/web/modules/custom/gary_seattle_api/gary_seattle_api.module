@@ -42,7 +42,7 @@ function gary_seattle_api_entity_view(array &$build, EntityInterface $entity, En
   $cityName = $terms->getName();
   $cityUrl = $terms->field_permit_url->value;
 
-  if (count($build['field_permit_number']['#items']) == 0) {
+  if (empty($build['field_permit_number']['#items']) || count($build['field_permit_number']['#items']) == 0) {
     return;
   }
 
@@ -92,7 +92,7 @@ function gary_seattle_api_entity_view(array &$build, EntityInterface $entity, En
         '#bundle' => $entity->bundle(),
         '#object' => $entity,
         '#items' => array(),
-        '#weight' => $build['field_project_services']['#weight'] - 5,
+        '#weight' => ($build['field_project_services']['#weight'] ?? 0) - 5,
         '#comment_display_mode' => '',
         0 => $table
       ];
