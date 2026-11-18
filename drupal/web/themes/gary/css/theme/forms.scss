@@ -93,6 +93,24 @@ input[type=submit]:hover {
     max-width: 500px;
   }
 
+  //captcha (turnstile): hide label/description, drop the fieldset border
+  .captcha {
+    border: 0;
+    margin: 10px 0;
+    padding: 0;
+    min-width: 0;
+
+    .captcha__title,
+    .captcha__description {
+      display: none;
+    }
+
+    .captcha__element {
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+
 }
 .user-login-center {
     margin: 10vh auto;
