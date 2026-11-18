@@ -1,0 +1,9 @@
+uuid: 2ed596a8-2230-4049-b602-d1e2c4790a1f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: XbughDuwgOtc_8ztmYxz84gaXBeR760xH3bGSKD9v1Q
+formId: user_login_form
+captchaType: turnstile/Turnstile
+label: user_login_form
